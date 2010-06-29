@@ -1,0 +1,47 @@
+<table bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0" width="300">
+  <tbody>
+  <tr>
+
+    <td bgcolor="#ffcc33">
+      <center>
+        <font size="5"><%= @calendar.name %></font>
+      </center>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffff66"><%= present_day @day %>: <%= @dow.name %>, <%= @weather_forecast.original_condition %></td>
+  </tr>
+
+
+  <% @tips.each do |tip| %>
+      <tr>
+        <td><p><%= tip.condition.name %>:<br>
+          <% if tip.url != '' -%>
+              <a href="/calendars/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                <%= tip.name %>
+              </a>
+          <% else -%>
+              <%= tip.name %>
+          <% end -%>
+        </p>
+
+          <p>
+            <% if tip.image.exists? -%>
+            <%= image_tag tip.image.url(:medium), {:align=>"left"} %>
+            <% end -%>
+            
+            <font color="#666666" size="2"><%= tip.description %></font>
+            <% if tip.address.address != '' -%>
+                <br/>Location: <%= tip.address.address %>
+                <small>
+                    <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">map</a>
+                    </small>
+            <% end -%>
+          </p>
+        </td>
+      </tr>
+  <% end %>
+
+
+  </tbody>
+</table>

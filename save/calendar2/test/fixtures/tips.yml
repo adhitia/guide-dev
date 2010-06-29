@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  condition_id: 1
+  day_of_week: 9.99
+  name: MyString
+  description: MyString
+  url: MyString
+
+two:
+  condition_id: 1
+  day_of_week: 9.99
+  name: MyString
+  description: MyString
+  url: MyString

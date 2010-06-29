@@ -1,0 +1,138 @@
+@charset "utf-8";
+/* CSS Document */
+
+.text {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #666666;
+	text-indent: 0px;
+}
+.subhead {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	text-transform: uppercase;
+	color: #666666;
+	background-color: #BFF1F7;
+	padding: 5px;
+	margin-left: 60px;
+	margin-right: 200px;
+}
+.smalltext {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	color: #666666;
+}
+.headtext {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	color: #CCCCCC;
+}
+.textflow {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: large;
+	color: #006699;
+	text-decoration: underline;
+	background-color: #FFCC00;
+	background-repeat: no-repeat;
+	float: none;
+	height: auto;
+	width: auto;
+	padding: 10px;
+}
+body {
+	background-color: #FFFFFF;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #666666;
+}
+.subheadtable {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	text-transform: uppercase;
+	color: #999999;
+	font-weight: bold;
+}
+.navig {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-weight: lighter;
+	text-transform: uppercase;
+	color: #669999;
+	text-align: right;
+	text-indent: 100px;
+}
+/* CSS Document */
+ 
+.textfield_effect    {
+    /*we will first set the border styles.*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: #999999;
+    /*we are now going <strong class="highlight">to</strong> add <strong class="highlight">in</strong> the shadow image that we created earlier*/
+    background-image: url(back_field.gif);
+    background-repeat: repeat-x;
+    /*I am going <strong class="highlight">to</strong> add some text formatting of my own*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333333;
+    width: 200px;
+    height: 35px;
+    }
+ 
+/*we are now going <strong class="highlight">to</strong> <strong class="highlight">style</strong> <strong class="highlight">how</strong> the textfield will look when we
+hover over it and when we actually have it selected*/
+ 
+.textfield_effect:hover    {
+    border-color: #64acd8;
+    border-width: 1px;
+    }
+ 
+.textfield_effect:focus    {
+    border-color: #64acd8;
+    border-width: 1px;
+    }
+ 
+/*you may also like <strong class="highlight">to</strong> add some styles for the rest of the form*/
+ 
+fieldset    {
+    width: 400px;
+    height: 200px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #036399;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #F5F5F5;
+    }
+fieldset:hover    {
+    border-color: #0ca0ff;
+    }
+legend    {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #097bc3;
+    font-weight: bold;
+    }
+.textwhite {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #FFFFFF;
+	text-indent: 0px;
+}
+.headtextdarker {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	color: #666666;
+}
+.headtextdarkersmall {
+	font-family: "Arial Narrow", "Franklin Gothic Demi Cond";
+	font-size: x-small;
+	color: #666666;
+}
+.subheadtablelarge {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: large;
+	text-transform: uppercase;
+	color: #666666;
+	font-weight: bold;
+}

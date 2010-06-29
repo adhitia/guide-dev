@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <script src="http://www.google.com/jsapi?key=ABCDEFG"
+        type="text/javascript"></script>
+    <script type="text/javascript">
+    </script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+      
+
+  </head>
+  <body>
+    <div id="searchcontrol"></div>
+
+
+<table id="t0">
+    <tbody>
+    </tbody>
+</table>
+<table id="t1">
+    <tbody>
+    <tr></tr>
+    </tbody>
+</table>
+<table id="t2">
+    <tbody>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    </tbody>
+</table>
+<table id="t3">
+    <tbody>
+    <tr></tr>
+    <tr></tr>
+    </tbody>
+</table>
+  
+
+  </body>
+
+<select name="label" id="label">
+    <option value="1" label="testLabel">testLabel</option>
+    <option value="newLabel" label="New Label">New Label</option>
+</select>
+
+
+
+</html>
+
+
+
+<script type="text/javascript">
+//    var a = $("table tr:nth-child(" + 2 + ")").parent().parent();
+    var a = $('tbody:has(tr:eq('+2+'))');
+//    var a = $('tbody:has(tr)');
+//    var a = $("tbody:has(tr:nth-child(2))");
+    alert(a.length);
+//    alert(a[0].id);
+//    alert(a[1].id);
+//    alert($("#label option[label=testLabel]").length);
+//    alert($("#label option[label=testLabel]").length);
+//    alert($("#label option:contains('testLabel')").length);
+</script>
+        

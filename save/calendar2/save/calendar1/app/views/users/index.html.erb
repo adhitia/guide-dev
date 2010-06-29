@@ -1,0 +1,72 @@
+
+<p class="subhead">Create your own travel guide</p>
+<blockquote>
+  <blockquote>
+    <p align="left">
+      <a href="/calendars/new" class="textflow">Create your own guide</a>
+      <strong class="subheadtable"><font size="+4">K</font>now some place well?</strong> <br>
+    Use out travel guide maker to detail your tips on where to go for each day of the week here, according to the weather. Then embed your travel guide on your sites, or let others embed it on theirs. You«ll earn ad bucks from advertisers.</p>
+
+  </blockquote>
+</blockquote>
+<p class="subhead">Search for travel guides</p>
+<form id="form1" name="form1" method="get" action="calendars">
+  <label>
+
+  </label><center>
+    <center>
+        <table border="0" cellpadding="15" cellspacing="0">
+          <tbody><tr>
+            <td><div class="subheadtable" align="right">We currently have <%= @calendars_amount %> guides... find it here </div></td>
+
+            <td bgcolor="#ffcc00">
+              <input class="watermark" name="search_location" id="search_location" value="" type="text" title="type destination here">
+              <button type="submit">Search</button>
+              </td>
+        </tr>
+          </tbody></table>
+
+      </center>
+  <label>
+  </label><center>
+  </center>
+
+
+
+<p class="subhead">View recently added guides</p>
+<center>
+  <table border="0" cellpadding="5" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+      <% @recent_calendars.each do |calendar| %>
+          <td valign="top">
+            <div id="calendar_area_<%= calendar.id %>"></div>
+            <script type="text/javascript">
+                _cal.render_calendar("calendar_area_<%= calendar.id %>", <%= calendar.id %>, "tiny");
+            </script>
+          </td>
+      <% end %>
+    </tr>
+    </tbody>
+  </table>
+</center>
+<p class="textflow" align="center">More recent additions</p>
+<p align="center">&nbsp;</p>
+</center></form>
+
+
+
+<script type="text/javascript">
+    $("#search_location").autocomplete(
+            [
+                <% @locations.size.times do |index| -%>
+                    '<%= @locations[index].name %>'
+                    <% if index < @locations.size - 1 -%>
+                        ,
+                    <% end %>
+                <% end -%>
+            ],
+    {
+//        mustMatch: true
+    });
+</script>

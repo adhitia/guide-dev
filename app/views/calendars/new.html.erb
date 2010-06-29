@@ -1,0 +1,61 @@
+<h1>New calendar</h1>
+
+<form id="new_calendar_form" action="<%= new_calendar_path %>" method="POST">
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+
+  <% if flash[:error] %>
+      <p style="color:red;"><%= flash[:error] %></p>
+  <% end %>
+
+  <p>
+    <label for="calendar_name">Name</label><br/>
+    <!--<input id="calendar_name" name="calendar_name" type="text" value="<%= params[:calendar_name] %>">-->
+    <input id="calendar_name_location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="10" title="location">
+    for
+    <input id="calendar_name_target" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="15" title="target group">
+    <br/>
+  </p>
+
+  <p style="color:gray;">
+    E.g., Rio for Partiers,<br/>
+    San Francisco for Families<br/>
+  </p>
+
+
+  <p>
+    <label for="calendar_location_name">City</label><br>
+    <input class="ac_input" id="calendar_location_name" name="location_name" size="30" value="<%= params[:location_name] %>" type="text">
+  </p>
+  <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden">
+
+  <p>
+    <button type="submit">Create</button>
+  </p>
+
+</form>
+
+
+
+<%= link_to 'Back', show_user_path(@current_user) %>
+
+
+<script type="text/javascript">
+    input = $("#calendar_location_name");
+    input.autocomplete('/check_location', {
+        delay: 1000,
+        minChars: 3,
+        mustMatch: true,
+        cacheLength: 1,
+        matchSubset: false
+    });
+    input.result(function(event, data, formatted) {
+        $('#calendar_location_code')[0].value = data[1];
+    });
+
+    $('#calendar_name_location').Watermark('location');
+    $('#calendar_name_target').Watermark('target group');
+    $('#new_calendar_form').submit(function() {
+        $.Watermark.HideAll();
+        return true;
+    });
+</script>

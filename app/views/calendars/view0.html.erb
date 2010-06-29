@@ -1,0 +1,83 @@
+<h1>Editing calendar</h1>
+
+<% form_for(@calendar) do |f| %>
+    <% if flash[:error] %>
+      <p style="color:red;"><%= flash[:error] %></p>
+    <% end %>
+    <%= f.error_messages %>
+
+    <p>
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <label for="calendar_location_name">Location name</label><br>
+      <input class="ac_input" id="calendar_location_name" name="location_name" size="30" value="<%= @calendar.location.name %>" type="text">
+    </p>
+    <input id="calendar_location_code" name="location_code" value="<%= @calendar.location.code %>" type="hidden">
+
+<p>
+  <b>Times Viewed:</b>
+  <%= h @calendar.view_count %><br/>
+  <b>Times Clicked:</b>
+  <%= h @calendar.click_count %>
+</p>
+
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="10">
+
+      <tr>
+        <th></th>
+        <% @weekdays.each do |day| %>
+            <th><%= day.name %></th>
+        <% end %>
+      </tr>
+
+      <% @conditions.each do |condition| %>
+          <tr>
+            <td><%= condition.name %></td>
+            <% @weekdays.each do |day| %>
+                <% tip = @calendar.tips.detect {|t| t.condition.id == condition.id and t.weekdays.include?(day)} %>
+                  <% if tip != nil then %>
+                    <td>
+                      <%= tip.name %><br/>
+                      Viewed <%= tip.view_count %> time<%= tip.view_count != 1 ? 's' : '' %><br/>
+                      Clicked <%= tip.click_count %> time<%= tip.click_count != 1 ? 's' : '' %><br/>
+                      Displayed in <%= tip.weekdays.size %> place<%= tip.weekdays.size != 1 ? 's' : '' %><br/>
+                      <%= link_to "edit tip", edit_tip_path(:id => @calendar.id, :tip_id => tip.id) %>
+                    </td>
+                  <% else %>
+                    <td style="background-color:lightgray;">
+                      no tip<br/>
+                      <%= link_to "create tip", new_tip_path(:id => @calendar.id, :dow => day.id, :condition_id => condition.id), :method => :post %>
+                    </td>
+                  <% end %>
+            <% end %>
+          </tr>
+      <% end %>
+
+    </table>
+
+
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+<% end %>
+
+<%= link_to 'Show', @calendar %> |
+<%= link_to 'Back', calendars_path %>
+
+
+<script type="text/javascript">
+    input = $("#calendar_location_name");
+    input.autocomplete('/check_location', {
+        delay: 1000,
+        minChars: 3,
+        mustMatch: true,
+        cacheLength: 1,
+        matchSubset: false
+    });
+    input.result(function(event, data, formatted) {
+        $('#calendar_location_code')[0].value = data[1];
+    });
+</script>

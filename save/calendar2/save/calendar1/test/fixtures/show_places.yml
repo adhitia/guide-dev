@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  condition_id: 1
+  weekday_id: 1
+  calendar_id: 1
+  tip_id: 1
+
+two:
+  condition_id: 1
+  weekday_id: 1
+  calendar_id: 1
+  tip_id: 1

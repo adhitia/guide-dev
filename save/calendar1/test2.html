@@ -1,0 +1,19 @@
+<script type="text/javascript" src="public/jquery/jquery-1.4.2.min.js"></script>
+<body>
+    <a id="add_phone" class="reply" href="#" rel="nofollow">Reply</a><br/>
+    <a id="reply-424885" class="reply" href="#" rel="nofollow">Reply2</a>
+
+    <br/>
+    <br/>
+    <ol id="phones">
+        <li>aaa</li>
+        <li>aaa</li>
+        <li>aaa</li>
+    </ol>
+<script>
+$(function(){
+  $('a#add_phone').click(function () {
+    $('<li>Test</li>').appendTo('ol#phones');
+  });
+});</script>
+</body>

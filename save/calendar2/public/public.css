@@ -1,0 +1,32 @@
+
+.starbar .outer {
+    background: url(/images/stars.png) no-repeat 0 0;
+    height: 20px;
+    width: 100px;
+}
+
+.starbar .inner {
+    background: url(/images/stars.png) no-repeat 0 -20px;
+    height: 20px;
+    /*width: 70px;*/
+}
+
+.starbar .voted {
+  background-position: 0 -40px;
+  /*width: 40px;*/
+}
+
+.starbar a {
+    position: absolute;
+    height: 20px;
+}
+
+.starbar a:hover {
+  background: transparent url(/images/stars.png) no-repeat scroll 0 -60px;
+}
+
+.starbar a.s1  { width:  20px; }
+.starbar a.s2  { width:  40px; }
+.starbar a.s3  { width:  60px; }
+.starbar a.s4  { width:  80px; }
+.starbar a.s5  { width: 100px; }

@@ -1,0 +1,42 @@
+
+
+<form id="calendar_overview_form" action="<%= new_calendar_path %>" method="POST">
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+  <input name="step" type="hidden" value="overview">
+
+  <!--<input type="hidden" name="calendar_name" value="<%= params[:calendar_name] %>">-->
+  <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
+  <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
+
+  <p class="subhead">Add your tip Titles for the week</p>
+  <table bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+      <td colspan="8" bgcolor="#ffcc33">
+        <center spry:hover="subheadtable">
+          <font size="5"><%= params[:calendar_name] %></font></center>
+      </td>
+    </tr>
+
+    <tr>
+      <td bgcolor="#ffff66">Weekday</td>
+
+      <% @weekdays.each do |day| %>
+          <td><%= day.name %></td>
+      <% end %>
+    </tr>
+
+    <% @conditions.each do |condition| %>
+        <tr>
+          <td><%= condition.name %></td>
+          <% @weekdays.each do |day| %>
+              <td>
+                <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="16" type="text">
+              </td>
+          <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <p class="textflow" align="center"><a href="javascript:$('#calendar_overview_form').submit();">save and add details &gt;&gt;</a></p>
+</form>

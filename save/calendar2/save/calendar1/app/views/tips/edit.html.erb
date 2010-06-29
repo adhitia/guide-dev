@@ -1,0 +1,155 @@
+
+<h1>Edit tip for <%= @calendar.name %></h1>
+<% form_for(@tip, :url => update_tip_path(:id => @calendar), :html => {:multipart => true}) do |f| %>
+    <%= f.error_messages %>
+
+    <p>
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :description %><br/>
+      <%= f.text_area :description %>
+    </p>
+    <p>
+      <label for="tip_address">Street Address</label><br>
+      <input id="tip_address" name="address" size="30" value="<%= @tip.address.address %>" type="text">
+    </p>
+    <input id="address_lat" name="address_lat" value="<%= @tip.address.lat %>" type="hidden">
+    <input id="address_lng" name="address_lng" value="<%= @tip.address.lng %>" type="hidden">
+
+    <div id="map_canvas" style="width: 240px; height: 160px;"></div>
+
+    <p>
+      <%= f.label :url %><br/>
+      <%= f.text_field :url %>
+    </p>
+
+    <p>
+      <% if @tip.image.exists? -%>
+        <%= image_tag @tip.image.url %>
+      <% else -%>
+        No image.
+      <% end -%>
+    </p>
+
+
+    <div id="upload_image" style="width:500px">
+      <ul>
+        <li><a href="#upload-google"><span>google suggestions</span></a></li>
+        <li><a href="#upload-drive"><span>upload from hard drive</span></a></li>
+      </ul>
+      <div id="upload-google">
+        <div class="google-image-choices" id="upload_google_area"></div>
+      </div>
+      <div id="upload-drive">
+        <%= f.label :image %><br/>
+        <%= f.file_field :image %>
+      </div>
+
+    </div>
+
+    <br/>
+    <p>
+      <% @weekdays.each do |day| %>
+          <%= check_box_tag "tip[weekday_ids][]", "#{day.id}", interest(day) -%>
+          <%= "#{day.name}" %> <br/>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+<% end %>
+
+<%= link_to 'Back', edit_calendar_path(:id => @calendar) %>
+
+<script type="text/javascript">
+  google.load('search', '1');
+
+  var geocoder;
+  var map;
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng($('#address_lat').val(), $('#address_lng').val());
+    var myOptions = {
+      zoom: 13,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    new google.maps.Marker({
+        map: map,
+        position: latlng
+    });
+  }
+
+  function showAddress() {
+    var address = $('#tip_address').val();
+    if (address == '') {
+        return;
+    }
+    address += ', <%= @calendar.location.name %>';
+    if (geocoder) {
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var location = results[0].geometry.location;
+          map.setCenter(location);
+          var marker = new google.maps.Marker({
+              map: map,
+              position: location
+          });
+          $('#address_lat').val(location.lat());
+          $('#address_lng').val(location.lng());
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    }
+  }
+
+  function drawSearchResults(searcher) {
+      var container = $('#upload_google_area');
+      container.html('');
+      if (searcher.results && searcher.results.length > 0) {
+          container.append('<input type="hidden" id="tip_image_url" name="tip[image_url]">');
+          for (var i = 0; i < searcher.results.length; i++) {
+              var result = searcher.results[i];
+              var html = "<div><img align='left' height='98' width='98' class='google_image' src='" + result.tbUrl + "' onclick='javascript:selectGoogleImage(this, \"" + result.url + "\");' ></div>";
+              container.append(html);
+          }
+      } else {
+          container.html('no results found');
+      }
+  }
+
+  function selectGoogleImage(img, url) {
+      if ($(img).parent().hasClass('selected')) {
+          $('.google-image-choices div').removeClass('selected');
+          $('#tip_image_url').val('');
+      } else {
+          $('.google-image-choices div').removeClass('selected');
+          $(img).parent().addClass('selected');
+          $('#tip_image_url').val(url);
+      }
+  }
+
+  $(document).ready(function() {
+      initialize();
+
+      $('#upload_image').tabs();
+
+      $('#tip_address').blur(function() {
+          showAddress();
+      });
+      $('#tip_name').blur(function() {
+          var imageSearch = new google.search.ImageSearch();
+          imageSearch.setSearchCompleteCallback(this, drawSearchResults, [imageSearch]);
+          imageSearch.execute($('#tip_name').val() + ' <%= @calendar.location.name %>');
+      });
+
+      if ($('#tip_name').val() != '') {
+          $('#tip_name').blur();
+      }
+  });
+</script>

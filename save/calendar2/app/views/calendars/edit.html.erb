@@ -1,0 +1,13 @@
+<h1 class="subhead">Add your tips to your <em>WEEKDAY RECOMMENDER</em></h1>
+
+
+<div id="edit_calendar_by_weekday" width="100%">
+  <ul>
+    <% @weekdays.each do |day| %>
+        <li style="width:13%;"><a style="width:100%;" title="<%= day.name %>" href="/calendars/<%=@calendar.id%>/edit_day/<%=day.id%>"><span><%= day.name %></span></a></li>
+    <% end %>
+  </ul>
+</div>
+
+
+<%= link_to 'Show', show_calendar_path(:id => @calendar) %>
