@@ -24,6 +24,6 @@ production:
   adapter: mysql
   database: crisnog_calendars
   username: crisnog_root
-  password: [Nw@yf+tulq(
+  password: "[Nw@yf+tulq("
   pool: 5
   timeout: 5000
