@@ -30,7 +30,7 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="thoughtbot-paperclip" version="2.3.0" bound="LATEST_IN_BRANCH" url="http://gems.github.com" lib="paperclip" git="false" />
+        <dependency name="thoughtbot-paperclip" version="0" bound="GREATER_OR_EQUAL" url="http://gems.github.com" lib="paperclip" git="false" />
       </requirement>
       <source from="config/environment.rb" />
     </requirement>
