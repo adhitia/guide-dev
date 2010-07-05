@@ -13,3 +13,7 @@ weather_com.txt
 pics/*
 save/**/*
 save/*
+.idea
+.idea/*
+.idea/**
+.idea/**/*
