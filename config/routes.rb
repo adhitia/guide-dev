@@ -34,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   map.create_tip  'calendars/:id/tips/create', :controller => :tips, :action => :create, :conditions => { :method => :post }
   map.edit_calendar 'calendars/:id/edit', :controller => :calendars, :action => :edit
   map.show_calendar 'calendars/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
+  map.share_calendar 'calendars/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
 #  map.resources :calendars
 
   map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }

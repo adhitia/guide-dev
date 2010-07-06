@@ -208,6 +208,10 @@ class CalendarsController < ApplicationController
     end
   end
 
+  def share
+    @calendar = Calendar.find(params[:id])
+  end
+
 end
 
 

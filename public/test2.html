@@ -23,6 +23,19 @@
 
 
 <script type="text/javascript">
+    Object.prototype.test = 'test';
+    var x = {};
+    x['a'] = 1;
+    x['b'] = 2;
+    var count = 0;
+    for (var k in x) {
+//        if (x.hasOwnProperty(k)) {
+            ++count;
+//        }
+    }
+
+    //    alert(keys(x).length);
+    alert(count);
 //    alert($('.inputchbox:not([disabled])').length);
 //    alert($(':checkbox:enabled').length);
 
