@@ -163,7 +163,7 @@ if (!window.tips) var tips = {
 
 
 google.load('search', '1');
-google.load('maps', '3');
+google.load('maps', '3', {"other_params" : {'sensor' : false}});
 
 $(document).ready(function() {
     tips.init(document);
