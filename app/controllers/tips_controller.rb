@@ -53,28 +53,8 @@ class TipsController < ApplicationController
       puts tip_data[:url]
       puts tip_data[:phone]
     end
-#    render :nothing => true
     render :text => 'dummy response'
   end
-#
-#  def update
-#    @calendar = Calendar.find(params[:id])
-#    @tip = Tip.find(params[:tip_id])
-#    @weekdays = Weekday.all
-#    @tip.address.address = params[:address]
-#    @tip.address.lat = params[:address_lat]
-#    @tip.address.lng = params[:address_lng]
-#    @tip.address.save
-#
-#    respond_to do |format|
-#      if @tip.update_attributes(params[:tip])
-#        flash[:notice] = 'Tip was successfully updated.'
-#        format.html { redirect_to(edit_calendar_path :id => @calendar.id) }
-#      else
-#        format.html { render :action => "edit" }
-#      end
-#    end
-#  end
 
   def follow_url
     @calendar = Calendar.find(params[:id])

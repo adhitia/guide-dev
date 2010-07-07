@@ -63,8 +63,9 @@ if (!window.tips) var tips = {
             container.append('<input type="hidden" class="tip_image_url" name="' + $(root).attr('form_prefix') + '[image_url]">');
             for (var i = 0; i < searcher.results.length; i++) {
                 var result = searcher.results[i];
-                var html = "<div class='full-image' full_url='" + result.url + "'>" +
-                           "<img align='left' style='max-width:98px;max-height:98px' class='google_image' src='" + result.tbUrl + "' onclick='javascript:tips.selectGoogleImage(this, \"" + result.url + "\");' >" +
+                var html = "" +
+                           "<div class='full-image' full_url='" + result.url + "'>" +
+                           "<img class='google_image' src='" + result.tbUrl + "' onclick='javascript:tips.selectGoogleImage(this, \"" + result.url + "\");' >" +
                            "</div>";
                 container.append(html);
             }
