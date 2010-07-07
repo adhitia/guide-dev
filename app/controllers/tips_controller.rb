@@ -47,6 +47,11 @@ class TipsController < ApplicationController
       tip.address.update_attributes tip_data[:address]
       tip_data.delete :address
       tip.update_attributes tip_data
+
+      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      puts id
+      puts tip_data[:url]
+      puts tip_data[:phone]
     end
 #    render :nothing => true
     render :text => 'dummy response'

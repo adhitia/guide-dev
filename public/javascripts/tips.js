@@ -126,6 +126,7 @@ if (!window.tips) var tips = {
         $(row).find('.tip_address_street').val(addr);
         $(row).find('.tip_address_lat').val(lat);
         $(row).find('.tip_address_lng').val(lng);
+//        alert($(row).find('.tip_url')[0].id + '   ' + url);
         $(row).find('.tip_url').val(url);
         $(row).find('.tip_phone').val(phone);
         $(row).find('.local-search-launch').click();
