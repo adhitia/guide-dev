@@ -26,6 +26,10 @@ if (!window.common) var common = {
 
     stopLoadingGlobal: function() {
         $('#global-loading-indicator').hide();
+    },
+
+    getHash: function() {
+        return window.location.hash.substring(1);;
     }
 };
 

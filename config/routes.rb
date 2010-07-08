@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.new_calendar 'calendars/new', :controller => :calendars, :action => :new, :conditions => { :method => :get }
   map.new_calendar 'calendars/new', :controller => :calendars, :action => :create, :conditions => { :method => :post }
   map.edit_calendar_day 'calendars/:id/edit_day/:weekday_id', :controller => :calendars, :action => :edit_day
+  map.edit_calendar_condition 'calendars/:id/edit_condition/:condition_id', :controller => :calendars, :action => :edit_condition
   map.update_tips 'calendars/:id/tips/update', :controller => :tips, :action => :update, :conditions => { :method => :post }
   map.create_tip  'calendars/:id/tips/create', :controller => :tips, :action => :create, :conditions => { :method => :post }
   map.edit_calendar 'calendars/:id/edit', :controller => :calendars, :action => :edit

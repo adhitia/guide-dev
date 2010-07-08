@@ -4,15 +4,15 @@
 
     <tbody>
 
-    <% @conditions.each do |condition| %>
-        <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
+    <% @weekdays    .each do |day| %>
+        <% tip = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id and !t.tip.advertisement } %>
         <% if tip != nil then %>
                <%= render :partial => 'tips/edit_row', :locals => {:place => tip} %>
         <% else %>
-            <tr id="tip_cond_<%=condition.id%>">
+            <tr id="tip_day_<%=day.id%>">
               <td colspan="4">
-                <%= condition.name %>
-                <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>);">create tip</button>
+                <%= day.name %>
+                <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>);">create tip</button>
               </td>
             </tr>
         <% end %>

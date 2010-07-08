@@ -34,7 +34,10 @@
 
       <% @conditions.each do |condition| %>
           <tr>
-            <td><%= condition.name %></td>
+            <td>
+              <%= condition.name %><br/>
+              <a href="/calendars/<%=@calendar.id%>/edit#<%=condition.name%>">edit</a>
+            </td>
             <% @weekdays.each do |day| %>
                 <% place = @calendar.show_places.detect{|t| t.condition.id == condition.id and t.weekday.id == day.id} %>
                 <% tip = place == nil ? nil : place.tip %>
