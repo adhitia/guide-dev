@@ -196,4 +196,6 @@ legend    {
     display:none;
 }
 
-
+.hidden {
+    display:none;
+}

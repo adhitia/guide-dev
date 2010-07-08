@@ -7,7 +7,7 @@
     <% @conditions.each do |condition| %>
         <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
         <% if tip != nil then %>
-               <%= render :partial => 'tips/edit_row', :locals => {:place => tip} %>
+               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :title => tip.condition.name} %>
         <% else %>
             <tr id="tip_cond_<%=condition.id%>">
               <td colspan="4">
@@ -19,9 +19,10 @@
     <% end %>
 
           </tbody></table>
+
      <table><tr><td> <p class="textflow" align="center">
       <% if !@edit_for.last? %>
-          <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {$('#edit_calendar_by_weekday').tabs('select', <%= @edit_for.id %>);});">
+          <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
             save and create <%= @edit_for.next.name %> tips &gt;&gt;
           </a>
       <% end %>
@@ -55,11 +56,3 @@
   <img src="/images/loading-indicator.gif">
   <br/>
 </div>
-
-<!--
-<div id="global-loading-indicator" style="display:none;position:absolute;left:50%;top:50%">
-  <div style="vertical-align:middle;text-align:center;width:100%;height:20%;">
-  <img src="/images/loading-indicator.gif" style="border:none;margin:20px;">
-  </div>
-</div>
--->

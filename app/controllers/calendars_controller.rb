@@ -5,14 +5,6 @@ require 'calendars_helper'
 class CalendarsController < ApplicationController
   before_filter :login_required, :only => [:advertise, :advertise_choose, :new, :edit]
 
-#  def index
-#    @calendars = Calendar.all
-#
-#    respond_to do |format|
-#      format.html
-#    end
-#  end
-
   def show
     @calendar = Calendar.find(params[:id])
     @today = Date.today.cwday - 1;
@@ -76,6 +68,15 @@ class CalendarsController < ApplicationController
     @conditions = Condition.all
 
     render :partial => 'edit_day'
+  end
+
+  def edit_condition
+    @calendar = Calendar.find(params[:id])
+    @edit_for = Condition.find params[:condition_id]
+    @weekdays = Weekday.all
+    @conditions = Condition.all
+
+    render :partial => 'edit_condition'
   end
 
   def create

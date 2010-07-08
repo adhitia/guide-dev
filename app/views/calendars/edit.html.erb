@@ -1,12 +1,26 @@
 <h1 class="subhead">Add your tips to your <em>WEEKDAY RECOMMENDER</em></h1>
 
 
-<div id="edit_calendar_by_weekday" width="100%">
+<div id="edit_calendar_tabs" width="100%">
   <ul>
-    <% @weekdays.each do |day| %>
-        <li style="width:13%;"><a style="width:100%;" title="<%= day.name %>" href="/calendars/<%=@calendar.id%>/edit_day/<%=day.id%>"><span><%= day.name %></span></a></li>
-    <% end %>
-  </ul>
-</div>
+    <span class="edit-calendar-tabs-weekdays">
+      <% @weekdays.each do |day| %>
+        <li style="width:12%;">
+          <a style="width:100%;" title="<%= day.name %>" href="/calendars/<%= @calendar.id %>/edit_day/<%= day.id %>"><span><%= day.name %></span></a>
+        </li>
+      <% end %>
+      <li style="float:right;"><a target="<%=@conditions[0].name%>" href="toggle-tabs">Conditions</a></li>
+    </span>
 
+    <span class="edit-calendar-tabs-conditions">
+      <% @conditions.each do |cond| %>
+        <li style="min-width:8%;">
+          <a style="width:100%;" title="<%= cond.name %>" href="/calendars/<%=@calendar.id%>/edit_condition/<%=cond.id%>"><span><%= cond.name %></span></a>
+        </li>
+      <% end %>
+      <li style="float:right;"><a target="<%=@weekdays[0].name%>" href="toggle-tabs">Weekdays</a></li>
+    </span>
+  </ul>
+
+</div>
 
