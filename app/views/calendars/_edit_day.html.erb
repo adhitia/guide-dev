@@ -19,18 +19,25 @@
     <% end %>
 
           </tbody></table>
-
-    <p class="textflow" align="center">
+     <table><tr><td> <p class="textflow" align="center">
       <% if !@edit_for.last? %>
           <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {$('#edit_calendar_by_weekday').tabs('select', <%= @edit_for.id %>);});">
             save and create <%= @edit_for.next.name %> tips &gt;&gt;
           </a>
       <% end %>
-    </p>
-
-    <p class="textflow" align="center">
+    </p></td><td><p class="textflow" align="center">
       <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">save</a>
-    </p>
+    </p></td>
+
+       <TD>
+         <%= link_to 'Show', show_calendar_path(:id => @calendar) %>
+       </TD>
+     </tr>
+
+     </table>
+
+
+
 
     <!--<p class="textflow" align="center">
       <a href="javascript:" onclick="$('#edit_calendar_by_weekday').tabs('select', <%= @edit_for.id - 1 %>);">discard</a>

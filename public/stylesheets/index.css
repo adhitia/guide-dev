@@ -4,7 +4,7 @@
 .text {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
-	color: #666666;
+	color: #ffffff;
 	text-indent: 0px;
 }
 .subhead {
@@ -20,7 +20,7 @@
 .smalltext {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: xx-small;
-	color: #666666;
+	color: #ffffff;
 }
 .headtext {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -43,13 +43,13 @@ body {
 	background-color: #FFFFFF;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
-	color: #666666;
+	color: #ffffff;
 }
 .subheadtable {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: medium;
 	text-transform: uppercase;
-	color: #999999;
+	color: #ffffff;
 	font-weight: bold;
 }
 .navig {

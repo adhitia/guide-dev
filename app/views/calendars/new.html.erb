@@ -1,10 +1,6 @@
-<h1>New calendar</h1>
+<h1>Create a Guide</h1>
 
 
-
-<p class="headtext">&nbsp;</p>
-
-<p class="subhead">Create a GUIDE</p>
 
 <p>&nbsp;</p>
 
@@ -14,30 +10,27 @@
       <p style="color:red;"><%= flash[:error] %></p>
   <% end %>
 
-  <p class="subheadtable" align="center"><strong>Guide name</strong>:
-    <input id="calendar_name_location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="10" title="location">
-    for
-    <input id="calendar_name_target" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="15" title="target group">
+  <p class="subheadtable" align="center"><strong>Guide name</strong> <span class="smalltext"(destination name or nickname):</span>
+    <input id="calendar_name_location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
+    FOR
+    <input id="calendar_name_target" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
   </p>
-  <!--<p class="subheadtable" align="center">
-    E.g., Rio for Partiers,<br/>
-    San Francisco for Families<br/>
-  </p>-->
+  <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
   
 
-  <p class="subheadtable" align="center"><strong>Destination </strong>
+  <p class="subheadtable" align="center"><strong>Use weather info for </strong><BR><span class="smalltext"(start typing destination) </span>
     <label>
-      <label for="calendar_location_name">City</label><br>
-      <input class="ac_input" id="calendar_location_name" name="location_name" size="30" value="<%= params[:location_name] %>" type="text">
+      <label for="calendar_location_name"></label><br>
+      <input class="ac_input" id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
       <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden">
 
-    </label>
-  </p>
+    </label><BR> <span class="smalltext" align="center">If you can not find your destination, type in the closest big city</span>
+  </span>
 
 
   <p>&nbsp;</p>
 
-  <p><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();">.<span class="textflow">NEXT</span></a></p>
+  <p><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();">.<span class="textflow" align="center">NEXT</span></a></p>
 
   <p>. </p>
 
