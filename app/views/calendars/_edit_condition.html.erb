@@ -7,7 +7,7 @@
     <% @weekdays    .each do |day| %>
         <% tip = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id and !t.tip.advertisement } %>
         <% if tip != nil then %>
-               <%= render :partial => 'tips/edit_row', :locals => {:place => tip} %>
+               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :title => tip.weekday.name} %>
         <% else %>
             <tr id="tip_day_<%=day.id%>">
               <td colspan="4">
