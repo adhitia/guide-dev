@@ -1,7 +1,9 @@
 if (!window._cal) {
     _cal = {
         render_calendar: function(target_id, id, style, day) {
-            $('#' + target_id + ' td.tip').qtip("destroy");
+            if (jQuery().qtip) {
+                $('#' + target_id + ' td.tip').qtip("destroy");
+            }
             $('#' + target_id).html('');
 
             $.ajax({

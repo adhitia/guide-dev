@@ -67,23 +67,13 @@
                     <td width="217" bgcolor="#317E98">
                       <center spry:hover="subheadtable">
 
-
-                        <!--<a href="signup.html">SIGN-UP</a> | <a href="signin.html">SIGN-IN</a>-->
-
-
                         <% if @current_user %>
-                            <!--<div align="right">-->
                             Welcome,
                             <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
                             | <%= link_to 'Sign out', logout_path %>
-                            <!--</div>-->
-                            <!--<hr/>-->
                         <% else %>
-                            <!--<div align="right">-->
                             <%= link_to 'Sign in', :controller => :users, :action => :login %> |
                             <%= link_to 'Sign up', :controller => :users, :action => :new %>
-                            <!--</div>-->
-                            <!--<hr/>-->
                         <% end %>
 
 
@@ -129,7 +119,7 @@
                   </tr>
                   <tr>
                     <td background="/images/guiderer-index_r11_c3.jpg">
-                      <img src="images/spacer.gif" width="20" height="13"/> copyright
+                      <img src="/images/spacer.gif" width="20" height="13"/> copyright
                     </td>
                   </tr>
 
@@ -142,7 +132,7 @@
       </td>
     </tr>
     <tr>
-      <td background="/images/guiderer-index_r12_c2.jpg"><img src="images/spacer.gif" width="20" height="11"/></td>
+      <td background="/images/guiderer-index_r12_c2.jpg"><img src="/images/spacer.gif" width="20" height="11"/></td>
     </tr>
   </table>
  
