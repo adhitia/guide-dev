@@ -45,5 +45,5 @@ String.prototype.endsWith = function(str) {
 
 
 $(document).ready(function() {
-    $('#global-loading-indicator').absoluteCenter();
+//    $('#global-loading-indicator').absoluteCenter();
 });
