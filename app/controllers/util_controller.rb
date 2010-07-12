@@ -17,7 +17,4 @@ class UtilController < ApplicationController
 
     render :text => result
   end
-
-
-
 end

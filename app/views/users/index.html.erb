@@ -1,99 +1,113 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td>
 
-                  
-                  <table width="100%" border="0" cellspacing="0" cellpadding="5">
-                    <tr>
-                      <td>
+      <table width="456" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="images/guiderer-index_r7_c3.jpg" class="headtext">
+            <img src="images/spacer.gif" width="20" height="50" align="absmiddle"/><font color="#FFFFFF" size="5">Want
+            tips on a travel destination?</font></td>
+        </tr>
+        <tr>
+          <td bgcolor="#1F8AAE">
+            <table width="100%" border="0" cellspacing="0" cellpadding="10">
+              <tr>
+                <td>
+                  <p class="text"><font color="#FFFFFF">We got guides! Find one here</font>:</p>
 
-                        <table width="456" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td background="images/guiderer-index_r7_c3.jpg" class="headtext"><img src="images/spacer.gif" width="20" height="50" align="absmiddle" /><font color="#FFFFFF" size="5">Want tips on a travel destination?</font></td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#1F8AAE"><table width="100%" border="0" cellspacing="0" cellpadding="10">
-                              <tr>
-                                <td>
-                                  <p class="text"><font color="#FFFFFF">We got guides! Find one here</font>:</p>
-                                  <form id="search_form" name="search_form" method="get" action="calendars">
-                                      <label>
-                                        <input class="watermark" name="search_location" id="search_location" value="" type="text" title="type destination here" size="35">
-                                      </label>
-                                      <font color="#FFFFFF">
-                                            <img onclick="$.Watermark.HideAll();document.search_form.submit();" src="images/guiderer-index_r11_c5.jpg" width="190" height="35" align="absmiddle" />
-                                      </font>
-                                  </form>
-                                </td>
-                              </tr>
-                          </table>
-
-
-                          </td>
-                        </tr>
-                        <tr>
-                          <td background="images/guiderer-index_r9_c3.jpg"><img src="images/spacer.gif" width="20" height="19" /></td>
-                        </tr>
-                      </table>
-                        <table width="456" border="0" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td background="images/guiderer-index_r7_c3.jpg" class="headtext"><img src="images/spacer.gif" width="20" height="50" align="absmiddle" /><font color="#FFFFFF" size="5">Know a tourist destination well?</font></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#1F8AAE"><table width="100%" border="0" cellspacing="0" cellpadding="10">
-                                <tr>
-                                  <td><p class="text"><font color="#FFFFFF">Create your own travel guide, complete with suggstions on what to do during the day, night and dinner.</font></p>
-                                      <p align="right"><font color="#FFFFFF">
-                                            <img onclick="window.location='/calendars/new';" src="images/guiderer-index_r12_c5.jpg" width="190" height="35" />
-                                      </font></p></td>
-                                </tr>
-                            </table></td>
-                          </tr>
-                          <tr>
-                            <td background="images/guiderer-index_r9_c3.jpg"><img src="images/spacer.gif" width="20" height="19" /></td>
-                          </tr>
-                        </table>
-                        <p>&nbsp;</p></td>
+                  <form id="search_form" name="search_form" method="get" action="calendars">
+                    <label>
+                      <input class="watermark" name="search_location" id="search_location" value="" type="text" title="type destination here" size="35">
+                    </label>
+                    <font color="#FFFFFF">
+                      <img onclick="$.Watermark.HideAll();document.search_form.submit();" src="images/guiderer-index_r11_c5.jpg" width="190" height="35" align="absmiddle"/>
+                    </font>
+                  </form>
+                </td>
+              </tr>
+            </table>
 
 
-                      <td><table width="513" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td background="images/guiderer-index_r7_c10.jpg" class="headtext"><img src="images/spacer.gif" width="20" height="50" align="absmiddle" /><font color="#FFFFFF" size="5">Recent guides</font></td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#1F8AAE"><table width="100%" border="0" cellspacing="0" cellpadding="10">
-                              <tr>
-                                <td class="text"><font color="#FFFFFF">Create your own travel guide, complete with suggstions on what to do during the day, night and dinner.</font></td>
-                              </tr>
-                          </table></td>
-                        </tr>
-                        <tr>
-                          <td background="/images/guiderer-index_r14_c10.jpg"><img src="images/spacer.gif" width="20" height="19" /></td>
-                        </tr>
+          </td>
+        </tr>
+        <tr>
+          <td background="images/guiderer-index_r9_c3.jpg"><img src="images/spacer.gif" width="20" height="19"/></td>
+        </tr>
+      </table>
+      <table width="456" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="images/guiderer-index_r7_c3.jpg" class="headtext">
+            <img src="images/spacer.gif" width="20" height="50" align="absmiddle"/><font color="#FFFFFF" size="5">Know a
+            tourist destination well?</font></td>
+        </tr>
+        <tr>
+          <td bgcolor="#1F8AAE">
+            <table width="100%" border="0" cellspacing="0" cellpadding="10">
+              <tr>
+                <td><p class="text">
+                  <font color="#FFFFFF">Create your own travel guide, complete with suggstions on what to do during the
+                    day, night and dinner.</font></p>
 
-                        <tr>
-                          
-                          <table border="0" cellpadding="5" cellspacing="0" width="100%">
-                            <tbody>
-                            <tr>
-                              <% @recent_calendars.each do |calendar| %>
-                                  <td valign="top">
-                                    <div id="calendar_area_<%= calendar.id %>"></div>
-                                    <script type="text/javascript">
-                                        _cal.render_calendar("calendar_area_<%= calendar.id %>", <%= calendar.id %>, "tiny");
-                                    </script>
-                                  </td>
-                              <% end %>
-                            </tr>
-                            </tbody>
-                          </table>
-
-
-                        </tr>
-                      </table>
+                  <p align="right"><font color="#FFFFFF">
+                    <img onclick="window.location='/calendars/new';" src="images/guiderer-index_r12_c5.jpg" width="190" height="35"/>
+                  </font></p></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td background="images/guiderer-index_r9_c3.jpg"><img src="images/spacer.gif" width="20" height="19"/></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p></td>
 
 
+    <td>
+      <table width="513" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="images/guiderer-index_r7_c10.jpg" class="headtext">
+            <img src="images/spacer.gif" width="20" height="50" align="absmiddle"/><font color="#FFFFFF" size="5">Recent
+            guides</font></td>
+        </tr>
+        <tr>
+          <td bgcolor="#1F8AAE">
+            <table width="100%" border="0" cellspacing="0" cellpadding="10">
+              <tr>
+                <td class="text">
+                  <font color="#FFFFFF">Create your own travel guide, complete with suggstions on what to do during the
+                    day, night and dinner.</font></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td background="/images/guiderer-index_r14_c10.jpg"><img src="images/spacer.gif" width="20" height="19"/></td>
+        </tr>
 
-                        <p>&nbsp;</p></td>
-                    </tr>
-                  </table>
+        <tr>
+
+          <td>
+            <table border="0" cellpadding="5" cellspacing="0" width="100%">
+            <tbody>
+            <tr>
+              <% @recent_calendars.each do |calendar| %>
+                  <td valign="top">
+                    <div id="calendar_area_<%= calendar.id %>"></div>
+                    <script type="text/javascript">
+                        _cal.render_calendar("calendar_area_<%= calendar.id %>", <%= calendar.id %>, "tiny");
+                    </script>
+                  </td>
+              <% end %>
+            </tr>
+            </tbody>
+          </table>
+          </td>
+        </tr>
+      </table>
+
+      <p>&nbsp;</p></td>
+  </tr>
+</table>
 
 
 

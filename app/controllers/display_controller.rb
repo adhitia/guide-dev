@@ -30,18 +30,6 @@ class DisplayController < ApplicationController
     end
 
     @rating = @calendar.rating_num;
-#    if @calendar.votes_num == 0
-#      @rating = 0
-#    else
-#      @rating = Float(@calendar.votes_sum) / @calendar.votes_num
-#    end
-
-#    @ads = Advertisement.find_all_by_calendar_id_and_active_and_weekday_id @calendar.id, true, @dow.id
-#    @ads = @ads.select {|a| condition_matches_weather?(a.condition, @weather_forecast.condition)}
-#    @ads.each do |ad|
-#      ad.views_total += 1
-#      ad.save
-#    end
 
     respond_to do |format|
       format.html

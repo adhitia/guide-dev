@@ -16,3 +16,4 @@ save/*
 public/system
 config/preinitializer.rb
 config/database.yml
+public/test2.html

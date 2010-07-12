@@ -17,11 +17,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '', :controller => :users, :action => :index
   map.connect 'index', :controller => :users, :action => :index
 
-  map.connect 'calendars/:id/tiny', :controller => :display, :action => :tiny
-  map.connect 'calendars/:id/small', :controller => :display, :action => :small
-  map.connect 'calendars/:id/normal', :controller => :display, :action => :normal
-  map.connect 'calendars/:id/vote/:vote', :controller => :display, :action => :vote
-
   map.connect 'calendars/:id/advertise', :controller => 'calendars', :action => 'advertise_choose', :conditions => { :method => :get }
   map.advertise_new 'calendars/:id/advertise', :controller => 'calendars', :action => 'advertise', :conditions => { :method => :post }
   map.connect 'calendars/:id/ads', :controller => 'calendars', :action => 'ads'
@@ -51,6 +46,13 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'faq', :controller => :application, :action => :faq
   map.connect 'how-it-works', :controller => :application, :action => :how_it_works
   map.connect 'join-us', :controller => :application, :action => :join_us
+
+
+
+  map.connect 'calendars/:id/vote/:vote', :controller => :display, :action => :vote
+  map.connect 'calendars/:id/tiny', :controller => :display, :action => :tiny
+  map.connect 'calendars/:id/small', :controller => :display, :action => :small
+  map.connect 'calendars/:id/normal', :controller => :display, :action => :normal
 
   # The priority is based upon order of creation: first created -> highest priority.
 
