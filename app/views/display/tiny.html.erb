@@ -46,7 +46,9 @@
           </p>
 
           <div class="full_tip" style="visibility:hidden;display:none;">
-            <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
+            <% if tip.image.exists? -%>
+                <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
+            <% end %>
             <b><%= tip.name %></b><br/>
 
             <p><%= tip.description %></p>

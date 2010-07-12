@@ -15,8 +15,8 @@ if (!window.calendar) var calendar = {
 
     selectNext: function() {
         var current = $('#edit_calendar_tabs').tabs('option', 'selected');
-        var current = $('#edit_calendar_tabs').tabs('select', current + 1);
-    }
+        $('#edit_calendar_tabs').tabs('select', current + 1);
+    } 
 };
 
 

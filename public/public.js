@@ -1,8 +1,12 @@
 if (!window._cal) {
     _cal = {
         render_calendar: function(target_id, id, style, day) {
+            if (jQuery().qtip) {
+                $('#' + target_id + ' td.tip').qtip("destroy");
+            }
+            $('#' + target_id).html('');
+
             $.ajax({
-//                url: 'http://0.0.0.0:3000/calendars/' + id + '/' + style,
                 url: 'http://localhost:3000/calendars/' + id + '/' + style,
                 type: 'GET',
                 data: {
@@ -24,9 +28,6 @@ if (!window._cal) {
             var root = $(el).parents('.guiderer')[0];
             var id = $(root).attr('cal_id');
             var vote = $(el).attr('title');
-//            alert('x');
-//            alert($(root).find('.inner').length);
-
 
             $.ajax({
                 url: 'http://localhost:3000/calendars/' + id + '/vote/' + vote,

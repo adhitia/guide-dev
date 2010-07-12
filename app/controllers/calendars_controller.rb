@@ -211,6 +211,9 @@ class CalendarsController < ApplicationController
 
   def share
     @calendar = Calendar.find(params[:id])
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+#    puts web_root
+    puts @web_root
   end
 
 end

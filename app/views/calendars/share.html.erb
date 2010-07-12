@@ -1,86 +1,49 @@
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://0.0.0.0:3000/public.js" ></script>
-
-
-<br/>
-<br/>
-<br/>
-
 Preview and get code<br/>
-<label for="preview_type_tiny">tiny</label>
-<input type="radio" name="preview_type" value="tiny" id="preview_type_tiny" checked="checked" onchange="change_pane(this.id);"/>
-<label for="preview_type_small">small</label>
-<input type="radio" name="preview_type" value="small" id="preview_type_small" onchange="change_pane(this.id);"/>
-<label for="preview_type_normal">normal</label>
-<input type="radio" name="preview_type" value="normal" id="preview_type_normal" onchange="change_pane(this.id);"/>
+
+<div id="choose_style">
+<% ["tiny", "small", "normal"].each do |style|  %>
+    <label for="preview_type_<%=style%>"><%= style %></label>
+    <input type="radio" name="preview_type" value="tiny" id="preview_type_<%=style%>" onchange="change_style(this);"/>
+<% end %>
+</div>
+
 <br/>
 
-<div id="preview_type_tiny_area" class="preview_area" style="">
-  <p>
-    Use following code to insert calendar in your page.
-    <br/>
-    <textarea rows="8" cols="150">
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-      <script type="text/javascript" src="http://0.0.0.0:3000/public.js" ></script>
-      <div id="calendar_area"> </div>
-      <script type="text/javascript">
-          _cal.render_calendar("calendar_area", <%= @calendar.id %>, "tiny");
-      </script>
-    </textarea>
-  </p>
+<textarea id="preview_html" rows="8" cols="150">
+</textarea>
 
-  <div id="calendar_area1"> </div>
-  <script type="text/javascript">
-      _cal.render_calendar("calendar_area1", <%= @calendar.id %>, "tiny");
-  </script>
-</div>
+<div id="preview_guide"></div>
 
-<div id="preview_type_small_area" class="preview_area" style="display:none;">
-  <p>
-    Use following code to insert calendar in your page.
-    <br/>
-    <textarea rows="8" cols="150">
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-      <script type="text/javascript" src="http://0.0.0.0:3000/public.js" ></script>
-      <div id="calendar_area"> </div>
-      <script type="text/javascript">
-          _cal.render_calendar("calendar_area", <%= @calendar.id %>, "small");
-      </script>
-    </textarea>
-  </p>
-
-  <div id="calendar_area2"> </div>
-  <script type="text/javascript">
-      _cal.render_calendar("calendar_area2", <%= @calendar.id %>, "small");
-  </script>
-</div>
-
-
-<div id="preview_type_normal_area" class="preview_area" style="display:none;">
-  <p>
-    Use following code to insert calendar in your page.
-    <br/>
-    <textarea rows="8" cols="150">
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-      <script type="text/javascript" src="http://0.0.0.0:3000/public.js" ></script>
-      <div id="calendar_area"> </div>
-      <script type="text/javascript">
-          _cal.render_calendar("calendar_area", <%= @calendar.id %>, "normal");
-      </script>
-    </textarea>
-  </p>
-
-
-
-  <div id="calendar_area3"> </div>
-  <script type="text/javascript">
-      _cal.render_calendar("calendar_area3", <%= @calendar.id %>, "normal");
-  </script>
+<div id="preview_template" class="hidden">
+  &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="<%=WEB_ROOT%>/public.js" &gt;&lt;/script&gt;
+  &lt;div id="preview_guide"&gt; &lt;/div&gt;
+  &lt;script type="text/javascript"&gt;
+      _cal.render_calendar("{target_id}", "{calendar_id}", "{style_id}");
+  &lt;/script&gt;
 </div>
 
 <script type="text/javascript">
     var change_pane = function(id) {
         $('.preview_area').hide();
         $('#' + id + '_area').show();
-    }
+    };
+    var change_style = function(el) {
+        var target_id = "preview_guide";
+        var calendar_id = "<%= @calendar.id %>";
+        var style_id = el.id.substring("preview_type_".length);
+
+        // prepare code to show
+        var html = $('#preview_template').html();
+        html = html.replace("{target_id}", target_id);
+        html = html.replace("{calendar_id}", calendar_id);
+        html = html.replace("{style_id}", style_id);
+        html = html.replace(/&lt;/g, '<');
+        html = html.replace(/&gt;/g, '>');
+        $('#preview_html').val(html);
+
+        _cal.render_calendar(target_id, calendar_id, style_id);
+    };
+
+    $('#choose_style').buttonset();
 </script>
