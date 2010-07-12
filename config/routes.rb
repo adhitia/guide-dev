@@ -36,7 +36,6 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_calendar 'calendars/:id/edit', :controller => :calendars, :action => :edit
   map.show_calendar 'calendars/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_calendar 'calendars/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
-#  map.resources :calendars
 
   map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
   map.login 'login', :controller => 'users', :action => 'login'
@@ -46,9 +45,12 @@ ActionController::Routing::Routes.draw do |map|
   map.register 'register', :controller => 'users', :action => 'new', :conditions => { :method => :get }
   map.create_user 'register', :controller => 'users', :action => 'create', :conditions => { :method => :post }
 
-#  map.resources :tips
-
-  map.resources :conditions
+  map.connect 'about-us', :controller => :application, :action => :about_us
+  map.connect 'advertise', :controller => :application, :action => :advertise
+  map.connect 'contact', :controller => :application, :action => :contact
+  map.connect 'faq', :controller => :application, :action => :faq
+  map.connect 'how-it-works', :controller => :application, :action => :how_it_works
+  map.connect 'join-us', :controller => :application, :action => :join_us
 
   # The priority is based upon order of creation: first created -> highest priority.
 

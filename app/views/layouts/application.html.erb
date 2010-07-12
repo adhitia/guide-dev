@@ -46,9 +46,9 @@
 
   <table width="1000" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td><img src="../images/tlcorner.gif" width="16" height="16" /></td>
+      <td><img src="../images/tlcorner.gif" width="16" height="16"/></td>
       <td bgcolor="#0099CC">&nbsp;</td>
-      <td><img src="../images/trcorner.gif" width="16" height="16" /></td>
+      <td><img src="../images/trcorner.gif" width="16" height="16"/></td>
     </tr>
     <tr>
       <td bgcolor="#0099CC">&nbsp;</td>
@@ -64,22 +64,13 @@
                 <div align="right">
 
 
-                  <!--<a href="signup.html">SIGN-UP</a> | <a href="signin.html">SIGN-IN</a>-->
-
-
                   <% if @current_user %>
-                      <!--<div align="right">-->
                       Welcome,
                       <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
                       | <%= link_to 'Sign out', logout_path %>
-                      <!--</div>-->
-                      <!--<hr/>-->
                   <% else %>
-                      <!--<div align="right">-->
                       <%= link_to 'Sign in', :controller => :users, :action => :login %> |
                       <%= link_to 'Sign up', :controller => :users, :action => :new %>
-                      <!--</div>-->
-                      <!--<hr/>-->
                   <% end %>
 
 
@@ -87,13 +78,19 @@
               </td>
             </tr>
           </table>
+
+
           <%= yield %>
+
+
         </div>
       </td>
       <td bgcolor="#0099CC">&nbsp;</td>
     </tr>
     <tr>
-      <td width="16"><div align="left"><img src="../images/blcorner.gif" width="16" height="16"></div></td>
+      <td width="16">
+        <div align="left"><img src="../images/blcorner.gif" width="16" height="16"></div>
+      </td>
       <td bgcolor="#0099CC">&nbsp;</td>
       <td width="16"><img src="../images/brcorner.gif" width="16" height="16"/></td>
       <td background="/images/guiderer-index_r12_c2.jpg"><img src="/images/spacer.gif" width="20" height="11"/></td>
@@ -101,37 +98,24 @@
   </table>
 
 
- 
-      <table width="1000" border="0" cellspacing="0" cellpadding="15">
+  <table width="1000" border="0" cellspacing="0" cellpadding="15">
     <tr>
-      <td width="50%" valign="top" class="textgray">Guiderer  is here to tell travelers what they should be doing right now. And later on for  dinner. And to night. And during the rest of their trip. Just search for your desired destination, choose the market segment you want to experience, and get juicy tips. <a href="aboutus.html">[more]</a></td>
-      <td width="24%" valign="top"><p class="textgray"><a href="aboutus.html">About us</a></p>
-      <p class="textgray"><a href="howworks.html">How does Guiderer work?</a></p>
-      <p class="textgray"><a href="joinus.html">Join us</a></p>
+      <td width="50%" valign="top" class="textgray">Guiderer is here to tell travelers what they should be doing right
+        now. And later on for dinner. And to night. And during the rest of their trip. Just search for your desired
+        destination, choose the market segment you want to experience, and get juicy tips.
+        <a href="/about-us">[more]</a></td>
+      <td width="24%" valign="top"><p class="textgray"><a href="/about-us">About us</a></p>
+
+        <p class="textgray"><a href="/how-it-works">How does Guiderer work?</a></p>
+
+        <p class="textgray"><a href="/join-us">Join us</a></p>
       </td>
-      <td width="26%" valign="top" class="textgray"><p><a href="faqs.html">FAQs</a></p>
-        <p><a href="contact.html">Contact</a></p>
-      <p><a href="advertise.html">Advertise</a></p></td>
+      <td width="26%" valign="top" class="textgray"><p><a href="/faq">FAQ</a></p>
+
+        <p><a href="/contact">Contact</a></p>
+        <p><a href="/advertise">Advertise</a></p></td>
     </tr>
   </table>
-                  <!--
-  </table></td>
-  </tr>
-  <tr>
-    <td background="/images/guiderer-index_r11_c3.jpg"><img src="/images/spacer.gif" width="20" height="13"/></td>
-  </tr>
-  </table>
-
-</center>
-</td>
-</tr>
-</table></td>
-</tr>
-<tr>
-  <td background="/images/guiderer-index_r12_c2.jpg"><img src="/images/spacer.gif" width="20" height="11"/></td>
-</tr>
-</table>
-   -->
 
 </center>
 </body>

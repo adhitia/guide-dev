@@ -3,7 +3,6 @@
 <br/>
 
 Your calendars<br/>
-<%= link_to 'New calendar', Create new_calendar_path %>
 <table>
   <tr>
     <th>Name</th>
@@ -24,41 +23,14 @@ Your calendars<br/>
 <br/>
 <br/>
 
-<%
-=begin %>
-
-<!--
-Your ads<br/>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Author</th>
-  </tr>
-
-<% @advertised_calendars.each do |calendar| %>
-  <tr>
-    <td><%=h calendar.name %></td>
-    <td><%=h calendar.user.name %></td>
-    <td><%= link_to 'Show', show_calendar_pathddd(calendar) %></td>
-    <td><%= link_to 'See ads', :controller => :calendars, :action => :ads, :id => calendar %></td>
-  </tr>
-<% end %>
-  <% if @advertised_calendars.length == 0 %>
-    <tr><td>none</td></tr>
-  <% end %>
-</table>
--->
-
-  <%
-=end %>
-
-<p>coming soon</p>
 
 
 <br/>
 
 
 <br/>
+<%= link_to 'New calendar', new_calendar_path %>
+
 <%= link_to 'Edit', edit_user_path(@current_user) %>
 
 
