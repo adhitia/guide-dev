@@ -1,15 +1,15 @@
-<table bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0" width="300">
+<table bgcolor="#336600" border="1" cellpadding="10" cellspacing="0" width="300">
   <tbody>
   <tr>
 
-    <td bgcolor="#ffcc33">
+    <td bgcolor="#336600">
       <center>
         <font size="5"><%= @calendar.name %></font>
       </center>
     </td>
   </tr>
   <tr>
-    <td bgcolor="#ffff66"><%= present_day @day %>: <%= @dow.name %>, <%= @weather_forecast.original_condition %></td>
+    <td bgcolor="#339900"><%= present_day @day %>: <%= @dow.name %>, <%= @weather_forecast.original_condition %></td>
   </tr>
 
     <% @tips.each do |show_place| %>

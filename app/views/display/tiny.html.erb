@@ -1,10 +1,10 @@
 <script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
 <link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
 
-<table class="guiderer" cal_id="<%= @calendar.id %>" bgcolor="#ffffcc" border="1" cellpadding="5" cellspacing="0" width="200">
+<table class="guiderer" cal_id="<%= @calendar.id %>" bgcolor="#336600" border="1" bordercolor="#113300" cellpadding="5" cellspacing="0" width="200">
   <tbody>
   <tr>
-    <td bgcolor="#ffcc33">
+    <td bgcolor="#336600">
       <center>
         <font face="Geneva, Arial, Helvetica, sans-serif" size="5"><%= @calendar.name %> </font>
 
@@ -12,7 +12,7 @@
     </td>
   </tr>
   <tr>
-    <td bgcolor="#ffff66">
+    <td bgcolor="#339900">
       <center>
         <font face="Geneva, Arial, Helvetica, sans-serif"> <%= present_day @day %>: <%= @dow.name %>
           <br/> <%= @weather_forecast.original_condition %>
@@ -61,7 +61,7 @@
 
   <% if @day > 0 then %>
       <tr>
-        <td bgcolor="#ffff66">
+        <td bgcolor="#339900">
           <div align="right">
             <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);">
               <font face="Geneva, Arial, Helvetica, sans-serif" size="4"> <<
@@ -72,7 +72,7 @@
   <% end %>
   <% if @day < 2 then %>
       <tr>
-        <td bgcolor="#ffff66">
+        <td bgcolor="#336600">
           <div align="right">
 
             <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);">
@@ -85,7 +85,7 @@
 
 
   <tr>
-    <td bgcolor="#ffff66">
+    <td bgcolor="#339900">
       <font size="2">Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
        <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>-->
       </font>

@@ -11,17 +11,17 @@
   <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
 
   <p class="subhead">Add your tip Titles for the week</p>
-  <table bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0" width="100%">
+  <table bgcolor="#547085" border="1" border-color="#1E6794" cellpadding="10" cellspacing="0" width="100%">
     <tbody>
     <tr>
-      <td colspan="8" bgcolor="#ffcc33">
+      <td colspan="8" bgcolor="#1E6794">
         <center spry:hover="subheadtable">
           <font size="5"><%= params[:calendar_name] %></font></center>
       </td>
     </tr>
 
     <tr>
-      <td bgcolor="#ffff66">Weekday</td>
+      <td bgcolor="#658296">Weekday</td>
 
       <% @weekdays.each do |day| %>
           <td><%= day.name %></td>
@@ -33,7 +33,7 @@
           <td><%= condition.name %></td>
           <% @weekdays.each do |day| %>
               <td>
-                <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="16" type="text">
+                <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="16" type="text"><BR><span class="smalltext">name of establishment or attraction eg: Renzo´s Pizza, Eiffel Tower, Limelight Club
               </td>
           <% end %>
         </tr>
