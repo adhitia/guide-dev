@@ -11,9 +11,9 @@
   <% end %>
 
   <p class="subheadtable" align="center"><strong>Guide name</strong> <span class="smalltext"(destination name or nickname):</span>
-    <input id="calendar_name_location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
+    <input id="calendar_name_location" class="headtextdarkerlarger" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
     FOR
-    <input id="calendar_name_target" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
+    <input id="calendar_name_target" class="headtextdarkerlarger" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
   </p>
   <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
   
@@ -21,7 +21,7 @@
   <p class="subheadtable" align="center"><strong>Use weather info for </strong><BR><span class="smalltext"(start typing destination) </span>
     <label>
       <label for="calendar_location_name"></label><br>
-      <input class="ac_input" id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
+      <input class="ac_input" class="headtextdarkerlarger" id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
       <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden">
 
     </label><BR> <span class="smalltext" align="center">If you can not find your destination, type in the closest big city</span>
@@ -32,7 +32,7 @@
 
   <p><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();">.<span class="textflow" align="center">NEXT</span></a></p>
 
-  <p>. </p>
+  <p> </p>
 
 </form>
 <p></p>

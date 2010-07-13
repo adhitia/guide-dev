@@ -7,8 +7,8 @@
 <% end %>
      <BR>
 <% form_tag :action => 'process_login' do |f| %>
-    Username: <%= text_field "user", "email" %>
+    E-mail: <%= text_field "user", "email" %>
     Password: <%= password_field "user", "password" %>
     <%= submit_tag "login" %>
 <% end %>
-<BR><BR><BR><BR><BR>
+<BR><BR>Forgot Your login or passoword? <a href="recover.html">Recover it here</a><BR><BR><BR>
