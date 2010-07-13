@@ -5,7 +5,12 @@ require 'calendars_helper'
 class DisplayController < ApplicationController
   layout nil
 
-  after_filter :jsonp
+  after_filter :jsonp, :except => :public
+
+
+  def public
+    render :file => 'app/views/display/public.js.erb'
+  end
 
 
   def tiny
