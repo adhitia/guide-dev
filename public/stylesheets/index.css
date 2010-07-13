@@ -38,6 +38,8 @@
 	height: auto;
 	width: auto;
 	padding: 10px;
+	text-align: center;
+	border: 3px groove #E8B900;
 }
 body {
 	background-color: #FFFFFF;
@@ -142,7 +144,11 @@ legend    {
 	color: #cccccc;
 	text-indent: 0px;
 }
-
+ .headtextdarkerlarger {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: #666666;
+}
 
 
 
