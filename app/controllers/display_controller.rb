@@ -9,7 +9,7 @@ class DisplayController < ApplicationController
 
 
   def public
-    get_forecast('BRXX0201', 1, 2)
+#    x = get_forecast(1, 0, 4)
     render :file => 'app/views/display/public.js.erb'
   end
 
@@ -29,7 +29,7 @@ class DisplayController < ApplicationController
     @calendar.view_count += 1;
     @calendar.save
 
-    @weather_forecast = get_forecast(@calendar.location.code, start_date, 1)[0]
+    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
     @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and condition_matches_weather?(t.condition, @weather_forecast.condition)}
     @tips.each do |tip|
       tip.tip.view_count += 1;
@@ -108,32 +108,43 @@ class DisplayController < ApplicationController
 
 
 
-  def get_forecast(location_code, start, days)
-    location = Location.find_by_code location_code
+  def get_forecast(location_id, start, days)
+    location = Location.find location_id
+    forecast = location.weather_forecast
 
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-#    puts ::WeatherForecast.quoted_table_name
-    puts ::Location.quoted_table_name
+    diff = DateTime.now.to_f - forecast.last_checked.to_f
+    now = DateTime.now
 
-    f = location.weather_forecast
-    puts f.class
+    if diff > 60 * 60 || now.min < forecast.last_checked.min || forecast.data == nil #|| true
+      # if last update was made more than x minutes ago
+      # or hour has changed since that
+      # or there's no forecast yet
+      puts "last update made #{diff} seconds ago, update #{location.name} forecast now"
+      forecast.data = get_forecast_weather_dot_com(location.code)
+      forecast.last_checked = DateTime.now
+      forecast.save
+    end
+
+    forecast.data[start, days]
   end
 
   
 
-  def get_forecast_weather_dot_com(start, days)
+  def get_forecast_weather_dot_com(location_code)
     WeatherMan.partner_id = '1180784909'
     WeatherMan.license_key = '0e1b5b7c95d8cdd8'
-    location = WeatherMan.new(@calendar.location.code)
-    weather = location.fetch(:days => start + days + 1, :unit => 'm') # , :current_conditions => true
+    days_fetch = 4;
+
+    location = WeatherMan.new(location_code)
+    weather = location.fetch(:days => days_fetch + 1, :unit => 'm') # , :current_conditions => true
     result = Array.new
-    for day in start..start + days - 1
+    for day in 0..days_fetch - 1
       forecast = weather.forecast.for(Date.today + day)
       weather_condition = forecast.day.description
       if (weather_condition == "N/A") then
         weather_condition = forecast.night.description
       end
-      data = WeatherForecast.new(process_weather(weather_condition), weather_condition)
+      data = WeatherForecastData.new(process_weather(weather_condition), weather_condition)
       result.push data
     end
     result
@@ -144,7 +155,8 @@ end
 
 
 
-class WeatherForecast
+
+class WeatherForecastData
   attr_accessor :condition, :original_condition
 
   def initialize(condition, original_condition)
@@ -152,4 +164,5 @@ class WeatherForecast
     @original_condition = original_condition
   end
 end
+
 
