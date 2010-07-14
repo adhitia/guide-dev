@@ -9,6 +9,7 @@ class DisplayController < ApplicationController
 
 
   def public
+    get_forecast('BRXX0201', 1, 2)
     render :file => 'app/views/display/public.js.erb'
   end
 
@@ -22,12 +23,13 @@ class DisplayController < ApplicationController
     else
       @day = @day.to_i
     end
-    @dow = Weekday.find((Date.today + @day).cwday);
+    start_date = Date.today + @day
+    @dow = Weekday.find(start_date.cwday);
 
     @calendar.view_count += 1;
     @calendar.save
 
-    @weather_forecast = get_weather_forecast(@day, 1)[0]
+    @weather_forecast = get_forecast(@calendar.location.code, start_date, 1)[0]
     @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and condition_matches_weather?(t.condition, @weather_forecast.condition)}
     @tips.each do |tip|
       tip.tip.view_count += 1;
@@ -64,24 +66,6 @@ class DisplayController < ApplicationController
 
 
   private
-
-  def get_weather_forecast(start, days)
-    WeatherMan.partner_id = '1180784909'
-    WeatherMan.license_key = '0e1b5b7c95d8cdd8'
-    location = WeatherMan.new(@calendar.location.code)
-    weather = location.fetch(:days => start + days + 1, :unit => 'm') # , :current_conditions => true
-    result = Array.new
-    for day in start..start + days - 1
-      forecast = weather.forecast.for(Date.today + day)
-      weather_condition = forecast.day.description
-      if (weather_condition == "N/A") then
-        weather_condition = forecast.night.description
-      end
-      data = WeatherForecast.new(process_weather(weather_condition), weather_condition)
-      result.push data
-    end
-    result
-  end
 
   def process_weather(description)
     description = description.downcase
@@ -120,6 +104,41 @@ class DisplayController < ApplicationController
       response.body = body;
     end
   end
+
+
+
+
+  def get_forecast(location_code, start, days)
+    location = Location.find_by_code location_code
+
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+#    puts ::WeatherForecast.quoted_table_name
+    puts ::Location.quoted_table_name
+
+    f = location.weather_forecast
+    puts f.class
+  end
+
+  
+
+  def get_forecast_weather_dot_com(start, days)
+    WeatherMan.partner_id = '1180784909'
+    WeatherMan.license_key = '0e1b5b7c95d8cdd8'
+    location = WeatherMan.new(@calendar.location.code)
+    weather = location.fetch(:days => start + days + 1, :unit => 'm') # , :current_conditions => true
+    result = Array.new
+    for day in start..start + days - 1
+      forecast = weather.forecast.for(Date.today + day)
+      weather_condition = forecast.day.description
+      if (weather_condition == "N/A") then
+        weather_condition = forecast.night.description
+      end
+      data = WeatherForecast.new(process_weather(weather_condition), weather_condition)
+      result.push data
+    end
+    result
+  end
+
 end
 
 
