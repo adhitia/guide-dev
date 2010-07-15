@@ -9,7 +9,6 @@ class DisplayController < ApplicationController
 
 
   def public
-#    x = get_forecast(1, 0, 4)
     render :file => 'app/views/display/public.js.erb'
   end
 
@@ -30,7 +29,7 @@ class DisplayController < ApplicationController
     @calendar.save
 
     @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
-    @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and condition_matches_weather?(t.condition, @weather_forecast.condition)}
+    @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
     @tips.each do |tip|
       tip.tip.view_count += 1;
       tip.tip.save;
@@ -67,26 +66,9 @@ class DisplayController < ApplicationController
 
   private
 
-  def process_weather(description)
-    description = description.downcase
-    if description.index('rain') or description.index('storms') or description.index('showers') then
-      'rainy'
-    elsif description.index('cloud') then
-      'cloudy'
-    else
-      'sunny'
-    end
-  end
-# Sunny, Fair, Clear
-# Partly Cloudy, Mostly Cloudy
-# Light Rain
-# Scattered T-Storms
-# T-Showers, Showers Late, Showers
-
-
   def condition_matches_weather?(condition, weather)
     weather = weather.downcase
-    condition = condition.name.downcase
+    condition = condition.weather.downcase
     if condition == "cloudy" or condition == "rainy" or condition == "sunny" then
       condition == weather
     else
@@ -149,6 +131,21 @@ class DisplayController < ApplicationController
     end
     result
   end
+
+  def process_weather(description)
+    good_weather = Set.new ['sunny', 'fair', 'clear', 'partly cloudy']
+    if good_weather.include? description.downcase then
+      'sunny'
+    else
+      'lousy'
+    end
+  end
+# Sunny, Fair, Clear
+# Partly Cloudy, Mostly Cloudy
+# Light Rain
+# Scattered T-Storms
+# T-Showers, Showers Late, Showers
+
 
 end
 

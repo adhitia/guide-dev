@@ -32,10 +32,22 @@
         <% end %>
       </tr>
 
+      <% prev_cond = Condition.new %>
       <% @conditions.each do |condition| %>
+
+          <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
+          <% if condition.group != prev_cond.group %>
+            <tr>
+              <td colspan="20" align="center" style="background-color:lightgreen;">
+                <%= condition.group %>
+              </td>
+            </tr>
+          <% end %>
+          <% prev_cond = condition %>
+
           <tr>
             <td>
-              <%= condition.name %><br/>
+              <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
               <a href="/calendars/<%=@calendar.id%>/edit#<%=condition.name%>">edit</a>
             </td>
             <% @weekdays.each do |day| %>

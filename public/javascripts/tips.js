@@ -149,6 +149,7 @@ if (!window.tips) var tips = {
 
     init: function(root) {
         // image suggestions
+//        alert(root.id + '  ' + $(root).find('.upload_image').length);
         $(root).find('.upload_image').tabs();
         $(root).find('.tip_name').blur(function() {
             var row = $(this).parents('.tipRoot')[0];
@@ -168,6 +169,7 @@ google.load('search', '1');
 google.load('maps', '3', {'other_params' : 'sensor=false'});
 
 $(document).ready(function() {
+//    alert('!!!');
     tips.init(document);
 });
 

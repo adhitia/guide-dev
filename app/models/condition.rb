@@ -15,4 +15,12 @@ class Condition < ActiveRecord::Base
     # TODO replace number with actual value 
     id == 9
   end
+
+  def full_name
+    if weather == nil
+      name
+    else
+      (weather + ' ' + name).capitalize
+    end
+  end
 end
