@@ -66,8 +66,8 @@
         <td bgcolor="#339900">
           <div align="right">
             <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);">
-              <font face="Geneva, Arial, Helvetica, sans-serif" size="4"> <<
-                Previous day: <%= @dow.prev.name %></font></a>
+              <span class="smalltext" <<
+                Previous day: <%= @dow.prev.name %></span></a>
           </div>
         </td>
       </tr>
@@ -81,6 +81,12 @@
               <font face="Geneva, Arial, Helvetica, sans-serif" size="4">Next day: <%= @dow.next.name %>&gt;&gt;</font></a>
 
           </div>
+              <div align="right">
+            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);">
+              <span class="smalltext" <<
+                Previous day: <%= @dow.prev.name %></span></a>
+          </div>
+
         </td>
       </tr>
   <% end %>
@@ -97,11 +103,11 @@
     <div class="starbar">
       <div class="outer">
         <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-          <a class="s5" onclick="_cal.vote(this);" title="5"></a>
-          <a class="s4" onclick="_cal.vote(this);" title="4"></a>
-          <a class="s3" onclick="_cal.vote(this);" title="3"></a>
-          <a class="s2" onclick="_cal.vote(this);" title="2"></a>
-          <a class="s1" onclick="_cal.vote(this);" title="1"></a>
+          <a class="s5" onclick="_cal.vote(this);" title="VOTE 5"></a>
+          <a class="s4" onclick="_cal.vote(this);" title="VOTE 4"></a>
+          <a class="s3" onclick="_cal.vote(this);" title="VOTE 3"></a>
+          <a class="s2" onclick="_cal.vote(this);" title="VOTE 2"></a>
+          <a class="s1" onclick="_cal.vote(this);" title="VOTE 1"></a>
         </div>
       </div>
     </div>

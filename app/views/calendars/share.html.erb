@@ -1,17 +1,17 @@
-Preview and get code<br/>
-
+<h1>Preview and get widget code</h1>
+<P>Choose your prefered widget dimensions:</p>
 <div id="choose_style">
 <% ["tiny", "small", "normal"].each do |style|  %>
     <label for="preview_type_<%=style%>"><%= style %></label>
     <input type="radio" name="preview_type" value="tiny" id="preview_type_<%=style%>" onchange="change_style(this);"/>
 <% end %>
 </div>
+      <p> Tiny= 200 pixels wide, Small= 300 pixels wide, Normal= 600 pixels wide</P>
 
-<br/>
-
-<textarea id="preview_html" rows="8" cols="150">
+<textarea id="preview_html" rows="8" cols="50">
 </textarea>
-
+<P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
+<p><span class="headtextlighter">What your widget looks like</span></p>
 <div id="preview_guide"></div>
 
 <div id="preview_template" class="hidden">

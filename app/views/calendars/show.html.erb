@@ -1,21 +1,8 @@
-<h1>Calendar Overview</h1>
-
-    <p>
-      <b>Name:</b>
-      <%= h @calendar.name %>
-    </p>
-
-    <p>
-      <b>Location:</b>
-      <%= h @calendar.location.name %>
-    </p>
-
-<p>
-  <b>Times Viewed:</b>
-  <%= h @calendar.view_count %><br/>
-  <b>Times Clicked:</b>
+<h1>Overview of "<%= h @calendar.name %>" Guide</h1>
+      <b>Location:</b>      <%= h @calendar.location.name %>  <b> | Times Viewed:</b>
+  <%= h @calendar.view_count %>
+  <b> | Times Clicked:</b>
   <%= h @calendar.click_count %>
-</p>
 
 <p>
 </p>
@@ -57,11 +44,10 @@
                 <% place = @calendar.show_places.detect{|t| t.condition.id == condition.id and t.weekday.id == day.id} %>
                 <% tip = place == nil ? nil : place.tip %>
                   <% if tip != nil then %>
-
                     <td class="tip">
-                      <%= tip.name %><br/>
-                      Viewed <%= tip.view_count %> time<%= tip.view_count != 1 ? 's' : '' %><br/>
-                      Clicked <%= tip.click_count %> time<%= tip.click_count != 1 ? 's' : '' %><br/>
+                      <span class="headtextlighter"><B><%= tip.name %></b><br/></span><span class="smalltext">
+                      Views= <%= tip.view_count %><%= tip.view_count != 1 ? '' : '' %>
+                      Clicks= <%= tip.click_count %><%= tip.click_count != 1 ? '' : '' %></span>
                     </td>
 
                   <% else %>

@@ -19,19 +19,20 @@
     <% end %>
 
           </tbody></table>
-
-    <p class="textflow" align="center">
+      <div align="center">
+    <table><tr><td><p class="textflow" align="center">
       <% if !@edit_for.last? %>
           <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
-            save and create <%= @edit_for.next.name %> tips &gt;&gt;
+            Save and edit <%= @edit_for.next.name %> tips &gt;&gt;
           </a>
       <% end %>
+    </p></td><td><p class="textflow" align="center">
+      <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">Save changes</a>
     </p>
+<% end %></td></tr></table> </div>
 
-    <p class="textflow" align="center">
-      <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">save</a>
-    </p>
-<% end %>
+
+
 
 
 <div id="new_tip" style="display:none;">
