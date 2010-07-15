@@ -1,14 +1,14 @@
 if (!window.common) {
     $.ajaxSetup({
-        error: function(event, request, options, error) {
-            switch (event.status) {
-                case 503: common.setLocation('maintenance.shtml'); break;
-                case 404: common.setLocation('error.shtml'); break;
-                case 401: common.setLocation('unauthenticated.shtml'); break;
-                case 403: common.setLocation('unauthorized.shtml'); break;
-                case 500: common.setLocation('oops.shtml'); break;
-            }
-        }
+//        error: function(event, request, options, error) {
+//            switch (event.status) {
+//                case 503: common.setLocation('maintenance.shtml'); break;
+//                case 404: common.setLocation('error.shtml'); break;
+//                case 401: common.setLocation('unauthenticated.shtml'); break;
+//                case 403: common.setLocation('unauthorized.shtml'); break;
+//                case 500: common.setLocation('oops.shtml'); break;
+//            }
+//        }
     });
 
 
@@ -44,7 +44,26 @@ if (!window.common) {
 
         getHash: function() {
             return window.location.hash.substring(1);
-            ;
+        },
+
+        confirm: function(message, successHandler) {
+            $("#dialog_box").html(message);
+            $("#dialog_box").dialog({
+                buttons: {
+                    "Ok": function() {
+                        $(this).dialog("close");
+                        successHandler();
+                    },
+                    "Cancel": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                draggable: false,
+                modal: true,
+                resizable: false,
+                title: 'Please confirm',
+                width: 230
+            });
         }
     };
 

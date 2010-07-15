@@ -13,7 +13,7 @@ class Condition < ActiveRecord::Base
 
   def last?
     # TODO replace number with actual value 
-    id == 9
+    id == 11
   end
 
   def full_name

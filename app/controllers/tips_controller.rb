@@ -1,4 +1,6 @@
 class TipsController < ApplicationController
+  before_filter :login_required, :except => [:follow_url]
+
   def new
     @tip = Tip.new
     @calendar = Calendar.find(params[:id])
@@ -47,11 +49,6 @@ class TipsController < ApplicationController
       tip.address.update_attributes tip_data[:address]
       tip_data.delete :address
       tip.update_attributes tip_data
-
-      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-      puts id
-      puts tip_data[:url]
-      puts tip_data[:phone]
     end
     render :text => 'dummy response'
   end
@@ -66,4 +63,43 @@ class TipsController < ApplicationController
     redirect_to @tip.url
   end
 
+  # removes binding between tip and calendar
+  def unbind
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    occurrence.delete
+    occurrence.tip.delete
+
+    render :text => 'dummy response'
+  end
+
+  # moves tip to a different place
+  def move
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    condition = Condition.find(params[:condition_id])
+    weekday = Weekday.find(params[:weekday_id])
+    occurrence.condition = condition
+    occurrence.weekday = weekday
+    occurrence.save
+
+    render :text => 'dummy response'
+  end
+
+  # switches two tips in one calendar
+  def switch
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    target = ShowPlace.find(params[:target_id])
+
+    # switch weekday and condition
+    weekday = occurrence.weekday
+    condition = occurrence.condition
+    occurrence.weekday = target.weekday
+    occurrence.condition = target.condition
+    target.weekday = weekday
+    target.condition = condition
+
+    occurrence.save
+    target.save
+
+    render :text => 'dummy response'
+  end
 end
