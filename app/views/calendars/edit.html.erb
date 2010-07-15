@@ -1,4 +1,4 @@
-<h1 class="subhead">Add your tips to your <em>WEEKDAY RECOMMENDER</em></h1>
+<h1 class="subhead">Add your tip details to your TRAVEL GUIDE</h1>
 
 
 <div id="edit_calendar_tabs" width="100%">
@@ -9,7 +9,7 @@
           <a style="width:100%;" title="<%= day.name %>" href="/calendars/<%= @calendar.id %>/edit_day/<%= day.id %>"><span><%= day.name %></span></a>
         </li>
       <% end %>
-      <li style="float:right;"><a target="<%=@conditions[0].name%>" href="toggle-tabs">Conditions</a></li>
+      <li style="float:right;"><a target="<%=@conditions[0].name%>" href="toggle-tabs">View by tip category</a></li>
     </span>
 
     <span class="edit-calendar-tabs-conditions">
@@ -18,7 +18,7 @@
           <a style="width:100%;" title="<%= cond.name %>" href="/calendars/<%=@calendar.id%>/edit_condition/<%=cond.id%>"><span><%= cond.name %></span></a>
         </li>
       <% end %>
-      <li style="float:right;"><a target="<%=@weekdays[0].name%>" href="toggle-tabs">Weekdays</a></li>
+      <li style="float:right;"><a target="<%=@weekdays[0].name%>" href="toggle-tabs">View by Weekday</a></li>
     </span>
   </ul>
 

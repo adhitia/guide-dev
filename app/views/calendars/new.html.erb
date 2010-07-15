@@ -10,7 +10,7 @@
       <p style="color:red;"><%= flash[:error] %></p>
   <% end %>
 
-  <p class="subheadtable" align="center"><strong>Guide name</strong> <span class="smalltext"(destination name or nickname):</span>
+  <p class="subheadtable" align="center"><strong>Guide name</strong> <BR> <span class="smalltext"(destination name or nickname):</span>
     <input id="calendar_name_location" class="headtextdarkerlarger" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
     FOR
     <input id="calendar_name_target" class="headtextdarkerlarger" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
@@ -30,7 +30,7 @@
 
   <p>&nbsp;</p>
 
-  <p><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();">.<span class="textflow" align="center">NEXT</span></a></p>
+  <div align="right"><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();"><span class="textflow" align="center">NEXT</span></a></div>
 
   <p> </p>
 

@@ -54,6 +54,12 @@ body {
 	color: #ffffff;
 	font-weight: bold;
 }
+.subheadtablegray {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: large;
+	color: #777777;
+	font-weight: bold;
+}
 .navig {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
@@ -125,6 +131,11 @@ legend    {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: medium;
 	color: #666666;
+}
+.headtextlighter {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	color: #ffffff;
 }
 .headtextdarkersmall {
 	font-family: "Arial Narrow", "Franklin Gothic Demi Cond";
