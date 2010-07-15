@@ -23,11 +23,12 @@ if (!window.calendar) var calendar = {
 $(document).ready(function() {
     $("#edit_calendar_tabs").tabs({
         ajaxOptions: {
-            error: function(xhr, status, index, anchor) {
-            }
+//            error: function(xhr, status, index, anchor) {
+//            }
         },
         load: function(event, ui) {
             $('.ui-tabs-hide').html('');
+//            alert('???? ' + ui.tab.id);
             tips.init(ui.panel);
         },
         select: function(event, ui) {

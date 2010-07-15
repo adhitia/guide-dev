@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100629022240) do
+ActiveRecord::Schema.define(:version => 20100714234015) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20100629022240) do
     t.string   "weather"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "group"
   end
 
   create_table "locations", :force => true do |t|
@@ -97,6 +98,14 @@ ActiveRecord::Schema.define(:version => 20100629022240) do
     t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "weather_forecasts", :force => true do |t|
+    t.datetime "last_checked"
+    t.integer  "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "data",         :limit => 1000
   end
 
   create_table "weekdays", :force => true do |t|

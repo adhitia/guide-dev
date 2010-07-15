@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  last_checked: 
+  location_id: 1
+
+two:
+  last_checked: 
+  location_id: 1

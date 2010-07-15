@@ -7,6 +7,9 @@
 <p>
 </p>
 
+
+<div id="view_tips">
+
     <table width="100%"  border="1" cellpadding="10" cellspacing="0">
 
       <tr>
@@ -19,21 +22,34 @@
         <% end %>
       </tr>
 
+      <% prev_cond = Condition.new %>
       <% @conditions.each do |condition| %>
+
+          <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
+          <% if condition.group != prev_cond.group %>
+            <tr>
+              <td colspan="20" align="center" style="background-color:lightgreen;">
+                <%= condition.group %>
+              </td>
+            </tr>
+          <% end %>
+          <% prev_cond = condition %>
+
           <tr>
             <td>
-              <%= condition.name %><br/>
+              <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
               <a href="/calendars/<%=@calendar.id%>/edit#<%=condition.name%>">edit</a>
             </td>
             <% @weekdays.each do |day| %>
                 <% place = @calendar.show_places.detect{|t| t.condition.id == condition.id and t.weekday.id == day.id} %>
                 <% tip = place == nil ? nil : place.tip %>
                   <% if tip != nil then %>
-                    <td>
+                    <td class="tip">
                       <span class="headtextlighter"><B><%= tip.name %></b><br/></span><span class="smalltext">
                       Views= <%= tip.view_count %><%= tip.view_count != 1 ? '' : '' %>
                       Clicks= <%= tip.click_count %><%= tip.click_count != 1 ? '' : '' %></span>
                     </td>
+
                   <% else %>
                     <td style="background-color:lightgray;">
                       no tip<br/>
@@ -44,9 +60,10 @@
       <% end %>
 
     </table>
+</div>
 
-<%# link_to 'Back', calendars_path %>
-         <BR><BR>
+
+<BR><BR>
 <div align="right">
   <a href="/calendars/<%=@calendar.id%>/share" class="textflow">view live version and get script</a>
 </div>
