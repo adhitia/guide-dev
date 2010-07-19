@@ -9,9 +9,9 @@
 }
 .subhead {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
-	font-size: x-large;
+	font-size: xx-large;
 	text-transform: uppercase;
-	color: #666666;
+	color: #0066ab;
 	background-color: #BFF1F7;
 	padding: 5px;
 	margin-left: 60px;
@@ -131,6 +131,13 @@ legend    {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: medium;
 	color: #666666;
+}
+.headtextwhiteblack {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	color: #ffffff;
+    background-color: #0066ab;
+	padding: 3px;
 }
 .headtextlighter {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
