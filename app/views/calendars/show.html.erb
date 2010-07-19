@@ -43,18 +43,25 @@
             <% @weekdays.each do |day| %>
                 <% place = @calendar.show_places.detect{|t| t.condition.id == condition.id and t.weekday.id == day.id} %>
                 <% tip = place == nil ? nil : place.tip %>
+
+                <td class="tip-container" condition_id="<%=condition.id%>" day_id="<%=day.id%>">
                   <% if tip != nil then %>
-                    <td class="tip">
-                      <span class="headtextlighter"><B><%= tip.name %></b><br/></span><span class="smalltext">
-                      Views= <%= tip.view_count %><%= tip.view_count != 1 ? '' : '' %>
-                      Clicks= <%= tip.click_count %><%= tip.click_count != 1 ? '' : '' %></span>
-                    </td>
+
+                      <div class="tip" tip_id="<%=tip.id%>" place_id="<%=place.id%>" calendar_id="<%=@calendar.id%>">
+                        <div class="move-tip"></div>
+                        <div class="delete-tip"></div>
+                        <span class="headtextlighter"><b><%= tip.name %></b><br/></span><span class="smalltext">
+                          Views= <%= tip.view_count %>
+                          Clicks= <%= tip.click_count %>
+                        </span>
+                      </div>
 
                   <% else %>
-                    <td style="background-color:lightgray;">
-                      no tip<br/>
-                    </td>
+                      <div class="no-tip">no tip</div>
                   <% end %>
+                </td>
+
+
             <% end %>
           </tr>
       <% end %>

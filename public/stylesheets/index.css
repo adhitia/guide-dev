@@ -230,10 +230,52 @@ legend    {
 }
 
 #view_tips .tip {
-    /*width:50px;*/
-    /*height:50px;*/
+    height:100%;
+    width:100%;
+    background-color:blue;
+}
+
+#view_tips td.tip-container {
+    background-color:white;
 }
 
 #view_tips .tip:hover {
-    /*background-color:green;*/
 }
+
+#view_tips .tip .move-tip {
+    background: transparent url(/images/movetip.gif) no-repeat;
+    width: 19px;
+    height: 19px;
+    opacity: 0.3;
+}
+#view_tips .tip:hover .move-tip {
+    opacity: 0.7;
+}
+#view_tips .tip .move-tip:hover {
+    opacity: 1;
+}
+
+#view_tips .tip .delete-tip {
+    background: transparent url(/images/deletetip.gif) no-repeat;
+    width: 19px;
+    height: 19px;
+    opacity: 0.3;
+}
+#view_tips .tip:hover .delete-tip {
+    opacity: 0.7;
+}
+#view_tips .tip .delete-tip:hover {
+    opacity: 1;
+}
+
+#view_tips .no-tip {
+    background-color:lightgray;
+    height:100%;
+    width:100%;
+}
+
+#view_tips .droppable-active {
+    background-color: lightblue;
+}
+
+

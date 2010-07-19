@@ -3,12 +3,16 @@ ActionController::Routing::Routes.draw do |map|
 
 
 
-  map.with_options :controller => 'tips' do |tips|
+  map.with_options :controller => :tips do |tips|
     tips.new_tip 'calendars/:id/tips/new', :action => 'new'
     tips.create_tip 'calendars/:id/tips', :action => 'create', :conditions => { :method => :post }
     tips.edit_tip 'calendars/:id/tips/:tip_id/edit', :action => 'edit'
     tips.update_tip 'calendars/:id/tips/:tip_id', :action => 'update', :conditions => { :method => :put }
     tips.follow_url 'calendars/:id/tips/:tip_id/url', :action => 'follow_url'
+
+    map.unbind_tip 'occurrences/:occurrence_id/unbind', :controller => :tips, :action => :unbind
+    map.unbind_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
+    map.unbind_tip 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
   end
 
   map.manage_user '/users/:id/manage', :controller => :users, :action => :manage

@@ -14,8 +14,8 @@
 
     <span class="edit-calendar-tabs-conditions">
       <% @conditions.each do |cond| %>
-        <li style="min-width:12%;">
-          <a style="width:100%;" title="<%= cond.full_name %>" href="/calendars/<%=@calendar.id%>/edit_condition/<%=cond.id%>"><span><%= cond.full_name %></span></a>
+        <li style="min-width:6%;">
+          <a style="width:100%;" title="<%= cond.full_name %>" href="/calendars/<%=@calendar.id%>/edit_condition/<%=cond.id%>"><span style="font-size:10px"><%= cond.full_name %></span></a>
         </li>
       <% end %>
       <li style="float:right;"><a target="<%=@weekdays[0].name%>" href="toggle-tabs">View by Weekday</a></li>
