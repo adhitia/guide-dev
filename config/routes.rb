@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
   map.login 'login', :controller => 'users', :action => 'login'
+  map.process_login 'process_login', :controller => 'users', :action => 'process_login'
   map.logout 'logout', :controller => 'users', :action => 'logout'
   map.edit_user 'users/:id/edit', :controller => 'users', :action => 'edit', :conditions => { :method => :get }
   map.update_user 'users/:id/edit', :controller => 'users', :action => 'update', :conditions => { :method => :put }
