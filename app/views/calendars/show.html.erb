@@ -1,8 +1,8 @@
 <h1>Overview of "<%= h @calendar.name %>" Guide</h1>
-      <b>Location:</b>      <%= h @calendar.location.name %>  <b> | Times Viewed:</b>
-  <%= h @calendar.view_count %>
-  <b> | Times Clicked:</b>
-  <%= h @calendar.click_count %>
+<b>Location:</b>      <%= h @calendar.location.name %>  <b> | Times Viewed:</b>
+<%= h @calendar.view_count %>
+<b> | Times Clicked:</b>
+<%= h @calendar.click_count %>
 
 <p>
 </p>
@@ -10,67 +10,77 @@
 
 <div id="view_tips">
 
-    <table width="100%"  border="1" cellpadding="10" cellspacing="0">
+  <table width="100%" border="1" cellpadding="10" cellspacing="0">
 
-      <tr>
-        <th></th>
-        <% @weekdays.each do |day| %>
-            <th>
-              <%= day.name %><br/>
-              <a href="/calendars/<%=@calendar.id%>/edit#<%=day.name%>">edit</a>
-            </th>
-        <% end %>
-      </tr>
+    <tr>
+      <th></th>
+      <% @weekdays.each do |day| %>
+          <th width="100px">
+            <%= day.name %>
+            <br/>
+            <a href="/calendars/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
+          </th>
+      <% end %>
+    </tr>
 
-      <% prev_cond = Condition.new %>
-      <% @conditions.each do |condition| %>
+    <% prev_cond = Condition.new %>
+    <% @conditions.each do |condition| %>
 
-          <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
-          <% if condition.group != prev_cond.group %>
+        <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
+        <% if condition.group != prev_cond.group %>
             <tr>
-              <td colspan="20" align="center" style="background-color:lightgreen;">
+              <td class="headtext" colspan="20" align="center" style="background-color:blue;">
                 <%= condition.group %>
               </td>
             </tr>
-          <% end %>
-          <% prev_cond = condition %>
+        <% end %>
+        <% prev_cond = condition %>
 
-          <tr>
-            <td>
-              <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
-              <a href="/calendars/<%=@calendar.id%>/edit#<%=condition.name%>">edit</a>
-            </td>
-            <% @weekdays.each do |day| %>
-                <% place = @calendar.show_places.detect{|t| t.condition.id == condition.id and t.weekday.id == day.id} %>
-                <% tip = place == nil ? nil : place.tip %>
+        <tr>
+          <td>
+            <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
+            <a href="/calendars/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
+          </td>
+          <% @weekdays.each do |day| %>
+              <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
+              <% tip = place == nil ? nil : place.tip %>
 
-                <td class="tip-container" condition_id="<%=condition.id%>" day_id="<%=day.id%>">
-                  <% if tip != nil then %>
+              <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
+                <% if tip != nil then %>
 
-                      <div class="tip" tip_id="<%=tip.id%>" place_id="<%=place.id%>" calendar_id="<%=@calendar.id%>">
-                        <div class="move-tip"></div>
-                        <div class="delete-tip"></div>
-                        <span class="headtextlighter"><b><%= tip.name %></b><br/></span><span class="smalltext">
+                    <div class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
+                      <table width=100% align="right">
+                        <tr>
+                          <td>
+                            <div class="move-tip"></div>
+                          </td>
+                          <td width=20px>
+                            <div class="delete-tip"></div>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <span class="headtextdarker"><b><%= tip.name %></b><br/></span><span class="textgray">
                           Views= <%= tip.view_count %>
-                          Clicks= <%= tip.click_count %>
+                      Clicks= <%= tip.click_count %>
                         </span>
-                      </div>
+                    </div>
 
-                  <% else %>
-                      <div class="no-tip">no tip</div>
-                  <% end %>
-                </td>
+                <% else %>
+                    <div class="no-tip" align="center"><BR>no tip<BR><BR></div>
+                <% end %>
+              </td>
 
 
-            <% end %>
-          </tr>
-      <% end %>
+          <% end %>
+        </tr>
+    <% end %>
 
-    </table>
+  </table>
 </div>
 
 
 <BR><BR>
 <div align="right">
-  <a href="/calendars/<%=@calendar.id%>/share" class="textflow">view live version and get script</a>
+  <a href="/calendars/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
 </div>

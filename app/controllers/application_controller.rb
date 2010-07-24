@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
 
 
 
-
   def about_us
     render :template => "/common/about-us.html.erb"
   end
