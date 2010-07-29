@@ -1,0 +1,33 @@
+gem install ruby-openid
+#script/plugin install open_id_authentication
+#rake open_id_authentication:db:create
+
+gem install oauth2
+
+
+
+
+
+
+
+
+
+      --- config/preinitializer.rb
+
+#on hosting
+require 'rubygems'
+require 'rubygems/gem_runner'
+ENV['GEM_PATH'] = '/home/crisnog/ruby/gems:/usr/lib/ruby/gems/1.8'
+Gem.clear_paths
+
+WEB_ROOT = 'http://brazilwide.com.br:12002'
+FACEBOOK_APP_ID = 'bdd587426a625843381681b7948e791b'
+FACEBOOK_APP_SECRET = 'a68430b55f9635b4e379bc935afbc23c'
+
+
+#locally
+WEB_ROOT = 'http://localhost:3000'
+FACEBOOK_APP_ID = 'e8a82604ae771543db615e26aeb68c59'
+FACEBOOK_APP_SECRET = 'b2c7f0025850a6d3fd88c56a93ab8e0c'
+
+
