@@ -12,14 +12,6 @@
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field(:password_confirmation, :value => @user.password) %>
-  </p>
-  <p>
     <%= f.submit 'Update' %>
   </p>
 <% end %>

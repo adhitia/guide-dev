@@ -36,10 +36,13 @@ ActionController::Routing::Routes.draw do |map|
   map.show_calendar 'calendars/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_calendar 'calendars/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
 
-  map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
   map.login 'login', :controller => 'users', :action => 'login'
   map.process_login 'process_login', :controller => 'users', :action => 'process_login'
+  map.open_id_complete 'session', :controller => :users, :action => :openid, :conditions => { :method => :get }
+  map.oauth_callback 'oauth_callback', :controller => :users, :action => :oauth_callback
   map.logout 'logout', :controller => 'users', :action => 'logout'
+
+  map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
   map.edit_user 'users/:id/edit', :controller => 'users', :action => 'edit', :conditions => { :method => :get }
   map.update_user 'users/:id/edit', :controller => 'users', :action => 'update', :conditions => { :method => :put }
   map.register 'register', :controller => 'users', :action => 'new', :conditions => { :method => :get }

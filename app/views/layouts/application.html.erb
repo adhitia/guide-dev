@@ -18,7 +18,7 @@
   <!--<script type="text/javascript" src="/jquery/jquery-ui-1.8.2.custom.min.js" ></script>-->
 
   <script type="text/javascript" src="/jquery/jquery.autocomplete.js"></script>
-  <script type="text/javascript" src="/public0.js"></script>
+  <script type="text/javascript" src="/public.js"></script>
   <script type="text/javascript" src="/javascripts/application.js"></script>
   <script type="text/javascript" src="/javascripts/tips.js"></script>
   <script type="text/javascript" src="/javascripts/calendar.js"></script>
@@ -27,6 +27,7 @@
   <script type="text/javascript" src="/jquery/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="/jquery/jquery.form.js"></script>
   <script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
+  <script type="text/javascript" src="/jquery/openid-jquery.js"></script>
 
   <!--<script type="text/javascript" src="/jquery/jquery.tools.min.js" ></script>-->
   <!--<script type="text/javascript" src="/jquery/absoluteCenter.jQuery.js"></script>-->
@@ -37,7 +38,7 @@
   <link href="/stylesheets/demo_table.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_page.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_table_jui.css" media="screen" rel="stylesheet" type="text/css"/>
-
+  <link href="/css/openid.css" media="screen" rel="stylesheet" type="text/css"/>
 </head>
 
 
@@ -66,8 +67,7 @@
                       <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
                       | <%= link_to 'Sign out', logout_path %>
                   <% else %>
-                      <%= link_to 'Sign in', :controller => :users, :action => :login %> |
-                      <%= link_to 'Sign up', :controller => :users, :action => :new %>
+                      <%= link_to 'Sign in', :controller => :users, :action => :login %>
                   <% end %></div></td>
                           </tr>
                         </table>                 

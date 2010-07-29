@@ -1,3 +1,5 @@
+
+
 <BR><BR>
 <% if flash[:message] %>
     <div><%= flash[:message] %></div>
@@ -5,10 +7,43 @@
 <% if flash[:error] %>
     <div><%= flash[:error] %></div>
 <% end %>
-     <BR>
-<% form_tag :action => 'process_login' do |f| %>
-    E-mail: <%= text_field "user", "email" %>
-    Password: <%= password_field "user", "password" %>
-    <%= submit_tag "login" %>
+
+<br>
+
+<% form_tag('/process_login', :method => :post, :id => 'openid_form') do |f| %>
+    <input type="hidden" id="oauth_version" name="oauth_version"/>
+    <input type="hidden" id="oauth_server" name="oauth_server"/>
+
+    <div id="openid_choice">
+      <p>Do you already have an account on one of these sites? You can use that to log on here!</p>
+
+      <div id="openid_btns"></div>
+    </div>
+
+    <div id="openid_input_area">
+    </div>
+
+
+    <p>Or, manually enter your OpenID</p>
+
+    <table id="openid-url-input">
+        <tr>
+            <td class="vt large"><input id="openid_identifier" name="openid_identifier" class="openid-identifier"
+              style="height:28px; width:500px;" type="text" tabindex="100"></td>
+            <td class="vt large"><input id="submit-button"
+              style="margin-left:5px; height:36px;" type="submit" value="Log in" tabindex="101"></td> 
+        </tr>
+
+
+    </table>
+
+
 <% end %>
-<BR><BR>Forgot Your login or passoword? <a href="recover.html">Recover it here</a><BR><BR><BR>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	    openid.init('openid_identifier');
+	});
+</script>

@@ -1,3 +1,5 @@
+require_library_or_gem 'oauth2'
+
 class UsersController < ApplicationController
   before_filter :login_required, :only => :home
 
@@ -5,18 +7,65 @@ class UsersController < ApplicationController
   end
 
   def process_login
-    if user = User.authenticate(params[:user])
-      session[:id] = user.id # Remember the user's id during this session
-      if session[:return_to]
-        redirect_to session[:return_to]
-      else
-        redirect_to :action => 'show', :id => user  
-      end
+    if params[:oauth_server]
+      login_oauth
     else
-      flash[:error] = 'Invalid login.'
-      redirect_to :action => 'login', :username => params[:user][:username]
+      login_openid
     end
   end
+
+  def login_oauth
+    # scope=email
+    redirect_to oauth_client.web_server.authorize_url(
+      :redirect_uri => oauth_callback_url(:oauth_server => params[:oauth_server]),
+      :scope => 'email'
+    )
+  end
+
+  def oauth_callback
+    access_token = oauth_client.web_server.get_access_token(
+      params[:code], :redirect_uri => oauth_callback_url(:oauth_server => params[:oauth_server])
+    )
+
+    user_json = access_token.get('/me')
+    user_data = ActiveSupport::JSON.decode(user_json)
+    identity_url = "synthetic-open-id/facebook/" + user_data["id"];
+    finish_login identity_url, user_data["email"], user_data["name"]
+  end
+
+  def login_openid
+    authenticate_with_open_id(params[:openid_identifier], :required => [:nickname, :email]) do |result, identity_url, registration|
+      if result.successful?
+        finish_login identity_url, registration['email'], registration['nickname']
+      else
+        flash[:error] = result.message
+        redirect_to :action => :login #, :username => params[:user][:username]
+      end
+    end
+  end
+
+  def finish_login(identity_url, email, name)
+    user = User.find_or_initialize_by_identity_url(identity_url)
+    if user.new_record?
+      user.name = name
+      user.email = email
+      user.save(false)
+    end
+
+    session[:id] = user.id # Remember the user's id during this session
+    if (user.name == nil || user.email == nil)
+      redirect_to edit_user_url(:id => user)
+      return
+    end
+
+
+    if session[:return_to]
+      redirect_to session[:return_to]
+    else
+      redirect_to :action => :show, :id => user
+    end
+  end
+
 
   def logout
     reset_session
@@ -64,7 +113,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'
@@ -82,4 +130,11 @@ class UsersController < ApplicationController
     @locations = Location.all
   end
 
+
+  protected
+
+
+  def oauth_client
+    @client ||= OAuth2::Client.new(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, :site => params[:oauth_server])
+  end
 end
