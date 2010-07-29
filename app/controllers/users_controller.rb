@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def process_login
-    if params[:oauth_server]
+    if params[:oauth_server] != nil && params[:oauth_server] != ''
       login_oauth
     else
       login_openid
