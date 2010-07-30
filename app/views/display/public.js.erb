@@ -28,6 +28,7 @@ if (!window._cal) {
             var root = $(el).parents('.guiderer')[0];
             var id = $(root).attr('cal_id');
             var vote = $(el).attr('title');
+//            alert(id + '  ' + vote);
 
             $.ajax({
                 url: '<%=WEB_ROOT%>/calendars/' + id + '/vote/' + vote,

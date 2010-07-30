@@ -1,8 +1,10 @@
 <!--<script type="text/javascript" src="/jquery/jquery-1.4.2.min.js"></script>-->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>-->
 <script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
+<link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
 
-<table bgcolor="#336600" border="1" cellpadding="5" cellspacing="0" width="200">
+
+<table class="guiderer" cal_id="<%= @calendar.id %>" bgcolor="#336600" border="1" cellpadding="5" cellspacing="0" width="200">
   <tbody>
   <tr>
     <td bgcolor="#ffcc33">
@@ -44,18 +46,9 @@
 
           <p><font color="#666666" size="2"><%= shorten tip.description, 70 %></font></p>
 
+          <!--put tip details here -->
           <div class="full_tip" style="visibility:hidden;display:none;">
             <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
-
-<!--
-            <% if tip.image.exists? -%>
-                <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
-            <% end %>
-            <b><%= tip.name %></b><br/>
-
-            <p><%= tip.description %></p>
--->
-
           </div>
         </td>
       </tr>
@@ -63,6 +56,19 @@
 
   <tr>
     <td bgcolor="#ffff66">
+
+      <div class="starbar">
+        <div class="outer">
+          <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+            <a class="s5" onclick="_cal.vote(this);" title="5"></a>
+            <a class="s4" onclick="_cal.vote(this);" title="4"></a>
+            <a class="s3" onclick="_cal.vote(this);" title="3"></a>
+            <a class="s2" onclick="_cal.vote(this);" title="2"></a>
+            <a class="s1" onclick="_cal.vote(this);" title="1"></a>
+          </div>
+        </div>
+      </div>
+
       <font size="2">Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
         || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %></font>
     </td>

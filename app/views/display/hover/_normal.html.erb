@@ -4,7 +4,6 @@
 
     <tbody>
     <tr>
-        <td background="images/picture-side.gif"></td>
         <td valign="top">
             <table border="0" cellpadding="3" cellspacing="0" width="100%">
                 <tbody>
@@ -58,21 +57,25 @@
                         </center>
                     </td>
                     <td>
+                      <!--url-->
                         <% if !empty?(tip.url) %>
-                            web: <a href="<%=tip.url%>"><%=tip.url%></a><br>
+                            web: <a href="/calendars/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+                                    <%=shorten(tip.url[7..tip.url.length], 35)%>
+                                 </a><br>
                         <% end %>
+
+                      <!--phone-->
                         <% if !empty?(tip.phone) %>
                             Phone: <%=tip.phone%><br>
                         <% end %>
 
+                      <!--address-->
                       <% if !empty?(tip.address.address) -%>
                           Address: <%= tip.address.address %>
-                          <!--<small>
-                              <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">map</a>
-                          </small>-->
                           <br/>
                       <% end -%>
-                      
+
+                      <!--map-->
                       <% if tip.address.lat != 0 %>
                         <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
                         <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100"></td>
@@ -86,7 +89,7 @@
                     <td>
                         <center>
 
-                            More tips from "<span class="text">What to do in<a href="sanfrancisco.html"> SAN FRANCISCO</a></span>" <br>
+                            More tips from "<span class="text"><a href="/calendars/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a></span>" <br>
 
                           <!-- no this functionality -->
                             <!--<a href="Other%20Local%20Dinners.html">Other Local Dinners </a>|-->
