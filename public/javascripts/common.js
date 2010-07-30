@@ -18,6 +18,9 @@ if (!window.common) {
             $(container).html('<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>');
         },
 
+        /**
+         * Provides overlay with full image to view.
+         */
         imageHelper: function(root) {
             $(root).find('.full-image').each(function() {
                 $(this).qtip({

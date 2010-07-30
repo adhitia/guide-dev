@@ -7,12 +7,12 @@
     <% @weekdays.each do |day| %>
         <% tip = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id and !t.tip.advertisement } %>
         <% if tip != nil then %>
-               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :title => tip.weekday.name} %>
+               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.weekday.name} %>
         <% else %>
             <tr id="tip_day_<%=day.id%>">
               <td colspan="4">
                 <%= day.name %>
-                <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>);">create tip</button>
+                <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, '<%=day.name%>');">create tip</button>
               </td>
             </tr>
         <% end %>
@@ -20,13 +20,15 @@
 
           </tbody></table>
       <div align="center">
-    <table><tr><td><p class="textflow" align="center">
+    <table><tr><td>
       <% if !@edit_for.last? %>
+          <p class="textflow" align="center">
           <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
             Save and edit <%= @edit_for.next.name %> tips &gt;&gt;
           </a>
+          </p>
       <% end %>
-    </p></td><td><p class="textflow" align="center">
+    </td><td><p class="textflow" align="center">
       <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">Save changes</a>
     </p>
 <% end %></td></tr></table> </div>

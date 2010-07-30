@@ -45,12 +45,17 @@
           <p><font color="#666666" size="2"><%= shorten tip.description, 70 %></font></p>
 
           <div class="full_tip" style="visibility:hidden;display:none;">
+            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+
+<!--
             <% if tip.image.exists? -%>
                 <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
             <% end %>
             <b><%= tip.name %></b><br/>
 
             <p><%= tip.description %></p>
+-->
+
           </div>
         </td>
       </tr>
@@ -72,13 +77,18 @@
         $('td.tip').each(function() {
             $(this).qtip({
                 content: $('#' + this.id + ' .full_tip').html(),
+                hide: {
+                    delay: 500,
+                    fixed: true
+                },
                 style:  {
-                    name: 'cream',
-                    padding: '7px 13px',
-                    width: {
+//                    name: 'cream',
+//                    padding: '7px 13px',
+                    /*width: {
                         max: 410,
                         min: 0
-                    },
+                    },*/
+                    width: 400,
                     tip: true
                 },
                 position: {
@@ -94,3 +104,4 @@
         });
     })
 </script>
+

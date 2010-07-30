@@ -24,10 +24,16 @@ WEB_ROOT = 'http://brazilwide.com.br:12002'
 FACEBOOK_APP_ID = 'bdd587426a625843381681b7948e791b'
 FACEBOOK_APP_SECRET = 'a68430b55f9635b4e379bc935afbc23c'
 
+WEB_ROOT = 'http://brazilwide.com.br:12003'
+FACEBOOK_APP_ID = 'd34be619dd3a0dbab1f2595e0a65f983'
+FACEBOOK_APP_SECRET = '02f2c15e6dcfe5110ffa78267c63ae3a'
+
 
 #locally
 WEB_ROOT = 'http://localhost:3000'
 FACEBOOK_APP_ID = 'e8a82604ae771543db615e26aeb68c59'
 FACEBOOK_APP_SECRET = 'b2c7f0025850a6d3fd88c56a93ab8e0c'
 
-
+# register apps
+# http://developers.facebook.com/setup/
+# http://www.facebook.com/developers/apps.php?ret=1

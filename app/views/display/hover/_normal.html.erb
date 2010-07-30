@@ -1,0 +1,110 @@
+<% tip = place.tip %>
+
+<table border="0" cellpadding="0" cellspacing="0" width="372">
+
+    <tbody>
+    <tr>
+        <td background="images/picture-side.gif"></td>
+        <td valign="top">
+            <table border="0" cellpadding="3" cellspacing="0" width="100%">
+                <tbody>
+                <tr>
+                    <td colspan="2">
+                        <table bgcolor="#ece9d8" border="0" cellpadding="3" cellspacing="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <center>
+                                        <span class="subheadtable"><%=place.weekday.name%> <%=place.condition.full_name%></span>
+                                    </center>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="200">
+                        <center>
+                            <p>
+
+                                <!--no wishlist or anything like that-->
+                                <!--<span class="subheadtablelarge">
+                                    <a href="option-details.html">
+                                        <img src="images/selected-tour_f01.gif" alt="Add to your travel plans"
+                                         name="Wishlist"
+                                         id="Wishlist12" border="0" height="14" width="14"></a>
+                                </span>-->
+
+                                <!--no tip rating-->
+                                <!--Tip rating: 4.3/5
+                                <img src="images/star.gif" height="9" width="9">
+                                <img src="images/star.gif" height="9" width="9">
+                                <img src="images/star.gif" height="9" width="9">
+                                <img src="images/star.gif" height="9" width="9"><br>-->
+
+                                <!-- image -->
+                                <% if tip.image.exists? -%>
+                                    <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
+                                <% end %><br>
+
+                                <!-- description -->
+                                <%= tip.description %><br>
+
+                                <!--also good on: not implemented-->
+                                <!--Also good on: Tue, Wed, Fri-->
+                            </p>
+                        </center>
+                    </td>
+                    <td>
+                        <% if !empty?(tip.url) %>
+                            web: <a href="<%=tip.url%>"><%=tip.url%></a><br>
+                        <% end %>
+                        <% if !empty?(tip.phone) %>
+                            Phone: <%=tip.phone%><br>
+                        <% end %>
+
+                      <% if !empty?(tip.address.address) -%>
+                          Address: <%= tip.address.address %>
+                          <!--<small>
+                              <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">map</a>
+                          </small>-->
+                          <br/>
+                      <% end -%>
+                      
+                      <% if tip.address.lat != 0 %>
+                        <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
+                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100"></td>
+                      <% end %>
+                </tr>
+                </tbody>
+            </table>
+            <table bgcolor="#ece9d8" border="0" cellpadding="10" cellspacing="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <center>
+
+                            More tips from "<span class="text">What to do in<a href="sanfrancisco.html"> SAN FRANCISCO</a></span>" <br>
+
+                          <!-- no this functionality -->
+                            <!--<a href="Other%20Local%20Dinners.html">Other Local Dinners </a>|-->
+                            <!--<a href="dinners">Other dinner tips</a> |-->
+                            <!--<a href="week">View all week«s tips</a><br>-->
+
+
+                            <!--Guide by <a href="adsf">John47</a> |-->
+                            <!--<a href="">Map</a> -->
+                            <!--| Flag | Correct | Share | Advertise here-->
+                            <!--| <a href="app">Get App </a>-->
+                        </center>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

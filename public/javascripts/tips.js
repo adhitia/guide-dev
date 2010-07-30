@@ -17,7 +17,7 @@ if (!window.tips) var tips = {
     },
 
 
-    create: function(row, conditionId, weekdayId) {
+    create: function(row, conditionId, weekdayId, label) {
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {
@@ -32,7 +32,8 @@ if (!window.tips) var tips = {
                         cache: false,
                         data: {
                             condition_id: conditionId,
-                            weekday_id: weekdayId
+                            weekday_id: weekdayId,
+                            label: label
                         },
                         dataType: "html",
                         success: function(r) {
@@ -108,6 +109,10 @@ if (!window.tips) var tips = {
                 if (result.phoneNumbers && result.phoneNumbers.length > 0) {
                     e.find('a').data('result_phone', result.phoneNumbers[0].number);
                 }
+//                e.find('a').data('static_map_url', result.staticMapUrl);
+//                for (k in result) {
+//                    console.log(k + " : " + result[k]);
+//                }
             }
         } else {
             container.append('no results found');
@@ -116,6 +121,7 @@ if (!window.tips) var tips = {
 
     selectLocalResult: function(result) {
         var row = $(result).parents('.tipRoot')[0];
+        var container = $(result).parents('.local-search-container');
         var addr = $(result).find('.local_result_address').html();
         var lat = $(result).find('.local_result_lat').html();
         var lng = $(result).find('.local_result_lng').html();
@@ -127,12 +133,38 @@ if (!window.tips) var tips = {
         $(row).find('.tip_address_street').val(addr);
         $(row).find('.tip_address_lat').val(lat);
         $(row).find('.tip_address_lng').val(lng);
-//        alert($(row).find('.tip_url')[0].id + '   ' + url);
         $(row).find('.tip_url').val(url);
         $(row).find('.tip_phone').val(phone);
+
+        var ajax_form = $('#fetch_remote_content_form');
+        ajax_form.attr('action', url);
         $(row).find('.local-search-launch').click();
+        container.html('');
+
+//        common.setLoading(container);
+//        ajax_form.ajaxSubmit({
+//            type: 'GET',
+//            cache: false,
+//            iframe: true,
+//            dataType: "html",
+//            async: false,
+//            success: function(r) {
+//                alert(1);
+//                console.log(r);
+//                alert(r);
+//                $(row).find('.local-search-launch').click();
+//                container.html('');
+//            },
+//            error: function(a, b, c) {
+//                alert('error ' + a + ' | ' + b + ' | ' + c);
+//            }
+//        });
+//        alert(23);
     },
 
+    /**
+     * Loads local suggestions (address, url, phone) from google. 
+     */
     loadLocalSuggestions: function(anchor) {
         var container = $(anchor).next();
         if (container.css('display') == 'none') {
@@ -168,7 +200,6 @@ google.load('search', '1');
 google.load('maps', '3', {'other_params' : 'sensor=false'});
 
 $(document).ready(function() {
-//    alert('!!!');
     tips.init(document);
 });
 

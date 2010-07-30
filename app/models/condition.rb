@@ -18,9 +18,13 @@ class Condition < ActiveRecord::Base
 
   def full_name
     if weather == nil
-      name
+      if group == 'dinner'
+        name.capitalize + ' ' + group.capitalize
+      else
+        name
+      end
     else
-      (weather + ' ' + name).capitalize
+      weather.capitalize + ' ' + name.capitalize
     end
   end
 end

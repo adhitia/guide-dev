@@ -93,6 +93,9 @@ class DisplayController < ApplicationController
   def get_forecast(location_id, start, days)
     location = Location.find location_id
     forecast = location.weather_forecast
+    if forecast == nil
+      forecast = WeatherForecast.create(:location_id => location.id, :last_checked => DateTime.now - 2)
+    end
 
     diff = DateTime.now.to_f - forecast.last_checked.to_f
     now = DateTime.now

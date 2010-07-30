@@ -27,11 +27,7 @@ class CalendarsController < ApplicationController
 
     location_code = params[:location_code]
     location_name = params[:location_name]
-    location = Location.find_by_code location_code
-    if location == nil
-      Location.create(:name => location_name, :code => location_code)
-      location = Location.find_by_code location_code
-    end
+    location = find_or_create_location location_code, location_name
     @location_id = location.id
     @calendar.location_id = location.id
 
@@ -118,11 +114,7 @@ class CalendarsController < ApplicationController
     @calendar = Calendar.find(params[:id])
     location_code = params[:location_code]
     location_name = params[:location_name]
-    loc = Location.find_by_code location_code
-    if loc == nil
-      Location.create(:name => location_name, :code => location_code)
-      loc = Location.find_by_code location_code
-    end
+    loc = find_or_create_location location_code, location_name
     @calendar.location_id = loc.id;
 
     if location_code == ''
@@ -211,6 +203,15 @@ class CalendarsController < ApplicationController
 
   def share
     @calendar = Calendar.find(params[:id])
+  end
+
+  def find_or_create_location(location_code, location_name)
+    location = Location.find_by_code location_code
+    if location == nil
+      Location.create(:name => location_name, :code => location_code)
+      location = Location.find_by_code location_code
+    end
+    location
   end
 
 end

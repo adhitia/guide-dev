@@ -30,7 +30,7 @@
 
     <% @conditions.each do |condition| %>
         <tr>
-          <td><%= condition.name %></td>
+          <td><%= condition.full_name %></td>
           <% @weekdays.each do |day| %>
               <td>
                 <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="16" type="text">

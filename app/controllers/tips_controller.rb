@@ -39,7 +39,7 @@ class TipsController < ApplicationController
     @tip.save
     @place.save
 
-    render :partial => 'tips/edit_row', :locals => {:place => @place}
+    render :partial => 'tips/edit_row', :locals => {:place => @place, :label => params[:label]}
   end
 
   def update
