@@ -1,19 +1,25 @@
 if (!window.common) {
     $.ajaxSetup({
-//        error: function(event, request, options, error) {
-//            switch (event.status) {
-//                case 503: common.setLocation('maintenance.shtml'); break;
-//                case 404: common.setLocation('error.shtml'); break;
-//                case 401: common.setLocation('unauthenticated.shtml'); break;
-//                case 403: common.setLocation('unauthorized.shtml'); break;
-//                case 500: common.setLocation('oops.shtml'); break;
-//            }
-//        }
+        error: function(event, request, options, error) {
+            alert(event.status);
+            switch (event.status) {
+//                case 503: common.setLocation('maintenance'); break;
+//                case 404: common.setLocation('not-found'); break;
+                case 401: common.setLocation('/unauthenticated'); break;
+                case 403: common.setLocation('/unauthorized'); break;
+                case 500: common.setLocation('/error'); break;
+            }
+        }
     });
 
 
 
     var common = {
+        setLocation: function (location) {
+            if (window.location.href.indexOf(location) < 0)
+                window.location.replace(location);
+        },
+
         setLoading: function(container) {
             $(container).html('<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>');
         },

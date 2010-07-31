@@ -28,7 +28,6 @@ if (!window._cal) {
             var root = $(el).parents('.guiderer')[0];
             var id = $(root).attr('cal_id');
             var vote = $(el).attr('title');
-//            alert(id + '  ' + vote);
 
             $.ajax({
                 url: '<%=WEB_ROOT%>/calendars/' + id + '/vote/' + vote,
@@ -38,7 +37,6 @@ if (!window._cal) {
                     $(root).find('.inner').addClass('voted').css('width', vote * 20);
                 },
                 error: function(r, s, e) {
-//                    $('#' + target_id).html('error has occurred');
                 }
             });
         }

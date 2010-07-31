@@ -1,7 +1,7 @@
 require_library_or_gem 'oauth2'
 
 class UsersController < ApplicationController
-  before_filter :login_required, :only => :home
+#  before_filter :login_required, :only => :home
 
   def login
   end
@@ -74,16 +74,17 @@ class UsersController < ApplicationController
   end
 
   def home
+    return unless authenticate
     @user = @current_user
   end
 
   def show
     @user = User.find(params[:id])
     if @current_user && (@user.id == @current_user.id)
-      @advertised_calendars = Set.new
-      @user.advertisements.each do |ad|
-        @advertised_calendars.add ad.calendar;
-      end
+#      @advertised_calendars = Set.new
+#      @user.advertisements.each do |ad|
+#        @advertised_calendars.add ad.calendar;
+#      end
 #      puts @advertised_calendars.length
       render :action => 'home'
     end
@@ -94,6 +95,8 @@ class UsersController < ApplicationController
   end
 
   def edit
+    return unless authorize_user params[:id]
+
     @user = User.find(params[:id])
   end
 
@@ -112,6 +115,8 @@ class UsersController < ApplicationController
   end
 
   def update
+    return unless authorize_user params[:id]
+
     @user = User.find(params[:id])
     respond_to do |format|
       if @user.update_attributes(params[:user])

@@ -4,22 +4,23 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.with_options :controller => :tips do |tips|
-    tips.new_tip 'calendars/:id/tips/new', :action => 'new'
-    tips.create_tip 'calendars/:id/tips', :action => 'create', :conditions => { :method => :post }
-    tips.edit_tip 'calendars/:id/tips/:tip_id/edit', :action => 'edit'
-    tips.update_tip 'calendars/:id/tips/:tip_id', :action => 'update', :conditions => { :method => :put }
+#    tips.new_tip 'calendars/:id/tips/new', :action => 'new'
+#    tips.create_tip 'calendars/:id/tips', :action => 'create', :conditions => { :method => :post }
+#    tips.edit_tip 'calendars/:id/tips/:tip_id/edit', :action => 'edit'
+#    tips.update_tip 'calendars/:id/tips/:tip_id', :action => 'update', :conditions => { :method => :put }
+
     tips.follow_url 'calendars/:id/tips/:tip_id/url', :action => 'follow_url'
 
     map.unbind_tip 'occurrences/:occurrence_id/unbind', :controller => :tips, :action => :unbind
-    map.unbind_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
-    map.unbind_tip 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
+    map.move_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
+    map.switch_tips 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
   end
 
   map.manage_user '/users/:id/manage', :controller => :users, :action => :manage
 
   map.connect 'check_location', :controller => :util, :action => :check_location
   map.connect '', :controller => :users, :action => :index
-  map.connect 'index', :controller => :users, :action => :index
+#  map.connect 'index', :controller => :users, :action => :index
 
   map.connect 'calendars/:id/advertise', :controller => 'calendars', :action => 'advertise_choose', :conditions => { :method => :get }
   map.advertise_new 'calendars/:id/advertise', :controller => 'calendars', :action => 'advertise', :conditions => { :method => :post }
@@ -54,6 +55,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'faq', :controller => :application, :action => :faq
   map.connect 'how-it-works', :controller => :application, :action => :how_it_works
   map.connect 'join-us', :controller => :application, :action => :join_us
+  map.connect 'unauthenticated', :controller => :application, :action => :unauthenticated
+  map.connect 'unauthorized', :controller => :application, :action => :unauthorized
+  map.connect 'error', :controller => :application, :action => :error
 
 
 

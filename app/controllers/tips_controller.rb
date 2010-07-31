@@ -1,29 +1,32 @@
 class TipsController < ApplicationController
-  before_filter :login_required, :except => [:follow_url]
+#  before_filter :login_required, :except => [:follow_url]
 
-  def new
-    @tip = Tip.new
-    @calendar = Calendar.find(params[:id])
-    @tip.condition = Condition.find(params[:condition_id])
-    @weekdays = Weekday.all
-    @tip.weekdays << Weekday.find(params[:dow]);
-    @tip.advertisement = params[:ad] != nil
+#  def new
+#    @tip = Tip.new
+#    @calendar = Calendar.find(params[:id])
+#    @tip.condition = Condition.find(params[:condition_id])
+#    @weekdays = Weekday.all
+#    @tip.weekdays << Weekday.find(params[:dow]);
+#    @tip.advertisement = params[:ad] != nil
+#
+#    respond_to do |format|
+#      format.html # new.html.erb
+#      format.xml  { render :xml => @tip }
+#    end
+#  end
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @tip }
-    end
-  end
 
-
-  def edit
-    @calendar = Calendar.find(params[:id])
-    @tip = Tip.find(params[:tip_id])
-    @weekdays = Weekday.all
-  end
+#  def edit
+#    @calendar = Calendar.find(params[:id])
+#    @tip = Tip.find(params[:tip_id])
+#    @weekdays = Weekday.all
+#  end
 
 
   def create
+    @ajax = true
+    return unless authorize_guide params[:id]
+
     @calendar = Calendar.find(params[:id])
     @tip = Tip.new(:name => params[:new_tip_name])
     @tip.author_id= @current_user.id;
@@ -31,7 +34,7 @@ class TipsController < ApplicationController
                                :tip_id => @tip.id
 
     @place = ShowPlace.new;
-    @place.condition_id = params[:condition_id] 
+    @place.condition_id = params[:condition_id]
     @place.weekday_id = params[:weekday_id]
     @place.calendar = @calendar
     @place.tip = @tip
@@ -43,6 +46,9 @@ class TipsController < ApplicationController
   end
 
   def update
+    @ajax = true
+    return unless authorize_guide params[:id]
+    
     @calendar = Calendar.find(params[:id])
     params[:tips].each_pair do |id, tip_data|
       tip = Tip.find(id)
@@ -65,6 +71,9 @@ class TipsController < ApplicationController
 
   # removes binding between tip and calendar
   def unbind
+    @ajax = true
+    return unless authorize_guide params[:id]
+
     occurrence = ShowPlace.find(params[:occurrence_id])
     occurrence.delete
     occurrence.tip.delete
@@ -74,6 +83,9 @@ class TipsController < ApplicationController
 
   # moves tip to a different place
   def move
+    @ajax = true
+    return unless authorize_guide params[:id]
+
     occurrence = ShowPlace.find(params[:occurrence_id])
     condition = Condition.find(params[:condition_id])
     weekday = Weekday.find(params[:weekday_id])
@@ -86,6 +98,9 @@ class TipsController < ApplicationController
 
   # switches two tips in one calendar
   def switch
+    @ajax = true
+    return unless authorize_guide params[:id]
+
     occurrence = ShowPlace.find(params[:occurrence_id])
     target = ShowPlace.find(params[:target_id])
 
