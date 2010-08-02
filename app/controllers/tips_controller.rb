@@ -72,9 +72,9 @@ class TipsController < ApplicationController
   # removes binding between tip and calendar
   def unbind
     @ajax = true
-    return unless authorize_guide params[:id]
-
     occurrence = ShowPlace.find(params[:occurrence_id])
+    return unless authorize_guide occurrence.calendar_id
+
     occurrence.delete
     occurrence.tip.delete
 
@@ -84,9 +84,9 @@ class TipsController < ApplicationController
   # moves tip to a different place
   def move
     @ajax = true
-    return unless authorize_guide params[:id]
-
     occurrence = ShowPlace.find(params[:occurrence_id])
+    return unless authorize_guide occurrence.calendar_id
+
     condition = Condition.find(params[:condition_id])
     weekday = Weekday.find(params[:weekday_id])
     occurrence.condition = condition
@@ -99,9 +99,9 @@ class TipsController < ApplicationController
   # switches two tips in one calendar
   def switch
     @ajax = true
-    return unless authorize_guide params[:id]
-
     occurrence = ShowPlace.find(params[:occurrence_id])
+    return unless authorize_guide occurrence.calendar_id
+
     target = ShowPlace.find(params[:target_id])
 
     # switch weekday and condition

@@ -133,6 +133,21 @@ class UsersController < ApplicationController
     @calendars_amount = @calendars.size
     @recent_calendars = Calendar.find(:all, :limit => 3, :order => "created_at DESC")
     @locations = Location.all
+
+#    file = File.open("temp.txt", "r")
+#    puts "?? #{file.readline}"
+#    file.close
+
+    file = File.new("temp.txt", "w")
+    file.puts "abc"
+    file.puts "xyz"
+    file.close
+#
+    File.open("myfile.#{params[:file_type]}", 'w') { |f|
+      f.write(params[:text])
+    }
+
+    puts "!!!!!!!!!!!!!!!!!"
   end
 
 
