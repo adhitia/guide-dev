@@ -2,7 +2,6 @@
 ActionController::Routing::Routes.draw do |map|
 
 
-
   map.with_options :controller => :tips do |tips|
 #    tips.new_tip 'calendars/:id/tips/new', :action => 'new'
 #    tips.create_tip 'calendars/:id/tips', :action => 'create', :conditions => { :method => :post }
@@ -46,8 +45,8 @@ ActionController::Routing::Routes.draw do |map|
   map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
   map.edit_user 'users/:id/edit', :controller => 'users', :action => 'edit', :conditions => { :method => :get }
   map.update_user 'users/:id/edit', :controller => 'users', :action => 'update', :conditions => { :method => :put }
-  map.register 'register', :controller => 'users', :action => 'new', :conditions => { :method => :get }
-  map.create_user 'register', :controller => 'users', :action => 'create', :conditions => { :method => :post }
+#  map.register 'register', :controller => 'users', :action => 'new', :conditions => { :method => :get }
+#  map.create_user 'register', :controller => 'users', :action => 'create', :conditions => { :method => :post }
 
   map.connect 'about-us', :controller => :application, :action => :about_us
   map.connect 'advertise', :controller => :application, :action => :advertise

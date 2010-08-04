@@ -51,7 +51,6 @@ class CalendarsController < ApplicationController
     end
 
     # validate data
-#    if (empty? params[:calendar_name])
     if (empty?(params[:calendar_name_location]) || empty?(params[:calendar_name_target]))
       flash[:error] = 'Please select name.';
       render :action => :new
@@ -155,10 +154,10 @@ class CalendarsController < ApplicationController
     location = params[:search_location];
     if location && location != ''
       location = location.gsub('%', '\%').gsub('_', '\_')
-      @calendars = Calendar.find(:all, :conditions=> ["locations.name like ?", "%" + location + "%"],
+      @guides = Calendar.find(:all, :conditions=> ["locations.name like ?", "%" + location + "%"],
                                   :include=>"location")
     else
-      @calendars = Calendar.find(:all, :include=>"location")
+      @guides = Calendar.find(:all, :include=>"location")
     end
   end
 

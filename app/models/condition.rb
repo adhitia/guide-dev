@@ -1,4 +1,6 @@
 class Condition < ActiveRecord::Base
+  attr_protected
+
   def next
     Condition.find(id + 1)
   end

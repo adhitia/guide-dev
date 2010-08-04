@@ -2,7 +2,12 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+#require "rake"
+#Rake::Task["db:test:load"].invoke
+require "#{Rails.root}/db/seeds.rb"
+
 class ActiveSupport::TestCase
+
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -35,4 +40,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def create_with_id(id, obj)
+    obj.id = id
+    obj.save
+  end
+
+
+  protected
 end

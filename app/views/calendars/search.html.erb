@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-<% @calendars.each do |calendar| %>
+<% @guides.each do |calendar| %>
   <tr>
     <td><span class="headtextlighter"<%= link_to calendar.name, show_calendar_path(:id => calendar) %></span></td>
     <td><%=h calendar.location.name %></td>

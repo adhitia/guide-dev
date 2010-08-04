@@ -70,6 +70,7 @@ class TipsController < ApplicationController
   end
 
   # removes binding between tip and calendar
+  # for now, also removes tip
   def unbind
     @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])

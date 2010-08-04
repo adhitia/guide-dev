@@ -1,9 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  wcode: MyString
+  id: 1
+  name: 'Rio de Janeiro, Brazil'
+  code: 'BRXX0201'
 
 two:
-  name: MyString
-  wcode: MyString
+  id: 2
+  name: 'Paris, France'
+  code: 'pcode'
+

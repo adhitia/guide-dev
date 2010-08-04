@@ -1,11 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  address: MyString
+
+1:
+  id: 1
+  tip_id: 1
+  address: ''
+  lat: 0
+  lng: 0
+
+2:
+  id: 2
+  tip_id: 2
+  address: 'museum street 1'
   lat: 1.5
   lng: 1.5
 
-two:
-  address: MyString
-  lat: 1.5
-  lng: 1.5
