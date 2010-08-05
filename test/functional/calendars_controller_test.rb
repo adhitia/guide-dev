@@ -52,7 +52,7 @@ class CalendarsControllerTest < ActionController::TestCase
     assert_equal 'beach', tips[0].name, 'tip name'
     assert_equal 'museum', tips[1].name, 'tip name'
 
-    assert_redirected_to "calendars/#{guide.id}/edit"
+    assert_redirected_to "guides/#{guide.id}/edit"
   end
 
   test "edit guide" do

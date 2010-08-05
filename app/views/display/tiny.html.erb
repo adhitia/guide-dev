@@ -49,7 +49,7 @@
           <% end %>
           <span class="headtextdarker" align="center"><%= show_place.condition.name %>:<br>
             <% if tip.url != '' -%>
-                <a href="/calendars/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
                   <%= tip.name %>
                 </a>
             <% else -%>

@@ -18,7 +18,7 @@
           <th width="100px">
             <%= day.name %>
             <br/>
-            <a href="/calendars/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
+            <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
           </th>
       <% end %>
     </tr>
@@ -39,7 +39,7 @@
         <tr>
           <td>
             <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
-            <a href="/calendars/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
+            <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
           </td>
           <% @weekdays.each do |day| %>
               <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
@@ -85,5 +85,5 @@
 
 <BR><BR>
 <div align="right">
-  <a href="/calendars/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
+  <a href="/guides/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
 </div>

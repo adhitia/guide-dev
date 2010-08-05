@@ -2,7 +2,7 @@
 
 <br/>
 
-Your calendars<br/>
+Your guides<br/>
 <table>
   <tr>
     <th>Name</th>
@@ -11,8 +11,8 @@ Your calendars<br/>
 <% @user.calendars.each do |calendar| %>
   <tr>
     <td><%=h calendar.name %></td>
-    <td><%= link_to 'Show', show_calendar_path(calendar) %></td>
-    <td><%= link_to 'Edit', edit_calendar_path(calendar) %></td>
+    <td><%= link_to 'Show', show_guide_path(calendar) %></td>
+    <td><%= link_to 'Edit', edit_guide_path(calendar) %></td>
   </tr>
 <% end %>
 <% if @user.calendars.length == 0 %>
@@ -29,7 +29,7 @@ Your calendars<br/>
 
 
 <br/>
-<%= link_to 'New guide', new_calendar_path %>
+<%= link_to 'New guide', new_guide_path %>
 
 <%= link_to 'Edit', edit_user_path(@current_user) %>
 

@@ -40,10 +40,16 @@ class UsersController < ApplicationController
 #        @advertised_calendars.add ad.calendar;
 #      end
 #      puts @advertised_calendars.length
-#      render :action => 'home'
-      home
+      render :action => 'home'
+#      home
     end
   end
+
+  def home
+    return unless authenticate
+    @user = @current_user
+  end
+
 
 #  def new
 #    @user = User.new
@@ -136,10 +142,5 @@ class UsersController < ApplicationController
     else
       redirect_to :action => :show, :id => user
     end
-  end
-
-  def home
-    return unless authenticate
-    @user = @current_user
   end
 end
