@@ -1,7 +1,6 @@
 require_library_or_gem 'oauth2'
 
 class UsersController < ApplicationController
-#  before_filter :login_required, :only => :home
 
   def login
   end
@@ -35,13 +34,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @current_user && (@user.id == @current_user.id)
-#      @advertised_calendars = Set.new
-#      @user.advertisements.each do |ad|
-#        @advertised_calendars.add ad.calendar;
-#      end
-#      puts @advertised_calendars.length
       render :action => 'home'
-#      home
     end
   end
 

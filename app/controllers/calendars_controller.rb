@@ -3,12 +3,11 @@ require 'weather_man'
 require 'calendars_helper'
 
 class CalendarsController < ApplicationController
-#  before_filter :login_required, :only => [:advertise, :advertise_choose, :new, :edit]
 
   def show
-#    login_required
-
     @calendar = Calendar.find(params[:id])
+    @full_access = @current_user && (@calendar.user.id == @current_user.id);
+
     @today = Date.today.cwday - 1;
     @weekdays = Weekday.all
     @conditions = Condition.all

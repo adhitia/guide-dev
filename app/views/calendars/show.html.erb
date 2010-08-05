@@ -17,8 +17,10 @@
       <% @weekdays.each do |day| %>
           <th width="100px">
             <%= day.name %>
-            <br/>
-            <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
+            <% if @full_access %>
+                <br/>
+                <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
+            <% end %>
           </th>
       <% end %>
     </tr>
@@ -38,8 +40,11 @@
 
         <tr>
           <td>
-            <%= condition.weather ? condition.weather : '' %> <%= condition.name %> <br/>
-            <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
+            <%= condition.weather ? condition.weather : '' %> <%= condition.name %>
+            <% if @full_access %>
+                <br/>
+                <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
+            <% end %>
           </td>
           <% @weekdays.each do |day| %>
               <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
@@ -49,6 +54,8 @@
                 <% if tip != nil then %>
 
                     <div class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
+
+                      <% if @full_access %>
                       <table width=100% align="right">
                         <tr>
                           <td>
@@ -61,7 +68,9 @@
                           </td>
                         </tr>
                       </table>
+                      <% end %>
 
+                      <!-- tip statistics -->
                       <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
                         <span class="textgray">
                           Views= <%= tip.view_count %>
