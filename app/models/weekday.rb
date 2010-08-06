@@ -1,4 +1,6 @@
 class Weekday < ActiveRecord::Base
+  attr_protected
+
   def next
     Weekday.find((id % 7) + 1)
   end

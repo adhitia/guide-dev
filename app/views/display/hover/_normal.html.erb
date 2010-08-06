@@ -45,7 +45,7 @@
                     <td>
                       <!--url-->
                         <% if !empty?(tip.url) %>
-                            web: <a href="/calendars/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+                            web: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
                                     <%=shorten(tip.url[7..tip.url.length], 35)%>
                                  </a><br>
                         <% end %>
@@ -70,7 +70,7 @@
                     <td colspan=2 bgcolor="#000000">
 
 
-                            More tips from "<span class="text"><a href="/calendars/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a>" - built on <a href="http://www.Guiderer.com">Guiderer.com</a></span> <br>
+                            More tips from "<span class="text"><a href="/guides/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a>" - built on <a href="http://www.Guiderer.com">Guiderer.com</a></span> <br>
 
                           <!-- no this functionality -->
                             <!--<a href="Other%20Local%20Dinners.html">Other Local Dinners </a>|-->

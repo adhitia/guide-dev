@@ -4,7 +4,7 @@
 
 <p>&nbsp;</p>
 
-<form id="new_calendar_form" name="new_calendar_form" action="<%= new_calendar_path %>" method="POST">
+<form id="new_calendar_form" name="new_calendar_form" action="<%= create_guide_path %>" method="POST">
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
   <% if flash[:error] %>
       <p style="color:red;"><%= flash[:error] %></p>

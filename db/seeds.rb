@@ -1,3 +1,7 @@
+#require "../app/helpers/application_helper.rb"
+#include ApplicationHelper
+# why fucking error?
+
 # http://cpanel.brazilwide.com.br
 # gongon6442
 
@@ -8,22 +12,31 @@
 #   
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
-Condition.create(:id => 1, :group => "day", :name => "Morning", :weather => "sunny")
-Condition.create(:id => 2, :group => "day", :name => "Morning", :weather => "lousy")
-Condition.create(:id => 3, :group => "day", :name => "Lunch")
-Condition.create(:id => 4, :group => "day", :name => "Afternoon", :weather => "sunny")
-Condition.create(:id => 5, :group => "day", :name => "Afternoon", :weather => "lousy")
-Condition.create(:id => 6, :group => "dinner", :name => "Ritzy")
-Condition.create(:id => 7, :group => "dinner", :name => "Traditional")
-Condition.create(:id => 8, :group => "dinner", :name => "Cheap")
-Condition.create(:id => 9, :group => "nightlife", :name => "Clubbing")
-Condition.create(:id => 10, :group => "nightlife", :name => "Live Music")
-Condition.create(:id => 11, :group => "nightlife", :name => "Chilling")
 
-Weekday.create(:name => "Monday")
-Weekday.create(:name => "Tuesday")
-Weekday.create(:name => "Wednesday")
-Weekday.create(:name => "Thursday")
-Weekday.create(:name => "Friday")
-Weekday.create(:name => "Saturday")
-Weekday.create(:name => "Sunday")
+def create_with_id(id, obj)
+  obj.id = id
+  obj.save
+end
+
+
+Condition.delete_all
+create_with_id 1, Condition.new(:id => 1, :group => "day", :name => "Morning", :weather => "sunny")
+create_with_id 2, Condition.new(:id => 2, :group => "day", :name => "Morning", :weather => "lousy")
+create_with_id 3, Condition.new(:id => 3, :group => "day", :name => "Lunch")
+create_with_id 4, Condition.new(:id => 4, :group => "day", :name => "Afternoon", :weather => "sunny")
+create_with_id 5, Condition.new(:id => 5, :group => "day", :name => "Afternoon", :weather => "lousy")
+create_with_id 6, Condition.new(:id => 6, :group => "dinner", :name => "Ritzy")
+create_with_id 7, Condition.new(:id => 7, :group => "dinner", :name => "Traditional")
+create_with_id 8, Condition.new(:id => 8, :group => "dinner", :name => "Cheap")
+create_with_id 9, Condition.new(:id => 9, :group => "nightlife", :name => "Clubbing")
+create_with_id 10, Condition.new(:id => 10, :group => "nightlife", :name => "Live Music")
+create_with_id 11, Condition.new(:id => 11, :group => "nightlife", :name => "Chilling")
+
+Weekday.delete_all
+create_with_id 1, Weekday.new(:id => 1, :name => "Monday")
+create_with_id 2, Weekday.new(:id => 2, :name => "Tuesday")
+create_with_id 3, Weekday.new(:id => 3, :name => "Wednesday")
+create_with_id 4, Weekday.new(:id => 4, :name => "Thursday")
+create_with_id 5, Weekday.new(:id => 5, :name => "Friday")
+create_with_id 6, Weekday.new(:id => 6, :name => "Saturday")
+create_with_id 7, Weekday.new(:id => 7, :name => "Sunday")

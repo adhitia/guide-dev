@@ -74,10 +74,13 @@ $(document).ready(function() {
         });
 
         // drag'n'drop
-        $('#view_tips .tip').draggable({
-            handle: '.move-tip',
-            revert: 'invalid'
-        });
+        // workaround for the case when editing is not accessible
+        if ($('.move-tip').length > 0) {
+            $('#view_tips .tip').draggable({
+                handle: '.move-tip',
+                revert: 'invalid'
+            });
+        }
         $("#view_tips .tip").droppable({
             hoverClass: 'droppable-active',
             drop: function(event, ui) {

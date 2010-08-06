@@ -1,4 +1,4 @@
-<% form_tag("/calendars/#{@calendar.id}/tips/update", :method => "post", :id => 'edit_tips_form') do %>
+<% form_tag("/guides/#{@calendar.id}/tips/update", :method => "post", :id => 'edit_tips_form') do %>
 
   <table border="1" cellpadding="10" cellspacing="0" width="100%">
 
@@ -38,7 +38,7 @@
 
 
 <div id="new_tip" style="display:none;">
-  <% form_tag("/calendars/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
+  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
     <input id="new_tip_name" name="new_tip_name"/>
   <% end %>
 </div>

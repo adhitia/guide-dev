@@ -1,7 +1,7 @@
 if (!window.common) {
     $.ajaxSetup({
         error: function(event, request, options, error) {
-            alert(event.status);
+//            alert(event.status);
             switch (event.status) {
 //                case 503: common.setLocation('maintenance'); break;
 //                case 404: common.setLocation('not-found'); break;

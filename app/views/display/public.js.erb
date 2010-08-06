@@ -7,7 +7,7 @@ if (!window._cal) {
             $('#' + target_id).html('');
 
             $.ajax({
-                url: '<%=WEB_ROOT%>/calendars/' + id + '/' + style,
+                url: '<%=WEB_ROOT%>/guides/' + id + '/' + style,
                 type: 'GET',
                 data: {
                     'day' : day,
@@ -30,7 +30,7 @@ if (!window._cal) {
             var vote = $(el).attr('title');
 
             $.ajax({
-                url: '<%=WEB_ROOT%>/calendars/' + id + '/vote/' + vote,
+                url: '<%=WEB_ROOT%>/guides/' + id + '/vote/' + vote,
                 type: 'GET',
                 dataType: 'jsonp',
                 success: function() {

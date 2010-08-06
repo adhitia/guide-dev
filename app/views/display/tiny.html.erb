@@ -19,9 +19,47 @@
 
 
           <tr>
-            <td width="156" bgcolor="#DBDABD"><center>
-              <table bgcolor="#ffffff" border="0px" width="100%" cellspacing="0" cellpadding="0">
+            <td width="156" bgcolor="#DBDABD">
+              <table  bgcolor="ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
 
+                <tr>
+
+
+                     
+
+        <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
+          <% if tip.advertisement %>
+              <div align="right" style="color:gray;">advertisement</div>
+          <% end %>
+          <span class="headtextdarker" align="center"><%= show_place.condition.name %>:<br>
+            <% if tip.url != '' -%>
+                <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                  <%= tip.name %>
+                </a>
+            <% else -%>
+                <%= tip.name %>
+            <% end -%>
+          </span>
+            <% if tip.address.address != '' -%>
+                <br>
+                <span class="headtextdarker" ><small>
+                  <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= tip.address.lat %>+<%= tip.address.lng %>&z=16" target="_blank">map</a>
+                </small></span>
+            <% end -%>
+          </p>
+
+          <div class="full_tip" style="visibility:hidden;display:none;">
+            <% if tip.image.exists? -%>
+                <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
+            <% end %>
+            <b><%= tip.name %></b><br/>
+
+            <p><%= tip.description %></p>
+            <% if tip.address.address != '' -%>
+                <p><%= tip.address.address %></p>
+            <% end -%>
+          </div>
+        </td>   </tr>
                 <tr>
                   <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
                             <% if tip.advertisement %>
@@ -53,18 +91,20 @@
                             <p class="text">&nbsp;</p>
                     <p class="text">&nbsp;</p>
                     <p class="text">&nbsp;</p>
-                    <p class="text"><img src="images/arrowdown.gif" width="12" height="11" alt="What to do later today" /> </p></td>
+                    <p class="text">
+                      <img src="images/arrowdown.gif" width="12" height="11" alt="What to do later today" />
+                    </p></td>
                 </tr> <tr>
-                  <td colspan="2"><center>
-                    <span class="headtextdarkersmall"><img src="images/arrowleft.gif" alt="View Sunday" width="11" height="12" /> Cloudy Monday <img src="images/arrowright.gif" alt="View Tuesday" width="11" height="12" /></span>
-                  </center></td>
+                  <td colspan="2">
+                    <span class="headtextdarkersmall">
+                      <img src="images/arrowleft.gif" alt="View Sunday" width="11" height="12" />
+                      Cloudy Monday <img src="images/arrowright.gif" alt="View Tuesday" width="11" height="12" /></span>
+                  </td>
                 </tr>
               </table>
-            </center></td>
+            </td><td></td>
           </tr>   <% end %>
-          <tr>
-            <td width="156" align="center" bgcolor="#FFFFFF" ></td>
-          </tr>
+
           <tr>
             <td bgcolor="#DBDABD">
               <div class="starbar">
