@@ -1,28 +1,10 @@
 <h1>Account Info</h1>
+<%= link_to 'Create a new guide', new_calendar_path %> &nbsp;&nbsp;&nbsp;
 
-<br/>
+<%= link_to 'Edit Your Profile', edit_user_path(@current_user) %>    <BR><BR>  <BR>
 
 Your guides<br/>
 
-<!--
-
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
-
-<% @user.calendars.each do |calendar| %>
-  <tr>
-    <td><%=h calendar.name %></td>
-    <td><%= link_to 'Show', show_guide_path(calendar) %></td>
-    <td><%= link_to 'Edit', edit_guide_path(calendar) %></td>
-  </tr>
-<% end %>
-<% if @user.calendars.length == 0 %>
-  <tr><td>none</td></tr>
-<% end %>
-</table>
--->
 
 
 
@@ -72,6 +54,5 @@ Your guides<br/>
 <br/>
 <%= link_to 'New guide', new_guide_path %>
 
-<%= link_to 'Edit', edit_user_path(@current_user) %>
 
 

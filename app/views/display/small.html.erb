@@ -1,63 +1,167 @@
-<!--<script type="text/javascript" src="/jquery/jquery-1.4.2.min.js"></script>-->
-<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>-->
 <script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
 <link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
 
 
-<table class="guiderer" cal_id="<%= @calendar.id %>" bgcolor="#336600" border="1" cellpadding="5" cellspacing="0" width="200">
-  <tbody>
+<table width="150" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td bgcolor="#ffcc33">
-      <center>
-        <font size="5"><%= @calendar.name %> </font>
-      </center>
-    </td>
+    <td width="19"><img src="images/widget-corner.gif" width="19" height="19" /></td>
+    <td background="images/widget-side-t.gif">&nbsp;</td>
+    <td width="19"><img src="images/widget-corner-rt.gif" width="19" height="19" /></td>
   </tr>
   <tr>
-    <td bgcolor="#ffff66">
-      <center>
-        <%= present_day @day %>: <%= @dow.name %>, <%= @weather_forecast.original_condition %>
-      </center>
-    </td>
-  </tr>
-
-  <% @tips.each do |show_place| %>
-    <% tip = show_place.tip %>
+    <td width="19" background="images/widget-side.gif">&nbsp;</td>
+    <td valign="baseline" bgcolor="#DBDABD"><table width="132" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td class="tip" id="tip_<%= show_place.id %>">
-          <p align="center"><%= show_place.condition.name %>:<br>
-            <font size="5">
-              <% if tip.url != '' -%>
-                  <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
-                    <%= tip.name %>
-                  </a>
-              <% else -%>
-                  <%= tip.name %>
-              <% end -%>
-            </font>
+        <td width="122" bgcolor="#DBDABD" class="subheadtable"><spry:hover="subheadtablelarge">
+          <p align="center"class="subheadtablelarge"><%= @calendar.name %> </p>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#E4E3CD" class="headtextdarker"><center>
+          What to do on a <%= @weather_forecast.original_condition %>  <%= @dow.name %>
+          <br/>  </span>
+        </td>
+      </tr>
 
+
+
+        <% @tips.each do |show_place| %>
+      <% tip = show_place.tip %>
+      <tr>
+
+
+        <td><table  bgcolor="ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td height="3"><img src="images/picture-corner.gif" width="3" height="3" /></td>
+                    <td height="3" background="images/picture-side-t.gif"></td>
+                    <td height="3"><img src="images/picture-corner-rt.gif" width="3" height="3" /></td>
+                  </tr>
+                <tr>
+                      <td height="125" background="images/picture-side.gif">&nbsp;</td>
+                    <td valign="top">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                      <tr>
+
+
+        <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
+          <% if tip.advertisement %>
+              <div align="right" style="color:gray;">advertisement</div>
+          <% end %>
+          <span class="headtextdarker" align="center"><%= show_place.condition.name %>:<br>
+            <% if tip.url != '' -%>
+                <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                  <%= tip.name %>
+                </a>
+            <% else -%>
+                <%= tip.name %>
+            <% end -%>
+          </span>
             <% if tip.address.address != '' -%>
                 <br>
-                <span style="color:gray;text-align:right;"><small>
-                <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">map</a>
+                <span class="headtextdarker" ><small>
+                  <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= tip.address.lat %>+<%= tip.address.lng %>&z=16" target="_blank">map</a>
                 </small></span>
             <% end -%>
           </p>
 
-          <p><font color="#666666" size="2"><%= shorten tip.description, 70 %></font></p>
-
-          <!--put tip details here -->
           <div class="full_tip" style="visibility:hidden;display:none;">
             <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+          </div>
+           </tr>
+                <tr>
+                  <td height="3"><img src="images/picture-corner-bl.gif" width="3" height="3" /></td>
+                    <td height="3" background="images/picture-side-b.gif"></td>
+                    <td height="3"><img src="images/picture-corner-br.gif" width="3" height="3" /></td>
+                  </tr>
+                </table></td>
+      </tr>                                     <tr>
+                  <td height="3"><img src="images/picture-corner-bl.gif" width="3" height="3" /></td>
+                    <td height="3" background="images/picture-side-b.gif"></td>
+                    <td height="3"><img src="images/picture-corner-br.gif" width="3" height="3" /></td>
+                  </tr>
+                </table></td>
+  <% end %>
+
+       <tr>
+        <td background="images/underground.gif" bgcolor="#E4E3CD"><center>
+          <table width="100%" border="0" cellspacing="0" cellpadding="3">
+            <tr>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="week.html">Week</a>
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="saunday.html">Sun</a>
+              </center></td>
+              <td valign="top" bgcolor="#F0EFE3" class="headtextdarkersmall"><center>
+                M<br />
+                <img src="images/arrowup.gif" width="12" height="11" border="0" />
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="tuesday">T</a>
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="w">W</a>
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="t">T</a>
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="f">F</a>
+              </center></td>
+              <td valign="top" class="headtextdarkersmall"><center>
+                  <a href="sat">Sat</a>
+              </center></td>
+            </tr>
+          </table>
+        </center></td>
+      </tr>
+
+
+        <% if @day > 0 then %>
+      <tr>
+        <td >
+          <div align="right">
+            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);">
+              <span class="smalltext">
+                Previous day: <%= @dow.prev.name %></span></a>
           </div>
         </td>
       </tr>
   <% end %>
+  <% if @day < 2 then %>
+      <tr>
+        <td >
+          <div align="right">
 
-  <tr>
-    <td bgcolor="#ffff66">
+            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day + 1 %>);">
+              <font face="Geneva, Arial, Helvetica, sans-serif" size="4">Next day: <%= @dow.next.name %>&gt;&gt;</font></a>
 
-      <div class="starbar">
+          </div>
+              <div align="right">
+            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);">
+              <span class="smalltext">
+                Previous day: <%= @dow.prev.name %></span></a>
+          </div>
+
+        </td>
+      </tr>
+  <% end %>
+
+        <tr>
+        <td bgcolor="#DBDABD"><center>
+           <BR>
+          <span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>-->
+      </span>
+        </center></td>
+      </tr>
+      <tr>
+        <td valign="baseline" bgcolor="#DBDABD"><center>
+          <a href="guiderer.com"><img src="images/guiderer-logo.gif" width="122" height="30" border="0" align="baseline" /></a>
+        </center></td>
+      </tr>
+    </table>
+    <div class="starbar">
         <div class="outer">
           <div class="inner" style="width:<%=Integer(@rating*20)%>px">
             <a class="s5" onclick="_cal.vote(this);" title="5"></a>
@@ -68,13 +172,20 @@
           </div>
         </div>
       </div>
-
-      <font size="2">Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-        || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %></font>
     </td>
+    <td width="19" background="images/widget-side-r.gif">&nbsp;</td>
   </tr>
-  </tbody>
+  <tr>
+    <td width="19"><img src="images/widget-corner-bl.gif" width="19" height="19" /></td>
+    <td background="images/widget-side-b.gif">&nbsp;</td>
+    <td width="19"><img src="images/widget-corner-br.gif" width="19" height="19" /></td>
+  </tr>
 </table>
+
+
+
+
+
 
 
 
@@ -83,24 +194,19 @@
         $('td.tip').each(function() {
             $(this).qtip({
                 content: $('#' + this.id + ' .full_tip').html(),
-                hide: {
-                    delay: 500,
-                    fixed: true
-                },
                 style:  {
-//                    name: 'cream',
-//                    padding: '7px 13px',
-                    /*width: {
+                    name: 'cream',
+                    padding: '7px 13px',
+                    width: {
                         max: 410,
                         min: 0
-                    },*/
-                    width: 400,
+                    },
                     tip: true
                 },
                 position: {
                     corner: {
-                        tooltip: 'bottomLeft',
-                        target: 'topRight'
+                        target: 'topRight',
+                        tooltip: 'bottomLeft'
                     },
                     adjust: {
                         screen: true // Keep the tooltip on-screen at all times
@@ -108,6 +214,5 @@
                 }
             });
         });
-    })
+    });
 </script>
-
