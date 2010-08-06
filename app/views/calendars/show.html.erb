@@ -53,7 +53,7 @@
               <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
                 <% if tip != nil then %>
 
-                    <div class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
+                    <div id="tip_<%=place.id%>" class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
 
                       <% if @full_access %>
                       <table width=100% align="right">
@@ -69,6 +69,41 @@
                         </tr>
                       </table>
                       <% end %>
+
+                      <!--view full tip-->
+                      <!--link here-->
+                      <a class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay">view</a><br/>
+                      <!--contents here-->
+                      <div id="full_tip" class="full-tip-overlay">
+                        <b><%= tip.name %></b><br/>
+                        <%= image_tag tip.image.url(:medium), {:align=>"left"} %>
+                        <br/>
+
+                        <!--url-->
+                          <% if !empty?(tip.url) %>
+                              web: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+                                      <%=shorten(tip.url[7..tip.url.length], 35)%>
+                                   </a><br>
+                          <% end %>
+
+                        <!--phone-->
+                          <% if !empty?(tip.phone) %>
+                              Phone: <%=tip.phone%><br>
+                          <% end %>
+
+                        <!--address-->
+                        <% if !empty?(tip.address.address) -%>
+                            Address: <%= tip.address.address %>
+                            <br/>
+                        <% end -%>
+
+                        <!--map-->
+                        <% if tip.address.lat != 0 %>
+                          <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
+                          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100">
+                        <% end %>
+
+                      </div>
 
                       <!-- tip statistics -->
                       <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
@@ -89,6 +124,9 @@
     <% end %>
 
   </table>
+
+
+
 </div>
 
 

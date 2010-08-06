@@ -135,5 +135,11 @@ $(document).ready(function() {
 			}
         });
 
+//        $('#view_tips .view-tip[rel]').overlay();
+        $('#view_tips .view-tip[rel]').overlay({
+            effect: 'apple'/*,
+            onBeforeLoad: function() {
+            }*/
+        });
     }
 });

@@ -78,8 +78,9 @@
                       <!--map-->
                       <% if tip.address.lat != 0 %>
                         <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
-                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100"></td>
+                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100">
                       <% end %>
+                    </td>
                 </tr>
                 </tbody>
             </table>
