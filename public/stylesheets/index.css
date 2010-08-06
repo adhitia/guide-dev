@@ -7,15 +7,21 @@
 	color: #ffffff;
 	text-indent: 0px;
 }
+
+.textdark {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #000000;
+	text-indent: 0px;
+}
 .subhead {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: xx-large;
 	text-transform: uppercase;
-	color: #0066ab;
-	background-color: #BFF1F7;
-	padding: 5px;
+	color: #ccffff;
+	background-color: #0066cc;
+	padding: 10px;
 	margin-left: 60px;
-	margin-right: 200px;
 }
 .smalltext {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -54,6 +60,15 @@ body {
 	color: #ffffff;
 	font-weight: bold;
 }
+
+.subheadtablemed {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	text-transform: uppercase;
+	color: #000000;
+	font-weight: bold;
+}
+
 .subheadtablegray {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: large;

@@ -1,31 +1,17 @@
 <% tip = place.tip %>
 
-<table border="0" cellpadding="0" cellspacing="0" width="372">
 
-    <tbody>
-    <tr>
-        <td valign="top">
-            <table border="0" cellpadding="3" cellspacing="0" width="100%">
+            <table border="0" cellpadding="2" cellspacing="0" width="100%">
                 <tbody>
                 <tr>
-                    <td colspan="2">
-                        <table bgcolor="#ece9d8" border="0" cellpadding="3" cellspacing="0" width="100%">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <center>
-                                        <span class="subheadtable"><%=place.weekday.name%> <%=place.condition.full_name%></span>
-                                    </center>
-                                </td>
-
-                            </tr>
-                            </tbody>
-                        </table>
+                    <td colspan="2" bgcolor="#000000">
+                      <span class="subheadtable"><%= tip.name %> this <%=place.weekday.name%> on a <%=place.condition.full_name%>  </span>
+                        
                     </td>
                 </tr>
                 <tr>
                     <td valign="top" width="200">
-                        <center>
+
                             <p>
 
                                 <!--no wishlist or anything like that-->
@@ -54,7 +40,7 @@
                                 <!--also good on: not implemented-->
                                 <!--Also good on: Tue, Wed, Fri-->
                             </p>
-                        </center>
+                        
                     </td>
                     <td>
                       <!--url-->
@@ -78,18 +64,13 @@
                       <!--map-->
                       <% if tip.address.lat != 0 %>
                         <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
-                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x100&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="100"></td>
+                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x150&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="150"></td>
                       <% end %>
-                </tr>
-                </tbody>
-            </table>
-            <table bgcolor="#ece9d8" border="0" cellpadding="10" cellspacing="0" width="100%">
-                <tbody>
-                <tr>
-                    <td>
-                        <center>
+                </tr>   <tr>
+                    <td colspan=2 bgcolor="#000000">
 
-                            More tips from "<span class="text"><a href="/calendars/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a></span>" <br>
+
+                            More tips from "<span class="text"><a href="/calendars/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a>" - built on <a href="http://www.Guiderer.com">Guiderer.com</a></span> <br>
 
                           <!-- no this functionality -->
                             <!--<a href="Other%20Local%20Dinners.html">Other Local Dinners </a>|-->
@@ -101,13 +82,11 @@
                             <!--<a href="">Map</a> -->
                             <!--| Flag | Correct | Share | Advertise here-->
                             <!--| <a href="app">Get App </a>-->
-                        </center>
+
                     </td>
 
                 </tr>
                 </tbody>
             </table>
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+ 

@@ -1,18 +1,18 @@
 <h1>Account Info</h1>
+<%= link_to 'Create a new guide', new_calendar_path %> &nbsp;&nbsp;&nbsp;
 
-<br/>
+<%= link_to 'Edit Your Profile', edit_user_path(@current_user) %>    <BR><BR>  <BR>
 
 Your calendars<br/>
 <table>
-  <tr>
-    <th>Name</th>
-  </tr>
+
 
 <% @user.calendars.each do |calendar| %>
   <tr>
-    <td><%=h calendar.name %></td>
-    <td><%= link_to 'Show', show_calendar_path(calendar) %></td>
-    <td><%= link_to 'Edit', edit_calendar_path(calendar) %></td>
+    <td><span class="subheadtable"><%=h calendar.name %>&nbsp;&nbsp;</span></td>
+    <td>&nbsp;<%= link_to 'Show', show_calendar_path(calendar) %></td>
+    <td>&nbsp;&nbsp;<%= link_to 'Edit Week', edit_calendar_path(calendar) %></td>
+    <td> &nbsp; or Edit &nbsp;<a href="http://localhost:3000/calendars/9/edit#Monday">M</a> | <a href="http://localhost:3000/calendars/9/edit#Tuesday">T</a> | <a href="http://localhost:3000/calendars/9/edit#Wednesday">W</a> | <a href="http://localhost:3000/calendars/9/edit#Thursday">Th</a> | <a href="http://localhost:3000/calendars/9/edit#Friday">F</a> | <a href="http://localhost:3000/calendars/9/edit#Saturday">Sat</a> | <a href="http://localhost:3000/calendars/9/edit#Sunday">Sun</a></td>
   </tr>
 <% end %>
 <% if @user.calendars.length == 0 %>
@@ -29,8 +29,6 @@ Your calendars<br/>
 
 
 <br/>
-<%= link_to 'New guide', new_calendar_path %>
 
-<%= link_to 'Edit', edit_user_path(@current_user) %>
 
 
