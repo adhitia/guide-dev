@@ -1,27 +1,4 @@
 class TipsController < ApplicationController
-#  before_filter :login_required, :except => [:follow_url]
-
-#  def new
-#    @tip = Tip.new
-#    @calendar = Calendar.find(params[:id])
-#    @tip.condition = Condition.find(params[:condition_id])
-#    @weekdays = Weekday.all
-#    @tip.weekdays << Weekday.find(params[:dow]);
-#    @tip.advertisement = params[:ad] != nil
-#
-#    respond_to do |format|
-#      format.html # new.html.erb
-#      format.xml  { render :xml => @tip }
-#    end
-#  end
-
-
-#  def edit
-#    @calendar = Calendar.find(params[:id])
-#    @tip = Tip.find(params[:tip_id])
-#    @weekdays = Weekday.all
-#  end
-
 
   def create
     @ajax = true
@@ -117,5 +94,18 @@ class TipsController < ApplicationController
     target.save
 
     render :text => 'dummy response'
+  end
+
+  def show
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    render :partial => 'tips/show', :locals => {:place => occurrence}
+  end
+
+  def edit
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    return unless authorize_guide occurrence.calendar_id
+    render :partial => 'tips/edit', :locals => {:place => occurrence}
   end
 end

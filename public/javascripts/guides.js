@@ -135,11 +135,45 @@ $(document).ready(function() {
 			}
         });
 
-//        $('#view_tips .view-tip[rel]').overlay();
-        $('#view_tips .view-tip[rel]').overlay({
-            effect: 'apple'/*,
-            onBeforeLoad: function() {
-            }*/
+        $('#view_tips .view-tip').overlay({
+            effect: 'apple',
+            closeOnClick: true,
+            closeOnEsc: true,
+            onLoad: function() {
+                var wrap = this.getOverlay().find('.content');
+                common.setLoading(wrap);
+                $.ajax({
+                    url: this.getTrigger().attr("href"),
+                    cache: false,
+                    dataType: "html",
+                    success: function(r) {
+                        wrap.html(r);
+                    }
+                });
+            }
+        });
+        $('#view_tips .edit-tip').overlay({
+            mask: {
+                color: 'grey',
+                loadSpeed: 200,
+                opacity: 0.5
+            },
+            effect: 'apple',
+            closeOnClick: false,
+            closeOnEsc: false,
+            onLoad: function() {
+                var wrap = this.getOverlay().find('.content');
+                common.setLoading(wrap);
+                $.ajax({
+                    url: this.getTrigger().attr("href"),
+                    cache: false,
+                    dataType: "html",
+                    success: function(r) {
+                        wrap.html(r);
+                        tips.init(wrap);
+                    }
+                });
+            }
         });
     }
 });

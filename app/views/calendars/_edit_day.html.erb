@@ -1,63 +1,61 @@
 <% form_tag("/guides/#{@calendar.id}/tips/update", :method => "post", :id => 'edit_tips_form') do %>
 
-  <table border="1" cellpadding="10" cellspacing="0" width="100%">
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
 
-    <tbody>
+      <tbody>
 
-    <% @conditions.each do |condition| %>
-        <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
-        <% if tip != nil then %>
-               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.condition.full_name} %>
-        <% else %>
-            <tr id="tip_cond_<%=condition.id%>">
-              <td colspan="4">
-                <%= condition.full_name %>
-                <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, '<%=condition.full_name%>');">create tip</button>
-              </td>
-            </tr>
-        <% end %>
-    <% end %>
-
-          </tbody></table>
-      <div align="center">
-     <table><tr><td>
-      <% if !@edit_for.last? %>
-           <p class="textflow" align="center">
-          <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
-            Save and go to <%= @edit_for.next.name %> &gt;&gt;
-          </a>
-           </p>
+      <% @conditions.each do |condition| %>
+          <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
+          <% if tip != nil then %>
+              <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.condition.full_name} %>
+          <% else %>
+              <tr id="tip_cond_<%= condition.id %>">
+                <td colspan="4">
+                  <%= condition.full_name %>
+                  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, '<%=condition.full_name%>');">create
+                    tip
+                  </button>
+                </td>
+              </tr>
+          <% end %>
       <% end %>
-    </td><td><p class="textflow" align="center">
-      <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">Save changes</a>
-    </p></td>
 
-       <TD><p class="textflow" align="center">
-         <%= link_to 'Show me my guide', show_guide_path(:id => @calendar) %></p>
-       </TD>
-     </tr>
+      </tbody>
+    </table>
+    <div align="center">
+      <table>
+        <tr>
+          <td>
+            <% if !@edit_for.last? %>
+                <p class="textflow" align="center">
+                  <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
+                    Save and go to <%= @edit_for.next.name %> &gt;&gt;
+                  </a>
+                </p>
+            <% end %>
+          </td>
+          <td><p class="textflow" align="center">
+            <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">Save changes</a>
+          </p></td>
 
-     </table>   </div>
+          <TD><p class="textflow" align="center">
+            <%= link_to 'Show me my guide', show_guide_path(:id => @calendar) %></p>
+          </TD>
+        </tr>
+
+      </table>
+    </div>
 
 
 
 
-    <!--<p class="textflow" align="center">
-      <a href="javascript:" onclick="$('#edit_calendar_by_weekday').tabs('select', <%= @edit_for.id - 1 %>);">discard</a>
-    </p>-->
 <% end %>
 
 
 <div id="new_tip" style="display:none;">
   <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
-    <input id="new_tip_name" name="new_tip_name"/>
+      <input id="new_tip_name" name="new_tip_name"/>
   <% end %>
 </div>
 
-<!--
-<div id="global-loading-indicator" style="display:none;top:50%;left:50%;position:fixed;z-index:2147483640;width:100px;height:50px;">
-  <img src="/images/loading-indicator.gif">
-  <br/>
-</div>
--->
 

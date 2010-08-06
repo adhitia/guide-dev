@@ -31,6 +31,9 @@ ActionController::Routing::Routes.draw do |map|
   map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
 
+  map.edit_tip  'tips/:occurrence_id/edit', :controller => :tips, :action => :edit, :conditions => { :method => :get }
+  map.show_tip  'tips/:occurrence_id', :controller => :tips, :action => :show, :conditions => { :method => :get }
+
   map.login 'login', :controller => 'users', :action => 'login'
   map.process_login 'process_login', :controller => 'users', :action => 'process_login'
   map.open_id_complete 'session', :controller => :users, :action => :openid, :conditions => { :method => :get }

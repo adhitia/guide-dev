@@ -170,11 +170,12 @@ if (!window.tips) var tips = {
         if (container.css('display') == 'none') {
             common.setLoading(container);
 
-            var row = $(anchor).parents('.tipRoot')[0];
+            var root = $(anchor).parents('.tipRoot')[0];
             var ls = new google.search.LocalSearch();
-            ls.setCenterPoint($(row).attr('city'));
-            ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, row]);
-            ls.execute($(row).find('.tip_name').val());
+            ls.setCenterPoint($(root).attr('city'));
+            ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
+            ls.execute($(root).find('.tip_name').val());
+//            alert(root);
         }
         container.toggle();
     },
