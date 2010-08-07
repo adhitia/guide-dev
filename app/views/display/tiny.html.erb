@@ -71,7 +71,7 @@
                                     <%= tip.name %>
                                   </a>
                               <% else -%>
-                                  <%= tip.name %>
+                                  <!%= tip.name %>
                               <% end -%>
                             </span>
                               <% if tip.address.address != '' -%>
@@ -96,9 +96,9 @@
                     </p></td>
                 </tr> <tr>
                   <td colspan="2">
-                    <span class="headtextdarkersmall">
-                      <img src="images/arrowleft.gif" alt="View Sunday" width="11" height="12" />
-                      Cloudy Monday <img src="images/arrowright.gif" alt="View Tuesday" width="11" height="12" /></span>
+                    <span class="headtextdarkersmall" align="center">
+                      <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="11" height="12" /></a>
+                      <%= @dow.name %> <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="11" height="12" /></a></span>
                   </td>
                 </tr>
               </table>

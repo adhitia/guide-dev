@@ -73,11 +73,11 @@
                       <% end %>
 
                       <!-- tip statistics -->
-                      <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
-                        <span class="textgray">
-                          Views= <%= tip.view_count %>
-                          Clicks= <%= tip.click_count %>
-                        </span>
+                      <b><span class="headtextdarker"><%= tip.name %></span></b><br/>
+                        <table><tr ><td ><span class="textgraysmall">
+                          Views= <%= tip.view_count %></td><td class="textgraysmall">
+                          Clicks= <%= tip.click_count %></span></td></tr></table>
+                        
                     </div>
 
                 <% else %>
