@@ -12,17 +12,19 @@
 
 <div id="view_tips">
 
-  <table width="100%" border="1" cellpadding="10" cellspacing="0">
+  <table width="100%" border="1" cellpadding="0" cellspacing="0">
 
     <tr>
       <th></th>
       <% @weekdays.each do |day| %>
-          <th width="100px">
+          <th>
+            <div style="padding:10px">
             <%= day.name %>
             <% if @full_access %>
                 <br/>
                 <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
             <% end %>
+            </div>
           </th>
       <% end %>
     </tr>
@@ -41,13 +43,18 @@
         <% prev_cond = condition %>
 
         <tr>
+
           <td>
+            <!--left labels-->
+            <div style="padding:10px">
             <%= condition.weather ? condition.weather : '' %> <%= condition.name %>
             <% if @full_access %>
                 <br/>
                 <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
             <% end %>
+            </div>
           </td>
+
           <% @weekdays.each do |day| %>
               <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
               <% tip = place == nil ? nil : place.tip %>
@@ -55,7 +62,7 @@
               <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
                 <% if tip != nil then %>
 
-                    <div id="tip_<%=place.id%>" class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
+                    <div style="margin:10px" id="tip_<%=place.id%>" class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
 
                       <% if @full_access %>
                       <table width=100% align="right">
@@ -99,7 +106,7 @@
                     </div>
 
                 <% else %>
-                    <div class="no-tip" align="center"><BR>no tip<BR><BR></div>
+                    <div style="padding:10px" class="no-tip" align="center"><BR>no tip<BR><BR></div>
                 <% end %>
               </td>
 

@@ -245,8 +245,11 @@ legend    {
 }
 
 #view_tips .tip {
-    height:100%;
-    width:100%;
+    /*height:100%;*/
+    /*width:100%;*/
+    height:110px;
+    width:110px;
+    overflow:hidden;
     background-color:white;
 }
 
@@ -285,8 +288,11 @@ legend    {
 
 #view_tips .no-tip {
     background-color:lightgray;
-    height:100%;
-    width:100%;
+    /*height:100%;*/
+    /*width:100%;*/
+    height:110px;
+    width:110px;
+    overflow:hidden;
 }
 
 #view_tips .droppable-active {
@@ -353,3 +359,14 @@ legend    {
 	width:35px;
 }
 
+.local-search-container {
+    position:absolute;
+    background-color:white;
+    display:none;
+    border: 1px solid black;
+    width:260px;
+    color:black !important;
+}
+.local-search-container a {
+    color:black !important;
+}
