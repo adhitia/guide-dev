@@ -1,0 +1,161 @@
+<script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
+<link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+<table width="160" border="0" cellpadding="5" cellspacing="0" bordercolor="#999900">
+      <tr>
+
+            <td bgcolor="#DBDABD">
+              <span class="subheadtablemed"><%= @calendar.name %>' travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span>
+            </td>
+          </tr>
+
+                  <% @tips.each do |show_place| %>
+      <% tip = show_place.tip %>
+
+
+          <tr>
+            <td width="156" bgcolor="#DBDABD">
+              <table  bgcolor="ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+
+                     
+
+        <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
+          <% if tip.advertisement %>
+              <div align="right" style="color:gray;">advertisement</div>
+          <% end %>
+          <span class="headtextdarker" align="center"><%= show_place.condition.name %>:<br>
+            <% if tip.url != '' -%>
+                <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                  <%= tip.name %>
+                </a>
+            <% else -%>
+                <%= tip.name %>
+            <% end -%>
+          </span>
+            <% if tip.address.address != '' -%>
+                <br>
+                <span class="headtextdarker" ><small>
+                  <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= tip.address.lat %>+<%= tip.address.lng %>&z=16" target="_blank">map</a>
+                </small></span>
+            <% end -%>
+          </p>
+
+          <div class="full_tip" style="visibility:hidden;display:none;">
+            <% if tip.image.exists? -%>
+                <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
+            <% end %>
+            <b><%= tip.name %></b><br/>
+
+            <p><%= tip.description %></p>
+            <% if tip.address.address != '' -%>
+                <p><%= tip.address.address %></p>
+            <% end -%>
+          </div>
+        </td>   </tr>
+                <tr>
+                  <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
+                            <% if tip.advertisement %>
+                                <div align="right" style="color:gray;">advertisement</div>
+                            <% end %>
+                            <span class="headtextdarker" align="center">
+                              <% if tip.url != '' -%>
+                                  <a href="/calendars/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                                    <%= tip.name %>
+                                  </a>
+                              <% else -%>
+                                  <!%= tip.name %>
+                              <% end -%>
+                            </span>
+                              <% if tip.address.address != '' -%>
+                                  <br>
+                                  <span class="headtextdarker" >
+                                    <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= tip.address.lat %>+<%= tip.address.lng %>&z=16" target="_blank">map</a>
+                                  </span>
+                              <% end -%>
+
+
+                            <div class="full_tip" style="visibility:hidden;display:none;">
+                              <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+                            </div>
+                          </td>
+
+                  <td><p class="text"><img src="images/arrowup.gif" alt="Earlier" width="12" height="11" /></p>
+                            <p class="text">&nbsp;</p>
+                    <p class="text">&nbsp;</p>
+                    <p class="text">&nbsp;</p>
+                    <p class="text">
+                      <img src="images/arrowdown.gif" width="12" height="11" alt="What to do later today" />
+                    </p></td>
+                </tr> <tr>
+                  <td colspan="2">
+                    <span class="headtextdarkersmall" align="center">
+                      <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);"><img src="images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="11" height="12" /></a>
+                      <%= @dow.name %> <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);"><img src="images/arrowright.gif" alt="View <%= @dow.next.name %>" width="11" height="12" /></a></span /align>
+                  </td>
+                </tr>
+              </table>
+            </td><td></td>
+          </tr>   <% end %>
+
+          <tr>
+            <td bgcolor="#DBDABD">
+              <div class="starbar">
+      <div class="outer">
+        <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+          <a class="s5" onclick="_cal.vote(this);" title="VOTE 5"></a>
+          <a class="s4" onclick="_cal.vote(this);" title="VOTE 4"></a>
+          <a class="s3" onclick="_cal.vote(this);" title="VOTE 3"></a>
+          <a class="s2" onclick="_cal.vote(this);" title="VOTE 2"></a>
+          <a class="s1" onclick="_cal.vote(this);" title="VOTE 1"></a>
+        </div>
+      </div>
+    </div> <span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--><BR> WWW.GUIDERER.COM<br>
+      </span>
+            </td>
+          </tr>
+        </table>
+              
+
+
+
+
+
+     
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('td.tip').each(function() {
+            $(this).qtip({
+                content: $('#' + this.id + ' .full_tip').html(),
+                style:  {
+                    name: 'cream',
+                    padding: '3px 3px',
+                    width: {
+                        max: 410,
+                        min: 0
+                    },
+                    tip: true
+                },
+                position: {
+                    corner: {
+                        target: 'topRight',
+                        tooltip: 'bottomLeft'
+                    },
+                    adjust: {
+                        screen: true // Keep the tooltip on-screen at all times
+                    }
+                }
+            });
+        });
+    });
+</script>

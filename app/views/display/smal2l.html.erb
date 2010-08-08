@@ -1,0 +1,113 @@
+<!--<script type="text/javascript" src="/jquery/jquery-1.4.2.min.js"></script>-->
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>-->
+<script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
+<link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
+
+
+<table class="guiderer" cal_id="<%= @calendar.id %>" bgcolor="#336600" border="1" cellpadding="5" cellspacing="0" width="200">
+  <tbody>
+  <tr>
+    <td bgcolor="#ffcc33">
+      <center>
+        <font size="5"><%= @calendar.name %> </font>
+      </center>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffff66">
+      <center>
+        <%= present_day @day %>: <%= @dow.name %>, <%= @weather_forecast.original_condition %>
+      </center>
+    </td>
+  </tr>
+
+  <% @tips.each do |show_place| %>
+    <% tip = show_place.tip %>
+      <tr>
+        <td class="tip" id="tip_<%= show_place.id %>">
+          <p align="center"><%= show_place.condition.name %>:<br>
+            <font size="5">
+              <% if tip.url != '' -%>
+                  <a href="/calendars/<%= @calendar.id %>/tips/<%= tip.id %>/url">
+                    <%= tip.name %>
+                  </a>
+              <% else -%>
+                  <%= tip.name %>
+              <% end -%>
+            </font>
+
+            <% if tip.address.address != '' -%>
+                <br>
+                <span style="color:gray;text-align:right;"><small>
+                <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">map</a>
+                </small></span>
+            <% end -%>
+          </p>
+
+          <p><font color="#666666" size="2"><%= shorten tip.description, 70 %></font></p>
+
+          <!--put tip details here -->
+          <div class="full_tip" style="visibility:hidden;display:none;">
+            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+          </div>
+        </td>
+      </tr>
+  <% end %>
+
+  <tr>
+    <td bgcolor="#ffff66">
+
+      <div class="starbar">
+        <div class="outer">
+          <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+            <a class="s5" onclick="_cal.vote(this);" title="5"></a>
+            <a class="s4" onclick="_cal.vote(this);" title="4"></a>
+            <a class="s3" onclick="_cal.vote(this);" title="3"></a>
+            <a class="s2" onclick="_cal.vote(this);" title="2"></a>
+            <a class="s1" onclick="_cal.vote(this);" title="1"></a>
+          </div>
+        </div>
+      </div>
+
+      <font size="2">Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+        || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %></font>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('td.tip').each(function() {
+            $(this).qtip({
+                content: $('#' + this.id + ' .full_tip').html(),
+                hide: {
+                    delay: 500,
+                    fixed: true
+                },
+                style:  {
+//                    name: 'cream',
+//                    padding: '7px 13px',
+                    /*width: {
+                        max: 410,
+                        min: 0
+                    },*/
+                    width: 400,
+                    tip: true
+                },
+                position: {
+                    corner: {
+                        tooltip: 'bottomLeft',
+                        target: 'topRight'
+                    },
+                    adjust: {
+                        screen: true // Keep the tooltip on-screen at all times
+                    }
+                }
+            });
+        });
+    })
+</script>
+
