@@ -5,6 +5,7 @@ class TipsController < ApplicationController
     return unless authorize_guide params[:id]
 
     @calendar = Calendar.find(params[:id])
+    @full_access = @current_user && (@calendar.user.id == @current_user.id);
     @tip = Tip.new(:name => params[:new_tip_name])
     @tip.author_id= @current_user.id;
     @tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location_id => @calendar.location_id,
@@ -20,6 +21,7 @@ class TipsController < ApplicationController
     @place.save
 
     render :partial => "tips/#{params[:result]}", :locals => {:place => @place, :label => params[:label]}
+#    render :partial => "tips/edit", :locals => {:place => @place}
   end
 
   def update
@@ -27,6 +29,7 @@ class TipsController < ApplicationController
     return unless authorize_guide params[:id]
     
     @calendar = Calendar.find(params[:id])
+    @full_access = @current_user && (@calendar.user.id == @current_user.id);
     params[:tips].each_pair do |id, tip_data|
       tip = Tip.find(id)
       tip.address.update_attributes tip_data[:address]
@@ -56,7 +59,8 @@ class TipsController < ApplicationController
     occurrence.delete
     occurrence.tip.delete
 
-    render :text => 'dummy response'
+#    render :text => 'dummy response'
+    render :partial => 'tips/no_tip_tile', :locals => {:condition => occurrence.condition, :day => occurrence.weekday}
   end
 
   # moves tip to a different place

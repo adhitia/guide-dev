@@ -1,0 +1,44 @@
+<% tip = place.tip %>
+
+<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
+
+  <% if @full_access %>
+  <table width=100% align="right">
+    <tr>
+      <td>
+        <!--move tip-->
+        <div class="move-tip"></div>
+      </td>
+      <td width=20px>
+        <!--delete tip-->
+        <div class="delete-tip"></div>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+
+  <!--view full tip-->
+  <!--link here-->
+  <a class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>">view</a><br/>
+  <div class="full-tip-overlay">
+    <!--contents here-->
+    <div class="content"></div>
+  </div>
+
+
+  <% if @full_access %>
+      <!--edit tip in overlay-->
+      <a class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit">edit</a><br/>
+      <div class="edit-tip-overlay">
+        <div class="content"></div>
+      </div>
+  <% end %>
+
+
+  <!-- tip statistics -->
+  <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
+    <span class="textgray">
+      Views= <%= tip.view_count %>
+      Clicks= <%= tip.click_count %>
+    </span>
+</div>

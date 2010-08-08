@@ -53,6 +53,8 @@ $(document).ready(function() {
     }
 
     // tips view page
+//    tips.init($('#view_tips'));
+    /*
     if ($('#view_tips').length > 0) {
 
         // remove tip handler
@@ -175,5 +177,5 @@ $(document).ready(function() {
                 });
             }
         });
-    }
+    }*/
 });

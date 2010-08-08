@@ -1,27 +1,25 @@
 <% form_tag("/guides/#{@calendar.id}/tips/update", :method => "post", :id => 'edit_tips_form') do %>
 
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-
-      <tbody>
+    <div class="edit-tips-batch">
 
       <% @conditions.each do |condition| %>
           <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
+
+          <h2><%=condition.full_name%></h2>
+
+          <div class="tip-edit">
           <% if tip != nil then %>
-              <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.condition.full_name} %>
+              <%= render :partial => 'tips/edit', :locals => {:place => tip} %>
           <% else %>
-              <tr id="tip_cond_<%= condition.id %>">
-                <td colspan="4">
-                  <%= condition.full_name %>
-                  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, '<%=condition.full_name%>', 'edit_row');">
-                    create tip
-                  </button>
-                </td>
-              </tr>
+            <button type="button" onclick="tips.create(this.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
+              create tip
+            </button>
           <% end %>
+          </div>
       <% end %>
 
-      </tbody>
-    </table>
+    </div>
+    
     <div align="center">
       <table>
         <tr>
@@ -59,3 +57,8 @@
 </div>
 
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".edit-tips-batch").fpTabs(".tip-edit", {tabs: 'h2', effect: 'slide'});
+    });
+</script>

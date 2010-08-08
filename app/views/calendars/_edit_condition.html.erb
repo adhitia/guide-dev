@@ -8,15 +8,14 @@
             <h2><%=day.name%></h2>
 
           <div class="tip-edit">
-
           <% if tip != nil then %>
-              <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.weekday.name} %>
+              <%= render :partial => 'tips/edit', :locals => {:place => tip} %>
           <% else %>
-                  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, '<%=day.name%>', 'edit_row');">
-                    create tip
-                  </button>
+              <button type="button" onclick="tips.create(this.parentNode, <%=@edit_for.id%>, <%=day.id%>, 'edit');">
+                create tip
+              </button>
           <% end %>
-            </div>
+          </div>
       <% end %>
 
     </div>
@@ -56,9 +55,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(".edit-tips-batch").fpTabs(".tip-edit", {tabs: 'h2', effect: 'slide'});
-//        $("#accordion").accordion();
     });
-
 </script>
 
 
