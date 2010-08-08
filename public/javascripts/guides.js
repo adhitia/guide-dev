@@ -16,7 +16,18 @@ if (!window.calendar) var calendar = {
     selectNext: function() {
         var current = $('#edit_calendar_tabs').tabs('option', 'selected');
         $('#edit_calendar_tabs').tabs('select', current + 1);
-    } 
+    },
+
+    updateTile: function(tile) {
+        $.ajax({
+            url: '/occurrences/' + tile.attr('place_id') + '/tile',
+            cache: false,
+            dataType: "html",
+            success: function(r) {
+                tile.replaceWith(r);
+            }
+        });
+    }
 };
 
 
@@ -53,11 +64,13 @@ $(document).ready(function() {
     }
 
     // tips view page
+//    tips.init($('#view_tips'));
+    /*
     if ($('#view_tips').length > 0) {
 
         // remove tip handler
-        $('#view_tips .tip .delete-tip').click(function() {
-            var root = $(this).parents('.tip');
+        $('#view_tips .tip-tile .delete-tip').click(function() {
+            var root = $(this).parents('.tip-tile');
             var place_id = root.attr('place_id');
             var calendar_id = root.attr('calendar_id');
             common.confirm('Are you sure you want to delete this tip?', function() {
@@ -76,12 +89,12 @@ $(document).ready(function() {
         // drag'n'drop
         // workaround for the case when editing is not accessible
         if ($('.move-tip').length > 0) {
-            $('#view_tips .tip').draggable({
+            $('#view_tips .tip-tile').draggable({
                 handle: '.move-tip',
                 revert: 'invalid'
             });
         }
-        $("#view_tips .tip").droppable({
+        $("#view_tips .tip-tile").droppable({
             hoverClass: 'droppable-active',
             drop: function(event, ui) {
                 var container_from = ui.draggable.parent();
@@ -135,5 +148,45 @@ $(document).ready(function() {
 			}
         });
 
-    }
+        $('#view_tips .view-tip').overlay({
+            effect: 'apple',
+            closeOnClick: true,
+            closeOnEsc: true,
+            onLoad: function() {
+                var wrap = this.getOverlay().find('.content');
+                common.setLoading(wrap);
+                $.ajax({
+                    url: this.getTrigger().attr("href"),
+                    cache: false,
+                    dataType: "html",
+                    success: function(r) {
+                        wrap.html(r);
+                    }
+                });
+            }
+        });
+        $('#view_tips .edit-tip').overlay({
+            mask: {
+                color: 'grey',
+                loadSpeed: 200,
+                opacity: 0.5
+            },
+            effect: 'apple',
+            closeOnClick: false,
+            closeOnEsc: false,
+            onLoad: function() {
+                var wrap = this.getOverlay().find('.content');
+                common.setLoading(wrap);
+                $.ajax({
+                    url: this.getTrigger().attr("href"),
+                    cache: false,
+                    dataType: "html",
+                    success: function(r) {
+                        wrap.html(r);
+                        tips.init(wrap);
+                    }
+                });
+            }
+        });
+    }*/
 });

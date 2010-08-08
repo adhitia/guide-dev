@@ -4,24 +4,22 @@
 
 
 
-<table  width="160" bgcolor="#FFFFFF" border="0" cellpadding="5" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
+<table  width="100%" bgcolor="#FFFFFF" border="0" cellpadding="5" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
       <tr>
 
-            <td bgcolor="#DBDABD">
-              <span class="subheadtablemed"><%= @calendar.name %>'</span><BR><span class="headtextdarker"> travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span>
+            <td colspan=4 bgcolor="#DBDABD">
+              <span class="subheadtablemed"><a href="http://localhost:3000/guides/<%= @calendar.id %>"><%= @calendar.name %>' </a>   travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span>
             </td>
           </tr>
- 
+ <TR><td><table><tr>
                   <% @tips.each do |show_place| %>
       <% tip = show_place.tip %>
-<TR><TD >
-<table width="100%"  style="-moz-border-radius: 4px;-webkit-border-radius: 4px; border-radius: 4px; border: 1px solid lightgray;padding: 1px;" background="<% if tip.image.exists? -%>
-		 <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
-                                <% end %>" valign="top">
+<TD >
+<table  style="-moz-border-radius: 4px;-webkit-border-radius: 4px; border-radius: 4px; border: 1px solid lightgray;padding: 1px;" background="<% if tip.image.exists? -%> <%= tip.image.url(:medium) %> <% end %>" valign="top">
   <tr>
-    <td><table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style="opacity:0.60;-moz-opacity:0.50;filter:alpha(opacity=50);">
+    <td><table  border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style="opacity:0.60;-moz-opacity:0.50;filter:alpha(opacity=50);">
       <tr>
-        <td bgcolor="#FFFFFF" class="tip" id="tip_<%= show_place.id %>">><% if tip.advertisement %>
+        <td bgcolor="#FFFFFF" class="tip" id="tip_<%= show_place.id %>"><% if tip.advertisement %>
               <div align="right" style="color:gray;">advertisement</div>
           <% end %><span class="textgray" ><%= show_place.condition.name %>:</span>
             <% if tip.url != '' -%>
@@ -35,8 +33,8 @@
                 <span class="headtextdarker" ><%= tip.name %></span>
                 <div class="full_tip" style="visibility:hidden;display:none;">
 		            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
-          </div>
-      </tr>
+          </div> <% end -%>
+      </td></tr>
       <tr>
         <td><p>&nbsp;</p>
           <p>&nbsp;</p></td>
@@ -45,18 +43,15 @@
   </tr>
 </table>
 
-               </td></tr>               
+                  
       
           
           
-            <% end -%>
+           
             
-          <!-- image -->
-	                                  <% if tip.image.exists? -%>
-	                                      <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
-                                <% end %><br>
           
-        </td>   </tr><% end %> 
+          
+        </td>   <% end %> </tr></table></tr>
         
         
         
@@ -64,15 +59,13 @@
         
         
                 <tr>
-                  <td  bgcolor="ffffff">
+                  <td  bgcolor="ffffff"><table width=100% bgcolor="#DBDABD" class="headtextdarkersmall"><tr><td>
                     <span class="headtextdarkersmall" align="center">
                       <div align="center"><a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="11" height="12" /></a>&nbsp;&nbsp;&nbsp;
-                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="11" height="12" /></a></div></span>
+                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="11" height="12" /></a><br></span><span class="textdark" align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>">View whole week</a></div></span>
                   </td>
-                </tr>
-
-          <tr>
-            <td bgcolor="#DBDABD">
+               
+            <td >Rate this guide:<BR>
               <div class="starbar" >
       <div class="outer">
         <div class="inner" style="width:<%=Integer(@rating*20)%>px">
@@ -83,11 +76,11 @@
           <a class="s1" onclick="_cal.vote(this);" title="VOTE 1"></a>
         </div>
       </div>
-    </div> <span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--><BR> Powered by <a = href="http://www.guiderer.com">WWW.GUIDERER.COM</a><br> 
-      </span> find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR>
-      <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site</a>
-            </td>
+    </div> </td><TD>Find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR>
+      <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site or blog</a>
+            </td><TD><span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--></td><td><a href="http://www.guiderer.com"><img src="/images/guiderer-logo-trasnp-tiny.gif" heigth=44 width=100 border=0><BR> Powered by GUIDERER.COM</a><br> 
+      </span> </TD></tr></table></td>
           </tr>
         </table>
               

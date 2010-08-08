@@ -64,8 +64,9 @@
                       <!--map-->
                       <% if tip.address.lat != 0 %>
                         <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
-                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x150&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="150"></td>
+                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x150&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="150" height="150">
                       <% end %>
+                    </td>
                 </tr>   <tr>
                     <td colspan=2 bgcolor="#000000">
 

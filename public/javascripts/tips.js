@@ -10,14 +10,31 @@ if (!window.tips) var tips = {
             success: function(r) {
                 common.stopLoadingGlobal();
                 if (after) {
-                    after();
+                    after(r);
                 }
             }
         });
     },
 
+    save_overlay: function(formId, calendarId) {
+        common.setLoadingGlobal();
+        $('#' + formId).ajaxSubmit({
+            type: 'POST',
+            cache: false,
+            iframe: true,
+            dataType: "html",
+            async: false,
+            success: function() {
+                common.stopLoadingGlobal();
+                var tile = $('#' + formId).parents('.tip-tile');
+                tile.find('.edit-tip').data('overlay').close();
+                calendar.updateTile(tile);
+            }
+        });
+    },
 
-    create: function(row, conditionId, weekdayId, label) {
+
+    create: function(root, conditionId, weekdayId, result) {
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {
@@ -26,20 +43,19 @@ if (!window.tips) var tips = {
                         return;
                     }
                     $(this).dialog("close");
-                    common.setLoading($(row).find('td')[0]);
+                    common.setLoading(root);
                     $('#new_tip_form').ajaxSubmit({
                         type: 'POST',
                         cache: false,
                         data: {
                             condition_id: conditionId,
                             weekday_id: weekdayId,
-                            label: label
+                            result: result
                         },
                         dataType: "html",
                         success: function(r) {
-                            var el = $(r);
-                            $(row).replaceWith(el);
-                            tips.init(el);
+                            $(root).html('').html(r);
+                            tips.init(root);
                         }
                     });
                 },
@@ -170,11 +186,11 @@ if (!window.tips) var tips = {
         if (container.css('display') == 'none') {
             common.setLoading(container);
 
-            var row = $(anchor).parents('.tipRoot')[0];
+            var root = $(anchor).parents('.tipRoot')[0];
             var ls = new google.search.LocalSearch();
-            ls.setCenterPoint($(row).attr('city'));
-            ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, row]);
-            ls.execute($(row).find('.tip_name').val());
+            ls.setCenterPoint($(root).attr('city'));
+            ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
+            ls.execute($(root).find('.tip_name').val());
         }
         container.toggle();
     },
@@ -192,6 +208,137 @@ if (!window.tips) var tips = {
 
 
         common.imageHelper(root);
+
+
+
+
+
+        // tips view page
+        if ($('#view_tips').length > 0) {
+
+            // remove tip handler
+            $(root).find('.tip-tile .delete-tip').click(function() {
+                var root = $(this).parents('.tip-tile');
+                var place_id = root.attr('place_id');
+                var calendar_id = root.attr('calendar_id');
+                common.confirm('Are you sure you want to delete this tip?', function() {
+                    common.setLoading(root);
+                    $.ajax({
+                        url: '/occurrences/' + place_id + '/unbind',
+                        cache: false,
+                        dataType: "html",
+                        success: function(r) {
+                            root.replaceWith(r);
+                        }
+                    });
+                });
+            });
+
+            // drag'n'drop
+            // workaround for the case when editing is not accessible
+            if ($('.move-tip').length > 0) {
+                $(root).find('.tip-tile').draggable({
+                    handle: '.move-tip',
+                    revert: 'invalid'
+                });
+            }
+            $(root).find('.tip-tile').droppable({
+                hoverClass: 'droppable-active',
+                drop: function(event, ui) {
+                    var container_from = ui.draggable.parent();
+                    var container_to = $(this).parent();
+
+                    var place_id = ui.draggable.attr('place_id');
+                    var target_id = $(this).attr('place_id');
+
+                    // TODO move elements slowly
+                    ui.draggable.appendTo(container_to);
+                    $(this).appendTo(container_from);
+                    ui.draggable.css('left', 0).css('top', 0);
+
+                    common.setLoadingGlobal();
+                    $.ajax({
+                        url: '/occurrences/' + place_id + '/switch',
+                        data: {'target_id' : target_id},
+                        cache: false,
+                        dataType: "text",
+                        success: function() {
+                            common.stopLoadingGlobal();
+                        }
+                    });
+                }
+            });
+//            alert('! ' + $(root).find('.tip-tile').length);
+            $(root).find('.no-tip-tile').droppable({
+                hoverClass: 'droppable-active',
+                drop: function(event, ui) {
+                    var container_from = ui.draggable.parent();
+                    var container_to = $(this).parent();
+
+                    var place_id = ui.draggable.attr('place_id');
+                    var condition_id = container_to.attr('condition_id');
+                    var day_id = container_to.attr('day_id');
+
+                    // TODO move elements slowly
+                    ui.draggable.appendTo(container_to);
+                    $(this).appendTo(container_from);
+                    ui.draggable.css('left', 0).css('top', 0);
+
+                    common.setLoadingGlobal();
+                    $.ajax({
+                        url: '/occurrences/' + place_id + '/move',
+                        data: {'condition_id' : condition_id, 'weekday_id' : day_id},
+                        cache: false,
+                        dataType: "text",
+                        success: function() {
+                            common.stopLoadingGlobal();
+                        }
+                    });
+                }
+            });
+
+            $(root).find('.view-tip').overlay({
+                effect: 'apple',
+                closeOnClick: true,
+                closeOnEsc: true,
+                onLoad: function() {
+                    /*var wrap = this.getOverlay().find('.content');
+                    common.setLoading(wrap);
+                    $.ajax({
+                        url: this.getTrigger().attr("href"),
+                        cache: false,
+                        dataType: "html",
+                        success: function(r) {
+                            wrap.html(r);
+                        }
+                    });*/
+                }
+            });
+            $(root).find('.edit-tip').overlay({
+                mask: {
+                    color: 'grey',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                effect: 'apple',
+                closeOnClick: false,
+                closeOnEsc: false,
+                onLoad: function() {
+                    var wrap = this.getOverlay().find('.content');
+                    common.setLoading(wrap);
+                    $.ajax({
+                        url: this.getTrigger().attr("href"),
+                        cache: false,
+                        dataType: "html",
+                        success: function(r) {
+                            wrap.html(r);
+                            tips.init(wrap);
+                        }
+                    });
+                }
+            });
+        }
+
     }
 };
 

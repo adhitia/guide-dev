@@ -12,17 +12,19 @@
 
 <div id="view_tips">
 
-  <table width="100%" border="1" cellpadding="10" cellspacing="0">
+  <table width="100%" border="1" cellpadding="0" cellspacing="0">
 
     <tr>
       <th></th>
       <% @weekdays.each do |day| %>
-          <th width="100px">
+          <th>
+            <div style="padding:10px">
             <%= day.name %>
             <% if @full_access %>
                 <br/>
                 <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
             <% end %>
+            </div>
           </th>
       <% end %>
     </tr>
@@ -41,47 +43,27 @@
         <% prev_cond = condition %>
 
         <tr>
+
           <td>
+            <!--left labels-->
+            <div style="padding:10px">
             <%= condition.weather ? condition.weather : '' %> <%= condition.name %>
             <% if @full_access %>
                 <br/>
                 <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
             <% end %>
+            </div>
           </td>
+
           <% @weekdays.each do |day| %>
               <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
               <% tip = place == nil ? nil : place.tip %>
 
               <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
                 <% if tip != nil then %>
-
-                    <div class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
-
-                      <% if @full_access %>
-                      <table width=100% align="right">
-                        <tr>
-                          <td>
-                            <!--move tip-->
-                            <div class="move-tip"></div>
-                          </td>
-                          <td width=20px>
-                            <!--delete tip-->
-                            <div class="delete-tip"></div>
-                          </td>
-                        </tr>
-                      </table>
-                      <% end %>
-
-                      <!-- tip statistics -->
-                      <b><span class="headtextdarker"><%= tip.name %></span></b><br/>
-                        <table><tr ><td ><span class="textgraysmall">
-                          Views= <%= tip.view_count %></td><td class="textgraysmall">
-                          Clicks= <%= tip.click_count %></span></td></tr></table>
-                        
-                    </div>
-
+                    <%= render :partial => 'tips/show_tile', :locals => {:place => place} %>
                 <% else %>
-                    <div class="no-tip" align="center"><BR>no tip<BR><BR></div>
+                    <%= render :partial => 'tips/no_tip_tile', :locals => {:condition => condition, :day => day} %>
                 <% end %>
               </td>
 
@@ -91,10 +73,20 @@
     <% end %>
 
   </table>
+
+
+
 </div>
 
 
 <BR><BR>
 <div align="right">
   <a href="/guides/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
+</div>
+
+
+<div id="new_tip" style="display:none;">
+  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
+      <input id="new_tip_name" name="new_tip_name"/>
+  <% end %>
 </div>

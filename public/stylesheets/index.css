@@ -196,6 +196,17 @@ legend    {
 
 
 
+.main-area {
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    width:1000px;
+    background-color:#0099CC;
+    padding:16px;
+}
+
+
+
 
 .google-image-choices div.full-image {
     border: 1px solid #CCCCCC;
@@ -253,58 +264,174 @@ legend    {
     display:none;
 }
 
-#view_tips .tip {
-    height:100%;
-    width:100%;
+#view_tips .tip-tile {
+    height:110px;
+    width:110px;
+    overflow:hidden;
     background-color:white;
+    margin:10px;
 }
 
 #view_tips td.tip-container {
     background-color:white;
 }
 
-#view_tips .tip:hover {
+#view_tips .tip-tile:hover {
 }
 
-#view_tips .tip .move-tip {
+#view_tips .tip-tile .move-tip {
     background: transparent url(/images/movetip.gif) no-repeat;
     width: 19px;
     height: 19px;
     opacity: 0.3;
 }
-#view_tips .tip:hover .move-tip {
+#view_tips .tip-tile:hover .move-tip {
     opacity: 0.7;
 }
-#view_tips .tip .move-tip:hover {
+#view_tips .tip-tile .move-tip:hover {
     opacity: 1;
 }
 
-#view_tips .tip .delete-tip {
+#view_tips .tip-tile .delete-tip {
     background: transparent url(/images/deletetip.gif) no-repeat;
     width: 19px;
     height: 19px;
     opacity: 0.3;
 }
-#view_tips .tip:hover .delete-tip {
+#view_tips .tip-tile:hover .delete-tip {
     opacity: 0.7;
 }
-#view_tips .tip .delete-tip:hover {
+#view_tips .tip-tile .delete-tip:hover {
     opacity: 1;
 }
 
-#view_tips .no-tip {
+#view_tips .no-tip-tile {
     background-color:lightgray;
-    height:100%;
-    width:100%;
+    height:110px;
+    width:110px;
+    overflow:hidden;
+    padding:10px
 }
 
 #view_tips .droppable-active {
     background-color: lightblue;
 }
 
+#view_tips .full-tip-overlay {
+	/* must be initially hidden */
+	display:none;
+
+	/* place overlay on top of other elements */
+	z-index:10000;
+
+	/* styling */
+	background-color:#333;
+
+	width:675px;
+    height:400px;
+	/*min-height:200px;*/
+	border:1px solid #666;
+
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;
+}
+
+#view_tips .full-tip-overlay .close {
+	background-image:url(/images/close.png);
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
 
 .ui-corner-all { 
 -moz-border-radius: 4px; 
 -webkit-border-radius: 4px; 
 border-radius: 4px; 
 }
+
+
+#view_tips .edit-tip-overlay {
+	/* must be initially hidden */
+	display:none;
+
+	/* place overlay on top of other elements */
+	z-index:10000;
+
+	/* styling */
+	background-color:#333;
+
+	width:950px;
+	min-height:400px;
+	border:1px solid #666;
+
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+#view_tips .edit-tip-overlay .close {
+	background-image:url(/images/close.png);
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+
+.local-search-container {
+    position:absolute;
+    background-color:white;
+    display:none;
+    border: 1px solid black;
+    width:260px;
+    color:black !important;
+}
+.local-search-container a {
+    color:black !important;
+}
+
+
+.edit-tips-batch {
+/* some decorations for the accordion root element */
+    width: 100%;
+}
+/* accordion header */
+.edit-tips-batch h2 {
+	background:#ccc url(/images/h30.png);
+	margin:0;
+	padding:5px 15px;
+	font-size:14px;
+	font-weight:normal;
+	border-bottom:1px solid #ddd;
+	cursor:pointer;
+}
+
+/* currently active header */
+.edit-tips-batch h2.current {
+	cursor:default;
+	background-color:#fff;
+}
+
+/* accordion pane */
+.edit-tips-batch .tip-edit {
+	display:none;
+	padding:15px;
+}
+
+/* a title inside pane */
+.edit-tips-batch .tip-edit h3 {
+	font-weight:normal;
+	margin:0 0 -5px 0;
+	font-size:16px;
+	color:#999;
+}
+

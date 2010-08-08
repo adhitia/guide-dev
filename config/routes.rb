@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => :tips do |tips|
     tips.follow_url 'guides/:id/tips/:tip_id/url', :action => 'follow_url'
 
+    map.tile 'occurrences/:occurrence_id/tile', :controller => :tips, :action => :tile
     map.unbind_tip 'occurrences/:occurrence_id/unbind', :controller => :tips, :action => :unbind
     map.move_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
     map.switch_tips 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
@@ -30,6 +31,9 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
   map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
+
+  map.edit_tip  'tips/:occurrence_id/edit', :controller => :tips, :action => :edit, :conditions => { :method => :get }
+  map.show_tip  'tips/:occurrence_id', :controller => :tips, :action => :show, :conditions => { :method => :get }
 
   map.login 'login', :controller => 'users', :action => 'login'
   map.process_login 'process_login', :controller => 'users', :action => 'process_login'

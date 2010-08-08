@@ -1,5 +1,13 @@
 if (!window.common) {
     $.ajaxSetup({
+        beforeSend: function(request) {
+//            alert(this.url);
+//            common.parseParameters();
+//
+//            if (this.type == 'GET' && common.params.userId)
+//                request.open(this.type, this.url + (this.url.indexOf('?') < 0 ? '?' : '&') + "userId=" + common.params.userId, this.async);
+
+        },
         error: function(event, request, options, error) {
 //            alert(event.status);
             switch (event.status) {

@@ -1,31 +1,9 @@
 class TipsController < ApplicationController
-#  before_filter :login_required, :except => [:follow_url]
-
-#  def new
-#    @tip = Tip.new
-#    @calendar = Calendar.find(params[:id])
-#    @tip.condition = Condition.find(params[:condition_id])
-#    @weekdays = Weekday.all
-#    @tip.weekdays << Weekday.find(params[:dow]);
-#    @tip.advertisement = params[:ad] != nil
-#
-#    respond_to do |format|
-#      format.html # new.html.erb
-#      format.xml  { render :xml => @tip }
-#    end
-#  end
-
-
-#  def edit
-#    @calendar = Calendar.find(params[:id])
-#    @tip = Tip.find(params[:tip_id])
-#    @weekdays = Weekday.all
-#  end
-
 
   def create
     @ajax = true
     return unless authorize_guide params[:id]
+    @full_access = true
 
     @calendar = Calendar.find(params[:id])
     @tip = Tip.new(:name => params[:new_tip_name])
@@ -42,13 +20,15 @@ class TipsController < ApplicationController
     @tip.save
     @place.save
 
-    render :partial => 'tips/edit_row', :locals => {:place => @place, :label => params[:label]}
+    render :partial => "tips/#{params[:result]}", :locals => {:place => @place, :label => params[:label]}
+#    render :partial => "tips/edit", :locals => {:place => @place}
   end
 
   def update
     @ajax = true
     return unless authorize_guide params[:id]
-    
+    @full_access = true;
+
     @calendar = Calendar.find(params[:id])
     params[:tips].each_pair do |id, tip_data|
       tip = Tip.find(id)
@@ -56,7 +36,12 @@ class TipsController < ApplicationController
       tip_data.delete :address
       tip.update_attributes tip_data
     end
+
     render :text => 'dummy response'
+#    if empty?(params[:result])
+#    else
+#    end
+#    render :partial => 'show_tile'
   end
 
   def follow_url
@@ -79,7 +64,8 @@ class TipsController < ApplicationController
     occurrence.delete
     occurrence.tip.delete
 
-    render :text => 'dummy response'
+#    render :text => 'dummy response'
+    render :partial => 'tips/no_tip_tile', :locals => {:condition => occurrence.condition, :day => occurrence.weekday}
   end
 
   # moves tip to a different place
@@ -118,4 +104,25 @@ class TipsController < ApplicationController
 
     render :text => 'dummy response'
   end
+
+  def show
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    render :partial => 'tips/show', :locals => {:place => occurrence}
+  end
+
+  def edit
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    return unless authorize_guide occurrence.calendar_id
+    render :partial => 'tips/edit', :locals => {:place => occurrence}
+  end
+
+  def tile
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    @full_access = @current_user && (occurrence.calendar.user.id == @current_user.id);
+    render :partial => 'tips/show_tile', :locals => {:place => occurrence}
+  end
+
 end
