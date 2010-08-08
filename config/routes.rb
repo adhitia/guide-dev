@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => :tips do |tips|
     tips.follow_url 'guides/:id/tips/:tip_id/url', :action => 'follow_url'
 
+    map.tile 'occurrences/:occurrence_id/tile', :controller => :tips, :action => :tile
     map.unbind_tip 'occurrences/:occurrence_id/unbind', :controller => :tips, :action => :unbind
     map.move_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
     map.switch_tips 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch

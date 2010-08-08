@@ -8,7 +8,7 @@
 <!--url-->
   <% if !empty?(tip.url) %>
       web: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-              <%=shorten(tip.url[7..tip.url.length], 35)%>
+              <%=tip.url.length > 35 ? shorten(tip.url[7..tip.url.length], 35) : tip.url%>
            </a><br>
   <% end %>
 

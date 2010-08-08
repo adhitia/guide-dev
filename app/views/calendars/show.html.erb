@@ -64,12 +64,6 @@
                     <%= render :partial => 'tips/show_tile', :locals => {:place => place} %>
                 <% else %>
                     <%= render :partial => 'tips/no_tip_tile', :locals => {:condition => condition, :day => day} %>
-
-                    <!--<div class="no-tip-tile" align="center">
-                      <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=day.id%>, 'show_tile');">
-                        create tip
-                      </button>
-                    </div>-->
                 <% end %>
               </td>
 

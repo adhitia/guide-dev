@@ -16,7 +16,18 @@ if (!window.calendar) var calendar = {
     selectNext: function() {
         var current = $('#edit_calendar_tabs').tabs('option', 'selected');
         $('#edit_calendar_tabs').tabs('select', current + 1);
-    } 
+    },
+
+    updateTile: function(tile) {
+        $.ajax({
+            url: '/occurrences/' + tile.attr('place_id') + '/tile',
+            cache: false,
+            dataType: "html",
+            success: function(r) {
+                tile.replaceWith(r);
+            }
+        });
+    }
 };
 
 

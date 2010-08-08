@@ -3,9 +3,9 @@ class TipsController < ApplicationController
   def create
     @ajax = true
     return unless authorize_guide params[:id]
+    @full_access = true
 
     @calendar = Calendar.find(params[:id])
-    @full_access = @current_user && (@calendar.user.id == @current_user.id);
     @tip = Tip.new(:name => params[:new_tip_name])
     @tip.author_id= @current_user.id;
     @tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location_id => @calendar.location_id,
@@ -27,16 +27,21 @@ class TipsController < ApplicationController
   def update
     @ajax = true
     return unless authorize_guide params[:id]
-    
+    @full_access = true;
+
     @calendar = Calendar.find(params[:id])
-    @full_access = @current_user && (@calendar.user.id == @current_user.id);
     params[:tips].each_pair do |id, tip_data|
       tip = Tip.find(id)
       tip.address.update_attributes tip_data[:address]
       tip_data.delete :address
       tip.update_attributes tip_data
     end
+
     render :text => 'dummy response'
+#    if empty?(params[:result])
+#    else
+#    end
+#    render :partial => 'show_tile'
   end
 
   def follow_url
@@ -112,4 +117,12 @@ class TipsController < ApplicationController
     return unless authorize_guide occurrence.calendar_id
     render :partial => 'tips/edit', :locals => {:place => occurrence}
   end
+
+  def tile
+    @ajax = true
+    occurrence = ShowPlace.find(params[:occurrence_id])
+    @full_access = @current_user && (occurrence.calendar.user.id == @current_user.id);
+    render :partial => 'tips/show_tile', :locals => {:place => occurrence}
+  end
+
 end

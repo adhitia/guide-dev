@@ -10,8 +10,25 @@ if (!window.tips) var tips = {
             success: function(r) {
                 common.stopLoadingGlobal();
                 if (after) {
-                    after();
+                    after(r);
                 }
+            }
+        });
+    },
+
+    save_overlay: function(formId, calendarId) {
+        common.setLoadingGlobal();
+        $('#' + formId).ajaxSubmit({
+            type: 'POST',
+            cache: false,
+            iframe: true,
+            dataType: "html",
+            async: false,
+            success: function() {
+                common.stopLoadingGlobal();
+                var tile = $('#' + formId).parents('.tip-tile');
+                tile.find('.edit-tip').data('overlay').close();
+                calendar.updateTile(tile);
             }
         });
     },
@@ -211,7 +228,6 @@ if (!window.tips) var tips = {
                         cache: false,
                         dataType: "html",
                         success: function(r) {
-//                            root.replaceWith('<div class="no-tip-tile">no tip</div>');
                             root.replaceWith(r);
                         }
                     });
