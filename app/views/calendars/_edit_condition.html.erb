@@ -1,27 +1,26 @@
 <% form_tag("/guides/#{@calendar.id}/tips/update", :method => "post", :id => 'edit_tips_form') do %>
 
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-
-      <tbody>
+    <div class="edit-tips-batch">
 
       <% @weekdays.each do |day| %>
           <% tip = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id and !t.tip.advertisement } %>
+
+            <h2><%=day.name%></h2>
+
+          <div class="tip-edit">
+
           <% if tip != nil then %>
               <%= render :partial => 'tips/edit_row', :locals => {:place => tip, :label => tip.weekday.name} %>
           <% else %>
-              <tr id="tip_day_<%= day.id %>">
-                <td colspan="4">
-                  <%= day.name %>
-                  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, '<%=day.name%>');">create
-                    tip
+                  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, '<%=day.name%>', 'edit_row');">
+                    create tip
                   </button>
-                </td>
-              </tr>
           <% end %>
+            </div>
       <% end %>
 
-      </tbody>
-    </table>
+    </div>
+
     <div align="center">
       <table>
         <tr>
@@ -53,10 +52,13 @@
   <% end %>
 </div>
 
-<!--
-<div id="global-loading-indicator" style="display:none;top:50%;left:50%;position:fixed;z-index:2147483640;width:100px;height:50px;">
-  <img src="/images/loading-indicator.gif">
-  <br/>
-</div>
--->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".edit-tips-batch").fpTabs(".tip-edit", {tabs: 'h2', effect: 'slide'});
+//        $("#accordion").accordion();
+    });
+
+</script>
+
 

@@ -61,52 +61,13 @@
 
               <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
                 <% if tip != nil then %>
-
-                    <div style="margin:10px" id="tip_<%=place.id%>" class="tip" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= @calendar.id %>">
-
-                      <% if @full_access %>
-                      <table width=100% align="right">
-                        <tr>
-                          <td>
-                            <!--move tip-->
-                            <div class="move-tip"></div>
-                          </td>
-                          <td width=20px>
-                            <!--delete tip-->
-                            <div class="delete-tip"></div>
-                          </td>
-                        </tr>
-                      </table>
-                      <% end %>
-
-                      <!--view full tip-->
-                      <!--link here-->
-                      <a class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>">view</a><br/>
-                      <div class="full-tip-overlay">
-                        <!--contents here-->
-                        <div class="content"></div>
-                      </div>
-
-
-                      <% if @full_access %>
-                          <!--edit tip in overlay-->
-                          <a class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit">edit</a><br/>
-                          <div class="edit-tip-overlay">
-                            <div class="content"></div>
-                          </div>
-                      <% end %>
-
-
-                      <!-- tip statistics -->
-                      <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
-                        <span class="textgray">
-                          Views= <%= tip.view_count %>
-                          Clicks= <%= tip.click_count %>
-                        </span>
-                    </div>
-
+                    <%= render :partial => 'tips/show_tile', :locals => {:place => place} %>
                 <% else %>
-                    <div style="padding:10px" class="no-tip" align="center"><BR>no tip<BR><BR></div>
+                    <div class="no-tip-tile" align="center">
+                      <button type="button" onclick="tips.create(this.parentNode, <%=condition.id%>, <%=day.id%>, '', 'show_tile');">
+                        create tip
+                      </button>
+                    </div>
                 <% end %>
               </td>
 
@@ -125,4 +86,11 @@
 <BR><BR>
 <div align="right">
   <a href="/guides/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
+</div>
+
+
+<div id="new_tip" style="display:none;">
+  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
+      <input id="new_tip_name" name="new_tip_name"/>
+  <% end %>
 </div>

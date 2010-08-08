@@ -56,8 +56,8 @@ $(document).ready(function() {
     if ($('#view_tips').length > 0) {
 
         // remove tip handler
-        $('#view_tips .tip .delete-tip').click(function() {
-            var root = $(this).parents('.tip');
+        $('#view_tips .tip-tile .delete-tip').click(function() {
+            var root = $(this).parents('.tip-tile');
             var place_id = root.attr('place_id');
             var calendar_id = root.attr('calendar_id');
             common.confirm('Are you sure you want to delete this tip?', function() {
@@ -76,12 +76,12 @@ $(document).ready(function() {
         // drag'n'drop
         // workaround for the case when editing is not accessible
         if ($('.move-tip').length > 0) {
-            $('#view_tips .tip').draggable({
+            $('#view_tips .tip-tile').draggable({
                 handle: '.move-tip',
                 revert: 'invalid'
             });
         }
-        $("#view_tips .tip").droppable({
+        $("#view_tips .tip-tile").droppable({
             hoverClass: 'droppable-active',
             drop: function(event, ui) {
                 var container_from = ui.draggable.parent();

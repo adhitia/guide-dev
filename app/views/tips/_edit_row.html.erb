@@ -1,13 +1,15 @@
 <% tip = place.tip %>
 
-<tr id="tips_<%= place.id %>" class="tipRoot" form_prefix="tips[<%= tip.id %>]" city="<%= place.calendar.location.name %>" style="height:200px;">
+  
+<div id="tips_<%= place.id %>" class="tipRoot" form_prefix="tips[<%= tip.id %>]" city="<%= place.calendar.location.name %>" style="height:220px;">
 
 
 <% fields_for "tips", tip, :index => tip.id do |tip_form| %>
 
-<td valign="top">
+<div style="position: relative;float: left; width:253px">
   <span class="headtextwhiteblack"><%= label %></span><br/>
   <%= tip_form.text_field :name, :size => 25, :class => 'tip_name' %>
+  <br/>
   <a href="javascript:" class="local-search-launch" title="google suggestions for address and url" onclick="tips.loadLocalSuggestions(this);">autofill</a>
   <div class="local-search-container" style="position:absolute;background-color:white;display:none;border: 1px solid black;width:260px;"></div>
   <br/>
@@ -24,16 +26,15 @@
     <%= tip_form.label :url %> <%= tip_form.text_field :url, :class => 'tip_url' %> <br/>
     <%= tip_form.label :phone %> <%= tip_form.text_field :phone, :class => 'tip_phone' %> <br/>
   </p>
+</div>
 
-</td>
-
-<td valign="top">
+<div style="position: relative;float: left; width:200px">
       <%= tip_form.label :description %><br/>
-      <%= tip_form.text_area(:description, :rows => 7, :cols => 40) %><br/>
-</td>
+      <%= tip_form.text_area(:description, :rows => 7, :cols => 20) %><br/>
+</div>
 
-<td valign="top">
-  <div class="upload_image" style="width:500px;float:left;">
+<div style="position: relative;float: left; width:420px">
+  <div class="upload_image" style="width:410px;float:left;">
     <ul>
       <% if tip.image.exists? -%>
           <li><a href="#tip-<%=place.id%>-current-image"><span>current image</span></a></li>
@@ -55,9 +56,8 @@
     </div>
 
   </div>
-</td>
+</div>
 
 <% end %>
 
-
-</tr>
+</div>

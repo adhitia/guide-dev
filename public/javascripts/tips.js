@@ -17,7 +17,7 @@ if (!window.tips) var tips = {
     },
 
 
-    create: function(row, conditionId, weekdayId, label) {
+    create: function(root, conditionId, weekdayId, label, result) {
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {
@@ -26,19 +26,21 @@ if (!window.tips) var tips = {
                         return;
                     }
                     $(this).dialog("close");
-                    common.setLoading($(row).find('td')[0]);
+//                    common.setLoading($(root).find('td')[0]);
+                    common.setLoading(root);
                     $('#new_tip_form').ajaxSubmit({
                         type: 'POST',
                         cache: false,
                         data: {
                             condition_id: conditionId,
                             weekday_id: weekdayId,
+                            result: result,
                             label: label
                         },
                         dataType: "html",
                         success: function(r) {
                             var el = $(r);
-                            $(row).replaceWith(el);
+                            $(root).replaceWith(el);
                             tips.init(el);
                         }
                     });

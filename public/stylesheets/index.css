@@ -187,6 +187,17 @@ legend    {
 
 
 
+.main-area {
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    width:1000px;
+    background-color:#0099CC;
+    padding:16px;
+}
+
+
+
 
 .google-image-choices div.full-image {
     border: 1px solid #CCCCCC;
@@ -244,55 +255,53 @@ legend    {
     display:none;
 }
 
-#view_tips .tip {
-    /*height:100%;*/
-    /*width:100%;*/
+#view_tips .tip-tile {
     height:110px;
     width:110px;
     overflow:hidden;
     background-color:white;
+    margin:10px;
 }
 
 #view_tips td.tip-container {
     background-color:white;
 }
 
-#view_tips .tip:hover {
+#view_tips .tip-tile:hover {
 }
 
-#view_tips .tip .move-tip {
+#view_tips .tip-tile .move-tip {
     background: transparent url(/images/movetip.gif) no-repeat;
     width: 19px;
     height: 19px;
     opacity: 0.3;
 }
-#view_tips .tip:hover .move-tip {
+#view_tips .tip-tile:hover .move-tip {
     opacity: 0.7;
 }
-#view_tips .tip .move-tip:hover {
+#view_tips .tip-tile .move-tip:hover {
     opacity: 1;
 }
 
-#view_tips .tip .delete-tip {
+#view_tips .tip-tile .delete-tip {
     background: transparent url(/images/deletetip.gif) no-repeat;
     width: 19px;
     height: 19px;
     opacity: 0.3;
 }
-#view_tips .tip:hover .delete-tip {
+#view_tips .tip-tile:hover .delete-tip {
     opacity: 0.7;
 }
-#view_tips .tip .delete-tip:hover {
+#view_tips .tip-tile .delete-tip:hover {
     opacity: 1;
 }
 
-#view_tips .no-tip {
+#view_tips .no-tip-tile {
     background-color:lightgray;
-    /*height:100%;*/
-    /*width:100%;*/
     height:110px;
     width:110px;
     overflow:hidden;
+    padding:10px
 }
 
 #view_tips .droppable-active {
@@ -369,4 +378,43 @@ legend    {
 }
 .local-search-container a {
     color:black !important;
+}
+
+
+.edit-tips-batch {
+/* some decorations for the accordion root element */
+    width: 100%;
+}
+/* accordion header */
+.edit-tips-batch h2 {
+	background:#ccc url(/images/h30.png);
+	margin:0;
+	padding:5px 15px;
+	font-size:14px;
+	font-weight:normal;
+	border:1px solid #fff;
+	border-bottom:1px solid #ddd;
+	cursor:pointer;
+}
+
+/* currently active header */
+.edit-tips-batch h2.current {
+	cursor:default;
+	background-color:#fff;
+}
+
+/* accordion pane */
+.edit-tips-batch .tip-edit {
+	border:1px solid #fff;
+	border-width:0 2px;
+	display:none;
+	padding:15px;
+}
+
+/* a title inside pane */
+.edit-tips-batch .tip-edit h3 {
+	font-weight:normal;
+	margin:0 0 -5px 0;
+	font-size:16px;
+	color:#999;
 }
