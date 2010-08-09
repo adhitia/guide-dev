@@ -228,7 +228,9 @@ if (!window.tips) var tips = {
                         cache: false,
                         dataType: "html",
                         success: function(r) {
+                            var parent = root.parent();
                             root.replaceWith(r);
+                            tips.init(parent);
                         }
                     });
                 });
@@ -302,7 +304,7 @@ if (!window.tips) var tips = {
                 closeOnClick: true,
                 closeOnEsc: true,
                 onLoad: function() {
-                    /*var wrap = this.getOverlay().find('.content');
+                    var wrap = this.getOverlay().find('.content');
                     common.setLoading(wrap);
                     $.ajax({
                         url: this.getTrigger().attr("href"),
@@ -311,7 +313,7 @@ if (!window.tips) var tips = {
                         success: function(r) {
                             wrap.html(r);
                         }
-                    });*/
+                    });
                 }
             });
             $(root).find('.edit-tip').overlay({

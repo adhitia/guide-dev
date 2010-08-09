@@ -24,7 +24,9 @@ if (!window.calendar) var calendar = {
             cache: false,
             dataType: "html",
             success: function(r) {
+                var parent = tile.parent();
                 tile.replaceWith(r);
+                tips.init(parent);
             }
         });
     }
