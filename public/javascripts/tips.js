@@ -300,7 +300,7 @@ if (!window.tips) var tips = {
             });
 
             $(root).find('.view-tip').overlay({
-                effect: 'apple',
+//                effect: 'apple',
                 closeOnClick: true,
                 closeOnEsc: true,
                 onLoad: function() {
@@ -322,7 +322,7 @@ if (!window.tips) var tips = {
                     loadSpeed: 200,
                     opacity: 0.5
                 },
-                effect: 'apple',
+//                effect: 'apple',
                 closeOnClick: false,
                 closeOnEsc: false,
                 onLoad: function() {
