@@ -1,5 +1,9 @@
 <div class="no-tip-tile" align="center">
-  <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=day.id%>, 'show_tile');">
-    create tip
-  </button>
+  <% if @full_access %>
+    <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=day.id%>, 'show_tile');">
+      create tip
+    </button>
+  <% else %>
+    no tip
+  <% end %>
 </div>
