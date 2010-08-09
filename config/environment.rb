@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
 #  config.gem 'rspec', :lib => 'spec'
 #  config.gem 'rspec-rails', :lib => 'spec/rails'
   config.gem "thoughtbot-paperclip", :lib => 'paperclip', :source =>  'http://gems.github.com'
+
 #  config.gem "factory_girl"
 
 
