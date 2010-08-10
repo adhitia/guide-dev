@@ -13,6 +13,10 @@
 	font-size: small;
 	color: #000000;
 	text-indent: 0px;
+	background-color: #000000;
+	opacity:0.75;
+	-moz-opacity:0.75;
+	filter:alpha(opacity=75);
 }
 .subhead {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -147,6 +151,19 @@ legend    {
 	font-size: medium;
 	color: #666666;
 	text-transform: uppercase;
+	background-color: #ffffff;
+	opacity:0.75;
+	-moz-opacity:0.75;
+	filter:alpha(opacity=75);
+}
+.headtextdarkersmaller {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #666666;
+	background-color: #ffffff;
+	opacity:0.75;
+	-moz-opacity:0.75;
+	filter:alpha(opacity=75);
 }
 .headtextwhiteblack {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
