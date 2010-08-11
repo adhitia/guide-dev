@@ -50,6 +50,9 @@ class CalendarsController < ApplicationController
       return
     end
 
+
+#    puts "!!!!!!!!!!!!! #{params[:location_code]} : #{params[:location_name]}"
+
     # validate data
     if (empty?(params[:calendar_name_location]) || empty?(params[:calendar_name_target]))
       flash[:error] = 'Please select name.';
@@ -78,7 +81,24 @@ class CalendarsController < ApplicationController
     @weekdays = Weekday.all
     @conditions = Condition.all
   end
-  
+
+  def update
+    @ajax = true
+    return unless authorize_guide params[:id]
+
+    @calendar = Calendar.find(params[:id])
+
+    location_code = params[:location_code]
+    location_name = params[:location_name]
+
+    if not empty? params[:location_name]
+      loc = find_or_create_location location_code, location_name
+      @calendar.location_id = loc.id;
+      @calendar.save
+    end
+
+    render :text => 'dummy response'
+  end
 
 #  def update
 #    @calendar = Calendar.find(params[:id])

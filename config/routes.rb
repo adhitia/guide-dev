@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.new_guide 'guides/new', :controller => :calendars, :action => :new, :conditions => { :method => :get }
   map.create_guide 'guides/new', :controller => :calendars, :action => :create, :conditions => { :method => :post }
+  map.update_guide 'guides/:id/update', :controller => :calendars, :action => :update
   map.edit_guide_day 'guides/:id/edit_day/:weekday_id', :controller => :calendars, :action => :edit_day
   map.edit_guide_condition 'guides/:id/edit_condition/:condition_id', :controller => :calendars, :action => :edit_condition
   map.update_tips 'guides/:id/tips/update', :controller => :tips, :action => :update, :conditions => { :method => :post }

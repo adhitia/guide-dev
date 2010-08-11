@@ -412,7 +412,6 @@ border-radius: 4px;
 /* accordion header */
 .edit-tips-batch h2 {
 	background: #ccc url(/images/h30.png) ;
-    /*background-origin: ;*/
 	margin:0;
 	padding:5px 15px;
 	font-size:14px;

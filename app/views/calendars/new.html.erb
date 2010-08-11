@@ -1,6 +1,6 @@
 <h1>Create a Guide</h1>
 
-<%=%>
+
 
 <p>&nbsp;</p>
 
@@ -10,7 +10,7 @@
       <p style="color:red;"><%= flash[:error] %></p>
   <% end %>
 
-  <p class="subheadtable" align="center"><strong>Guide name</strong> <BR> <span class="smalltext"(destination name or nickname):</span>
+  <p class="subheadtable" align="center"><strong>Guide name</strong> <BR>
     <input id="calendar_name_location" class="headtextdarkerlarger" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
     FOR
     <input id="calendar_name_target" class="headtextdarkerlarger" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
@@ -18,14 +18,16 @@
   <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
   
 
-  <p class="subheadtable" align="center"><strong>Use weather info for </strong><BR><span class="smalltext"(start typing destination) </span>
-    <label>
-      <label for="calendar_location_name"></label><br>
-      <input class="ac_input" class="headtextdarkerlarger" id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
-      <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden">
-
-    </label><BR> <span class="smalltext" align="center">If you can not find your destination, type in the closest big city</span>
-  </span>
+  <p class="subheadtable" align="center">
+    <strong>Use weather info for </strong><BR>
+      <span style="position:relative;">
+        <input id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
+        <span style="position:absolute;left:50%;" class="location-loading"></span>
+        <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
+      </span>
+    <BR>
+    <span class="smalltext" align="center">If you can not find your destination, type in the closest big city</span>
+  </p>
 
 
   <p>&nbsp;</p>
@@ -40,17 +42,22 @@
 
 
 <script type="text/javascript">
-    input = $("#calendar_location_name");
-    input.autocomplete('/check_location', {
-        delay: 1000,
-        minChars: 3,
-        mustMatch: true,
-        cacheLength: 1,
-        matchSubset: false
+    $(document).ready(function() {
+        // initialize autocomplete for locations
+        $('#calendar_location_name').each(function(i, e) {
+            calendar.locationInput(e, function(input, result) {
+                if (result == null) {
+//                    if ($('#calendar_location_code').val() == '') {
+//                        $('#calendar_location_name').val('');
+//                    }
+//                    $('#calendar_location_code').val('');
+                } else {
+                    $('#calendar_location_code').val(result.id);
+                }
+            });
+        });
     });
-    input.result(function(event, data, formatted) {
-        $('#calendar_location_code')[0].value = data[1];
-    });
+
 
     $('#calendar_name_location').Watermark('location');
     $('#calendar_name_target').Watermark('target group');

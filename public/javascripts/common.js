@@ -28,8 +28,13 @@ if (!window.common) {
                 window.location.replace(location);
         },
 
-        setLoading: function(container) {
-            $(container).html('<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>');
+        setLoading: function(container, text) {
+//            $(container).html('<!--<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>-->');
+            $(container).html('<span style="text-align:center;"><img src="/images/loading-indicator.gif">' + text + '</span>');
+        },
+
+        stopLoading: function(container) {
+            $(container).html('');
         },
 
         /**
