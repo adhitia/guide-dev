@@ -4,7 +4,7 @@
 
 
 
-<table  width="100%" bgcolor="#FFFFFF" border="0" cellpadding="5" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
+<table  width="100%" bgcolor="#FFFFFF" border="0" cellpadding="2" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
       <tr>
 
             <td colspan=4 bgcolor="#DBDABD">
@@ -15,14 +15,14 @@
                   <% @tips.each do |show_place| %>
       <% tip = show_place.tip %>
 <TD >
-<table  style="-moz-border-radius: 4px;-webkit-border-radius: 4px; border-radius: 4px; border: 1px solid lightgray;padding: 1px;"
-        background="<% if tip.image.exists? -%> <%= tip.image.url(:medium) %> <% end %>" valign="top">
+<table  style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray;padding: 2px; height:150px"
+        background="<% if tip.image.exists? -%> <%= tip.image.url(:medium) %> <% else -%>/images/Maps_google_map.gif <% end %>" valign="top">
   <tr>
-    <td><table  border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style="opacity:0.60;-moz-opacity:0.50;filter:alpha(opacity=50);">
+    <td valign="top"><table  border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" style="opacity:0.75;-moz-opacity:0.75;filter:alpha(opacity=75);">
       <tr>
         <td bgcolor="#FFFFFF" class="tip" id="tip_<%= show_place.id %>"><% if tip.advertisement %>
               <div align="right" style="color:gray;">advertisement</div>
-          <% end %><span class="textgray" ><%= show_place.condition.name %>:</span>
+          <% end %><span class="textdark" bgcolor="#000000"><%= show_place.condition.name %>:</span><BR>
             <% if tip.url != '' -%>
                 <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
                   <span class="headtextdarker" ><%= tip.name %></span>                </a>
@@ -37,8 +37,7 @@
           </div> <% end -%>
       </td></tr>
       <tr>
-        <td><p>&nbsp;</p>
-          <p>&nbsp;</p></td>
+        <td></td>
       </tr>
     </table></td>
   </tr>

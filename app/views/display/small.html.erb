@@ -2,185 +2,89 @@
 <link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
 
 
-<table width="150" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="19"><img src="images/widget-corner.gif" width="19" height="19" /></td>
-    <td background="images/widget-side-t.gif">&nbsp;</td>
-    <td width="19"><img src="images/widget-corner-rt.gif" width="19" height="19" /></td>
-  </tr>
-  <tr>
-    <td width="19" background="images/widget-side.gif">&nbsp;</td>
-    <td valign="baseline" bgcolor="#DBDABD"><table width="132" border="0" cellspacing="0" cellpadding="5">
+
+
+<table  width="100" bgcolor="#FFFFFF" border="0" cellpadding="2" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
       <tr>
-        <td width="122" bgcolor="#DBDABD" class="subheadtable"><spry:hover="subheadtablelarge">
-          <p align="center"class="subheadtablelarge"><%= @calendar.name %> </p>
-        </td>
-      </tr>
-      <tr>
-        <td bgcolor="#E4E3CD" class="headtextdarker"><center>
-          What to do on a <%= @weather_forecast.original_condition %>  <%= @dow.name %>
-          <br/>  </span>
-        </td>
-      </tr>
 
+            <td colspan=4 bgcolor="#DBDABD">
+              <span class="subheadtablemed"><a href="http://localhost:3000/guides/<%= @calendar.id %>"><%= @calendar.name %>' </a>   travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span>
+            </td>
+          </tr>
 
-
-        <% @tips.each do |show_place| %>
+                  <% @tips.each do |show_place| %>
       <% tip = show_place.tip %>
+<TR><TD ><div align="center">
+<table  style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray;padding: 2px; height:100px; width:100%;"  background="<% if tip.image.exists? -%> <%= tip.image.url(:medium) %> <% else -%>/images/Maps_google_map.gif <% end %>" valign="top">
+  <tr>
+    <td valign="top"><table  border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF"  style="opacity:0.75;-moz-opacity:0.75;filter:alpha(opacity=75); width=100%;">
       <tr>
-
-
-        <td><table  bgcolor="ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td height="3"><img src="images/picture-corner.gif" width="3" height="3" /></td>
-                    <td height="3" background="images/picture-side-t.gif"></td>
-                    <td height="3"><img src="images/picture-corner-rt.gif" width="3" height="3" /></td>
-                  </tr>
-                <tr>
-                      <td height="125" background="images/picture-side.gif">&nbsp;</td>
-                    <td valign="top">
-                      <table width="100%" border="0" cellspacing="0" cellpadding="3">
-                      <tr>
-
-
-        <td  bgcolor="ffffff" class="tip" id="tip_<%= show_place.id %>">
-          <% if tip.advertisement %>
+        <td bgcolor="#FFFFFF" class="tip" id="tip_<%= show_place.id %>"><% if tip.advertisement %>
               <div align="right" style="color:gray;">advertisement</div>
-          <% end %>
-          <span class="headtextdarker" align="center"><%= show_place.condition.name %>:<br>
+          <% end %><span class="textdark" bgcolor="#000000"><%= show_place.condition.name %>:</span>
             <% if tip.url != '' -%>
                 <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
-                  <%= tip.name %>
-                </a>
+                  <span class="textdark" ><b><%= tip.name %></b></span>                </a>
+                  <div class="full_tip" style="visibility:hidden;display:none;">
+		              <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+          </div>
+                
             <% else -%>
-                <%= tip.name %>
-            <% end -%>
-          </span>
-            <% if tip.address.address != '' -%>
-                <br>
-                <span class="headtextdarker" ><small>
-                  <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= tip.address.lat %>+<%= tip.address.lng %>&z=16" target="_blank">map</a>
-                </small></span>
-            <% end -%>
-          </p>
-
-          <div class="full_tip" style="visibility:hidden;display:none;">
-            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+                <span class="textdark" ><b><%= tip.name %></b></span><div class="full_tip" style="visibility:hidden;display:none;">
+		            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
           </div>
-           </tr>
+                 <div class="guideinf" style="visibility:hidden;display:none;">
+		              <%= render :partial => 'display/hover/guideinfo', :locals => {:place => "guideinfo2"} %>
+          </div><% end -%>
+      </td></tr>
+      <tr>
+        <td></td>
+      </tr>
+    </table></td>
+  </tr>
+</table></div>
+
+                  
+      
+          
+          
+           
+            
+          
+          
+        </td> </tr>  <% end %> 
+        
+        
+        
+        
+        
+        
                 <tr>
-                  <td height="3"><img src="images/picture-corner-bl.gif" width="3" height="3" /></td>
-                    <td height="3" background="images/picture-side-b.gif"></td>
-                    <td height="3"><img src="images/picture-corner-br.gif" width="3" height="3" /></td>
-                  </tr>
-                </table></td>
-      </tr>                                     <tr>
-                  <td height="3"><img src="images/picture-corner-bl.gif" width="3" height="3" /></td>
-                    <td height="3" background="images/picture-side-b.gif"></td>
-                    <td height="3"><img src="images/picture-corner-br.gif" width="3" height="3" /></td>
-                  </tr>
-                </table></td>
-  <% end %>
-
-       <tr>
-        <td background="images/underground.gif" bgcolor="#E4E3CD"><center>
-          <table width="100%" border="0" cellspacing="0" cellpadding="3">
-            <tr>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="week.html">Week</a>
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="saunday.html">Sun</a>
-              </center></td>
-              <td valign="top" bgcolor="#F0EFE3" class="headtextdarkersmall"><center>
-                M<br />
-                <img src="images/arrowup.gif" width="12" height="11" border="0" />
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="tuesday">T</a>
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="w">W</a>
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="t">T</a>
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="f">F</a>
-              </center></td>
-              <td valign="top" class="headtextdarkersmall"><center>
-                  <a href="sat">Sat</a>
-              </center></td>
-            </tr>
-          </table>
-        </center></td>
-      </tr>
-
-
-        <% if @day > 0 then %>
-      <tr>
-        <td >
-          <div align="right">
-            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);">
-              <span class="smalltext">
-                Previous day: <%= @dow.prev.name %></span></a>
-          </div>
-        </td>
-      </tr>
-  <% end %>
-  <% if @day < 2 then %>
-      <tr>
-        <td >
-          <div align="right">
-
-            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day + 1 %>);">
-              <font face="Geneva, Arial, Helvetica, sans-serif" size="4">Next day: <%= @dow.next.name %>&gt;&gt;</font></a>
-
-          </div>
-              <div align="right">
-            <a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);">
-              <span class="smalltext">
-                Previous day: <%= @dow.prev.name %></span></a>
-          </div>
-
-        </td>
-      </tr>
-  <% end %>
-
-        <tr>
-        <td bgcolor="#DBDABD"><center>
-           <BR>
-          <span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>-->
-      </span>
-        </center></td>
-      </tr>
-      <tr>
-        <td valign="baseline" bgcolor="#DBDABD"><center>
-          <a href="guiderer.com"><img src="images/guiderer-logo.gif" width="122" height="30" border="0" align="baseline" /></a>
-        </center></td>
-      </tr>
-    </table>
-    <div class="starbar">
-        <div class="outer">
-          <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-            <a class="s5" onclick="_cal.vote(this);" title="5"></a>
-            <a class="s4" onclick="_cal.vote(this);" title="4"></a>
-            <a class="s3" onclick="_cal.vote(this);" title="3"></a>
-            <a class="s2" onclick="_cal.vote(this);" title="2"></a>
-            <a class="s1" onclick="_cal.vote(this);" title="1"></a>
-          </div>
+                  <td  bgcolor="ffffff"><table id="guideinfo" width=100% bgcolor="#DBDABD" class="headtextdarkersmall"><tr><td>
+                    <span class="headtextdarkersmall" align="center">
+                      <div align="center"><a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="16" height="12" /></a>&nbsp;&nbsp;&nbsp;
+                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="16" height="12" /></a><br></span><span class="textdark" align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>" target="_blank">View whole week</a></div></span>
+                  </td></tr><tr>
+               
+            <td >Rate this guide:<BR>
+              <div class="starbar" >
+      <div class="outer">
+        <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+          <a class="s5" onclick="_cal.vote(this);" title="VOTE 5"></a>
+          <a class="s4" onclick="_cal.vote(this);" title="VOTE 4"></a>
+          <a class="s3" onclick="_cal.vote(this);" title="VOTE 3"></a>
+          <a class="s2" onclick="_cal.vote(this);" title="VOTE 2"></a>
+          <a class="s1" onclick="_cal.vote(this);" title="VOTE 1"></a>
         </div>
       </div>
-    </td>
-    <td width="19" background="images/widget-side-r.gif">&nbsp;</td>
-  </tr>
-  <tr>
-    <td width="19"><img src="images/widget-corner-bl.gif" width="19" height="19" /></td>
-    <td background="images/widget-side-b.gif">&nbsp;</td>
-    <td width="19"><img src="images/widget-corner-br.gif" width="19" height="19" /></td>
-  </tr>
-</table>
+    </div> </td></tr><tr><TD>Find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR>
+      <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site or blog</a>
+            </td></tr><tr><TD><span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--></td></tr><tr><td><a href="http://www.guiderer.com"> Powered by <BR><img src="/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border=0 id=guideinfo2></a> 
+      </span> </TD></tr></table></td>
+          </tr>
+        </table>
+              
 
 
 
