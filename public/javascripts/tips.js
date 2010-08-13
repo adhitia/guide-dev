@@ -35,6 +35,7 @@ if (!window.tips) var tips = {
 
 
     create: function(root, conditionId, weekdayId, result) {
+        root = $(root).find('.tip-edit');
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {

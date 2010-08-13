@@ -3,19 +3,32 @@
     <div class="edit-tips-batch">
 
       <% @conditions.each do |condition| %>
-          <% tip = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
+          <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
 
-          <h2><%=condition.full_name%></h2>
+          <div>
+
+          <h2><%=condition.full_name%>  <span style="text-align:right;">
+            <% if place != nil then %>
+               <%= place.tip.name %>
+            <% else %>
+                <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
+                  create tip
+                </button>
+            <% end %>
+          </span> </h2>
 
           <div class="tip-edit">
-          <% if tip != nil then %>
-              <%= render :partial => 'tips/edit', :locals => {:place => tip} %>
+          <% if place != nil then %>
+              <%= render :partial => 'tips/edit', :locals => {:place => place} %>
           <% else %>
-            <button type="button" onclick="tips.create(this.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
+            <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
               create tip
             </button>
           <% end %>
           </div>
+
+          </div>
+
       <% end %>
 
     </div>
