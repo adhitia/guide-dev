@@ -57,6 +57,7 @@ if (!window.tips) var tips = {
                         success: function(r) {
                             $(root).html('').html(r);
                             tips.init(root);
+                            $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
                         }
                     });
                 },

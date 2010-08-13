@@ -7,25 +7,24 @@
 
           <div>
 
-          <h2><%=condition.full_name%>  <span style="text-align:right;">
             <% if place != nil then %>
+                <h2 class="tip-tab"><%=condition.full_name%>  <span style="float:right;">
                <%= place.tip.name %>
+                </span> </h2>
+
+                <div class="tip-edit">
+                  <%= render :partial => 'tips/edit', :locals => {:place => place} %>
+                </div>
             <% else %>
+                <h2 class="no-tip-tab"><%=condition.full_name%>  <span style="float:right;">
                 <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
                   create tip
                 </button>
-            <% end %>
-          </span> </h2>
+                </span> </h2>
 
-          <div class="tip-edit">
-          <% if place != nil then %>
-              <%= render :partial => 'tips/edit', :locals => {:place => place} %>
-          <% else %>
-            <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
-              create tip
-            </button>
-          <% end %>
-          </div>
+                <div class="tip-edit">
+                </div>
+            <% end %>
 
           </div>
 
@@ -72,6 +71,13 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".edit-tips-batch").fpTabs(".tip-edit", {tabs: 'h2', effect: 'slide'});
+        $(".edit-tips-batch").fpTabs(".tip-edit", {
+            tabs: 'h2',
+            onBeforeClick: function(event, tabIndex) {
+                var tab = this.getTabs().eq(tabIndex);
+                return !tab.hasClass('no-tip-tab');
+            },
+            effect: 'slide'
+        });
     });
 </script>

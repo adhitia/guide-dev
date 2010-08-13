@@ -60,6 +60,7 @@ class TipsController < ApplicationController
     @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
+    @full_access = true
 
     occurrence.delete
     occurrence.tip.delete
