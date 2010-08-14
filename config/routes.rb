@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.manage_user '/users/:id/manage', :controller => :users, :action => :manage
 
   map.connect 'check_location', :controller => :util, :action => :check_location
+  map.connect 'fetch_gmaps_data', :controller => :util, :action => :fetch_gmaps_data
   map.connect '', :controller => :users, :action => :index
 #  map.connect 'index', :controller => :users, :action => :index
 
@@ -64,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'guides/:id/tiny', :controller => :display, :action => :tiny
   map.connect 'guides/:id/small', :controller => :display, :action => :small
   map.connect 'guides/:id/normal', :controller => :display, :action => :normal
-  map.connect 'public.js', :controller => :display, :action => :public
+#  map.connect 'public.js', :controller => :display, :action => :public
 
 #  map.connect ':controller/:action/:id'
 #  map.connect ':controller/:action/:id.:format'

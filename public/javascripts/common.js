@@ -30,6 +30,9 @@ if (!window.common) {
 
         setLoading: function(container, text) {
 //            $(container).html('<!--<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>-->');
+            if (text == null || text == undefined) {
+                text = '';
+            }
             $(container).html('<span style="text-align:center;"><img src="/images/loading-indicator.gif">' + text + '</span>');
         },
 

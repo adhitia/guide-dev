@@ -143,40 +143,54 @@ if (!window.tips) var tips = {
         var addr = $(result).find('.local_result_address').html();
         var lat = $(result).find('.local_result_lat').html();
         var lng = $(result).find('.local_result_lng').html();
-        var url = $(result).data('result_url');
+        var google_url = $(result).data('result_url');
         var phone = $(result).data('result_phone');
         if (phone.startsWith('(0xx)')) {
             phone = phone.substring('(0xx)'.length);
         }
-        $(row).find('.tip_address_street').val(addr);
-        $(row).find('.tip_address_lat').val(lat);
-        $(row).find('.tip_address_lng').val(lng);
-        $(row).find('.tip_url').val(url);
-        $(row).find('.tip_phone').val(phone);
 
-        var ajax_form = $('#fetch_remote_content_form');
-        ajax_form.attr('action', url);
-        $(row).find('.local-search-launch').click();
+//        var ajax_form = $('#fetch_remote_content_form');
+//        ajax_form.attr('action', url);
+//        $(row).find('.local-search-launch').click();
         container.html('');
 
-//        common.setLoading(container);
-//        ajax_form.ajaxSubmit({
-//            type: 'GET',
-//            cache: false,
-//            iframe: true,
-//            dataType: "html",
-//            async: false,
-//            success: function(r) {
-//                alert(1);
-//                console.log(r);
-//                alert(r);
-//                $(row).find('.local-search-launch').click();
-//                container.html('');
-//            },
-//            error: function(a, b, c) {
-//                alert('error ' + a + ' | ' + b + ' | ' + c);
-//            }
-//        });
+        // fetch website url
+        common.setLoading(container);
+        $.ajax({
+            url: '/fetch_gmaps_data',
+            data: {'url' : google_url},
+            type: 'GET',
+            cache: false,
+            dataType: "html",
+            success: function(r) {
+                r = $(r);
+//                var url = r.find('.pp-authority-page a').html();
+                var url = r.find('.pp-authority-page a').attr('href');
+                if (url == null) {
+                    url = google_url;
+                } else {
+                    var re = new RegExp("q=[^&]+&");
+                    url = re.exec(url).toString();
+                    url = url.substr(2, url.length - 3);
+                }
+//                alert(url);
+                r.remove();
+
+                $(row).find('.local-search-launch').click();
+                container.html('');
+
+                $(row).find('.tip_address_street').val(addr);
+                $(row).find('.tip_address_lat').val(lat);
+                $(row).find('.tip_address_lng').val(lng);
+                $(row).find('.tip_url').val(url);
+                $(row).find('.tip_phone').val(phone);
+//                $(row).find('.map_url').val(google_url);
+
+            },
+            error: function(a, b, c) {
+                alert('error ' + a + ' | ' + b + ' | ' + c);
+            }
+        });
 //        alert(23);
     },
 

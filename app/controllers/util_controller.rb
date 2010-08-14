@@ -1,4 +1,8 @@
+require 'net/http'
+require 'uri'
+
 class UtilController < ApplicationController
+  layout nil
 
 #  def check_location
 #    WeatherMan.partner_id = '1180784909'
@@ -40,5 +44,11 @@ class UtilController < ApplicationController
     end
 
     render :json => result
+  end
+
+  def fetch_gmaps_data
+    url = params[:url]
+#    puts "!!!!!!!!!!!!!!!!! #{url}"
+    render :text => Net::HTTP.get(URI.parse(url))
   end
 end
