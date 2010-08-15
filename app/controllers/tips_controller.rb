@@ -56,7 +56,7 @@ class TipsController < ApplicationController
     if !url.start_with? 'http://'
       url = 'http://' + url
     end
-    puts "!!!!!!!!!!!! #{url}"
+#    puts "!!!!!!!!!!!! #{url}"
     redirect_to url
   end
 

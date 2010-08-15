@@ -5,7 +5,6 @@ require 'calendars_helper'
 class CalendarsController < ApplicationController
 
   def show
-#    puts "!!!!!!!!!!!!!! #{params.inspect}"
     @calendar = Calendar.find(params[:id])
     @full_access = @current_user && (@calendar.user.id == @current_user.id);
 
