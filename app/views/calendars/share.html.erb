@@ -1,4 +1,14 @@
 <h1>Preview and get widget code</h1>
+
+Add those imports to the 'head' tag of your page.
+<textarea id="preview_import" rows="4" cols="120">
+  <% escape do %>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=WEB_ROOT%>/public.js" ></script>
+  <% end %>
+</textarea>
+
+
 <P>Choose your prefered widget dimensions:</p>
 <div id="choose_style">
 <% ["tiny", "small", "normal"].each do |style|  %>
@@ -8,19 +18,19 @@
 </div>
       <p> Tiny= 200 pixels wide, Small= 300 pixels wide, Normal= 600 pixels wide</P>
 
-<textarea id="preview_html" rows="8" cols="120">
-</textarea>
+
+<textarea id="preview_html" rows="7" cols="120"></textarea>
+
 <P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
 <p><span class="headtextlighter">What your widget looks like</span></p>
 <div id="preview_guide"></div>
 
 <div id="preview_template" class="hidden">
-  &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"&gt;&lt;/script&gt;
-  &lt;script type="text/javascript" src="<%=WEB_ROOT%>/public.js" &gt;&lt;/script&gt;
-  &lt;div id="preview_guide"&gt; &lt;/div&gt;
-  &lt;script type="text/javascript"&gt;
-      _cal.render_calendar("{target_id}", "{calendar_id}", "{style_id}");
-  &lt;/script&gt;
+  <% escape do %>
+    <div class="guiderer" guide_id="{calendar_id}" guide_style="{style_id}">
+      <%= link_to "Find more #{@calendar.name_location} guides on Guiderer!", search_url(:search_location => @calendar.location.name) %>
+    </div>
+  <% end %>
 </div>
 
 <script type="text/javascript">

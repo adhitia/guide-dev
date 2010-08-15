@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'guides/:id/advertise', :controller => 'calendars', :action => 'advertise_choose', :conditions => { :method => :get }
   map.advertise_new 'guides/:id/advertise', :controller => 'calendars', :action => 'advertise', :conditions => { :method => :post }
   map.connect 'guides/:id/ads', :controller => 'calendars', :action => 'ads'
-  map.connect 'guides', :controller => 'calendars', :action => 'search', :conditions => { :method => :get }
+  map.search 'guides', :controller => 'calendars', :action => 'search', :conditions => { :method => :get }
 
   map.new_guide 'guides/new', :controller => :calendars, :action => :new, :conditions => { :method => :get }
   map.create_guide 'guides/new', :controller => :calendars, :action => :create, :conditions => { :method => :post }

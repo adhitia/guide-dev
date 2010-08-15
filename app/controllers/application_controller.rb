@@ -115,11 +115,8 @@ class ApplicationController < ActionController::Base
   end
 
   def ajax?
+#    puts "!!!!!!!!! #{request.headers['X-Requested-With'] == 'XMLHttpRequest'}"
     request.headers['X-Requested-With'] == 'XMLHttpRequest'
-#    if @ajax == nil
-#      @ajax = false
-#    end
-#    @ajax
   end
 
   def handle_error(exception)

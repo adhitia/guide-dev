@@ -23,4 +23,13 @@ module ApplicationHelper
   def empty?(s)
     return s == nil || s.strip.empty?;
   end
+
+  def escape(&block)
+    text = capture(&block)
+    text = text.gsub(/[&><"]/) { |special|
+      ERB::Util::HTML_ESCAPE[special]
+    }
+#    output_buffer << text
+    concat text
+  end
 end
