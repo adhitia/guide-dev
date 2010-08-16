@@ -1,9 +1,6 @@
 <h1>Create a Guide</h1>
 
 
-
-<p>&nbsp;</p>
-
 <form id="new_calendar_form" name="new_calendar_form" action="<%= create_guide_path %>" method="POST">
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
   <% if flash[:error] %>
@@ -11,9 +8,9 @@
   <% end %>
 
   <p class="subheadtable" align="center"><strong>Guide name</strong> <BR>
-    <input id="calendar_name_location" class="headtextdarkerlarger" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20" title="location">
+    <input id="calendar_name_location" class="headtextdarkerlarger watermark" title="location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20">
     FOR
-    <input id="calendar_name_target" class="headtextdarkerlarger" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20" title="target group">
+    <input id="calendar_name_target" class="headtextdarkerlarger watermark" title="target group" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20">
   </p>
   <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
   
@@ -56,13 +53,15 @@
                 }
             });
         });
-    });
 
 
-    $('#calendar_name_location').Watermark('location');
-    $('#calendar_name_target').Watermark('target group');
-    $('#new_calendar_form').submit(function() {
-        $.Watermark.HideAll();
-        return true;
+
+//        $('#calendar_name_location').Watermark('location');
+//        $('#calendar_name_target').Watermark('target group');
+        $('#new_calendar_form').submit(function() {
+            $.Watermark.HideAll();
+            return true;
+        });
     });
+
 </script>

@@ -50,8 +50,6 @@ class CalendarsController < ApplicationController
     end
 
 
-#    puts "!!!!!!!!!!!!! #{params[:location_code]} : #{params[:location_name]}"
-
     # validate data
     if (empty?(params[:calendar_name_location]) || empty?(params[:calendar_name_target]))
       flash[:error] = 'Please select name.';

@@ -25,7 +25,7 @@
 
             <form id="search_form" name="search_form" method="get" action="guides">
               <label>
-                <input  name="search_location" id="search_location" class="subheadtablegray" value="" type="text" title="type destination here" size="20">
+                <input  name="search_location" id="search_location" class="subheadtablegray watermark" value="" type="text" title="type destination here" size="20">
               </label>
               <font color="#FFFFFF">
                 <img onclick="$.Watermark.HideAll();document.search_form.submit();" src="images/guiderer-index_r11_c5.jpg" class="subheadtablegray" width="190" height="35" align="absmiddle"/>
@@ -133,6 +133,7 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function() {
     $("#search_location").autocomplete(
             [
                 <% @locations.size.times do |index| -%>
@@ -149,4 +150,5 @@
         $.Watermark.HideAll();
         return true;
     });
+  });
 </script>
