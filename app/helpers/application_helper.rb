@@ -29,7 +29,20 @@ module ApplicationHelper
     text = text.gsub(/[&><"]/) { |special|
       ERB::Util::HTML_ESCAPE[special]
     }
-#    output_buffer << text
     concat text
+  end
+
+  def show_errors(name, &block)
+    if !@errors.nil? and @errors[name]
+      concat "<span class='fieldWithErrors'>"
+      concat capture(&block)
+      concat "</span>"
+    else
+      concat capture(&block)
+    end
+  end
+
+  def has_errors(name)
+    !@errors.nil? and !@errors[name].nil?
   end
 end

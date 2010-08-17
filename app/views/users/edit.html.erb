@@ -1,8 +1,6 @@
 <h1>Editing user</h1>
 
 <% form_for @user, :url => update_user_path(:id => @user) do |f| %>
-  <%= f.error_messages %>
-
   <p>
     <%= f.label :email %><br />
     <%= f.text_field :email %>

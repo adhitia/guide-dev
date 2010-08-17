@@ -51,4 +51,22 @@ Rails::Initializer.run do |config|
 
   config.gem 'oauth2'
 
+
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    if html_tag.start_with? "<label"
+      "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe!
+    else
+      if instance.error_message.kind_of?(Array)
+        %(<span class='fieldWithErrors'>#{html_tag}</span>
+        <span class="validation-error">&nbsp;#{instance.error_message.join(',')}</span>)
+      else
+        %(<span class='fieldWithErrors'>#{html_tag}</span>
+        <span class="validation-error">&nbsp;#{instance.error_message}</span>)
+      end
+    end
+  end
+#
+#
+#  ActionView::Base.field_error_proc = Proc.new{ |html_tag, instance| "<div class=\"fieldWithErrors\">#{html_tag}</div>".html_safe! }
+
 end

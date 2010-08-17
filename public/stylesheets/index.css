@@ -442,5 +442,14 @@ border-radius: 4px;
 
 input.invalid {
     border-color:red;
-    border-width:2px;
+    border-width:3px;
+    border-style:solid;
 }
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: inline;
+}
+
+

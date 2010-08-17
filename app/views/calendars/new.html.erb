@@ -1,24 +1,27 @@
-<h1>Create a Guide</h1>
+
 
 
 <form id="new_calendar_form" name="new_calendar_form" action="<%= create_guide_path %>" method="POST">
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-  <% if flash[:error] %>
-      <p style="color:red;"><%= flash[:error] %></p>
-  <% end %>
+
+  <div style="" align="center">
+    <h1>Create a Guide</h1>
+  </div>
 
   <p class="subheadtable" align="center"><strong>Guide name</strong> <BR>
-    <input id="calendar_name_location" class="headtextdarkerlarger watermark" title="location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20">
+    <input id="calendar_name_location" class="headtextdarkerlarger watermark <%=has_errors('calendar_name_location') ? 'invalid' : ''%>"
+           title="location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20">
     FOR
-    <input id="calendar_name_target" class="headtextdarkerlarger watermark" title="target group" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20">
+    <input id="calendar_name_target" class="headtextdarkerlarger watermark <%=has_errors('calendar_name_target') ? 'invalid' : ''%>"
+           title="target group" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20">
   </p>
   <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
-  
 
   <p class="subheadtable" align="center">
     <strong>Use weather info for </strong><BR>
       <span style="position:relative;">
-        <input id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
+        <input id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>"
+               class="<%=has_errors('location_code') ? 'invalid' : ''%>" type="text">
         <span style="position:absolute;left:50%;" class="location-loading"></span>
         <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
       </span>

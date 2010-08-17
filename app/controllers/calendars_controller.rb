@@ -15,6 +15,7 @@ class CalendarsController < ApplicationController
 
   def new
     return unless authenticate
+#    @guide = Calendar.new
   end
 
   def edit_day
@@ -49,15 +50,12 @@ class CalendarsController < ApplicationController
       return
     end
 
+    @errors = {};
+    @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
+    @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
+    @errors["location_code"] = "" if params[:location_code].blank?
 
-    # validate data
-    if (empty?(params[:calendar_name_location]) || empty?(params[:calendar_name_target]))
-      flash[:error] = 'Please select name.';
-      render :action => :new
-      return
-    end
-    if (empty? params[:location_code])
-      flash[:error] = 'Please select location.';
+    if not @errors.blank?
       render :action => :new
       return
     end
@@ -192,8 +190,8 @@ class CalendarsController < ApplicationController
     @calendar.name_location = params[:calendar_name_location]
     @calendar.name_target = params[:calendar_name_target]
     @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
-    @calendar.view_count = 0;
-    @calendar.click_count = 0;
+#    @calendar.view_count = 0;
+#    @calendar.click_count = 0;
     @calendar.user = @current_user
 
     location_code = params[:location_code]
