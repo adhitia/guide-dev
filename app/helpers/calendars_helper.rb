@@ -12,4 +12,8 @@ module CalendarsHelper
       (Date.today + day).strftime '%m/%d'
     end
   end
+
+#  def validateGuide()
+#    puts "!!!!!!!!!!!!!!"
+#  end
 end

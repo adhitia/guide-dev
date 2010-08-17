@@ -8,13 +8,19 @@
     <h1>Create a Guide</h1>
   </div>
 
-  <p class="subheadtable" align="center"><strong>Guide name</strong> <BR>
+  <div class="subheadtable" align="center">
+
+    <strong>Guide name</strong> <BR>
+
+    <div>
     <input id="calendar_name_location" class="headtextdarkerlarger watermark <%=has_errors('calendar_name_location') ? 'invalid' : ''%>"
            title="location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20">
     FOR
     <input id="calendar_name_target" class="headtextdarkerlarger watermark <%=has_errors('calendar_name_target') ? 'invalid' : ''%>"
            title="target group" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20">
-  </p>
+    </div>
+  </div>
+
   <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
 
   <p class="subheadtable" align="center">
