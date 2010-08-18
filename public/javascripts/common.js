@@ -1,3 +1,4 @@
+
 if (!window.common) {
     $.ajaxSetup({
         beforeSend: function(request) {
@@ -102,15 +103,28 @@ if (!window.common) {
     };
 
     $(document).ready(function() {
+//        alert(validation_errors);
+        if (validation_errors != null) {
+            for (var key in validation_errors) {
+                if (validation_errors[key] == null) {
+                    continue;
+                }
+                var e = $('input[name=' + key + ']');
+                if (e.length != 1) {
+                    throw "One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
+                }
+                e.addClass("invalid");
+//                alert(key + "  :  " + e.length);
+            }
+        }
     });
 
 
-
-$(document).ready(function() {
-    $('input.watermark').each(function(i) {
-        $(this).Watermark($(this).attr('title'));
+    $(document).ready(function() {
+        $('input.watermark').each(function(i) {
+            $(this).Watermark($(this).attr('title'));
+        });
     });
-});
 
 }
 

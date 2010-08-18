@@ -15,7 +15,6 @@ class CalendarsController < ApplicationController
 
   def new
     return unless authenticate
-#    @guide = Calendar.new
   end
 
   def edit_day
@@ -50,12 +49,18 @@ class CalendarsController < ApplicationController
       return
     end
 
+    guide = read_guide
+    if guide.invalid?
+      @errors = guide.errors_as_hash
+      puts "!!!!!!!!!!!!!! #{@errors.inspect}"
+      render :action => :new
+      return
+    end
+
     @errors = {};
     @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
     @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
     @errors["location_code"] = "" if params[:location_code].blank?
-#    CalendarsHelper
-#    Calendar.new
 
     if not @errors.blank?
       render :action => :new
@@ -89,8 +94,9 @@ class CalendarsController < ApplicationController
     location_name = params[:location_name]
 
     if not empty? params[:location_name]
-      loc = find_or_create_location location_code, location_name
-      @calendar.location_id = loc.id;
+#      loc = find_or_create_location location_code, location_name
+#      @calendar.location_id = loc.id;
+      @calendar.location_id = find_or_create_location;
       @calendar.save
     end
 
@@ -196,11 +202,11 @@ class CalendarsController < ApplicationController
 #    @calendar.click_count = 0;
     @calendar.user = @current_user
 
-    location_code = params[:location_code]
-    location_name = params[:location_name]
-    location = find_or_create_location location_code, location_name
-    @location_id = location.id
-    @calendar.location_id = location.id
+#    location_code = params[:location_code]
+#    location_name = params[:location_name]
+#    location = find_or_create_location #location_code, location_name
+#    @location_id = location.id
+    @calendar.location_id = find_or_create_location
 
     @calendar.save
 
@@ -229,15 +235,25 @@ class CalendarsController < ApplicationController
   end
 
 
-  def find_or_create_location(location_code, location_name)
+  def find_or_create_location(location_code = params[:location_code], location_name = params[:location_name])
+    return nil if location_code.blank?
+
     location = Location.find_by_code location_code
     if location == nil
       Location.create(:name => location_name, :code => location_code)
       location = Location.find_by_code location_code
     end
-    location
+    location.id
   end
 
+  def read_guide
+    Calendar.new({
+            :name_location => params[:calendar_name_location],
+            :name_target => params[:calendar_name_target],
+#            :location_id => find_or_create_location(params[:location_code], params[:location_name])
+            :location_id => find_or_create_location
+    })
+  end
 end
 
 

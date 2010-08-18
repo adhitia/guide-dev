@@ -28,18 +28,19 @@ class TipsController < ApplicationController
     @full_access = true;
 
     @calendar = Calendar.find(params[:id])
-    params[:tips].each_pair do |id, tip_data|
-      tip = Tip.find(id)
-      if tip.author_id != @calendar.user_id
-        raise "Found tip belonging to user #{tip.author_id}, while #{@calendar.user_id} expected."
-      end
-    end
 
-    params[:tips].each_pair do |id, tip_data|
-      tip = Tip.find(id)
-      tip.address.update_attributes tip_data[:address]
-      tip_data.delete :address
-      tip.update_attributes tip_data
+    Tip.transaction do
+      params[:tips].each_pair do |id, tip_data|
+        tip = Tip.find id, :lock => true
+        if tip.author_id != @calendar.user_id
+          raise "Found tip belonging to user #{tip.author_id}, while #{@calendar.user_id} expected."
+        end
+
+
+        tip.address.update_attributes tip_data[:address]
+        tip_data.delete :address
+        tip.update_attributes tip_data
+      end
     end
 
     render :text => 'dummy response'
