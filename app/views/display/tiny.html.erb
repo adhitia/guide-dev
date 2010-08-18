@@ -8,13 +8,13 @@
 
 
 
-
-<div id="apDiv1" style="position: relative;  width: 981px; height: 25px; z-index: 1; background: #DBDABD; vertical-align: middle;padding:5px;"><span class="subheadtablemed"><a href="http://localhost:3000/guides/<%= @calendar.id %>"><%= @calendar.name %>'</a> travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span></div>
+<div style="width:auto;height:250px;position:relative;float:left;background-color:white;-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px;border:2px solid gray;z-index: 0;">
+<div id="apDiv1" style="width:98%;position: relative; top:4px; left:4px;  height: 25px; z-index: 1; background: #DBDABD; vertical-align: middle;padding:5px;"><span class="subheadtablemed"><a href="http://localhost:3000/guides/<%= @calendar.id %>"><%= @calendar.name %>'</a> travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span></div>
   <% @tips.each do |show_place| %>
       <% tip = show_place.tip %>
 <div id="apDiv<%= tip.name %>" style="position: relative;float:left;width:10%; height: 150px; margin:2px; z-index: 2; background-image:url('<% if tip.image.exists? -%><%= tip.image.url(:medium) %> <% else -%>/images/Maps_google_map.gif <% end %>');padding:2px;-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px;border:1px solid gray;><% if tip.advertisement %>
               <div align="right" style="color:gray;">advertisement</div>
-          <% end %><span class="headtextdarkersmaller"><%= show_place.condition.name %>:</span><BR />
+          <% end %><span class="text"><%= show_place.condition.name %>:</span><BR />
             <% if tip.url != '' -%>
                 <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
                   <span class="headtextdarker" ><%= tip.name %></span>                </a>
@@ -29,11 +29,16 @@
           </div> <% end -%></div>
 
      <% end -%>
-<div id="apDiv3" style="position: relative; float:left; width: 166px; height: 45px; z-index: 3; background: #DBDABD"><span align="center">
+     
+     
+     <p>
+<div class="text" align="center">
+<div id="apDivd" style="position: relative; float:left; width:95%; height: 1px; z-index: 13; background: #bbbbbb">
+<div id="apDiv3" style="position: relative; float:left; height: 45px; z-index: 3; background: #DBDABD";padding:10px;>
                       <div align="center"><a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="11" height="12" border="0" /></a>&nbsp;&nbsp;&nbsp;
                       <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'tiny', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="11" height="12" border="0" /></a><br />
-                    <span align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>">View whole week</a></span></div></span></div>
-<div id="apDiv4" style="position: relative; float:left; width: 127px; height: 45px; z-index: 4; background: #DBDABD; vertical-align: middle">Rate this guide:<BR />
+                    <a href="http://localhost:3000/guides/<%= @calendar.id %>">View whole week</a></div></div>
+<div id="apDiv4" style="position: relative; float:left; height: 45px; z-index: 4; background: #DBDABD; vertical-align: middle">Rate this guide:<BR />
               <div class="starbar" >
       <div class="outer">
         <div class="inner" style="width:<%=Integer(@rating*20)%>px">
@@ -45,14 +50,16 @@
         </div>
       </div>
     </div></div>
-<div id="apDiv5" style="position: relative; float:left; width: 234px; height: 45px; z-index: 5; background: #DBDABD; vertical-align: middle">Find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR />
+    
+    
+<div id="apDiv5" style="position: relative; float:left;  height: 45px; z-index: 5; background: #DBDABD; vertical-align: middle">Find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR />
       <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site or blog</a></div>
-<div id="apDiv6" style="position: relative; float:left; width: 155px; height: 45px; z-index: 6; background: #DBDABD; vertical-align: middle"><span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--></span></div><span class="headtextdarkersmall">
-<div id="apDiv7" style="position: relative; float:left; width: 275px; height: 45px; z-index: 7; background: #DBDABD; vertical-align: middle"><a href="http://www.guiderer.com"><img src="/images/guiderer-logo-trasnp-tiny.gif" width=100 height="20" border=0 /><BR /> 
+<div id="apDiv6" style="position: relative; float:left;  height: 45px; z-index: 6; background: #DBDABD; vertical-align: middle"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--></div>
+<div id="apDiv7" style="position: relative; float:left; height: 45px; z-index: 7; background: #DBDABD; vertical-align: middle"><a href="http://www.guiderer.com"><img src="/images/guiderer-logo-trasnp-tiny.gif" width=100 height="20" border=0 /><BR /> 
            Powered by GUIDERER.COM</a><br /></div>
-</span></span></span>
-
+</div></div>
+</p>
 
 
 
