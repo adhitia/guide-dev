@@ -3,50 +3,50 @@
 
 <div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>">
 
-  <% if @full_access %>
-  <table width=100% align="right">
-    <tr>
-      <td>
-        <!--move tip-->
-        <div class="move-tip"></div>
-      </td>
-      <td width=20px>
+  <!--top icons-->
+  <div>
+
+    <% if @full_access %>
         <!--delete tip-->
-        <div class="delete-tip"></div>
-      </td>
-    </tr>
-  </table>
-  <% end %>
-
-  <!--view full tip-->
-  <!--link here-->
-  <a class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>">view</a><br/>
-  <div class="full-tip-overlay">
-    <!--contents here-->
-    <div class="content"></div>
-  </div>
+        <a class="delete-tip" style="position:relative;float:right;margin-left:5px;" title="delete"></a>
+        <!--move tip-->
+        <a class="move-tip" style="position:relative;float:right;margin-left:5px;" title="move"></a>
+    <% end %>
 
 
-  <% if @full_access %>
-      <!--edit tip in overlay-->
-      <!--link goes here-->
-      <a class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit">edit</a><br/>
+    <% if @full_access %>
+        <!--edit tip in overlay-->
+        <!--link goes here-->
+        <a style="float:right;margin-left:5px;" class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit">edit</a>
 
-      <!--content goes here, do not touch-->
-      <div class="edit-tip-overlay">
+        <!--content goes here, do not touch-->
+        <div class="edit-tip-overlay">
 
-        <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
-        <div class="content"></div>
-        <div align="center">
-            <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
-              save
-            </button>
+          <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
+          <div class="content"></div>
+          <div align="center">
+              <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
+                save
+              </button>
+          </div>
+          <% end %>
+
+
         </div>
-        <% end %>
+    <% end %>
 
 
-      </div>
-  <% end %>
+
+    <!--view full tip-->
+    <!--link here-->
+    <a style="float:right;margin-left:5px;" class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>" title="view">see</a>
+    <div class="full-tip-overlay">
+      <!--contents here-->
+      <div class="content"></div>
+    </div>
+
+
+  </div>
 
 
   <!-- tip statistics -->

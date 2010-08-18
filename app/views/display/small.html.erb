@@ -62,8 +62,8 @@
                 <tr>
                   <td  bgcolor="ffffff"><table id="guideinfo" width=100% bgcolor="#DBDABD" class="headtextdarkersmall"><tr><td>
                     <span class="headtextdarkersmall" align="center">
-                      <div align="center"><a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="16" height="12" /></a>&nbsp;&nbsp;&nbsp;
-                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_cal.render_calendar('<%= params[:target_id] %>', <%= @calendar.id %>, 'small', <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="16" height="12" /></a><br></span><span class="textdark" align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>" target="_blank">View whole week</a></div></span>
+                      <div align="center"><a href="javascript:_guiderer.render(this, <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="16" height="12" /></a>&nbsp;&nbsp;&nbsp;
+                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_guiderer.render(this, <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="16" height="12" /></a><br></span><span class="textdark" align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>" target="_blank">View whole week</a></div></span>
                   </td></tr><tr>
                
             <td >Rate this guide:<BR>
@@ -80,7 +80,7 @@
     </div> </td></tr><tr><TD>Find other guides for <a href="http://localhost:3000/guides?search_location=miami">miami</a><BR>
       <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site or blog</a>
             </td></tr><tr><TD><span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-       <!-- || <%= link_to 'Advertise', :controller => 'calendars', :action => 'advertise', :id => @calendar.id %>--></td></tr><tr><td><a href="http://www.guiderer.com"> Powered by <BR><img src="/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border=0 id=guideinfo2></a> 
+       </td></tr><tr><td><a href="http://www.guiderer.com"> Powered by <BR><img src="/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border=0 id=guideinfo2></a>
       </span> </TD></tr></table></td>
           </tr>
         </table>

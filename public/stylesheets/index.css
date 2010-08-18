@@ -427,7 +427,7 @@ border-radius: 4px;
 }
 /* accordion header */
 .edit-tips-batch h2 {
-	background:#ccc url(/images/h30.png);
+	background: #ccc url(/images/h30.png) ;
 	margin:0;
 	padding:5px 15px;
 	font-size:14px;
@@ -455,4 +455,17 @@ border-radius: 4px;
 	font-size:16px;
 	color:#999;
 }
+
+input.invalid {
+    border-color:red;
+    border-width:3px;
+    border-style:solid;
+}
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: inline;
+}
+
 

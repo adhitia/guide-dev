@@ -51,7 +51,13 @@ class TipsController < ApplicationController
     @tip.save;
     @calendar.click_count += 1;
     @calendar.save;
-    redirect_to @tip.url
+
+    url = @tip.url
+    if !url.start_with? 'http://'
+      url = 'http://' + url
+    end
+#    puts "!!!!!!!!!!!! #{url}"
+    redirect_to url
   end
 
   # removes binding between tip and calendar
@@ -60,6 +66,7 @@ class TipsController < ApplicationController
     @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
+    @full_access = true
 
     occurrence.delete
     occurrence.tip.delete

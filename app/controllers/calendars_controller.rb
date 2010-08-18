@@ -5,7 +5,6 @@ require 'calendars_helper'
 class CalendarsController < ApplicationController
 
   def show
-#    puts "!!!!!!!!!!!!!! #{params.inspect}"
     @calendar = Calendar.find(params[:id])
     @full_access = @current_user && (@calendar.user.id == @current_user.id);
 
@@ -16,6 +15,7 @@ class CalendarsController < ApplicationController
 
   def new
     return unless authenticate
+#    @guide = Calendar.new
   end
 
   def edit_day
@@ -50,14 +50,12 @@ class CalendarsController < ApplicationController
       return
     end
 
-    # validate data
-    if (empty?(params[:calendar_name_location]) || empty?(params[:calendar_name_target]))
-      flash[:error] = 'Please select name.';
-      render :action => :new
-      return
-    end
-    if (empty? params[:location_code])
-      flash[:error] = 'Please select location.';
+    @errors = {};
+    @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
+    @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
+    @errors["location_code"] = "" if params[:location_code].blank?
+
+    if not @errors.blank?
       render :action => :new
       return
     end
@@ -78,7 +76,24 @@ class CalendarsController < ApplicationController
     @weekdays = Weekday.all
     @conditions = Condition.all
   end
-  
+
+  def update
+    @ajax = true
+    return unless authorize_guide params[:id]
+
+    @calendar = Calendar.find(params[:id])
+
+    location_code = params[:location_code]
+    location_name = params[:location_name]
+
+    if not empty? params[:location_name]
+      loc = find_or_create_location location_code, location_name
+      @calendar.location_id = loc.id;
+      @calendar.save
+    end
+
+    render :text => 'dummy response'
+  end
 
 #  def update
 #    @calendar = Calendar.find(params[:id])
@@ -175,8 +190,8 @@ class CalendarsController < ApplicationController
     @calendar.name_location = params[:calendar_name_location]
     @calendar.name_target = params[:calendar_name_target]
     @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
-    @calendar.view_count = 0;
-    @calendar.click_count = 0;
+#    @calendar.view_count = 0;
+#    @calendar.click_count = 0;
     @calendar.user = @current_user
 
     location_code = params[:location_code]

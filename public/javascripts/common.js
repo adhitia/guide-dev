@@ -28,8 +28,16 @@ if (!window.common) {
                 window.location.replace(location);
         },
 
-        setLoading: function(container) {
-            $(container).html('<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>');
+        setLoading: function(container, text) {
+//            $(container).html('<!--<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>-->');
+            if (text == null || text == undefined) {
+                text = '';
+            }
+            $(container).html('<span style="text-align:center;"><img src="/images/loading-indicator.gif">' + text + '</span>');
+        },
+
+        stopLoading: function(container) {
+            $(container).html('');
         },
 
         /**
@@ -96,4 +104,13 @@ if (!window.common) {
     $(document).ready(function() {
     });
 
+
+
+$(document).ready(function() {
+    $('input.watermark').each(function(i) {
+        $(this).Watermark($(this).attr('title'));
+    });
+});
+
 }
+

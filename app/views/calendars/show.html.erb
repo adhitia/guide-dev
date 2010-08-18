@@ -1,5 +1,22 @@
 <h1>Overview of "<%= h @calendar.name %>" Guide</h1>
-<b>Location:</b>      <%= h @calendar.location.name %>  <b> | Times Viewed:</b>
+
+<b>Location:</b>
+<span>
+  <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
+  <span class="edit-area hidden" style="position:relative;">
+    <input type="text" value="<%= @calendar.location.name %>" class="location-input" /><span style="position:absolute;left:50%;" class="location-loading"></span>
+    <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
+  </span>
+  <span class="hidden">
+    <% form_tag(update_guide_path(:id => @calendar), :method => 'post', :class => 'submit-location') do %>
+        <input type="hidden" name="location_name" class="param_location_name">
+        <input type="hidden" name="location_code" class="param_location_code">
+    <% end %>
+  </span>
+</span>
+
+<br/>
+<b> Times Viewed:</b>
 <%= h @calendar.view_count %>
 <b> | Times Clicked:</b>
 <%= h @calendar.click_count %>
@@ -90,3 +107,30 @@
       <input id="new_tip_name" name="new_tip_name"/>
   <% end %>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      // initialize autocomplete for locations
+      $('.location-input').each(function(i, e) {
+          calendar.locationInput(e, function(input, result) {
+              if (result == null) {
+                  return;
+              }
+              var root = input.parent().parent();
+              root.find('.view-area').html(result.label);
+              calendar.resetGuideLocation(root);
+
+              // Now save value.
+              common.setLoading($('.location-loading'), 'Saving...');
+              root.find('.param_location_name').val(result.label);
+              root.find('.param_location_code').val(result.id);
+              root.find('.submit-location').ajaxSubmit({
+                  success: function() {
+                      common.stopLoading($('.location-loading'));
+                  }
+              });
+          });
+      });
+  });
+</script>

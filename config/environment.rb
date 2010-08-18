@@ -1,3 +1,4 @@
+
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not  present
@@ -49,5 +50,23 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 
   config.gem 'oauth2'
+
+
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    if html_tag.start_with? "<label"
+      "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe!
+    else
+      if instance.error_message.kind_of?(Array)
+        %(<span class='fieldWithErrors'>#{html_tag}</span>
+        <span class="validation-error">&nbsp;#{instance.error_message.join(',')}</span>)
+      else
+        %(<span class='fieldWithErrors'>#{html_tag}</span>
+        <span class="validation-error">&nbsp;#{instance.error_message}</span>)
+      end
+    end
+  end
+#
+#
+#  ActionView::Base.field_error_proc = Proc.new{ |html_tag, instance| "<div class=\"fieldWithErrors\">#{html_tag}</div>".html_safe! }
 
 end

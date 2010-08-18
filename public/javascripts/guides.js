@@ -29,6 +29,74 @@ if (!window.calendar) var calendar = {
                 tips.init(parent);
             }
         });
+    },
+
+    editGuideLocation: function(root) {
+        $(root).find('.view-area').hide();
+        $(root).find('.edit-area').show();
+    },
+
+    resetGuideLocation: function(root) {
+        $(root).find('.view-area').show();
+        $(root).find('.edit-area').hide();
+    },
+
+    locationInput: function(input, callback) {
+        input = $(input);
+        input.autocomplete({
+            source: function(term, callback) {
+                common.setLoading($('.location-loading'), 'Loading...');
+                $.ajax({
+                    url: '/check_location',
+                    data: term,
+                    cache: false,
+                    dataType: "json",
+                    success: function(r) {
+                        $('.param_location_code').val('');
+                        common.stopLoading($('.location-loading'));
+                        if (r.length == 0) {
+                            r = [{
+                                label : "No result found. <br/>" +
+                                          "Please ensure that full word is entered, <br/>" +
+                                          "like <b>New</b> or <b>New York</b>, but not <b>New Yo</b>.",
+                                id : 'no_result'
+                            }];
+                        }
+                        callback(r);
+                    }
+                });
+            },
+            delay: 1000,
+            focus: function(event, ui) {
+                return ui.item.id != 'no_result';
+            },
+            change: function(event, ui) {
+                callback(input, null);
+            },
+            select: function(event, ui) {
+                if (ui.item.id == 'no_result') {
+                    callback(input, null);
+                    return false;
+                }
+
+                callback(input, ui.item);
+            },
+
+            minLength: 2
+        });
+
+
+//        input.autocomplete('/check_location', {
+//            delay: 1000,
+//            minChars: 3,
+//            mustMatch: true,
+//            cacheLength: 1,
+//            matchSubset: false
+//        });
+//        input.result(function(event, data, formatted) {
+//            alert(data[0] + " : " + data[1]);
+//            calendar.resetGuideLocation(input);
+//        });
     }
 };
 
@@ -64,6 +132,9 @@ $(document).ready(function() {
         });
         calendar.selectTab(common.getHash());
     }
+
+    // initialize autocomplete for locations
+//    $('.location-input').each(function(i, e) {calendar.locationInput(e);});
 
     // tips view page
 //    tips.init($('#view_tips'));

@@ -5,7 +5,7 @@ class Calendar < ActiveRecord::Base
   accepts_nested_attributes_for :show_places
   accepts_nested_attributes_for :location
 
-  validates_presence_of :name
+  validates_presence_of :name_location, :name_target, :location_id
 
   def rating_num
     if votes_num == 0
