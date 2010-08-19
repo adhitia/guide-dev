@@ -14,7 +14,6 @@
       <div class="column">
         <input id="calendar_name_location" class="watermark" title="location" name="calendar_name_location"
                type="text" value="<%= params[:calendar_name_location] %>" size="20">
-        <!--<br/><span class="validation-error">some text</span>-->
       </div>
       FOR
       <div class="column">
@@ -41,15 +40,7 @@
 
 
   <div class="button-panel">
-    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
-      NEXT
-    </a>
-    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
-      NEXT2
-    </a>
-  </div>
-  <div class="button-panel">
-    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
+    <a href="javascript:" onclick="$('#new_calendar_form').submit();" class="button">
       NEXT
     </a>
   </div>
@@ -78,8 +69,6 @@
 
 
 
-//        $('#calendar_name_location').Watermark('location');
-//        $('#calendar_name_target').Watermark('target group');
         $('#new_calendar_form').submit(function() {
             $.Watermark.HideAll();
             return true;

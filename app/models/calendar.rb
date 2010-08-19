@@ -5,9 +5,10 @@ class Calendar < ActiveRecord::Base
   accepts_nested_attributes_for :show_places
   accepts_nested_attributes_for :location
 
-  validates_presence_of :name_location, :name_target, :location_id
-#  validates_format_of
-#  validates_length_of
+  validates_presence_of :location_id
+  validates_length_of :name_location, :name_target, :in => 2..20,
+                      :too_long => "no more than {{count}} characters expected",
+                      :too_short => "at least {{count}} characters expected"
 
   def rating_num
     if votes_num == 0
@@ -24,10 +25,6 @@ class Calendar < ActiveRecord::Base
       "#{rating_num()}, #{votes_num} votes"
     end
   end
-
-#  def self.validate_name(params)
-#    /\A[a-zA-Z]+\z/
-#  end
 
   def errors_as_hash
 #    result = {}

@@ -104,6 +104,7 @@ if (!window.common) {
 
     $(document).ready(function() {
 //        alert(validation_errors);
+        $('.validation-error').html();
         if (validation_errors != null) {
             for (var key in validation_errors) {
                 var message = validation_errors[key];
@@ -121,7 +122,7 @@ if (!window.common) {
                 if (message != '') {
                     var label_id = key + "_error";
                     if ($('#' + label_id).length == 0) {
-                        $('<span id="' + label_id + '" class="validation-error">' + message + '</span>').insertAfter(e);
+                        $('<br/><span id="' + label_id + '" class="validation-error">' + message + '</span>').insertAfter(e);
                     } else {
                         $('#' + label_id).html(message);
                     }
