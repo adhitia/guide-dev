@@ -106,15 +106,27 @@ if (!window.common) {
 //        alert(validation_errors);
         if (validation_errors != null) {
             for (var key in validation_errors) {
-                if (validation_errors[key] == null) {
+                var message = validation_errors[key];
+                if (message == null) {
                     continue;
                 }
+
+                // highlight corresponding input field
                 var e = $('input[name=' + key + ']');
                 if (e.length != 1) {
                     throw "One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
                 }
                 e.addClass("invalid");
-//                alert(key + "  :  " + e.length);
+
+                if (message != '') {
+                    var label_id = key + "_error";
+                    if ($('#' + label_id).length == 0) {
+                        $('<span id="' + label_id + '" class="validation-error">' + message + '</span>').insertAfter(e);
+                    } else {
+                        $('#' + label_id).html(message);
+                    }
+                    //<span class="validation-error">&nbsp;#{instance.error_message.join(',')}</span>
+                }
             }
         }
     });

@@ -452,4 +452,61 @@ input.invalid {
   display: inline;
 }
 
+.validation-error {
+    font-size: medium;
+    color: red;
+    font-weight:normal;
+    text-transform:none;
+    float:left;
+}
 
+
+#new_guide_page {
+    text-align: center;
+}
+#new_guide_page .name-area {
+    margin-bottom: 40px;
+}
+#new_guide_page .name-area input {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    color: #666666;
+}
+#new_guide_page .name-area .column {
+    display: inline-block;
+}
+
+#new_guide_page .location-area {
+    /*margin-bottom: 40px;*/
+}
+#new_guide_page .location-area input {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: large;
+    color: #666666;
+}
+#new_guide_page .location-area .input-area {
+    position:relative;
+    display:inline-block;
+}
+#new_guide_page .hint {
+    font-size: xx-small;
+}
+
+
+.button-panel {
+    display: table;
+    width: 100%;
+    text-align: right;
+    margin-top: 40px;
+}
+
+.button-panel .button {
+    font-size: large;
+    color: #006699;
+    text-decoration: underline;
+    background-color: #FFCC00;
+    float: right;
+    padding: 10px;
+    margin-left: 10px;
+    border: 3px groove #E8B900;
+}

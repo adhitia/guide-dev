@@ -1,48 +1,62 @@
 
 
+<div id="new_guide_page" >
 
 <form id="new_calendar_form" name="new_calendar_form" action="<%= create_guide_path %>" method="POST">
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
 
-  <div style="" align="center">
-    <h1>Create a Guide</h1>
-  </div>
+  <h1>Create a Guide</h1>
 
-  <div class="subheadtable" align="center">
-
-    <strong>Guide name</strong> <BR>
+  <div class="name-area">
+    <h3>GUIDE NAME</h3>
 
     <div>
-    <input id="calendar_name_location" class="headtextdarkerlarger watermark"
-           title="location" name="calendar_name_location" type="text" value="<%= params[:calendar_name_location] %>" size="20">
-    FOR
-    <input id="calendar_name_target" class="headtextdarkerlarger watermark"
-           title="target group" name="calendar_name_target" type="text" value="<%= params[:calendar_name_target] %>" size="20">
+      <div class="column">
+        <input id="calendar_name_location" class="watermark" title="location" name="calendar_name_location"
+               type="text" value="<%= params[:calendar_name_location] %>" size="20">
+        <!--<br/><span class="validation-error">some text</span>-->
+      </div>
+      FOR
+      <div class="column">
+        <input id="calendar_name_target" class="watermark" title="target group" name="calendar_name_target"
+               type="text" value="<%= params[:calendar_name_target] %>" size="20">
+      </div>
     </div>
+    <p class="hint"> E.g., Rio for Partiers, Big Apple for Families </p>
+
   </div>
 
-  <p class="smalltext" align="center"> E.g., Rio for Partiers, Big Apple for Families </p>
 
-  <p class="subheadtable" align="center">
-    <strong>Use weather info for </strong><BR>
-      <span style="position:relative;">
-        <input id="calendar_location_name" name="location_name" size="20" value="<%= params[:location_name] %>" type="text">
-        <span style="position:absolute;left:50%;" class="location-loading"></span>
-        <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
-      </span>
-    <BR>
-    <span class="smalltext" align="center">If you can not find your destination, type in the closest big city</span>
-  </p>
+  <div class="location-area">
+    <h4>Use weather info for </h4>
+
+    <div class="input-area">
+      <input id="calendar_location_name" name="location_name" size="25" value="<%= params[:location_name] %>" type="text">
+      <span style="position:absolute;left:50%;" class="location-loading"></span>
+      <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
+    </div>
+
+    <p class="hint">If you can not find your destination, type in the closest big city</p>
+  </div>
 
 
-  <p>&nbsp;</p>
-
-  <div align="right"><a href="javascript:" onclick="$.Watermark.HideAll();document.new_calendar_form.submit();"><span class="textflow" align="center">NEXT</span></a></div>
-
-  <p> </p>
+  <div class="button-panel">
+    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
+      NEXT
+    </a>
+    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
+      NEXT2
+    </a>
+  </div>
+  <div class="button-panel">
+    <a href="javascript:" onclick="document.new_calendar_form.submit();" class="button">
+      NEXT
+    </a>
+  </div>
 
 </form>
-<p></p>
+
+
 
 
 
@@ -73,3 +87,6 @@
     });
 
 </script>
+
+
+</div>

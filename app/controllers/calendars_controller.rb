@@ -57,15 +57,15 @@ class CalendarsController < ApplicationController
       return
     end
 
-    @errors = {};
-    @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
-    @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
-    @errors["location_code"] = "" if params[:location_code].blank?
-
-    if not @errors.blank?
-      render :action => :new
-      return
-    end
+#    @errors = {};
+#    @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
+#    @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
+#    @errors["location_code"] = "" if params[:location_code].blank?
+#
+#    if not @errors.blank?
+#      render :action => :new
+#      return
+#    end
 
 
     @weekdays = Weekday.all
