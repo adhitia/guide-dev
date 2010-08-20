@@ -44,6 +44,9 @@ class CalendarsController < ApplicationController
   def create
     return unless authenticate
 
+    @weekdays = Weekday.all
+    @conditions = Condition.all
+
     if (params[:step] == 'overview')
       create_overview
       return
@@ -52,7 +55,6 @@ class CalendarsController < ApplicationController
     guide = read_guide
     if guide.invalid?
       @errors = guide.errors_as_hash
-      puts "!!!!!!!!!!!!!! #{@errors.inspect}"
       render :action => :new
       return
     end
@@ -67,9 +69,7 @@ class CalendarsController < ApplicationController
 #      return
 #    end
 
-
-    @weekdays = Weekday.all
-    @conditions = Condition.all
+    params['tip_name'] = Hash.new({})
 
     render :action => :new_overview
   end
@@ -194,44 +194,55 @@ class CalendarsController < ApplicationController
 
 
   def create_overview
-    @calendar = Calendar.new
-    @calendar.name_location = params[:calendar_name_location]
-    @calendar.name_target = params[:calendar_name_target]
-    @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
-#    @calendar.view_count = 0;
-#    @calendar.click_count = 0;
-    @calendar.user = @current_user
+    Calendar.transaction do
+      @calendar = Calendar.new
+      @calendar.name_location = params[:calendar_name_location]
+      @calendar.name_target = params[:calendar_name_target]
+      @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
+#     @calendar.view_count = 0;
+#     @calendar.click_count = 0;
+      @calendar.user = @current_user
 
-#    location_code = params[:location_code]
-#    location_name = params[:location_name]
-#    location = find_or_create_location #location_code, location_name
-#    @location_id = location.id
-    @calendar.location_id = find_or_create_location
+      @calendar.location_id = find_or_create_location
 
-    @calendar.save
+      @calendar.save
 
-    Condition.all.each do |c|
-      Weekday.all.each do |day|
-        name = params['tip_name'][c.id.to_s][day.id.to_s];
-        if !empty?(name)
-          tip = Tip.new
-          tip.name = name
-          tip.author_id = @current_user.id
-          tip.save
+      @errors = {}
+      Condition.all.each do |c|
+        Weekday.all.each do |day|
+          name = params['tip_name'][c.id.to_s][day.id.to_s];
+          param_name = "tip_name[#{c.id}][#{day.id}]";
+          if !empty?(name)
+            tip = Tip.new
+            tip.name = name
+            tip.author_id = @current_user.id
+            if tip.invalid?
+              @errors[param_name] = tip.errors.on :name
+              next
+            end
 
-          tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location => @calendar.location, :tip => tip
+            tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location => @calendar.location, :tip => tip
+            tip.save
 
-          where = ShowPlace.new
-          where.condition = c
-          where.weekday = day
-          where.calendar = @calendar
-          where.tip = tip
-          where.save
+            where = ShowPlace.new
+            where.condition = c
+            where.weekday = day
+            where.calendar = @calendar
+            where.tip = tip
+            where.save
+          end
         end
+      end
+
+      if !@errors.empty?
+        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
+        render :action => :new_overview
+        raise ActiveRecord::Rollback
+      else
+        redirect_to :action => :edit, :id => @calendar.id
       end
     end
 
-    redirect_to :action => :edit, :id => @calendar.id
   end
 
 

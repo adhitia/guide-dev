@@ -105,6 +105,7 @@ if (!window.common) {
     $(document).ready(function() {
 //        alert(validation_errors);
         $('.validation-error').html();
+        
         if (validation_errors != null) {
             for (var key in validation_errors) {
                 var message = validation_errors[key];
@@ -113,9 +114,9 @@ if (!window.common) {
                 }
 
                 // highlight corresponding input field
-                var e = $('input[name=' + key + ']');
+                var e = $('input[name=' + key.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + ']');
                 if (e.length != 1) {
-                    throw "One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
+                    throw "1One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
                 }
                 e.addClass("invalid");
 
@@ -126,7 +127,6 @@ if (!window.common) {
                     } else {
                         $('#' + label_id).html(message);
                     }
-                    //<span class="validation-error">&nbsp;#{instance.error_message.join(',')}</span>
                 }
             }
         }

@@ -453,12 +453,32 @@ input.invalid {
 }
 
 .validation-error {
-    font-size: medium;
+    font-size: smaller;
     color: red;
     font-weight:normal;
     text-transform:none;
     float:left;
 }
+
+.button-panel {
+    display: table;
+    width: 100%;
+    text-align: right;
+    margin-top: 40px;
+}
+
+.button-panel .button {
+    font-size: large;
+    color: #006699;
+    text-decoration: underline;
+    background-color: #FFCC00;
+    float: right;
+    padding: 10px;
+    margin-left: 10px;
+    border: 3px groove #E8B900;
+}
+
+
 
 
 #new_guide_page {
@@ -492,21 +512,9 @@ input.invalid {
     font-size: xx-small;
 }
 
-
-.button-panel {
-    display: table;
-    width: 100%;
-    text-align: right;
-    margin-top: 40px;
+#new_guide_overview_page {
 }
 
-.button-panel .button {
-    font-size: large;
-    color: #006699;
-    text-decoration: underline;
-    background-color: #FFCC00;
-    float: right;
-    padding: 10px;
-    margin-left: 10px;
-    border: 3px groove #E8B900;
-}
+
+
+
