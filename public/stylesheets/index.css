@@ -12,7 +12,7 @@
 	font-size: small;
 	color: #000000;
 	text-indent: 0px;
-	background-color: #000000;
+	background-color: #ffffff;
 	opacity:0.75;
 	-moz-opacity:0.75;
 	filter:alpha(opacity=75);
@@ -335,11 +335,11 @@ input.invalid {
 }
 
 #view_tips .tip-tile {
-    height:110px;
     width:110px;
     overflow:hidden;
     background-color:white;
-    margin:10px;
+    margin:5px;
+    align:center;
 }
 
 #view_tips td.tip-container {
@@ -364,8 +364,8 @@ input.invalid {
 }
 
 #view_tips .no-tip-tile {
+    height:130px;
     background-color:lightgray;
-    height:110px;
     width:110px;
     overflow:hidden;
     padding:10px
@@ -572,7 +572,7 @@ border-radius: 4px;
     margin-left:5px;
     width: 19px;
     height: 19px;
-    opacity: 0.3;
+    opacity: 0.8;
 }
 .icon-small:hover {
     opacity: 1;
