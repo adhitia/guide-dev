@@ -1,6 +1,6 @@
 
 ActionController::Routing::Routes.draw do |map|
-
+  map.resources :util
 
   map.with_options :controller => :tips do |tips|
     tips.follow_url 'guides/:id/tips/:tip_id/url', :action => 'follow_url'

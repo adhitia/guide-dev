@@ -1,7 +1,6 @@
 class TipsController < ApplicationController
 
   def create
-    @ajax = true
     return unless authorize_guide params[:id]
     @full_access = true
 
@@ -25,23 +24,47 @@ class TipsController < ApplicationController
   end
 
   def update
-    @ajax = true
     return unless authorize_guide params[:id]
     @full_access = true;
 
     @calendar = Calendar.find(params[:id])
-    params[:tips].each_pair do |id, tip_data|
-      tip = Tip.find(id)
-      tip.address.update_attributes tip_data[:address]
-      tip_data.delete :address
-      tip.update_attributes tip_data
+    errors = {};
+
+    Tip.transaction do
+      params[:tips].each_pair do |id, tip_data|
+        tip = Tip.find id, :lock => true
+        if tip.author_id != @calendar.user_id
+          raise "Found tip belonging to user #{tip.author_id}, while #{@calendar.user_id} expected."
+        end
+
+        tip.address.update_attributes tip_data[:address]
+        tip_data.delete :address
+#        tip.update_attributes tip_data
+
+        tip.update_attributes tip_data
+
+#        if !tip.update_attributes tip_data
+        errors["tips[#{id}]"] = tip.errors_as_hash
+#          tip.errors_as_hash.each do |key, value|
+#            errors["tips[#{id}][#{key}]"] = value
+#          end
+#          errors["tips[#{id}]"] = tip.errors_as_hash
+#        end
+      end
+
+
+      
+      errors = flatten errors 
+      if !errors.empty?
+        puts "!!!!!!!!!!!!!! #{errors.inspect}"
+        raise ActiveRecord::Rollback
+      end
     end
 
-    render :text => 'dummy response'
-#    if empty?(params[:result])
-#    else
-#    end
-#    render :partial => 'show_tile'
+    render :text => {:errors => errors}.to_json
+#    render :json => {}
+#    render :json => errors
+#    render :text => 'dummy response'
   end
 
   def follow_url
@@ -63,7 +86,6 @@ class TipsController < ApplicationController
   # removes binding between tip and calendar
   # for now, also removes tip
   def unbind
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
     @full_access = true
@@ -77,7 +99,6 @@ class TipsController < ApplicationController
 
   # moves tip to a different place
   def move
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
 
@@ -92,7 +113,6 @@ class TipsController < ApplicationController
 
   # switches two tips in one calendar
   def switch
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
 
@@ -113,20 +133,17 @@ class TipsController < ApplicationController
   end
 
   def show
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     render :partial => 'tips/show', :locals => {:place => occurrence}
   end
 
   def edit
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     return unless authorize_guide occurrence.calendar_id
     render :partial => 'tips/edit', :locals => {:place => occurrence}
   end
 
   def tile
-    @ajax = true
     occurrence = ShowPlace.find(params[:occurrence_id])
     @full_access = @current_user && (occurrence.calendar.user.id == @current_user.id);
     render :partial => 'tips/show_tile', :locals => {:place => occurrence}

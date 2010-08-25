@@ -2,24 +2,27 @@
 
 
 <b><%= tip.name %></b><br/>
-<%= image_tag tip.image.url(:medium), {:align=>"left"} %>
+
+<% if tip.image.exists? %>
+  <%= image_tag tip.image.url(:medium), {:align=>"left"} %>
+<% end %>
 <br/>
 
 <!--url-->
-  <% if !empty?(tip.url) %>
+  <% if !tip.url.blank? %>
       web: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-              <%=tip.url.length > 35 ? shorten(tip.url[7..tip.url.length], 35) : tip.url%>
+              <%= h shorten(tip.url, 35) %>
            </a><br>
   <% end %>
 
 <!--phone-->
-  <% if !empty?(tip.phone) %>
-      Phone: <%=tip.phone%><br>
+  <% if !tip.phone.blank? %>
+      Phone: <%= h tip.phone%><br>
   <% end %>
 
 <!--address-->
-<% if !empty?(tip.address.address) -%>
-    Address: <%= tip.address.address %>
+<% if !tip.address.address.blank? -%>
+    Address: <%= h tip.address.address %>
     <br/>
 <% end -%>
 
@@ -30,3 +33,7 @@
 <% end %>
 
 
+<!--description-->
+<p>
+  <%= h tip.description %>
+</p>

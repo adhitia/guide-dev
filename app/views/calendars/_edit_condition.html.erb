@@ -9,19 +9,25 @@
           <div>
 
             <% if place != nil then %>
-                <h2 class="tip-tab"><%=day.name%>  <span style="float:right;">
-                    <%= place.tip.name %>
-                </span> </h2>
+                <h2 class="tip-tab">
+                  <%= day.name %>
+                  <span style="float:right;">
+                    <%= h place.tip.name %>
+                  </span>
+                </h2>
 
                 <div class="tip-edit">
                   <%= render :partial => 'tips/edit', :locals => {:place => place} %>
                 </div>
             <% else %>
-                <h2 class="no-tip-tab"><%=day.name%>  <span style="float:right;">
-                <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
-                  create tip
-                </button>
-                </span> </h2>
+                <h2 class="no-tip-tab">
+                  <%= day.name %>
+                  <span style="float:right;">
+                    <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, 'edit');">
+                      create tip
+                    </button>
+                  </span>
+                </h2>
 
                 <div class="tip-edit">
                 </div>
@@ -33,42 +39,36 @@
 
     </div>
 
-    <div align="center">
-      <table>
-        <tr>
-          <td>
-            <% if !@edit_for.last? %>
-                <p class="textflow" align="center">
-                  <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});">
-                    Save and edit <%= @edit_for.next.name %> tips &gt;&gt;
-                  </a>
-                </p>
-            <% end %>
-          </td>
-          <td><p class="textflow" align="center">
-            <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);">Save changes</a>
-          </p>
-          </td>
-        </tr>
-      </table>
-    </div>
 
+
+
+    <div class="button-panel">
+      <% if !@edit_for.last? %>
+          <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>, function() {calendar.selectNext();});" class="button">
+            Save and edit <%= @edit_for.next.name %> tips &gt;&gt;
+          </a>
+      <% end %>
+      <a href="javascript:" onclick="tips.save('edit_tips_form', <%= @calendar.id %>);" class="button">
+        Save changes
+      </a>
+      <%= link_to 'Show me my guide', show_guide_path(:id => @calendar), :class => 'button' %>
+    </div>
 <% end %>
 
 
 
 
 
-<div id="new_tip" style="display:none;">
-  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
-      <input id="new_tip_name" name="new_tip_name"/>
-  <% end %>
-</div>
-
-
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".edit-tips-batch").fpTabs(".tip-edit", {tabs: 'h2', effect: 'slide'});
+        $(".edit-tips-batch").fpTabs(".tip-edit", {
+            tabs: 'h2',
+            onBeforeClick: function(event, tabIndex) {
+                var tab = this.getTabs().eq(tabIndex);
+                return !tab.hasClass('no-tip-tab');
+            },
+            effect: 'slide'
+        });
     });
 </script>
 

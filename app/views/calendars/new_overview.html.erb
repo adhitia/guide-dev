@@ -1,44 +1,59 @@
+<div id="new_guide_overview_page">
 
+  <form id="calendar_overview_form" action="<%= create_guide_path %>" method="POST">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+    <input name="step" type="hidden" value="overview">
 
-<form id="calendar_overview_form" action="<%= create_guide_path %>" method="POST">
-  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
-  <input name="step" type="hidden" value="overview">
+    <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
+    <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
+    <input type="hidden" name="location_code" value="<%= params[:location_code] %>">
+    <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
 
-  <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
-  <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
-  <input type="hidden" name="location_code" value="<%= params[:location_code] %>">
-  <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
+    <p class="subhead">Tip Matrix: Add your tips for the entire week</p>
 
-  <p class="subhead">Tip Matrix: Add your tips for the entire week</p>
-  <p><span class="text"> Name of establishment or attraction eg: Renzos Pizza, Eiffel Tower, Limelight Club</span></p>
-  <table bgcolor="#547085" border="1" border-color="#222222" cellpadding="10" cellspacing="0" width="100%">
-    <tbody>
-    <tr>
-      <td colspan="8" bgcolor="#1E6794">
-        <center>
-          <font size="5"><%= params[:calendar_name_location] + ' for ' + params[:calendar_name_target] %></font></center>
-      </td>
-    </tr>
+    <p>Name of establishment or attraction eg: Renzos Pizza, Eiffel Tower, Limelight Club</p>
 
-    <tr>
-      <td bgcolor="#658296">Weekday</td>
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%;background-color:#547085;">
+      <tbody>
+      <tr>
+        <td colspan="8" bgcolor="#1E6794">
+          <center>
+            <font size="5"><%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %></font>
+          </center>
+        </td>
+      </tr>
 
-      <% @weekdays.each do |day| %>
-          <td><%= day.name %></td>
+      <tr>
+        <td bgcolor="#658296">Weekday</td>
+
+        <% @weekdays.each do |day| %>
+            <td><%= day.name %></td>
+        <% end %>
+      </tr>
+
+      <% @conditions.each do |condition| %>
+          <tr>
+            <td><%= condition.full_name %></td>
+            <% @weekdays.each do |day| %>
+                <td>
+                  <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="12" class="text-limit" type="text"
+                         value="<%=params['tip_name'][condition.id.to_s][day.id.to_s]%>" textLimit="25">
+                </td>
+            <% end %>
+          </tr>
       <% end %>
-    </tr>
+      </tbody>
+    </table>
 
-    <% @conditions.each do |condition| %>
-        <tr>
-          <td><%= condition.full_name %></td>
-          <% @weekdays.each do |day| %>
-              <td>
-                <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="12" type="text">
-              </td>
-          <% end %>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <BR><P><div align="right"><span class="textflow" align="center"><a href="javascript:$('#calendar_overview_form').submit();">save and add details &gt;&gt;</a></span></div></P>
-</form>
+
+    <div class="button-panel">
+      <a href="javascript:" onclick="$('#calendar_overview_form').submit();" class="button">
+        save and add details &gt;&gt;
+      </a>
+    </div>
+
+  </form>
+
+
+</div>
+    

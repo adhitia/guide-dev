@@ -8,9 +8,9 @@
 
     <% if @full_access %>
         <!--delete tip-->
-        <a class="delete-tip" style="position:relative;float:right;margin-left:5px;" title="delete"></a>
+        <a class="delete-tip icon-small" title="delete"></a>
         <!--move tip-->
-        <a class="move-tip" style="position:relative;float:right;margin-left:5px;" title="move"></a>
+        <a class="move-tip icon-small" title="move"></a>
     <% end %>
 
 
@@ -50,7 +50,7 @@
 
 
   <!-- tip statistics -->
-  <span class="headtextdarker"><b><%= tip.name %></b><br/></span>
+  <span class="headtextdarker"><b><%= h tip.name %></b><br/></span>
     <span class="textgray">
       Views= <%= tip.view_count %>
       Clicks= <%= tip.click_count %>

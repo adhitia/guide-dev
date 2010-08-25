@@ -24,3 +24,12 @@
 
 </div>
 
+
+
+<div id="new_tip" style="display:none;">
+  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
+      <input id="new_tip_name" name="new_tip_name"/>
+  <% end %>
+</div>
+
+

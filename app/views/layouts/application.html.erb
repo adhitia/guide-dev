@@ -83,30 +83,6 @@
 -->
 
 
-  <!--
-  <table width="1000" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td><img src="/images/tlcorner.gif" width="16" height="16"/></td>
-      <td bgcolor="#0099CC"></td>
-      <td><img src="/images/trcorner.gif" width="16" height="16"/></td>
-    </tr>
-    <tr>
-      <td bgcolor="#0099CC"><img src="/images/spacer.gif" width="10" height="550"/></td>
-      <td bgcolor="#0099CC" valign="top">
-      </td>
-      <td bgcolor="#0099CC">&nbsp;</td>
-    </tr>
-    <tr>
-      <td width="16">
-        <div align="left"><img src="/images/blcorner.gif" width="16" height="16"></div>
-      </td>
-      <td bgcolor="#0099CC"></td>
-      <td width="16"><img src="/images/brcorner.gif" width="16" height="16"/></td>
-    </tr>
-  </table>
-  -->
-
-
   <table width="1000" border="0" cellspacing="0" cellpadding="15">
     <tr>
       <td width="50%" valign="top" class="textgray">Guiderer is here to tell travelers what they should be doing right
@@ -138,10 +114,20 @@
 </div>
 
 
-
 <div class="hidden">
   <form id="fetch_remote_content_form"></form>
 </div>
+
+
+<script type="text/javascript">
+  var validation_errors = <%= @errors.nil? ? '{}' : @errors.to_json %>;
+</script>
+
+<%
+#   if !@errors.nil?
+#       concat @errors.to_json
+#   end
+%>
 
 </body>
 </html>

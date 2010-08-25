@@ -12,7 +12,17 @@ class Tip < ActiveRecord::Base
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
 
   accepts_nested_attributes_for :address
-  validates_presence_of :name
+
+  validates_presence_of :author_id
+  validates_length_of :name, :in => 1..25,
+                      :too_long => "{{count}} characters max",
+                      :too_short => "required field"
+  validates_length_of :url, :phone, :maximum => 255,
+                      :too_long => "no more than {{count}} characters expected"
+  validates_length_of :description, :maximum => 300,
+                      :too_long => "no more than {{count}} characters expected"
+
+
 
 private
   # to make paperclip load urls

@@ -33,8 +33,20 @@ class ApplicationController < ActionController::Base
   end
 
 
+
   protected
-  
+
+  def flatten(hash, result = {}, prefix = "")
+    hash.each do |key, value|
+      if value.class == Hash
+        flatten value, result, prefix + key.to_s
+      else
+        result[prefix + key.to_s] = value
+      end
+    end
+    result
+  end
+
   def set_user
     @current_user = User.find(session[:id]) if @current_user.nil? && session[:id]
   end
@@ -115,17 +127,19 @@ class ApplicationController < ActionController::Base
   end
 
   def ajax?
-#    puts "!!!!!!!!! #{request.headers['X-Requested-With'] == 'XMLHttpRequest'}"
-    request.headers['X-Requested-With'] == 'XMLHttpRequest'
+    puts "!!!!!!!!! #{request.headers['X-Requested-With']} - #{params['X-Requested-With']}"
+    request.headers['X-Requested-With'] == 'XMLHttpRequest' || params['X-Requested-With'] == 'XMLHttpRequest'
   end
 
   def handle_error(exception)
-#    puts "!!!!!!!!!!???  #{exception}"
+    puts "!!!!!!!!!! error !!!  #{exception}   ajax : #{ajax?}"
 #    puts "!!!!!!!!!!???  #{clean_backtrace(exception).join("\n  ")}"
     log_error(exception)
     if ajax?
+      puts "ajax error"
       render :text => 'Error happened', :status => 500
     else
+      puts "not ajax error"
       render :template => "/common/error.html.erb"
     end
   end

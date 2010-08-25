@@ -17,15 +17,21 @@ if (!window.tips) var tips = {
     },
 
     save_overlay: function(formId, calendarId) {
+        common.clearValidationErrors();
         common.setLoadingGlobal();
         $('#' + formId).ajaxSubmit({
             type: 'POST',
             cache: false,
             iframe: true,
-            dataType: "html",
-            async: false,
-            success: function() {
+            dataType: "json",
+//            async: false,
+            success: function(r) {
                 common.stopLoadingGlobal();
+
+                if (common.validationErrors(r.errors)) {
+                    return;
+                }
+
                 var tile = $('#' + formId).parents('.tip-tile');
                 tile.find('.edit-tip').data('overlay').close();
                 calendar.updateTile(tile);
@@ -95,7 +101,7 @@ if (!window.tips) var tips = {
     },
 
     selectGoogleImage: function(img, url) {
-        var row = $(img).parents('.tipRoot')[0];
+        var row = $(img).parents('.edit-tip-root')[0];
         if ($(img).parent().hasClass('selected')) {
             $(row).find('.google-image-choices div').removeClass('selected');
             $(row).find('.tip_image_url').val('');
@@ -138,7 +144,7 @@ if (!window.tips) var tips = {
     },
 
     selectLocalResult: function(result) {
-        var row = $(result).parents('.tipRoot')[0];
+        var row = $(result).parents('.edit-tip-root')[0];
         var container = $(result).parents('.local-search-container');
         var addr = $(result).find('.local_result_address').html();
         var lat = $(result).find('.local_result_lat').html();
@@ -202,7 +208,7 @@ if (!window.tips) var tips = {
         if (container.css('display') == 'none') {
             common.setLoading(container);
 
-            var root = $(anchor).parents('.tipRoot')[0];
+            var root = $(anchor).parents('.edit-tip-root')[0];
             var ls = new google.search.LocalSearch();
             ls.setCenterPoint($(root).attr('city'));
             ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
@@ -215,7 +221,7 @@ if (!window.tips) var tips = {
         // image suggestions
         $(root).find('.upload_image').tabs();
         $(root).find('.tip_name').blur(function() {
-            var row = $(this).parents('.tipRoot')[0];
+            var row = $(this).parents('.edit-tip-root')[0];
             var imageSearch = new google.search.ImageSearch();
             imageSearch.setSearchCompleteCallback(this, tips.drawSearchResults, [imageSearch, row]);
             imageSearch.execute($(this).val() + ' ' + $(row).attr('city'));
