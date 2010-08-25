@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'weather_man'
-require 'calendars_helper'
 
 class CalendarsController < ApplicationController
 

@@ -17,6 +17,11 @@ class Tip < ActiveRecord::Base
   validates_length_of :name, :in => 1..25,
                       :too_long => "{{count}} characters max",
                       :too_short => "required field"
+  validates_length_of :url, :phone, :maximum => 255,
+                      :too_long => "no more than {{count}} characters expected"
+  validates_length_of :description, :maximum => 300,
+                      :too_long => "no more than {{count}} characters expected"
+
 
 
 private

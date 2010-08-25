@@ -1,35 +1,32 @@
 <% tip = place.tip %>
 
 
-<div  id="tips_<%= place.id %>" class="tipRoot" form_prefix="tips[<%= tip.id %>]" city="<%= place.calendar.location.name %>" style="height:250px;padding:10px;">
+<div  id="tips_<%= place.id %>" class="edit-tip-root" form_prefix="tips[<%= tip.id %>]" city="<%= place.calendar.location.name %>">
 
 
 <% fields_for "tips", tip, :index => tip.id do |tip_form| %>
 
-<div style="position: relative;float: left; width: 49%;">
+<div class="left-pane">
 
-  <div style="padding-right:10px;">
-  <div style="height:40px;">
+  <div class="input-row">
     Name
     <span style="float:right;">
       <a href="javascript:" class="local-search-launch" title="use name to suggest address, phone and url" onclick="tips.loadLocalSuggestions(this);">autofill</a>
-      <div class="local-search-container" style="position:absolute;background-color:white;display:none;border: 1px solid black;width:260px;"></div>
-      <%= tip_form.text_field :name, :size => 30, :class => 'tip_name' %>
+      <div class="local-search-container"></div>
+      <%= tip_form.text_field :name, :size => 30, :class => 'tip_name text-limit', :textLimit => 25 %>
     </span>
   </div>
-  <div style="height:40px;">
+  <div class="input-row">
     <%= tip_form.label :url %> <%= tip_form.text_field :url, :size => 30, :class => 'tip_url', :style => "float:right;" %>
   </div>
-  <div style="display:block;">
+  <div class="input-row">
     <%= tip_form.label :description %>
     <span style="float:right;"><%= tip_form.text_area(:description, :rows => 8, :cols => 35) %></span>
   </div>
-  </div>
 </div>
 
-<div style="position: relative;float: left; width: 50%;">
-  <div style="padding-left:10px;">
-  <div style="height:40px;">
+<div class="right-pane">
+  <div class="input-row">
     <% tip_form.fields_for tip.address do |address_form| %>
         <%= address_form.label :address, 'Street Address' %>
         <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :style => "float:right;" %>
@@ -38,12 +35,12 @@
     <% end %>
   </div>
 
-  <div style="height:40px;">
+  <div class="input-row">
     <%= tip_form.label :phone %> <%= tip_form.text_field :phone, :size => 30, :class => 'tip_phone', :style => "float:right;" %>
   </div>
 
-  <div>
-    <div class="upload_image" style="width:100%;height:162px;float:left;">
+  <div class="input-row">
+    <div class="upload_image">
       <ul>
         <% if tip.image.exists? -%>
             <li><a href="#tip-<%=place.id%>-current-image"><span>current image</span></a></li>
@@ -66,10 +63,7 @@
 
     </div>
   </div>
-  </div>
 </div>
-
-<br/>
 
 
 

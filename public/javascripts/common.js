@@ -1,7 +1,10 @@
 
 if (!window.common) {
     $.ajaxSetup({
+//        data: {'X-Requested-With' : 'XMLHttpRequest'},
         beforeSend: function(request) {
+//            alert('beforeSend ' + data);
+//            request.setRequestHeader("X-Requested-With","XMLHttpRequest");
 //            alert(this.url);
 //            common.parseParameters();
 //
@@ -10,13 +13,14 @@ if (!window.common) {
 
         },
         error: function(event, request, options, error) {
-//            alert(event.status);
+//            alert("error " + event.status);
             switch (event.status) {
 //                case 503: common.setLocation('maintenance'); break;
 //                case 404: common.setLocation('not-found'); break;
                 case 401: common.setLocation('/unauthenticated'); break;
                 case 403: common.setLocation('/unauthorized'); break;
-                case 500: common.setLocation('/error'); break;
+            // zero is from post requests
+                case 500, 0: common.setLocation('/error'); break;
             }
         }
     });
@@ -30,7 +34,6 @@ if (!window.common) {
         },
 
         setLoading: function(container, text) {
-//            $(container).html('<!--<div style="text-align:center;"><img src="/images/loading-indicator.gif"></div>-->');
             if (text == null || text == undefined) {
                 text = '';
             }
@@ -47,7 +50,7 @@ if (!window.common) {
         imageHelper: function(root) {
             $(root).find('.full-image').each(function() {
                 $(this).qtip({
-                    content: '<img style="max-width:230px;max-height:230px" src="' + $(this).attr('full_url') + '" alt="Loading..." />',
+                    content: '<img style="max-width:230px;max-height:230px;" src="' + $(this).attr('full_url') + '" alt="Loading..." />',
                     position: {
                         adjust: {
                             screen: true // Keep the tooltip on-screen at all times
@@ -90,6 +93,42 @@ if (!window.common) {
                 title: 'Please confirm',
                 width: 230
             });
+        },
+
+        clearValidationErrors: function() {
+            $('.validation-error').html('');
+            $('input.invalid,textarea.invalid').removeClass('invalid');
+        },
+
+        validationErrors: function(errors) {
+            var errorsFound = false;
+            if (errors != null) {
+                for (var key in errors) {
+                    var message = errors[key];
+                    if (message == null) {
+                        continue;
+                    }
+                    errorsFound = true;
+
+                    // highlight corresponding input field
+                    var searchKey = key.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+                    var e = $('input[name=' + searchKey + '],textarea[name=' + searchKey + ']');
+                    if (e.length != 1) {
+                        throw "One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
+                    }
+                    e.addClass("invalid");
+
+                    if (message != '') {
+//                        var label_id = key + "_error";
+                        if ($('#' + searchKey + "_error").length == 0) {
+                            $('<br/><span id="' + key + "_error" + '" class="validation-error">' + message + '</span>').insertAfter(e);
+                        } else {
+                            $('#' + searchKey + "_error").html(message);
+                        }
+                    }
+                }
+            }
+            return errorsFound;
         }
     };
 
@@ -104,32 +143,8 @@ if (!window.common) {
 
     $(document).ready(function() {
 //        alert(validation_errors);
-        $('.validation-error').html();
-        
-        if (validation_errors != null) {
-            for (var key in validation_errors) {
-                var message = validation_errors[key];
-                if (message == null) {
-                    continue;
-                }
-
-                // highlight corresponding input field
-                var e = $('input[name=' + key.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + ']');
-                if (e.length != 1) {
-                    throw "1One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
-                }
-                e.addClass("invalid");
-
-                if (message != '') {
-                    var label_id = key + "_error";
-                    if ($('#' + label_id).length == 0) {
-                        $('<br/><span id="' + label_id + '" class="validation-error">' + message + '</span>').insertAfter(e);
-                    } else {
-                        $('#' + label_id).html(message);
-                    }
-                }
-            }
-        }
+        common.clearValidationErrors();
+        common.validationErrors(validation_errors);
     });
 
 
@@ -137,7 +152,15 @@ if (!window.common) {
         $('input.watermark').each(function(i) {
             $(this).Watermark($(this).attr('title'));
         });
-    });
 
+        $('input.text-limit').keyup(function() {
+            var text = $(this).val();
+            var limit = $(this).attr('textLimit');
+            if (text.length > limit) {
+                text = text.substring(0, limit);
+                $(this).val(text);
+            }
+        });
+    });
 }
 

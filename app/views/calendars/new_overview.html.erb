@@ -36,8 +36,8 @@
             <td><%= condition.full_name %></td>
             <% @weekdays.each do |day| %>
                 <td>
-                  <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="12" type="text"
-                         value="<%=params['tip_name'][condition.id.to_s][day.id.to_s]%>">
+                  <input name="tip_name[<%= condition.id %>][<%= day.id %>]" size="12" class="text-limit" type="text"
+                         value="<%=params['tip_name'][condition.id.to_s][day.id.to_s]%>" textLimit="25">
                 </td>
             <% end %>
           </tr>

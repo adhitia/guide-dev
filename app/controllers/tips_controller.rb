@@ -28,6 +28,7 @@ class TipsController < ApplicationController
     @full_access = true;
 
     @calendar = Calendar.find(params[:id])
+    errors = {};
 
     Tip.transaction do
       params[:tips].each_pair do |id, tip_data|
@@ -36,18 +37,34 @@ class TipsController < ApplicationController
           raise "Found tip belonging to user #{tip.author_id}, while #{@calendar.user_id} expected."
         end
 
-
         tip.address.update_attributes tip_data[:address]
         tip_data.delete :address
+#        tip.update_attributes tip_data
+
         tip.update_attributes tip_data
+
+#        if !tip.update_attributes tip_data
+        errors["tips[#{id}]"] = tip.errors_as_hash
+#          tip.errors_as_hash.each do |key, value|
+#            errors["tips[#{id}][#{key}]"] = value
+#          end
+#          errors["tips[#{id}]"] = tip.errors_as_hash
+#        end
+      end
+
+
+      
+      errors = flatten errors 
+      if !errors.empty?
+        puts "!!!!!!!!!!!!!! #{errors.inspect}"
+        raise ActiveRecord::Rollback
       end
     end
 
-    render :text => 'dummy response'
-#    if empty?(params[:result])
-#    else
-#    end
-#    render :partial => 'show_tile'
+    render :text => {:errors => errors}.to_json
+#    render :json => {}
+#    render :json => errors
+#    render :text => 'dummy response'
   end
 
   def follow_url

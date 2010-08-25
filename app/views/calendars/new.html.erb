@@ -12,13 +12,13 @@
 
     <div>
       <div class="column">
-        <input id="calendar_name_location" class="watermark" title="location" name="calendar_name_location"
-               type="text" value="<%= params[:calendar_name_location] %>" size="20">
+        <input id="calendar_name_location" class="watermark text-limit" title="location" name="calendar_name_location"
+               type="text" value="<%= params[:calendar_name_location] %>" size="20" textLimit="20">
       </div>
       FOR
       <div class="column">
-        <input id="calendar_name_target" class="watermark" title="target group" name="calendar_name_target"
-               type="text" value="<%= params[:calendar_name_target] %>" size="20">
+        <input id="calendar_name_target" class="watermark text-limit" title="target group" name="calendar_name_target"
+               type="text" value="<%= params[:calendar_name_target] %>" size="20" textLimit="20">
       </div>
     </div>
     <p class="hint"> E.g., Rio for Partiers, Big Apple for Families </p>
@@ -30,7 +30,7 @@
     <h4>Use weather info for </h4>
 
     <div class="input-area">
-      <input id="calendar_location_name" name="location_name" size="25" value="<%= params[:location_name] %>" type="text">
+      <input id="calendar_location_name" name="location_name" size="25" value="<%= params[:location_name] %>" type="text" >
       <span style="position:absolute;left:50%;" class="location-loading"></span>
       <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
     </div>

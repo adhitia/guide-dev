@@ -44,6 +44,7 @@
  * an HTML form using AJAX.
  */
 $.fn.ajaxSubmit = function(options) {
+//    alert('2');
 	// fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
 	if (!this.length) {
 		log('ajaxSubmit: skipping submit process - no element selected');
@@ -82,6 +83,13 @@ $.fn.ajaxSubmit = function(options) {
 	}
 
 	var a = this.formToArray(options.semantic);
+
+    // mark this as ajax request by adding parameter
+    if (!options.data) {
+        options.data = {}
+    }
+    options.data['X-Requested-With'] = 'XMLHttpRequest';
+
 	if (options.data) {
 		options.extraData = options.data;
 		for (var n in options.data) {
@@ -190,7 +198,8 @@ $.fn.ajaxSubmit = function(options) {
 			statusText: 'n/a',
 			getAllResponseHeaders: function() {},
 			getResponseHeader: function() {},
-			setRequestHeader: function() {},
+			setRequestHeader: function() {/*alert('!!!0')*/},
+			getRequestHeader: function() {/*alert('getRequestHeader')*/},
 			abort: function() {
 				this.aborted = 1;
 				$io.attr('src', opts.iframeSrc); // abort op in progress
