@@ -3,7 +3,7 @@
     <div class="edit-tips-batch">
 
       <% @conditions.each do |condition| %>
-          <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id and !t.tip.advertisement } %>
+          <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id } %>
 
           <div>
 

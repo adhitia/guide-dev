@@ -1,14 +1,18 @@
 if (!window.tips) var tips = {
     save: function(formId, calendarId, after) {
+        common.clearValidationErrors();
         common.setLoadingGlobal();
         $('#' + formId).ajaxSubmit({
             type: 'POST',
             cache: false,
             iframe: true,
-            dataType: "html",
+            dataType: "json",
             async: false,
             success: function(r) {
                 common.stopLoadingGlobal();
+                if (common.validationErrors(r.errors)) {
+                    return;
+                }
                 if (after) {
                     after(r);
                 }

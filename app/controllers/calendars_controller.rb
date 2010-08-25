@@ -216,6 +216,8 @@ class CalendarsController < ApplicationController
             tip.name = name
             tip.author_id = @current_user.id
             if tip.invalid?
+              puts "!!!!!!!!!!!!! #{tip.errors_as_hash.inspect} ! #{tip.phone.nil?} ! #{tip.url.nil?} !"
+              puts "!!!!!!!!!!!!! #{tip.errors.on :phone} !"
               @errors[param_name] = tip.errors.on :name
               next
             end
