@@ -8,16 +8,17 @@
 
     <% if @full_access %>
         <!--delete tip-->
-        <a class="delete-tip icon-small" title="delete"></a>
+        <a class="delete-tip icon-small" title="delete" href="javascript:"></a>
         <!--move tip-->
-        <a class="move-tip icon-small" title="move"></a>
+        <a class="move-tip icon-small" title="move" href="javascript:"></a>
     <% end %>
 
 
     <% if @full_access %>
         <!--edit tip in overlay-->
         <!--link goes here-->
-        <a style="float:right;margin-left:5px;" class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit">edit</a>
+        <a class="edit-tip icon-small" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit" ></a>
+        <!--<a style="float:right;margin-left:5px;" class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit">edit</a>-->
 
         <!--content goes here, do not touch-->
         <div class="edit-tip-overlay">
@@ -39,7 +40,8 @@
 
     <!--view full tip-->
     <!--link here-->
-    <a style="float:right;margin-left:5px;" class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>" title="view">see</a>
+    <!--<a style="float:right;margin-left:5px;" class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>" title="view">see</a>-->
+    <a class="view-tip icon-small" title="view" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>"></a>
     <div class="full-tip-overlay">
       <!--contents here-->
       <div class="content"></div>

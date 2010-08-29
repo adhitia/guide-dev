@@ -336,14 +336,22 @@ input.invalid {
 #view_tips .tip-tile .move-tip {
     background: transparent url(/images/movetip.gif) no-repeat;
 }
-#view_tips .tip-tile:hover .move-tip {
-    opacity: 0.7;
-}
+/*#view_tips .tip-tile:hover .move-tip {*/
+    /*opacity: 0.7;*/
+/*}*/
 
 #view_tips .tip-tile .delete-tip {
     background: transparent url(/images/deletetip.gif) no-repeat;
 }
-#view_tips .tip-tile:hover .delete-tip {
+#view_tips .tip-tile .edit-tip {
+    background: transparent url(/images/edit-tip.gif) no-repeat;
+}
+#view_tips .tip-tile .view-tip {
+    background: transparent url(/images/view-tip.gif) no-repeat;
+}
+
+
+#view_tips .tip-tile:hover .icon-small {
     opacity: 0.7;
 }
 
@@ -563,7 +571,7 @@ border-radius: 4px;
     opacity: 0.3;
 }
 .icon-small:hover {
-    opacity: 1;
+    opacity: 1 !important;
 }
 
 

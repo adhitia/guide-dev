@@ -65,9 +65,7 @@ if (!window.tips) var tips = {
                         },
                         dataType: "html",
                         success: function(r) {
-//                            alert(root.length);
                             $(root).html('').html(r);
-//                            alert($(root).html());
                             tips.init(root);
                             if ($(root).prev().hasClass('no-tip-tab')) {
                                 $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
