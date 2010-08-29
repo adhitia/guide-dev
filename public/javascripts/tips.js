@@ -69,7 +69,9 @@ if (!window.tips) var tips = {
                             $(root).html('').html(r);
 //                            alert($(root).html());
                             tips.init(root);
-//                            $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+                            if ($(root).prev().hasClass('no-tip-tab')) {
+                                $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+                            }
                         }
                     });
                 },
