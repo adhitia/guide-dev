@@ -25,11 +25,12 @@
 <b> | Times Clicked:</b>
 <%= h @calendar.click_count %>
 
-<p>
-</p>
-<div align="right">
-  <a href="/calendars/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
-</div>     <BR><BR>
+
+<div class="button-panel">
+  <a href="/guides/<%= @calendar.id %>/share" class="button">
+    view live version and get script
+  </a>
+</div>
 
 <div id="view_tips">
 
@@ -100,10 +101,12 @@
 </div>
 
 
-<BR><BR>
-<div align="right">
-  <a href="/guides/<%= @calendar.id %>/share" class="textflow">view live version and get script</a>
+<div class="button-panel">
+  <a href="/guides/<%= @calendar.id %>/share" class="button">
+    view live version and get script
+  </a>
 </div>
+
 
 
 <div id="new_tip" style="display:none;">

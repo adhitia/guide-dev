@@ -23,7 +23,7 @@
                 <h2 class="no-tip-tab">
                   <%= day.name %>
                   <span class="accordion-header-right">
-                    <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, 'edit');">
+                    <button type="button" onclick="tips.create($(this.parentNode.parentNode.parentNode).find('.tip-edit'), <%=@edit_for.id%>, <%=day.id%>, 'edit');">
                       create tip
                     </button>
                   </span>

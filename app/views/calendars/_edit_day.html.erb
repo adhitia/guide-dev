@@ -10,7 +10,7 @@
             <% if place != nil then %>
                 <h2 class="tip-tab">
                   <%= condition.full_name %>
-                  <span style="float:right;">
+                  <span class="accordion-header-right">
                     <%= h place.tip.name %>
                   </span>
                 </h2>
@@ -21,8 +21,8 @@
             <% else %>
                 <h2 class="no-tip-tab">
                   <%= condition.full_name %>
-                  <span style="float:right;">
-                    <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
+                  <span class="accordion-header-right">
+                    <button type="button" onclick="tips.create($(this.parentNode.parentNode.parentNode).find('.tip-edit'), <%=condition.id%>, <%=@edit_for.id%>, 'edit');">
                       create tip
                     </button>
                   </span>

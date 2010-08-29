@@ -45,7 +45,7 @@ if (!window.tips) var tips = {
 
 
     create: function(root, conditionId, weekdayId, result) {
-        root = $(root).find('.tip-edit');
+//        root = $(root).find('.tip-edit');
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {
@@ -65,9 +65,11 @@ if (!window.tips) var tips = {
                         },
                         dataType: "html",
                         success: function(r) {
+//                            alert(root.length);
                             $(root).html('').html(r);
+//                            alert($(root).html());
                             tips.init(root);
-                            $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+//                            $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
                         }
                     });
                 },
