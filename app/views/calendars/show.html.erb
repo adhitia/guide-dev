@@ -2,9 +2,10 @@
 
 <b>Location:</b>
 <span>
+  <% if @full_access %>
   <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
   <span class="edit-area hidden" style="position:relative;">
-    <input type="text" value="<%= @calendar.location.name %>" class="location-input" /><span style="position:absolute;left:50%;" class="location-loading"></span>
+    <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
     <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
   </span>
   <span class="hidden">
@@ -13,6 +14,9 @@
         <input type="hidden" name="location_code" class="param_location_code">
     <% end %>
   </span>
+  <% else %>
+    <%= h @calendar.location.name %>
+  <% end %>
 </span>
 
 <br/>

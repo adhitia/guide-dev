@@ -39,17 +39,9 @@ class TipsController < ApplicationController
 
         tip.address.update_attributes tip_data[:address]
         tip_data.delete :address
-#        tip.update_attributes tip_data
-
         tip.update_attributes tip_data
 
-#        if !tip.update_attributes tip_data
         errors["tips[#{id}]"] = tip.errors_as_hash
-#          tip.errors_as_hash.each do |key, value|
-#            errors["tips[#{id}][#{key}]"] = value
-#          end
-#          errors["tips[#{id}]"] = tip.errors_as_hash
-#        end
       end
 
 
@@ -79,7 +71,6 @@ class TipsController < ApplicationController
     if !url.start_with? 'http://'
       url = 'http://' + url
     end
-#    puts "!!!!!!!!!!!! #{url}"
     redirect_to url
   end
 
