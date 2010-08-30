@@ -6,18 +6,22 @@
   <!--top icons-->
   <div>
 
+<!--
+<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>">
+-->
+
     <% if @full_access %>
+      <!--top icons-->
+      <div>
         <!--delete tip-->
-        <a class="delete-tip icon-small" title="delete"></a>
+        <a class="delete-tip icon-small" title="delete" href="javascript:"></a>
         <!--move tip-->
-        <a class="move-tip icon-small" title="move"></a>
-    <% end %>
+        <a class="move-tip icon-small" title="move" href="javascript:"></a>
 
 
-    <% if @full_access %>
         <!--edit tip in overlay-->
         <!--link goes here-->
-        <a style="float:right;margin-left:5px;" class="edit-tip textgray" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit">edit</a>
+        <a class="edit-tip icon-small" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit" ></a>
 
         <!--content goes here, do not touch-->
         <div class="edit-tip-overlay">
@@ -25,28 +29,28 @@
           <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
           <div class="content"></div>
           <div align="center">
-              <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
-                save
-              </button>
+            <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
+              save
+            </button>
           </div>
           <% end %>
-
-
         </div>
+
+
+        <!--view full tip-->
+        <!--link here-->
+        <a class="view-tip icon-small" title="view" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>"></a>
+        <div class="full-tip-overlay">
+          <!--contents here-->
+          <div class="content"></div>
+        </div>
+
+      </div>
+    <% else %>
+      <div class="view-tip-hover">view it</div>
     <% end %>
 
 
-
-    <!--view full tip-->
-    <!--link here-->
-    <a style="float:right;margin-left:5px;" class="view-tip textgray" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>" title="view">see</a>
-    <div class="full-tip-overlay">
-      <!--contents here-->
-      <div class="content"></div>
-    </div>
-
-
-  </div>
 
 
   <!-- tip statistics -->

@@ -65,9 +65,7 @@ if (!window.tips) var tips = {
                         },
                         dataType: "html",
                         success: function(r) {
-//                            alert(root.length);
                             $(root).html('').html(r);
-//                            alert($(root).html());
                             tips.init(root);
                             if ($(root).prev().hasClass('no-tip-tab')) {
                                 $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
@@ -346,6 +344,28 @@ if (!window.tips) var tips = {
                     });
                 }
             });
+
+
+            $(root).find('div.view-tip-hover').each(function() {
+                var tile = $(this).parents('div.tip-tile');
+                var place_id = tile.attr('place_id');
+                tile.qtip({
+                    content: {
+                        url: '/tips/' + place_id
+                    },
+                    position: {
+                        adjust: {
+                            screen: true
+                        }
+                    },
+                    width: {
+                        max: 1000
+                    }
+                });
+            });
+
+
+
             $(root).find('.edit-tip').overlay({
                 mask: {
                     color: 'grey',
