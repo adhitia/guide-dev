@@ -336,10 +336,6 @@ input.invalid {
 #view_tips .tip-tile .move-tip {
     background: transparent url(/images/movetip.gif) no-repeat;
 }
-/*#view_tips .tip-tile:hover .move-tip {*/
-    /*opacity: 0.7;*/
-/*}*/
-
 #view_tips .tip-tile .delete-tip {
     background: transparent url(/images/deletetip.gif) no-repeat;
 }
@@ -349,7 +345,6 @@ input.invalid {
 #view_tips .tip-tile .view-tip {
     background: transparent url(/images/view-tip.gif) no-repeat;
 }
-
 
 #view_tips .tip-tile:hover .icon-small {
     opacity: 0.7;
