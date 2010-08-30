@@ -237,11 +237,11 @@ input.invalid {
     border-style:solid;
 }
 
-.fieldWithErrors {
-  padding: 2px;
-  background-color: red;
-  display: inline;
-}
+/*.fieldWithErrors {*/
+  /*padding: 2px;*/
+  /*background-color: red;*/
+  /*display: inline;*/
+/*}*/
 
 .validation-error {
     font-size: smaller;
@@ -476,6 +476,10 @@ border-radius: 4px;
 	font-weight:normal;
 	border-bottom:1px solid #ddd;
 	cursor:pointer;
+}
+/* right part of accordion header */
+.edit-tips-batch h2 .accordion-header-right {
+    float: right;
 }
 
 /* currently active header */

@@ -2,9 +2,10 @@
 
 <b>Location:</b>
 <span>
+  <% if @full_access %>
   <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
   <span class="edit-area hidden" style="position:relative;">
-    <input type="text" value="<%= @calendar.location.name %>" class="location-input" /><span style="position:absolute;left:50%;" class="location-loading"></span>
+    <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
     <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
   </span>
   <span class="hidden">
@@ -13,6 +14,9 @@
         <input type="hidden" name="location_code" class="param_location_code">
     <% end %>
   </span>
+  <% else %>
+    <%= h @calendar.location.name %>
+  <% end %>
 </span>
 
 <br/>
@@ -21,11 +25,20 @@
 <b> | Times Clicked:</b>
 <%= h @calendar.click_count %>
 
+<<<<<<< HEAD
 <p>
 </p>
 <div align="right">
   <a href="/guides/<%= @calendar.id %>/share" class="textflow">Get script to embed widget</a>
 </div>     <BR><BR>
+=======
+
+<div class="button-panel">
+  <a href="/guides/<%= @calendar.id %>/share" class="button">
+    view live version and get script
+  </a>
+</div>
+>>>>>>> 1344f989b2cee0a27af125404e449a9330186197
 
 <div id="view_tips">
 
@@ -96,10 +109,18 @@
 </div>
 
 
+<<<<<<< HEAD
 <BR><BR>
 <div align="right">
   <a href="/guides/<%= @calendar.id %>/share" class="textflow">Get script to embed widget</a>
+=======
+<div class="button-panel">
+  <a href="/guides/<%= @calendar.id %>/share" class="button">
+    view live version and get script
+  </a>
+>>>>>>> 1344f989b2cee0a27af125404e449a9330186197
 </div>
+
 
 
 <div id="new_tip" style="display:none;">

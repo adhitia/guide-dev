@@ -142,7 +142,6 @@ if (!window.common) {
     };
 
     $(document).ready(function() {
-//        alert(validation_errors);
         common.clearValidationErrors();
         common.validationErrors(validation_errors);
     });

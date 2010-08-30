@@ -1,6 +1,7 @@
 <div class="no-tip-tile" align="center">
   <% if @full_access %>
-    <button type="button" onclick="tips.create(this.parentNode.parentNode, <%=condition.id%>, <%=day.id%>, 'show_tile');">
+    <button type="button" onclick="tips.create($(this).parents('.tip-container'), <%=condition.id%>, <%=day.id%>, 'show_tile');">
+    <!--<button type="button" onclick="alert('' + $(this).parents('td').length);">-->
       create tip
     </button>
   <% else %>

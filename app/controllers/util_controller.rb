@@ -48,7 +48,6 @@ class UtilController < ApplicationController
 
   def fetch_gmaps_data
     url = params[:url]
-#    puts "!!!!!!!!!!!!!!!!! #{url}"
     render :text => Net::HTTP.get(URI.parse(url))
   end
 end

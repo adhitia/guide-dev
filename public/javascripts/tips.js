@@ -1,14 +1,18 @@
 if (!window.tips) var tips = {
     save: function(formId, calendarId, after) {
+        common.clearValidationErrors();
         common.setLoadingGlobal();
         $('#' + formId).ajaxSubmit({
             type: 'POST',
             cache: false,
             iframe: true,
-            dataType: "html",
+            dataType: "json",
             async: false,
             success: function(r) {
                 common.stopLoadingGlobal();
+                if (common.validationErrors(r.errors)) {
+                    return;
+                }
                 if (after) {
                     after(r);
                 }
@@ -41,7 +45,7 @@ if (!window.tips) var tips = {
 
 
     create: function(root, conditionId, weekdayId, result) {
-        root = $(root).find('.tip-edit');
+//        root = $(root).find('.tip-edit');
         $("#new_tip_name").val("");
         $("#new_tip").dialog({
             buttons: {
@@ -61,9 +65,13 @@ if (!window.tips) var tips = {
                         },
                         dataType: "html",
                         success: function(r) {
+//                            alert(root.length);
                             $(root).html('').html(r);
+//                            alert($(root).html());
                             tips.init(root);
-                            $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+                            if ($(root).prev().hasClass('no-tip-tab')) {
+                                $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+                            }
                         }
                     });
                 },

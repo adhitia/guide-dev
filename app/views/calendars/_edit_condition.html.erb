@@ -3,7 +3,7 @@
     <div class="edit-tips-batch">
 
       <% @weekdays.each do |day| %>
-          <% place = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id and !t.tip.advertisement } %>
+          <% place = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id } %>
 
 
           <div>
@@ -11,7 +11,7 @@
             <% if place != nil then %>
                 <h2 class="tip-tab">
                   <%= day.name %>
-                  <span style="float:right;">
+                  <span class="accordion-header-right">
                     <%= h place.tip.name %>
                   </span>
                 </h2>
@@ -22,8 +22,8 @@
             <% else %>
                 <h2 class="no-tip-tab">
                   <%= day.name %>
-                  <span style="float:right;">
-                    <button type="button" onclick="tips.create(this.parentNode.parentNode.parentNode, <%=@edit_for.id%>, <%=day.id%>, 'edit');">
+                  <span class="accordion-header-right">
+                    <button type="button" onclick="tips.create($(this.parentNode.parentNode.parentNode).find('.tip-edit'), <%=@edit_for.id%>, <%=day.id%>, 'edit');">
                       create tip
                     </button>
                   </span>
