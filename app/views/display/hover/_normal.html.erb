@@ -1,93 +1,41 @@
-<% tip = place.tip %>
+<table width="100%" border="1" cellpadding="10" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="5">
+      <tr >
+        <td colspan="2" class="selected">
+          <span class="headtextdarkerlarger">
+          <% tip = place.tip %>
+          <b><%= tip.name %></b></span></td>
+        </tr>
+      <tr>
+        <td valign="top"><% if tip.image.exists? %>
+          <%= image_tag tip.image.url(:medium), {:align=>"left"} %>
+          <% end %></td>
+        <td valign="top" class="text"><%= h tip.description %>
+          <p>
+            <% if !tip.address.address.blank? -%>
+Address: <%= h tip.address.address %> <br/>
+<% end -%>
+</p>
+          <p>
+            <% if !tip.phone.blank? %>
+            Phone: <%= h tip.phone%><br />
+  <% end %>
+          </p>
+         </td>
+      </tr>
+      <tr>        <td colspan="2"><p>
+	             <span class="textflow">
+	             <% if !tip.url.blank? %>
+	             website: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank"> <%= h shorten(tip.url, 35) %> </a></span></span><br />
+          </p>
+          <% end %>
+<% if tip.address.lat != 0 %>
+          <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%=tip.address.lat%>+<%=tip.address.lng%>&amp;z=16" target="_blank">Directions and Map</a>:<br />
+          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=400x300&amp;zoom=13&amp;markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="400" height="300" />
+          <% end %></td>
+        </tr>
 
-
-            <table border="0" cellpadding="2" cellspacing="0" width="100%">
-                <tbody>
-                <tr>
-                    <td colspan="2" bgcolor="#000000">
-                      <span class="subheadtable"><%= tip.name %> this <%=place.weekday.name%> on a <%=place.condition.full_name%>  </span>
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top" width="200">
-
-                            <p>
-
-                                <!--no wishlist or anything like that-->
-                                <!--<span class="subheadtablelarge">
-                                    <a href="option-details.html">
-                                        <img src="images/selected-tour_f01.gif" alt="Add to your travel plans"
-                                         name="Wishlist"
-                                         id="Wishlist12" border="0" height="14" width="14"></a>
-                                </span>-->
-
-                                <!--no tip rating-->
-                                <!--Tip rating: 4.3/5
-                                <img src="images/star.gif" height="9" width="9">
-                                <img src="images/star.gif" height="9" width="9">
-                                <img src="images/star.gif" height="9" width="9">
-                                <img src="images/star.gif" height="9" width="9"><br>-->
-
-                                <!-- image -->
-                                <% if tip.image.exists? -%>
-                                    <%= image_tag(tip.image.url(:medium), {:align=>"left", :alt => ''}) %>
-                                <% end %><br>
-
-                                <!-- description -->
-                                <%= tip.description %><br>
-
-                                <!--also good on: not implemented-->
-                                <!--Also good on: Tue, Wed, Fri-->
-                            </p>
-                        
-                    </td>
-                    <td>
-                      <!--url-->
-                        <% if !empty?(tip.url) %>
-                            web: <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-                                    <%=shorten(tip.url[7..tip.url.length], 35)%>
-                                 </a><br>
-                        <% end %>
-
-                      <!--phone-->
-                        <% if !empty?(tip.phone) %>
-                            Phone: <%=tip.phone%><br>
-                        <% end %>
-
-                      <!--address-->
-                      <% if !empty?(tip.address.address) -%>
-                          Address: <%= tip.address.address %>
-                          <br/>
-                      <% end -%>
-
-                      <!--map-->
-                      <% if tip.address.lat != 0 %>
-                        <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=tip.address.lat%>+<%=tip.address.lng%>&z=16" target="_blank">Directions and Map</a>:<br>
-                        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&format=gif&sensor=false&size=150x150&zoom=13&markers=<%=tip.address.lat%>,<%=tip.address.lng%>" width="200" height="200" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
-                      <% end %>
-                    </td>
-                </tr>   <tr>
-                    <td colspan=2 bgcolor="#000000">
-
-
-                            More tips from "<span class="text"><a href="/guides/<%= place.calendar.id %>/" target="_blank"> <%=place.calendar.name%></a>" - built on <a href="http://www.Guiderer.com">Guiderer.com</a></span> <br>
-
-                          <!-- no this functionality -->
-                            <!--<a href="Other%20Local%20Dinners.html">Other Local Dinners </a>|-->
-                            <!--<a href="dinners">Other dinner tips</a> |-->
-                            <!--<a href="week">View all week«s tips</a><br>-->
-
-
-                            <!--Guide by <a href="adsf">John47</a> |-->
-                            <!--<a href="">Map</a> -->
-                            <!--| Flag | Correct | Share | Advertise here-->
-                            <!--| <a href="app">Get App </a>-->
-
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-
- 
+    </table></td>
+  </tr>
+</table>
