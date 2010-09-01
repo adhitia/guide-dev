@@ -357,10 +357,10 @@ if (!window.tips) var tips = {
                         adjust: {
                             screen: true
                         }
-                    },
+                    }/*,
                     width: {
                         max: 1000
-                    }
+                    }*/
                 });
             });
 

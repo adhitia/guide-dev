@@ -363,7 +363,7 @@ input.invalid {
 }
 
 #view_tips .tip-tile:hover .icon-small {
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 #view_tips .no-tip-tile {
@@ -579,7 +579,7 @@ border-radius: 4px;
     margin-left:5px;
     width: 19px;
     height: 19px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 .icon-small:hover {
     opacity: 1 !important;

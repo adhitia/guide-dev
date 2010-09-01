@@ -2,8 +2,14 @@
 <% calendar = place.calendar %>
 
 <div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>" >
-<div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray; height:100px; margin: 2px; align:center;  background-image:url('<% if tip.image.exists? -%><%= tip.image.url(:medium) %> <% else -%>/images/Maps_google_map.gif <% end %>')"><BR><BR><BR><BR></div>    
-  <!--top icons-->
+
+  <div></div>
+
+<div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray; height:100px; margin: 2px; align:center;
+        background-image:url('<%= tip.image.url(:medium) %>')">
+  <!--<BR><BR><BR><BR>-->
+</div>
+
   <div>
 
 <!--
