@@ -340,6 +340,7 @@ input.invalid {
     background-color:white;
     margin:5px;
     align:center;
+    height:180px;
 }
 
 #view_tips td.tip-container {
@@ -362,16 +363,22 @@ input.invalid {
     background: transparent url(/images/view-tip.gif) no-repeat;
 }
 
+#view_tips .tip-tile .tip-name {
+    color: #666666;
+    font-weight: bold;
+    font-size: medium;
+}
+
 #view_tips .tip-tile:hover .icon-small {
     opacity: 0.8;
 }
 
 #view_tips .no-tip-tile {
-    height:130px;
     background-color:lightgray;
     width:110px;
     overflow:hidden;
-    padding:10px
+    padding:5px;
+    height:180px;
 }
 
 #view_tips .droppable-active {

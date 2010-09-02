@@ -1,70 +1,72 @@
 <% tip = place.tip %>
 <% calendar = place.calendar %>
 
-<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>" >
+<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>"
+>
 
-  <div></div>
 
-<div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray; height:100px; margin: 2px; align:center;
-        background-image:url('<%= tip.image.url(:medium) %>')">
-  <!--<BR><BR><BR><BR>-->
-</div>
+  <% if @full_access %>
+    <!--top icons-->
+    <div>
+      <!--delete tip-->
+      <a class="delete-tip icon-small" title="delete" href="javascript:"></a>
+      <!--move tip-->
+      <a class="move-tip icon-small" title="move" href="javascript:"></a>
 
-  <div>
+
+      <!--edit tip in overlay-->
+      <!--link goes here-->
+      <a class="edit-tip icon-small" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit" ></a>
+
+      <!--content goes here, do not touch-->
+      <div class="edit-tip-overlay">
+
+        <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
+        <div class="content"></div>
+        <div align="center">
+          <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
+            save
+          </button>
+        </div>
+        <% end %>
+      </div>
+
+
+      <!--view full tip-->
+      <!--link here-->
+      <a class="view-tip icon-small" title="view" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>"></a>
+      <div class="full-tip-overlay">
+        <!--contents here-->
+        <div class="content"></div>
+      </div>
+
+    </div>
+  <% else %>
+    <div class="view-tip-hover"></div>
+  <% end %>
+
+
+  <div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray; height:100px;width:100px; align:center;
+          background:url('<%= tip.image.url(:thumb) %>') no-repeat; margin-left:auto;margin-right:auto;">
+  </div>
 
 <!--
-<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>">
+  <div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray;margin: 2px; align:center;">
+  <img style="height:100px;" src="<%=tip.image.url(:thumb)%>">
+  </div>
 -->
 
-    <% if @full_access %>
-      <!--top icons-->
-      <div>
-        <!--delete tip-->
-        <a class="delete-tip icon-small" title="delete" href="javascript:"></a>
-        <!--move tip-->
-        <a class="move-tip icon-small" title="move" href="javascript:"></a>
-
-
-        <!--edit tip in overlay-->
-        <!--link goes here-->
-        <a class="edit-tip icon-small" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit" ></a>
-
-        <!--content goes here, do not touch-->
-        <div class="edit-tip-overlay">
-
-          <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
-          <div class="content"></div>
-          <div align="center">
-            <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
-              save
-            </button>
-          </div>
-          <% end %>
-        </div>
-
-
-        <!--view full tip-->
-        <!--link here-->
-        <a class="view-tip icon-small" title="view" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>"></a>
-        <div class="full-tip-overlay">
-          <!--contents here-->
-          <div class="content"></div>
-        </div>
-
-      </div>
-    <% else %>
-      <div class="view-tip-hover">view it</div>
-    <% end %>
-
-
+  <div class="tip-name"><%= h tip.name %></div>
 
 
   <!-- tip statistics -->
+
+  <!--
   <span class="headtextdarker"><b><%= h tip.name %></b><br/></span>
     <span class="textgraysmall">
       Views= <%= tip.view_count %>
       Clicks= <%= tip.click_count %>
     </span>
-    
+  -->
 
 </div>
