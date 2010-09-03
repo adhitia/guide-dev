@@ -558,6 +558,15 @@ border-radius: 4px;
     font-weight: bold;
     font-size: larger;
 }
+.tip-show .tip-details {
+    overflow:hidden;
+    zoom:1;
+    margin-bottom:10px;
+}
+.tip-show .tip-map {
+    margin-top:10px;
+    text-align:center;
+}
 
 .tip-show  a {
     color: black;

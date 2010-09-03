@@ -6,7 +6,7 @@
 <div class="tip-show">
   <div class="tip-name"><%= h tip.name %></div>
 
-  <div style="overflow:hidden;zoom:1;margin-bottom:10px;">
+  <div class="tip-details">
       <% if tip.image.exists? %>
           <%= image_tag tip.image.url(:medium), {:align=>"left", :style=>"margin:10px;"} %>
       <% else %>
@@ -34,7 +34,7 @@
         <% end %>
   </div>
 
-  <div style="margin-top:10px;text-align:center;">
+  <div class="tip-map">
     <% if tip.address.lat != 0 %>
         <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.address.lat %>+<%= tip.address.lng %>&amp;z=16" target="_blank">
           Directions and Map
