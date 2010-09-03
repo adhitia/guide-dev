@@ -388,17 +388,19 @@ input.invalid {
 #view_tips .full-tip-overlay {
 	/* must be initially hidden */
 	display:none;
+
+    background-color:white;
     /*background-image:url(/images/overlay/white.png);*/
 
 	/* place overlay on top of other elements */
 	z-index:10000;
 
 	/* styling */
-	background-color:#333;
 
-	width:675px;
-    height:400px;
-	/*min-height:200px;*/
+	/*width:675px;*/
+    /*height:400px;*/
+	min-height:200px;
+    min-width:200px;
 	border:1px solid #666;
 
 	/* CSS3 styling for latest browsers */
@@ -543,6 +545,26 @@ border-radius: 4px;
     height:162px;
 }
 
+.tip-show {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 600px;
+    color:black;
+    padding: 5px;
+}
+
+.tip-show .tip-name {
+    color: #666666;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.tip-show  a {
+    color: black;
+}
+.tip-show a:visited {
+    color: black;
+}
 
 
 

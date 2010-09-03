@@ -346,6 +346,7 @@ if (!window.tips) var tips = {
             });
 
 
+//            alert('?');
             $(root).find('div.view-tip-hover').each(function() {
                 var tile = $(this).parents('div.tip-tile');
                 var place_id = tile.attr('place_id');
@@ -353,14 +354,21 @@ if (!window.tips) var tips = {
                     content: {
                         url: '/tips/' + place_id
                     },
+                    hide: {
+                        delay: 500,
+                        fixed: true
+                    },
                     position: {
                         adjust: {
                             screen: true
                         }
-                    }/*,
-                    width: {
-                        max: 1000
-                    }*/
+                    },
+                    style: {
+                        width: {
+                            max: 600,
+                            min: 200
+                        }
+                    }
                 });
             });
 
