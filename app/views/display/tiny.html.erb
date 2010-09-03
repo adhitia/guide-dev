@@ -1,105 +1,203 @@
 <script type="text/javascript" src="/jquery/jquery.qtip-1.0.0-rc3.js"></script>
-<link href="/public.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/public.css" media="screen" rel="stylesheet" type="text/css"/>
+
+<% root_class = ".guide-template-#{@template_id}" %>
+
+<style type="text/css">
+    .guide-template-1 {
+        width: 106px;
+        background-color: #FFFFFF;
+        border: 2px solid gray;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        padding: 2px;
+    }
+
+    /* guide head */
+    .guide-template-1 .guide-head {
+        background-color:#DBDABD;
+        color: #000000;
+        font-size: small;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .guide-template-1 .guide-head .guide-name {
+        color: white;
+    }
+
+    .guide-template-1 .guide-head .guide-description {
+    }
+
+    .guide-template-1 .guide-head .guide-dow {
+    }
 
 
+    /* tips, main part */
+    .guide-template-1 .guide-tip {
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        border: 1px solid lightgray;
+        padding: 2px;
+        height: 96px;
+        width: 96px;
+        background-repeat: no-repeat;
+        margin: 2px;
+    }
 
-<%= @calendar.location.name %>
-<table  width="100" bgcolor="#FFFFFF" border="0" cellpadding="2" cellspacing="0" bordercolor="#999900" style="-moz-border-radius: 8px;-webkit-border-radius: 8px; border-radius: 8px; border: 2px solid gray;padding: 2px;">
-      <tr>
+    .guide-template-1 .guide-tip .tip-legend {
+        opacity: 0.6;
+        background-color: white;
+        font-size: small;
+        color: #222222;
+        margin: 2px;
+    }
 
-            <td colspan=4 bgcolor="#DBDABD">
-              <span class="subheadtablemed"><a href="http://localhost:3000/guides/<%= @calendar.id %>"><%= @calendar.name %>' </a>   travel tips for a <%= @weather_forecast.original_condition %>  <%= @dow.name %>:</span>
-            </td>
-          </tr>
+    .guide-template-1 .guide-tip .tip-legend .tip-condition {
+    }
 
-                  <% @tips.each do |show_place| %>
-      <% tip = show_place.tip %>
-<TR><TD ><div align="center">
-<table  style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray;padding: 2px; height:100px; width:100%;"  background="<% if tip.image.exists? -%> <%= tip.image.url(:medium) %> <% else -%>/images/Maps_google_map.gif <% end %>" valign="top">
-  <tr>
-    <td valign="top"><table  border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF"  style="opacity:0.75;-moz-opacity:0.75;filter:alpha(opacity=75); width=100%;">
-      <tr>
-        <td bgcolor="#FFFFFF" class="tip" id="tip_<%= show_place.id %>"><% if tip.advertisement %>
-              <div align="right" style="color:gray;">advertisement</div>
-          <% end %><span class="textdark" bgcolor="#000000"><%= show_place.condition.name %>:</span>
-            <% if tip.url != '' -%>
-                <a href="/guides/<%= @calendar.id %>/tips/<%= tip.id %>/url">
-                  <span class="textdark" ><b><%= tip.name %></b></span>                </a>
-                  <div class="full_tip" style="visibility:hidden;display:none;">
-		              <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+    .guide-template-1 .guide-tip .tip-legend .tip-name {
+        font-weight: bold;
+    }
+
+
+    /* guide footer */
+    .guide-template-1 .guide-footer {
+        background-color: #DBDABD;
+        color: #000000;
+        font-size: small;
+    }
+
+    .guide-template-1 .guide-footer .select-day {
+        text-align: center;
+        color: #666666;
+    }
+    .guide-template-1 .guide-footer .select-day .previous-day {
+        /*background: url("/images/arrowleft.gif") no-repeat;*/
+        /*width: 12px;*/
+        /*height: 12px;*/
+    }
+    .guide-template-1 .guide-footer .select-day .next-day {
+    }
+
+    .guide-template-1 .guide-footer .guide-info {
+        font-size: x-small;
+        color: #666666;
+    }
+</style>
+
+<!-- main guide container -->
+<div class="guide-template-1">
+  <!--header-->
+  <div class="guide-head">
+    <div class="guide-name">
+      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
+    </div>
+    <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
+    <div class="guide-dow"><%= @dow.name %></div>
+  </div>
+
+  <!--tips-->
+  <div class="guide-tips">
+    <% @tips.each do |show_place| %>
+        <% tip = show_place.tip %>
+
+        <div class="guide-tip" style="background-image:url('<%=tip.image.url(:thumb)%>');">
+          <div class="tip-legend">
+            <span class="tip-condition"><%= show_place.condition.name %>:</span>
+            <span class="tip-name"><%= tip.name %></span>
+
+            <div class="full_tip" style="visibility:hidden;display:none;">
+              <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
+            </div>
           </div>
-                
-            <% else -%>
-                <span class="textdark" ><b><%= tip.name %></b></span><div class="full_tip" style="visibility:hidden;display:none;">
-		            <%= render :partial => 'display/hover/normal', :locals => {:place => show_place} %>
-          </div>
-                <% end -%>
-      </td></tr>
-      <tr>
-        <td></td>
-      </tr>
-    </table></td>
-  </tr>
-</table></div>
+        </div>
 
-                  
-      
-          
-          
-           
-            
-          
-          
-        </td> </tr>  <% end %> 
-        
-        
-        
-        
-        
-        
-                <tr>
-                  <td  bgcolor="ffffff"><table id="guideinfo" width=100% bgcolor="#DBDABD" class="headtextdarkersmall"><tr><td>
-                    <span class="headtextdarkersmall" align="center">
-                      <div align="center"><a href="javascript:_guiderer.render(this, <%= @day - 1 %>);"><img src="/images/arrowleft.gif" alt="View <%= @dow.prev.name %>" width="16" height="12" /></a>&nbsp;&nbsp;&nbsp;
-                      <%= @dow.name %> &nbsp;&nbsp;&nbsp;<a href="javascript:_guiderer.render(this, <%= @day + 1 %>);"><img src="/images/arrowright.gif" alt="View <%= @dow.next.name %>" width="16" height="12" /></a><br></span><span class="text" align="center"><a href="http://localhost:3000/guides/<%= @calendar.id %>" target="_blank">View whole week</a></div></span>
-                  </td></tr><tr>
-               
-            <td >Rate this guide:<BR>
-              <div class="starbar" >
+    <% end %>
+  </div>
+
+  <!--footer-->
+  <div class="guide-footer">
+    <!-- date navigation -->
+    <div class="select-day">
+      <a class="previous-day" href="javascript:_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
+        <img style="border: none;" src="<%=WEB_ROOT%>/images/arrowleft.gif"/>
+      </a>
+      <%= @dow.name %>
+      <a class="next-day" href="javascript:_guiderer.render(this, <%= @day + 1 %>);">
+        <img style="border: none;" src="<%=WEB_ROOT%>/images/arrowright.gif" title="View <%= @dow.next.name %>" />
+      </a>
+    </div>
+
+    <span>
+      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>" target="_blank">
+        Whole week
+      </a>
+    </span>
+
+    <!-- ratings go here -->
+    Rate this guide:
+    <div class="starbar">
       <div class="outer">
         <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-          <a class="s5" onclick="_cal.vote(this);" title="VOTE 5"></a>
-          <a class="s4" onclick="_cal.vote(this);" title="VOTE 4"></a>
-          <a class="s3" onclick="_cal.vote(this);" title="VOTE 3"></a>
-          <a class="s2" onclick="_cal.vote(this);" title="VOTE 2"></a>
-          <a class="s1" onclick="_cal.vote(this);" title="VOTE 1"></a>
+          <a class="s5" onclick="_cal.vote(this);" title="5"></a>
+          <a class="s4" onclick="_cal.vote(this);" title="4"></a>
+          <a class="s3" onclick="_cal.vote(this);" title="3"></a>
+          <a class="s2" onclick="_cal.vote(this);" title="2"></a>
+          <a class="s1" onclick="_cal.vote(this);" title="1"></a>
         </div>
       </div>
-    </div> </td></tr><tr><TD>Find other guides for <a href="http://localhost:3000/guides?search_location=<%= @calendar.location.name %>"><%= @calendar.location.name %></a><BR>
-      <a href="http://localhost:3000/guides/<%= @calendar.id %>/share">Embed on your site or blog</a>
-            </td></tr><tr><TD><span class="headtextdarkersmall"> Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-       </td></tr><tr><td><a href="http://www.guiderer.com"> Powered by <BR><img src="/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border=0 id=guideinfo2></a>      
-       
-       <BR> For more info on <%= @calendar.location.name %> <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= @calendar.location.name %>&fulltext=Search">Visit WikiTravel</a> or <a href="http://www.tripadvisor.com/Search?q=<%= @calendar.location.name %>&sub-search=Search&geo=&where=nav&returnTo=__2F__"> TripAdvisor</a>
-      </span> </TD></tr></table></td>
-          </tr>
-        </table>
-              
+    </div>
 
+    <!-- links and other info -->
+    <div class="guide-info">
+      <div>
+        Find other guides for 
+        <a href="<%= WEB_ROOT %>/guides?search_location=<%= @calendar.location.name %>">
+          <%= @calendar.location.name %>
+        </a>
+      </div>
+      <div>
+        <a href="<%= WEB_ROOT %>/guides/<%= @calendar.id %>/share">
+          Embed on your site or blog
+        </a>
+      </div>
+      <div>
+        Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
+      </div>
+      <div>
+        <a href="<%= WEB_ROOT %>"> Powered by<br/>
+        <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
+      </div>
+      <div>
+        For more info on <%= @calendar.location.name %>
+        <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= @calendar.location.name %>&fulltext=Search">
+          Visit WikiTravel
+        </a>
+        or
+        <a href="http://www.tripadvisor.com/Search?q=<%= @calendar.location.name %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
+          TripAdvisor
+        </a>
+      </div>
+    </div>
 
-
-
-
+  </div>
+</div>
 
 
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('td.tip').each(function() {
+        $('.guide-template-1 div.guide-tip').each(function() {
             $(this).qtip({
-                content: $('#' + this.id + ' .full_tip').html(),
+                content: $(this).find('.full_tip').html(),
+                hide: {
+                    delay: 500,
+                    fixed: true
+                },
                 style:  {
-                    name: 'cream',
                     padding: '7px 13px',
                     width: {
                         max: 470,

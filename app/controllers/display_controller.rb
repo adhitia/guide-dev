@@ -14,6 +14,7 @@ class DisplayController < ApplicationController
 
 
   def tiny
+    @template_id = 1
     @calendar = Calendar.find(params[:id])
     @weekdays = Weekday.all
     @day = params[:day]

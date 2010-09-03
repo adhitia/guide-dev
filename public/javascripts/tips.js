@@ -346,7 +346,6 @@ if (!window.tips) var tips = {
             });
 
 
-//            alert('?');
             $(root).find('div.view-tip-hover').each(function() {
                 var tile = $(this).parents('div.tip-tile');
                 var place_id = tile.attr('place_id');
