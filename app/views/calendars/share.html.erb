@@ -23,7 +23,7 @@ Add those imports to the 'head' tag of your page.
 
 <P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
 <p><span class="headtextlighter">What your widget looks like</span></p>
-<div id="preview_guide"></div>
+<div id="preview_guide" class=""></div>
 
 <div id="preview_template" class="hidden">
   <% escape do %>
@@ -52,7 +52,12 @@ Add those imports to the 'head' tag of your page.
         html = html.replace(/&gt;/g, '>');
         $('#preview_html').val(html);
 
-        _cal.render_calendar(target_id, calendar_id, style_id);
+        var target = $('#' + target_id);
+        target.attr('guide_id', calendar_id);
+        target.attr('guide_style', style_id);
+        target.addClass("guiderer");
+//        alert(target.length);
+        _guiderer.render(target);
     };
 
     $('#choose_style').buttonset();

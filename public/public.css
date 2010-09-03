@@ -30,3 +30,36 @@
 .starbar a.s3  { width:  60px; }
 .starbar a.s4  { width:  80px; }
 .starbar a.s5  { width: 100px; }
+
+
+
+
+.tip-show {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 600px;
+    color:black;
+    padding: 5px;
+}
+
+.tip-show .tip-name {
+    color: #666666;
+    font-weight: bold;
+    font-size: larger;
+}
+.tip-show .tip-details {
+    overflow:hidden;
+    zoom:1;
+    margin-bottom:10px;
+}
+.tip-show .tip-map {
+    margin-top:10px;
+    text-align:center;
+}
+
+.tip-show  a {
+    color: black;
+}
+.tip-show a:visited {
+    color: black;
+}

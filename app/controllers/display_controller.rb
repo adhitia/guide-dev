@@ -29,7 +29,9 @@ class DisplayController < ApplicationController
     @calendar.view_count += 1;
     @calendar.save
 
-    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
+    @forecast_full = get_forecast(@calendar.location.id)
+    @weather_forecast = @forecast_full[@day]
+#    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
     @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
     @tips.each do |tip|
       tip.tip.view_count += 1;
@@ -91,7 +93,7 @@ class DisplayController < ApplicationController
 
 
 
-  def get_forecast(location_id, start, days)
+  def get_forecast(location_id, start = 0, days = :all)
     location = Location.find location_id
     forecast = location.weather_forecast
     if forecast == nil
@@ -111,7 +113,12 @@ class DisplayController < ApplicationController
       forecast.save
     end
 
-    forecast.data[start, days]
+    if days == :all
+      forecast.data[start, forecast.data.length - start]
+    else
+      forecast.data[start, days]
+    end
+
   end
 
   

@@ -88,6 +88,14 @@
     }
 </style>
 
+
+
+
+
+
+
+
+
 <!-- main guide container -->
 <div class="guide-template-1">
   <!--header-->
@@ -122,13 +130,17 @@
   <div class="guide-footer">
     <!-- date navigation -->
     <div class="select-day">
-      <a class="previous-day" href="javascript:_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
-        <img style="border: none;" src="<%=WEB_ROOT%>/images/arrowleft.gif"/>
-      </a>
+      <% if @day > 0 %>
+          <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
+            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowleft.gif"/>
+          </a>
+      <% end %>
       <%= @dow.name %>
-      <a class="next-day" href="javascript:_guiderer.render(this, <%= @day + 1 %>);">
-        <img style="border: none;" src="<%=WEB_ROOT%>/images/arrowright.gif" title="View <%= @dow.next.name %>" />
-      </a>
+      <% if @day < @forecast_full.length - 1 %>
+          <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View <%= @dow.next.name %>">
+            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
+          </a>
+      <% end %>
     </div>
 
     <span>
@@ -142,11 +154,11 @@
     <div class="starbar">
       <div class="outer">
         <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-          <a class="s5" onclick="_cal.vote(this);" title="5"></a>
-          <a class="s4" onclick="_cal.vote(this);" title="4"></a>
-          <a class="s3" onclick="_cal.vote(this);" title="3"></a>
-          <a class="s2" onclick="_cal.vote(this);" title="2"></a>
-          <a class="s1" onclick="_cal.vote(this);" title="1"></a>
+          <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
+          <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
+          <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
+          <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
+          <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
         </div>
       </div>
     </div>
@@ -198,18 +210,12 @@
                     fixed: true
                 },
                 style:  {
-                    padding: '7px 13px',
                     width: {
-                        max: 470,
-                        min: 0
-                    },
-                    tip: true
+                        max: 600,
+                        min: 200
+                    }
                 },
                 position: {
-                    corner: {
-                        target: 'topRight',
-                        tooltip: 'bottomLeft'
-                    },
                     adjust: {
                         screen: true // Keep the tooltip on-screen at all times
                     }

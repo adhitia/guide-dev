@@ -1,3 +1,4 @@
+/*
 if (!window._cal) {
     _cal = {
         render_calendar: function(target_id, id, style, day) {
@@ -42,6 +43,7 @@ if (!window._cal) {
         }
     }
 }
+*/
 
 
 $(document).ready(function() {
@@ -60,18 +62,31 @@ if (!window._guiderer) {
         },
 
         render: function(target, day) {
+            if (target == undefined) {
+                throw "Target element must be passed into render.";
+            }
+            if (!day) {
+                day = 0;
+            }
+
+//            alert(target);
             target = $(target);
             if (!target.hasClass('guiderer')) {
-                target = target.parent('.guiderer');
+                target = target.parents('.guiderer');
+            }
+            if (target.length == 0) {
+                throw "Can't find adequate target.";
             }
 
             var id = target.attr('guide_id');
             var style = target.attr('guide_style');
+            if (!id || !style) {
+                throw "Guide id or style isn't set.";
+            }
 
             if (jQuery().qtip) {
                 target.find('td.tip').qtip("destroy");
             }
-//            target.html('');
 
             $.ajax({
                 url: '/guides/' + id + '/' + style,
