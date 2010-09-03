@@ -108,7 +108,10 @@ if (!window._guiderer) {
 
         vote: function(el) {
             var root = $(el).parents('.guiderer')[0];
-            var id = $(root).attr('cal_id');
+            var id = $(root).attr('guide_id');
+            if (!id) {
+                throw "No guide id found in root element.";
+            }
             var vote = $(el).attr('title');
 
             $.ajax({
