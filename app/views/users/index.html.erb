@@ -5,7 +5,7 @@
 
     <% @recent_calendars.each do |calendar| %>
         <div style="display:inline-block;vertical-align:text-top;">
-          <div class="guiderer" guide_id="<%=calendar.id%>" guide_style="tiny">
+          <div class="guiderer" guide_id="<%=calendar.id%>" guide_style="1">
             <%= link_to "Find more #{calendar.name_location} guides on Guiderer!", search_url(:search_location => calendar.location.name) %>
           </div>
         </div>

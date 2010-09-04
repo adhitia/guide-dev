@@ -185,6 +185,7 @@ class CalendarsController < ApplicationController
 
   def share
     @calendar = Calendar.find(params[:id])
+    @layouts = GuideLayout.find_all_by_public true
   end
 
 
@@ -236,7 +237,7 @@ class CalendarsController < ApplicationController
       end
 
       if !@errors.empty?
-        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
+#        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
         render :action => :new_overview
         raise ActiveRecord::Rollback
       else

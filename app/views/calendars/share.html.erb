@@ -11,12 +11,12 @@ Add those imports to the 'head' tag of your page.
 
 <P>Choose your prefered widget dimensions:</p>
 <div id="choose_style">
-<% ["tiny", "small", "normal"].each do |style|  %>
-    <label for="preview_type_<%=style%>"><%= style %></label>
-    <input type="radio" name="preview_type" value="tiny" id="preview_type_<%=style%>" onchange="change_style(this);"/>
+<% @layouts.each do |layout|  %>
+    <label for="preview_type_<%=layout.id%>"><%= layout.name %></label>
+    <input type="radio" name="preview_type" id="preview_type_<%=layout.id%>" onchange="change_style(this);"/>
 <% end %>
 </div>
-      <p> Tiny= 200 pixels wide, Small= 300 pixels wide, Normal= 600 pixels wide</P>
+      <!--<p> Tiny= 200 pixels wide, Small= 300 pixels wide, Normal= 600 pixels wide</P>-->
 
 
 <textarea id="preview_html" rows="7" cols="120"></textarea>

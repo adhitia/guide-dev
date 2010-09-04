@@ -5,17 +5,16 @@ require 'calendars_helper'
 class DisplayController < ApplicationController
   layout nil
 
-  after_filter :jsonp, :except => :public
+  after_filter :jsonp #, :except => :public
 
 
-  def public
-    render :file => 'app/views/display/public.js.erb'
-  end
+#  def public
+#    render :file => 'app/views/display/public.js.erb'
+#  end
 
 
-  def tiny
-    @template_id = 1
-    @calendar = Calendar.find(params[:id])
+  def display
+    @calendar = Calendar.find params[:id]
     @weekdays = Weekday.all
     @day = params[:day]
     if @day == nil then
@@ -40,18 +39,17 @@ class DisplayController < ApplicationController
 
     @rating = @calendar.rating_num;
 
-    respond_to do |format|
-      format.html
-    end
+    layout = GuideLayout.find params[:layout]
+    render :template => "display/#{layout.path}"
   end
 
-  def small
-    tiny
-  end
-
-  def normal
-    tiny
-  end
+#  def small
+#    tiny
+#  end
+#
+#  def normal
+#    tiny
+#  end
 
 
   # vote for the calendar

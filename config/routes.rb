@@ -62,9 +62,10 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.connect 'guides/:id/vote/:vote', :controller => :display, :action => :vote
-  map.connect 'guides/:id/tiny', :controller => :display, :action => :tiny
-  map.connect 'guides/:id/small', :controller => :display, :action => :small
-  map.connect 'guides/:id/normal', :controller => :display, :action => :normal
+  map.connect 'guides/:id/:layout', :controller => :display, :action => :display
+#  map.connect 'guides/:id/tiny', :controller => :display, :action => :tiny
+#  map.connect 'guides/:id/small', :controller => :display, :action => :small
+#  map.connect 'guides/:id/normal', :controller => :display, :action => :normal
 #  map.connect 'public.js', :controller => :display, :action => :public
 
 #  map.connect ':controller/:action/:id'
