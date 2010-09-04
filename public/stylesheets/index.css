@@ -577,6 +577,62 @@ border-radius: 4px;
 
 
 
+#home-page {
+    overflow: hidden;
+}
+
+/*#home-page .new-guides, #home-page .search-guides, #home-page .create-guide {*/
+#home-page > .section {
+    background-color: #1f8aae;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    display:inline-block;
+}
+
+#home-page > .section h1 {
+    background-color: #437888;
+    font-weight: normal;
+    font-size: x-large;
+
+    -moz-border-radius-topleft: 16px;
+    -webkit-border-top-left-radius: 16px;
+    border-top-left-radius: 16px;
+    -moz-border-radius-bottomright: 16px;
+    -webkit-border-bottom-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    position:relative;
+    left:-20px;
+    top:-20px;
+    padding: 10px;
+    margin: 0 50px 0 0;
+}
+
+#home-page .new-guides {
+    float: right;
+    width: 350px;
+}
+
+#home-page .search-guides, #home-page .create-guide {
+    float: left;
+    width: 520px;
+}
+
+#home-page #search_location {
+    font-size: large;
+    font-weight: bold;
+}
+
+/*#home-page .left-container {*/
+    /*width: 500px;*/
+/*}*/
+
+
+
 #new_guide_page {
     text-align: center;
 }

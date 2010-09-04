@@ -1,4 +1,3 @@
-/*
 if (!window._cal) {
     _cal = {
         render_calendar: function(target_id, id, style, day) {
@@ -43,7 +42,6 @@ if (!window._cal) {
         }
     }
 }
-*/
 
 
 $(document).ready(function() {

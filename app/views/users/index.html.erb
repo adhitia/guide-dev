@@ -1,3 +1,42 @@
+<div id="home-page">
+  <!--new guides-->
+  <div class="new-guides section">
+    <h1>Recently Created Guides</h1>
+
+    <% @recent_calendars.each do |calendar| %>
+        <div style="display:inline-block;vertical-align:text-top;">
+          <div class="guiderer" guide_id="<%=calendar.id%>" guide_style="tiny">
+            <%= link_to "Find more #{calendar.name_location} guides on Guiderer!", search_url(:search_location => calendar.location.name) %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <!--search guides-->
+  <div class="search-guides section">
+    <h1>Want tips on a travel destination?</h1>
+    We got guides, yes we do! Find one here:
+
+    <form id="search_form" name="search_form" method="get" action="guides">
+      <input name="search_location" id="search_location" class="watermark" value="" type="text" title="type destination here" size="20">
+      <img onclick="document.search_form.submit();" src="/images/guiderer-index_r11_c5.jpg" align="absmiddle"/>
+    </form>
+  </div>
+
+  <!--create guide-->
+  <div class="create-guide section">
+    <h1>Know a tourist destination well?</h1>
+
+    Create your own travel guide, complete with suggestions on what to do during the day, night and dinner.
+    <img align="right" onclick="window.location='/guides/new';" src="/images/guiderer-index_r12_c5.jpg"/>
+  </div>
+</div>
+
+
+<!--
+
+
+
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
   <tr>
     <td valign="top">
@@ -31,6 +70,7 @@
                 <img onclick="$.Watermark.HideAll();document.search_form.submit();" src="images/guiderer-index_r11_c5.jpg" class="subheadtablegray" width="190" height="35" align="absmiddle"/>
               </font>
             </form>
+
           </td>
           <td bgcolor="#1F8AAE">&nbsp;</td>
         </tr>
@@ -123,12 +163,13 @@
       </table>
 
 
-    
+
 
       <p>&nbsp;</p></td>
   </tr>
 </table>
 
+-->
 
 
 
