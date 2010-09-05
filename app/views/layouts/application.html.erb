@@ -123,11 +123,5 @@
   var validation_errors = <%= @errors.nil? ? '{}' : @errors.to_json %>;
 </script>
 
-<%
-#   if !@errors.nil?
-#       concat @errors.to_json
-#   end
-%>
-
 </body>
 </html>

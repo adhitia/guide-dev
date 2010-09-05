@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   before_filter :set_user
+  before_filter :ban_ie, :except => [:display, :vote, :internet_explorer]
 
 
 
@@ -30,6 +31,9 @@ class ApplicationController < ActionController::Base
   end
   def error
     render :template => "/common/error.html.erb"
+  end
+  def internet_explorer
+    render :template => "/common/internet-explorer.html.erb"
   end
 
 
@@ -141,6 +145,12 @@ class ApplicationController < ActionController::Base
     else
       puts "not ajax error"
       render :template => "/common/error.html.erb"
+    end
+  end
+
+  def ban_ie
+    if request.env['HTTP_USER_AGENT'] =~ /MSIE/
+      redirect_to :controller => :application, :action => :internet_explorer
     end
   end
 end

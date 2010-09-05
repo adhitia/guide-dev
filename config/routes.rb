@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'unauthenticated', :controller => :application, :action => :unauthenticated
   map.connect 'unauthorized', :controller => :application, :action => :unauthorized
   map.connect 'error', :controller => :application, :action => :error
+  map.connect 'internet-explorer', :controller => :application, :action => :internet_explorer
 
 
 
