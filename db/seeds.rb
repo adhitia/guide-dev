@@ -40,3 +40,13 @@ create_with_id 4, Weekday.new(:id => 4, :name => "Thursday")
 create_with_id 5, Weekday.new(:id => 5, :name => "Friday")
 create_with_id 6, Weekday.new(:id => 6, :name => "Saturday")
 create_with_id 7, Weekday.new(:id => 7, :name => "Sunday")
+
+
+create_with_id 1, GuideLayout.new(:id => 1, :name => 'tiny', :path => 'tiny', :public => true)
+create_with_id 2, GuideLayout.new(:id => 2, :name => 'other1', :path => 'other1', :public => true)
+create_with_id 3, GuideLayout.new(:id => 3, :name => 'other2', :path => 'other2', :public => true)
+create_with_id 4, GuideLayout.new(:id => 4, :name => 'other3', :path => 'other3', :public => true)
+create_with_id 5, GuideLayout.new(:id => 5, :name => 'other4', :path => 'other4', :public => true)
+create_with_id 6, GuideLayout.new(:id => 6, :name => 'other5', :path => 'other5', :public => true)
+create_with_id 7, GuideLayout.new(:id => 7, :name => 'other6', :path => 'other6', :public => true)
+create_with_id 8, GuideLayout.new(:id => 8, :name => 'other7', :path => 'other7', :public => true)

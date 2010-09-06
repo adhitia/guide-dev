@@ -139,22 +139,14 @@ class UsersController < ApplicationController
   end
 
   def finish_login(identity_url, email, name)
-#    user = User.find_or_initialize_by_identity_url(identity_url)
     user = User.find_by_identity_url(identity_url)
-#    if user.new_record?
     if user.nil?
       redirect_to register_path("user[email]" => email, "user[name]" => name, "user[identity_url]" => identity_url)
-#      user.name = name
-#      user.email = email
-#      user.save(false)
       return
     end
 
+#    reset_session
     session[:id] = user.id # Remember the user's id during this session
-#    if (user.name == nil || user.email == nil)
-#      redirect_to edit_user_url(:id => user)
-#      return
-#    end
 
 
     if session[:return_to]
