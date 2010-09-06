@@ -22,34 +22,37 @@ class DisplayController < ApplicationController
     else
       @day = @day.to_i
     end
-    start_date = Date.today + @day
-    @dow = Weekday.find(start_date.cwday);
+#    start_date = Date.today + @day
+#    @dow = Weekday.find(start_date.cwday);
 
-    @calendar.view_count += 1;
-    @calendar.save
 
+    # protect ourselves from bad indexes
     @forecast_full = get_forecast(@calendar.location.id)
+    if @day >= @forecast_full.length
+      @day = @forecast_full.length - 1
+    end
+    if @day < 0
+      @day = 0
+    end
+
+
     @weather_forecast = @forecast_full[@day]
+    @dow = Weekday.find(@weather_forecast.date.cwday);
 #    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
+
     @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
     @tips.each do |tip|
       tip.tip.view_count += 1;
       tip.tip.save;
     end
+    @calendar.view_count += 1;
+    @calendar.save
 
     @rating = @calendar.rating_num;
 
     layout = GuideLayout.find params[:layout]
     render :template => "display/#{layout.path}"
   end
-
-#  def small
-#    tiny
-#  end
-#
-#  def normal
-#    tiny
-#  end
 
 
   # vote for the calendar
@@ -111,6 +114,8 @@ class DisplayController < ApplicationController
       forecast.save
     end
 
+#    puts "!!!!!!!!!!!!! #{forecast.data[0].date}"
+#    puts "!!!!!!!!!!!!! #{forecast.data[0].date.class}"
     if days == :all
       forecast.data[start, forecast.data.length - start]
     else
@@ -128,14 +133,21 @@ class DisplayController < ApplicationController
 
     location = WeatherMan.new(location_code)
     weather = location.fetch(:days => days_fetch + 1, :unit => 'm') # , :current_conditions => true
+    
+#    puts "******************* #{weather.local_time}"
+#    d = weather.forecast[0].date
+#    puts "******************* #{d.to_s}"
+#    puts "******************* #{Date.parse d.to_s}"
+#    puts "******************* #{weather.forecast[1].date.class}"
+#    puts "******************* #{weather.forecast.length}"
     result = Array.new
-    for day in 0..days_fetch - 1
-      forecast = weather.forecast.for(Date.today + day)
+    for day in 0 .. weather.forecast.length - 1
+      forecast = weather.forecast[day]
       weather_condition = forecast.day.description
       if (weather_condition == "N/A") then
         weather_condition = forecast.night.description
       end
-      data = WeatherForecastData.new(process_weather(weather_condition), weather_condition)
+      data = WeatherForecastData.new(process_weather(weather_condition), weather_condition, forecast.date)
       result.push data
     end
     result
@@ -163,12 +175,14 @@ end
 
 
 class WeatherForecastData
-  attr_accessor :condition, :original_condition
+  attr_accessor :condition, :original_condition, :date
 
-  def initialize(condition, original_condition)
+  def initialize(condition, original_condition, date)
     @condition = condition
     @original_condition = original_condition
+    @date = date
   end
 end
+
 
 

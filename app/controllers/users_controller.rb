@@ -100,9 +100,7 @@ class UsersController < ApplicationController
     @user.name.gsub! /[\s]+/, ' '
     @user.name.strip!
     if request.post?
-      puts "********* post"
       if @user.save
-        puts "********* user saved!"
         session[:id] = user.id # Remember the user's id during this session
         if session[:return_to]
           redirect_to session[:return_to]
@@ -110,14 +108,8 @@ class UsersController < ApplicationController
           redirect_to :action => :show, :id => @user
         end
       else
-#        puts "!!!!!!!!!!! #{@user.errors.on(:name).class}"
-        @errors = {:user => @user.errors_as_hash}
-        @errors = flatten @errors
-        puts "#{@errors.inspect}"
-        puts "********* can't save user!"
+        @errors = flatten({:user => @user.errors_as_hash})
       end
-#    else
-#      @user = User.new(params[:user])
     end
   end
 

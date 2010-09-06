@@ -68,7 +68,10 @@ if (!window.tips) var tips = {
                             $(root).html('').html(r);
                             tips.init(root);
                             if ($(root).prev().hasClass('no-tip-tab')) {
-                                $(root).prev().removeClass('no-tip-tab').addClass('tip-tab').click();
+                                // when we're on edit page
+                                var header = $(root).prev();
+                                header.removeClass('no-tip-tab').addClass('tip-tab').click();
+                                header.find('.accordion-header-right').html($(root).find('.tip_name').val());
                             }
                         }
                     });

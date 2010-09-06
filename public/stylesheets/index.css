@@ -506,7 +506,7 @@ border-radius: 4px;
 
 /* accordion pane */
 .edit-tips-batch .tip-edit {
-	display:none;
+	/*display:none;*/
 	/*padding:15px;*/
 }
 
@@ -618,7 +618,7 @@ border-radius: 4px;
 
 #home-page .new-guides {
     float: right;
-    width: 350px;
+    width: 355px;
 }
 
 #home-page .search-guides, #home-page .create-guide {
