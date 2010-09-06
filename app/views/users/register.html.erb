@@ -1,2 +1,26 @@
-<h1>Users#register</h1>
-<p>Find me in app/views/users/register.html.erb</p>
+<h1>You're logging in for the first time!</h1>
+<!--<p>Please complete registration by creating simple .</p>-->
+
+<style type="text/css">
+  .validation-error {
+      font-size: medium !important;
+  }
+</style>
+
+<% form_for @user, :url => register_path do |f| %>
+    <p>
+      <%= f.label :email %><br/>
+      <%= f.text_field :email %>
+    </p>
+    <br/>
+    <p>
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </p>
+    <%= f.hidden_field :identity_url %>
+    <br/>
+    <p>
+      <%= f.submit 'Complete registration' %>
+    </p>
+<% end %>
+

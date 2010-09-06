@@ -89,6 +89,37 @@ class UsersController < ApplicationController
     @locations = Location.all
   end
 
+  def register
+    if params[:user][:identity_url].blank?
+      puts "no identity url provided"
+      redirect_to login_path
+      return
+    end
+
+    @user = User.new(params[:user])
+    @user.name.gsub! /[\s]+/, ' '
+    @user.name.strip!
+    if request.post?
+      puts "********* post"
+      if @user.save
+        puts "********* user saved!"
+        session[:id] = user.id # Remember the user's id during this session
+        if session[:return_to]
+          redirect_to session[:return_to]
+        else
+          redirect_to :action => :show, :id => @user
+        end
+      else
+#        puts "!!!!!!!!!!! #{@user.errors.on(:name).class}"
+        @errors = {:user => @user.errors_as_hash}
+        @errors = flatten @errors
+        puts "#{@errors.inspect}"
+        puts "********* can't save user!"
+      end
+#    else
+#      @user = User.new(params[:user])
+    end
+  end
 
   protected
 
@@ -116,18 +147,22 @@ class UsersController < ApplicationController
   end
 
   def finish_login(identity_url, email, name)
-    user = User.find_or_initialize_by_identity_url(identity_url)
-    if user.new_record?
-      user.name = name
-      user.email = email
-      user.save(false)
+#    user = User.find_or_initialize_by_identity_url(identity_url)
+    user = User.find_by_identity_url(identity_url)
+#    if user.new_record?
+    if user.nil?
+      redirect_to register_path("user[email]" => email, "user[name]" => name, "user[identity_url]" => identity_url)
+#      user.name = name
+#      user.email = email
+#      user.save(false)
+      return
     end
 
     session[:id] = user.id # Remember the user's id during this session
-    if (user.name == nil || user.email == nil)
-      redirect_to edit_user_url(:id => user)
-      return
-    end
+#    if (user.name == nil || user.email == nil)
+#      redirect_to edit_user_url(:id => user)
+#      return
+#    end
 
 
     if session[:return_to]

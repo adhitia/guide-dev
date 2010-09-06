@@ -237,6 +237,10 @@ input.invalid {
     border-style:solid;
 }
 
+
+.fieldWithErrors {
+    display: inline;
+}
 /*.fieldWithErrors {*/
   /*padding: 2px;*/
   /*background-color: red;*/
