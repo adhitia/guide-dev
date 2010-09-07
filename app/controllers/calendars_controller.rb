@@ -3,6 +3,10 @@ require 'weather_man'
 
 class CalendarsController < ApplicationController
 
+  before_filter :set_user
+  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
+
+
   def show
     @calendar = Calendar.find(params[:id])
     @full_access = @current_user && (@calendar.user.id == @current_user.id);

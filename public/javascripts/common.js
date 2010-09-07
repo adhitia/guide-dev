@@ -160,6 +160,12 @@ if (!window.common) {
                 $(this).val(text);
             }
         });
+
+        // remove watermarks before form is submitted
+        $('form.with-watermark').submit(function (){
+            $.Watermark.HideAll();
+            return true;
+        });
     });
 }
 

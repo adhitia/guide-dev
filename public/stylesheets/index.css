@@ -232,9 +232,10 @@ legend    {
 
 
 input.invalid {
-    border-color:red;
-    border-width:3px;
-    border-style:solid;
+    border: 3px solid red;
+}
+textarea.invalid {
+    border: 3px solid red;
 }
 
 
@@ -684,3 +685,28 @@ border-radius: 4px;
 }
 
 
+.about-guiderer {
+    margin-left: 400px;
+}
+
+.about-guiderer h1 {
+    margin-left: 60px;
+    background-color: #0066CC;
+    padding: 10px;
+    display: inline-block;
+}
+
+#contact-page .emails {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#contact-page .contact-form {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#contact-page .contact-form div {
+    margin: 15px;
+}

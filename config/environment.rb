@@ -84,4 +84,53 @@ Rails::Initializer.run do |config|
 #
 #  ActionView::Base.field_error_proc = Proc.new{ |html_tag, instance| "<div class=\"fieldWithErrors\">#{html_tag}</div>".html_safe! }
 
+
+
+  puts "initializing mailer"
+
+  #/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/base.rb
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.raise_delivery_errors = true
+#  config.action_mailer.sendmail_settings = {
+#          :location       => 'no_such_path',
+#          :arguments      => '-i -t'
+#  }
+
+=begin
+
+
+  config.action_mailer.smtp_settings = {
+          :address              => "smtp.gmail.com",
+#          :port                 => 465,
+          :port                 => 587,
+#          :domain               => 'baci.lindsaar.net',
+          :domain               => 'brazilwide.com.br',
+#          :user_name            => 'guiderer.test@gmail.com',
+          :user_name            => 'chumbonus.test@gmail.com',
+          :password             => 'abcabcabc',
+          :authentication       => 'plain',
+          :enable_starttls_auto => true
+  }
+
+
+=end
+
+  puts "initializing mailer - finished2"
+
+
+
+=begin
+
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.server_settings = {
+          :address => "smtp.gmail.com",
+          :port => 465,
+#          :domain => "tutorialspoint.com",
+          :authentication => :login,
+          :user_name => "chumbonus.test@gmail.com",
+          :password => "abcabcabc",
+  }
+
+=end
 end

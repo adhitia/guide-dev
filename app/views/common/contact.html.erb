@@ -1,45 +1,26 @@
-<p class="textwhite">&nbsp;</p>
-<table width="100%" border="0" cellspacing="0" cellpadding="5">
-  <tr>
-    <td width="400">&nbsp;</td>
-    <td><p class="textwhite"><span class="subhead">Contact us</span><br/>
-    </p>
+<div class="about-guiderer" id="contact-page">
+  <h1>Contact us</h1>
 
-      <p class="textwhite"><strong>We are easy to find:</strong></p>
+  <h3>We are easy to find:</h3>
+  <p>US 1 312 238 8998</p>
+  <p>BR +55 21 8894 9857</p>
 
-      <p class="textwhite">US 1 312 238 8998</p>
+  <div class="emails">
+    <p>support [at] guiderer.com</p>
+    <p>partnerships [at] guiderer.com</p>
+    <p>jobs [at] guiderer.com</p>
+  </div>
 
-      <p class="textwhite">BR +55 21 8894 9857</p>
 
-      <p class="textwhite">&nbsp;</p>
+  <% form_tag(contact_path, :method => :post, :class=>'contact-form with-watermark') do %>
+    <h3>Or use the form below</h3>
 
-      <p class="textwhite"><strong>support [at] guiderer.com</strong></p>
+      <span style="color: yellow"><%= flash[:notice] %></span>
 
-      <p class="textwhite"><strong>partnerships [at] guiderer.com</strong></p>
+    <div><input name="name" type="text" value="<%=h params[:name]%>" class="watermark" title="Name"/></div>
+    <div><input name="email" type="text" value="<%=h params[:email]%>" class="watermark" title="Email"/></div>
+    <div><textarea name="message" cols="45" rows="5" class="watermark" title="Your message"><%=h params[:message]%></textarea></div>
+    <button type="submit">Submit</button>
+  <% end %>
 
-      <p class="textwhite"><strong>jobs [at] guiderer.com</strong></p>
-
-      <p class="textwhite">&nbsp;</p>
-
-      <p class="textwhite"><strong>Or use the form below</strong></p>
-
-      <form id="form1" name="form1" method="post" action="">
-        <label>
-          <input name="firstname" type="text" id="firstname" value="name"/>
-          <br/>
-          <br/>
-        </label>
-        <label>
-          <input name="email" type="text" id="email" value="email"/>
-        </label>
-        <label> <br/>
-          <br/>
-          <textarea name="message" id="message" cols="45" rows="5">Your message</textarea>
-        </label> <label><br/>
-        <input type="submit" name="button" id="button" value="Submit"/>
-      </label>
-      </form>
-    </td>
-  </tr>
-</table>
-<p class="textwhite">&nbsp;</p>
+</div>

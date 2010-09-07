@@ -49,16 +49,16 @@ ActionController::Routing::Routes.draw do |map|
   map.register 'register', :controller => :users, :action => :register #, :conditions => { :method => :post }
 #  map.create_user 'register', :controller => 'users', :action => 'create', :conditions => { :method => :post }
 
-  map.connect 'about-us', :controller => :application, :action => :about_us
-  map.connect 'advertise', :controller => :application, :action => :advertise
-  map.connect 'contact', :controller => :application, :action => :contact
-  map.connect 'faq', :controller => :application, :action => :faq
-  map.connect 'how-it-works', :controller => :application, :action => :how_it_works
-  map.connect 'join-us', :controller => :application, :action => :join_us
-  map.connect 'unauthenticated', :controller => :application, :action => :unauthenticated
-  map.connect 'unauthorized', :controller => :application, :action => :unauthorized
-  map.connect 'error', :controller => :application, :action => :error
-  map.connect 'internet-explorer', :controller => :application, :action => :internet_explorer
+  map.connect 'about-us', :controller => :common, :action => :about_us
+  map.advertise 'advertise', :controller => :common, :action => :advertise
+  map.contact 'contact', :controller => :common, :action => :contact
+  map.faq 'faq', :controller => :common, :action => :faq
+  map.connect 'how-it-works', :controller => :common, :action => :how_it_works
+  map.connect 'join-us', :controller => :common, :action => :join_us
+  map.connect 'unauthenticated', :controller => :common, :action => :unauthenticated
+  map.connect 'unauthorized', :controller => :common, :action => :unauthorized
+  map.connect 'error', :controller => :common, :action => :error
+  map.connect 'internet-explorer', :controller => :common, :action => :internet_explorer
 
 
 

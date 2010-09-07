@@ -1,6 +1,7 @@
 require_library_or_gem 'oauth2'
 
 class UsersController < ApplicationController
+  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
 
   def login
   end

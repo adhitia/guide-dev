@@ -5,38 +5,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  before_filter :set_user
-  before_filter :ban_ie, :except => [:display, :vote, :internet_explorer]
-
-
-
-  def about_us
-    render :template => "/common/about-us.html.erb"
-  end
-  def faq
-    render :template => "/common/faq.html.erb"
-  end
-  def how_it_works
-    render :template => "/common/how-it-works.html.erb"
-  end
-  def join_us
-    render :template => "/common/join-us.html.erb"
-  end
-  def unauthenticated
-    flash[:error] = 'Oops. You need to login before you can view that page.'
-    redirect_to :controller => 'users', :action => 'login'
-  end
-  def unauthorized
-    render :template => "/common/unauthorized.html.erb"
-  end
-  def error
-    render :template => "/common/error.html.erb"
-  end
-  def internet_explorer
-    render :template => "/common/internet-explorer.html.erb"
-  end
-
-
 
   protected
 
@@ -82,7 +50,7 @@ class ApplicationController < ActionController::Base
       render :text => 'Please login first', :status => 401
     else
       flash[:error] = 'Oops. You need to login before you can view that page.'
-      redirect_to :controller => 'users', :action => 'login'
+      redirect_to :controller => :users, :action => 'login'
     end
 
     return false
@@ -99,7 +67,7 @@ class ApplicationController < ActionController::Base
         render :text => 'Operation is not permitted', :status => 403
       else
         flash[:error] = "You're not authorized to perform this operation"
-        redirect_to :controller => :application, :action => :unauthorized
+        redirect_to :controller => :common, :action => :unauthorized
       end
       return false
     end
@@ -118,7 +86,7 @@ class ApplicationController < ActionController::Base
         render :text => 'Operation is not permitted', :status => 403
       else
         flash[:error] = "You're not authorized to perform this operation"
-        redirect_to :controller => :application, :action => :unauthorized
+        redirect_to :controller => :common, :action => :unauthorized
       end
       return false
     end
@@ -150,7 +118,7 @@ class ApplicationController < ActionController::Base
 
   def ban_ie
     if request.env['HTTP_USER_AGENT'] =~ /MSIE/
-      redirect_to :controller => :application, :action => :internet_explorer
+      redirect_to :controller => :common, :action => :internet_explorer
     end
   end
 end

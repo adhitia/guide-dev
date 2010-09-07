@@ -1,4 +1,5 @@
 class TipsController < ApplicationController
+  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
 
   def create
     return unless authorize_guide params[:id]
