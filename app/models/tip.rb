@@ -7,7 +7,8 @@ class Tip < ActiveRecord::Base
   has_many :show_places
 
   # include Paperclip
-  has_attached_file :image, :styles => { :medium => "200x200>", :thumb => "100x100#" , :small => "100x100>" },
+  has_attached_file :image, :styles => { :medium => "200x200>", :thumb => "100x100#" , :small => "100x100>",
+                                          :thumb_large => "200x200#" },
                     :default_url => "/images/tip_missing.gif"
 #                    :default_url => "/images/tip_missing_:style.png"
 #                    :url => "/:class/:attachment/:id/:style_:basename.:extension"

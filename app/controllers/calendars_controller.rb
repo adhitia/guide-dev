@@ -185,9 +185,6 @@ class CalendarsController < ApplicationController
 #  end
 
   def search
-#    if (params[:search_location] == 'type destination here')
-#      params[:search_location] = '';
-#    end
     location = params[:search_location];
     if !location.blank?
       location = location.gsub('%', '\%').gsub('_', '\_')

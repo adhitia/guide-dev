@@ -98,11 +98,37 @@ if (!window._guiderer) {
                 },
                 dataType: 'jsonp',
                 success: function(res) {
-                    target.html(res);
+                    var el = $(res);
+                    target.html('');
+                    target.append(el);
+                    _guiderer.init(el);
                 },
                 error: function(r, s, e) {
                     target.html('error has occurred');
                 }
+            });
+        },
+
+        init: function(root) {
+            root.find('div.guide-tip').each(function() {
+                $(this).qtip({
+                    content: $(this).find('.full_tip').html(),
+                    hide: {
+                        delay: 500,
+                        fixed: true
+                    },
+                    style:  {
+                        width: {
+                            max: 600,
+                            min: 200
+                        }
+                    },
+                    position: {
+                        adjust: {
+                            screen: true // Keep the tooltip on-screen at all times
+                        }
+                    }
+                });
             });
         },
 
@@ -127,4 +153,12 @@ if (!window._guiderer) {
             });
         }
     };
+
+    // initialize guides
+    $(document).ready(function() {
+        $('div.guiderer').each(function() {
+            _guiderer.init(this);
+        });
+    });
 }
+

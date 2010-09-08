@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  before_filter :set_user
 
 
   protected
@@ -45,11 +46,11 @@ class ApplicationController < ActionController::Base
     return true if @current_user
 
     # redirect user
-    session[:return_to] = request.request_uri
     if ajax?
       render :text => 'Please login first', :status => 401
     else
       flash[:error] = 'Oops. You need to login before you can view that page.'
+      session[:return_to] = request.request_uri
       redirect_to :controller => :users, :action => 'login'
     end
 
@@ -62,11 +63,11 @@ class ApplicationController < ActionController::Base
 
     if guide.user_id != @current_user.id
       # action forbidden
-      session[:return_to] = request.request_uri
       if ajax?
         render :text => 'Operation is not permitted', :status => 403
       else
         flash[:error] = "You're not authorized to perform this operation"
+        session[:return_to] = request.request_uri
         redirect_to :controller => :common, :action => :unauthorized
       end
       return false
@@ -81,11 +82,11 @@ class ApplicationController < ActionController::Base
 
     if user.id != @current_user.id
       # action forbidden
-      session[:return_to] = request.request_uri
       if ajax?
         render :text => 'Operation is not permitted', :status => 403
       else
         flash[:error] = "You're not authorized to perform this operation"
+        session[:return_to] = request.request_uri
         redirect_to :controller => :common, :action => :unauthorized
       end
       return false
