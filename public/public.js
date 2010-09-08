@@ -110,7 +110,7 @@ if (!window._guiderer) {
         },
 
         init: function(root) {
-            root.find('div.guide-tip').each(function() {
+            root.find('div.guide-tip-body').each(function() {
                 $(this).qtip({
                     content: $(this).find('.full_tip').html(),
                     hide: {
