@@ -467,6 +467,17 @@ border-radius: 4px;
 	width:35px;
 }
 
+#view_tips .guide-access-type .current-access-type {
+    font-weight: bold;
+}
+
+#view_tips .guide-access-type {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+
+
 .local-search-container {
     position:absolute;
     background-color:white;
@@ -710,3 +721,10 @@ border-radius: 4px;
 #contact-page .contact-form div {
     margin: 15px;
 }
+
+
+
+
+
+
+

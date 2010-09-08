@@ -1,38 +1,57 @@
-<h1>Overview of "<%= h @calendar.name %>" Guide</h1>
-
-<b>Location:</b>
-<span>
-  <% if @full_access %>
-  <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
-  <span class="edit-area hidden" style="position:relative;">
-    <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
-    <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
-  </span>
-  <span class="hidden">
-    <% form_tag(update_guide_path(:id => @calendar), :method => 'post', :class => 'submit-location') do %>
-        <input type="hidden" name="location_name" class="param_location_name">
-        <input type="hidden" name="location_code" class="param_location_code">
-    <% end %>
-  </span>
-  <% else %>
-    <%= h @calendar.location.name %>
-  <% end %>
-</span>
-
-<br/>
-<b> Times Viewed:</b>
-<%= h @calendar.view_count %>
-<b> | Times Clicked:</b>
-<%= h @calendar.click_count %>
-
-
-<div class="button-panel">
-  <a href="/guides/<%= @calendar.id %>/share" class="button">
-    view live version and get script
-  </a>
-</div>
 
 <div id="view_tips">
+  <h1>Overview of "<%= h @calendar.name %>" Guide</h1>
+
+  <b>Location:</b>
+  <span>
+    <% if @full_access %>
+    <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
+    <span class="edit-area hidden" style="position:relative;">
+      <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
+      <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
+    </span>
+    <% else %>
+      <%= h @calendar.location.name %>
+    <% end %>
+  </span>
+  <br/>
+
+
+  <% if @full_access %>
+      <div class="guide-access-type">
+        <h3>Access Type</h3>
+        <p>Public guides can be discovered by other users through search and featured on guiderer main page.</p>
+        <p>All guides are private when created, to allow author to fill in content.</p>
+        Current state: <span class="current-access-type"><%= @calendar.public? ? 'Public' : 'Private' %></span>
+        <input type="checkbox" id="guide_active" onchange="calendar.updateAccessType(this);" <%= 'checked="checked"' if @calendar.public? %> />
+        <label for="guide_active">Change</label>
+      </div>
+  <% end %>
+
+  <% if @full_access %>
+      <span class="hidden">
+        <% form_tag(update_guide_path(:id => @calendar), :method => 'post', :class => 'update-guide-form') do %>
+            <input type="hidden" name="location_name" class="param_location_name">
+            <input type="hidden" name="location_code" class="param_location_code">
+            <input type="hidden" name="access_type" class="param_access_type">
+        <% end %>
+      </span>
+  <% end %>
+
+
+  <b> Times Viewed:</b>
+  <%= h @calendar.view_count %>
+  <b> | Times Clicked:</b>
+  <%= h @calendar.click_count %>
+
+  <div class="button-panel">
+    <a href="/guides/<%= @calendar.id %>/share" class="button">
+      view live version and get script
+    </a>
+  </div>
+
+
+
 
   <table border="1" cellpadding="0" cellspacing="0">
 
@@ -97,10 +116,6 @@
   </table>
 
 
-
-</div>
-
-
 <div class="button-panel">
   <a href="/guides/<%= @calendar.id %>/share" class="button">
     Get script to embed widget
@@ -114,6 +129,10 @@
       <input id="new_tip_name" name="new_tip_name"/>
   <% end %>
 </div>
+
+</div>
+
+
 
 
 <script type="text/javascript">
@@ -130,14 +149,17 @@
 
               // Now save value.
               common.setLoading($('.location-loading'), 'Saving...');
-              root.find('.param_location_name').val(result.label);
-              root.find('.param_location_code').val(result.id);
-              root.find('.submit-location').ajaxSubmit({
+              var form = $('#view_tips form.update-guide-form');
+              form.find('.param_location_name').val(result.label);
+              form.find('.param_location_code').val(result.id);
+              form.ajaxSubmit({
                   success: function() {
                       common.stopLoading($('.location-loading'));
                   }
               });
           });
       });
+
+      $('#guide_active').button();
   });
 </script>

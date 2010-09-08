@@ -34,6 +34,7 @@ Add those imports to the 'head' tag of your page.
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function() {
     var change_pane = function(id) {
         $('.preview_area').hide();
         $('#' + id + '_area').show();
@@ -61,4 +62,5 @@ Add those imports to the 'head' tag of your page.
     };
 
     $('#choose_style').buttonset();
+  });
 </script>

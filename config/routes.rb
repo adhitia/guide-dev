@@ -33,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
   map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
+#  map.change_access_type 'guides/:id'
 
   map.edit_tip  'tips/:occurrence_id/edit', :controller => :tips, :action => :edit, :conditions => { :method => :get }
   map.show_tip  'tips/:occurrence_id', :controller => :tips, :action => :show, :conditions => { :method => :get }

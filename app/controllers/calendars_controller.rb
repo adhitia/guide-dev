@@ -93,18 +93,29 @@ class CalendarsController < ApplicationController
 
     @calendar = Calendar.find(params[:id])
 
-    location_code = params[:location_code]
-    location_name = params[:location_name]
-
-    if not empty? params[:location_name]
-#      loc = find_or_create_location location_code, location_name
-#      @calendar.location_id = loc.id;
+    if !params[:location_name].blank?
       @calendar.location_id = find_or_create_location;
-      @calendar.save
     end
+
+    if !params[:access_type].blank?
+      @calendar.public = params[:access_type] == "true" ? true : false
+    end
+
+    @calendar.save
 
     render :text => 'dummy response'
   end
+
+#  def change_access_type
+#    return unless authorize_guide params[:id]
+#
+#    @calendar = Calendar.find(params[:id])
+#    @new_value = params[:access_type] == "true" ? true : false;
+#    @calendar.public = @new_value
+#    @calendar.save
+#
+#    render :text => 'dummy response'
+#  end
 
 #  def update
 #    @calendar = Calendar.find(params[:id])
@@ -178,12 +189,11 @@ class CalendarsController < ApplicationController
 #      params[:search_location] = '';
 #    end
     location = params[:search_location];
-    if location && location != ''
+    if !location.blank?
       location = location.gsub('%', '\%').gsub('_', '\_')
-      @guides = Calendar.find(:all, :conditions=> ["locations.name like ?", "%" + location + "%"],
-                                  :include=>"location")
+      @guides = Calendar.find(:all, :conditions=> ["locations.name like ? and public = ?", "%" + location + "%", true], :include=>"location")
     else
-      @guides = Calendar.find(:all, :include=>"location")
+      @guides = Calendar.find(:all, :conditions => ["public = ?", true], :include => "location")
     end
   end
 

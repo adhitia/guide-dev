@@ -27,14 +27,6 @@ class Calendar < ActiveRecord::Base
   end
 
   def errors_as_hash
-#    result = {}
-#    errors.each do |attr, msg|
-#      if result[attr].nil?
-#        result[attr] = [];
-#      end
-#      result[attr] = msg
-#    end
-#    return result
     {
             :calendar_name_location => errors.on(:name_location),
             :calendar_name_target => errors.on(:name_target),

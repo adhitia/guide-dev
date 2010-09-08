@@ -41,6 +41,23 @@ if (!window.calendar) var calendar = {
         $(root).find('.edit-area').hide();
     },
 
+    updateAccessType: function(target) {
+        var public = $(target)[0].checked;
+        
+        var form = $('#view_tips form.update-guide-form');
+        form.find('.param_access_type').val(public);
+        common.setLoadingGlobal('Saving...');
+
+        $(target).button('disable');
+        form.ajaxSubmit({
+            success: function() {
+                common.stopLoadingGlobal();
+                $(target).parent().find('.current-access-type').html(public ? 'Public' : 'Private');
+                $(target).button('enable');
+            }
+        });
+    },
+
     locationInput: function(input, callback) {
         input = $(input);
         input.autocomplete({

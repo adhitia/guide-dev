@@ -2,25 +2,31 @@
   <h1>Contact us</h1>
 
   <h3>We are easy to find:</h3>
+
   <p>US 1 312 238 8998</p>
+
   <p>BR +55 21 8894 9857</p>
 
   <div class="emails">
     <p>support [at] guiderer.com</p>
+
     <p>partnerships [at] guiderer.com</p>
+
     <p>jobs [at] guiderer.com</p>
   </div>
 
 
   <% form_tag(contact_path, :method => :post, :class=>'contact-form with-watermark') do %>
-    <h3>Or use the form below</h3>
+      <h3>Or use the form below</h3>
 
       <span style="color: yellow"><%= flash[:notice] %></span>
 
-    <div><input name="name" type="text" value="<%=h params[:name]%>" class="watermark" title="Name"/></div>
-    <div><input name="email" type="text" value="<%=h params[:email]%>" class="watermark" title="Email"/></div>
-    <div><textarea name="message" cols="45" rows="5" class="watermark" title="Your message"><%=h params[:message]%></textarea></div>
-    <button type="submit">Submit</button>
+      <div><input name="name" type="text" value="<%= h params[:name] %>" class="watermark" title="Name"/></div>
+      <div><input name="email" type="text" value="<%= h params[:email] %>" class="watermark" title="Email"/></div>
+      <div>
+        <textarea name="message" cols="45" rows="5" class="watermark" title="Your message"><%= h params[:message] %></textarea>
+      </div>
+      <button type="submit">Submit</button>
   <% end %>
 
 </div>

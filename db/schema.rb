@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100904225617) do
+ActiveRecord::Schema.define(:version => 20100907221122) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20100904225617) do
     t.integer  "votes_num",     :default => 0
     t.string   "name_location"
     t.string   "name_target"
+    t.boolean  "public",        :default => false
   end
 
   create_table "conditions", :force => true do |t|

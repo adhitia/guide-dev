@@ -86,7 +86,6 @@ Rails::Initializer.run do |config|
 
 
 
-  puts "initializing mailer"
 
   #/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/base.rb
   config.action_mailer.delivery_method = :sendmail
@@ -115,7 +114,6 @@ Rails::Initializer.run do |config|
 
 =end
 
-  puts "initializing mailer - finished2"
 
 
 
