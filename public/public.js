@@ -130,6 +130,21 @@ if (!window._guiderer) {
                     }
                 });
             });
+            root.find('div.guide-info > div.qtip-content').each(function() {
+//                alert('!' + $(this).parent().find('div.guiderer-logo').length);
+                $(this).parent().find('div.guiderer-logo').qtip({
+                    content: $(this).html(),
+                    hide: {
+                        delay: 500,
+                        fixed: true
+                    },
+                    position: {
+                        adjust: {
+                            screen: true // Keep the tooltip on-screen at all times
+                        }
+                    }
+                });
+            });
         },
 
 

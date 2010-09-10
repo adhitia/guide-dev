@@ -85,6 +85,7 @@ class DisplayController < ApplicationController
       body = response.body
       body = body.gsub '"', '\\"'
       body = body.gsub /\n/, '\\n';
+      body = body.gsub /\r/, '\\r';
       body = body.gsub '/', '\\/';
       body = params[:callback] + '("' + body + '");';
       response.body = body;

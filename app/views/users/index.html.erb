@@ -174,22 +174,22 @@
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#search_location").autocomplete(
-            [
-                <% @locations.size.times do |index| -%>
+    $(document).ready(function() {
+        $("#search_location").autocomplete(
+                [
+                    <% @locations.size.times do |index| -%>
                     '<%= @locations[index].name %>'
                     <% if index < @locations.size - 1 -%>
-                        ,
+                    ,
                     <% end %>
-                <% end -%>
-            ],
-    {
-    });
+                    <% end -%>
+                ],
+        {
+        });
 
-    $('#search_form').submit(function() {
-        $.Watermark.HideAll();
-        return true;
+        $('#search_form').submit(function() {
+            $.Watermark.HideAll();
+            return true;
+        });
     });
-  });
 </script>

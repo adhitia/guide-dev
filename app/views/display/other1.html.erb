@@ -190,33 +190,13 @@
 
     <!-- links and other info -->
     <div class="guide-info">
-      <div>
-        Find other guides for 
-        <a href="<%= WEB_ROOT %>/guides?search_location=<%= @calendar.location.name %>">
-          <%= @calendar.location.name %>
-        </a>
-      </div>
-      <div>
-        <a href="<%= WEB_ROOT %>/guides/<%= @calendar.id %>/share">
-          Embed on your site or blog
-        </a>
-      </div>
-      <div>
-        Travel guide by <%= link_to @calendar.user.name, show_user_path(:id => @calendar.user.id) %>
-      </div>
-      <div>
+      <div class="guiderer-logo">
         <a href="<%= WEB_ROOT %>"> Powered by<br/>
         <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
       </div>
-      <div>
-        For more info on <%= @calendar.location.name %>
-        <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= @calendar.location.name %>&fulltext=Search">
-          Visit WikiTravel
-        </a>
-        or
-        <a href="http://www.tripadvisor.com/Search?q=<%= @calendar.location.name %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
-          TripAdvisor
-        </a>
+
+      <div class="qtip-content" style="display:none;">
+        <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
       </div>
     </div>
 
