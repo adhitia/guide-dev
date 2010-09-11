@@ -8,10 +8,13 @@ class Tip < ActiveRecord::Base
 
   # include Paperclip
   has_attached_file :image, :styles => { :medium => "200x200>", :thumb => "100x100#" , :small => "100x100>",
-                                          :square => "200x200#" },
+                                          :square => "200x200#" , :original => "300x300>" }, # override 'original' style
+                    :storage => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :path => "/:class/:attachment/:id/:style.:extension",
+                    :bucket => 'guiderer',
+                    :default_style => :medium,
                     :default_url => "/images/tip_missing.gif"
-#                    :default_url => "/images/tip_missing_:style.png"
-#                    :url => "/:class/:attachment/:id/:style_:basename.:extension"
   before_validation :download_remote_image, :if => :image_url_provided?
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
 
