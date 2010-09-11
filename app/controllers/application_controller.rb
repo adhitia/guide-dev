@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-#  rescue_from ActionController::RoutingError, :with => :handle_error
   rescue_from Exception, :with => :handle_error
+  rescue_from ActionController::RoutingError, :with => :handle_routing_error
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -23,23 +23,6 @@ class ApplicationController < ActionController::Base
   def set_user
     @current_user = User.find(session[:id]) if @current_user.nil? && session[:id]
   end
-
-=begin
-
-  def login_required
-    return true if @current_user
-    access_denied
-    return false
-  end
-
-  def access_denied
-    session[:return_to] = request.request_uri
-    flash[:error] = 'Oops. You need to login before you can view that page.'
-    redirect_to :controller => 'users', :action => 'login'
-  end
-
-
-=end
 
 
   def authenticate
@@ -100,22 +83,36 @@ class ApplicationController < ActionController::Base
   end
 
   def ajax?
-#    puts "!!!!!!!!! #{request.headers['X-Requested-With']} - #{params['X-Requested-With']}"
     request.headers['X-Requested-With'] == 'XMLHttpRequest' || params['X-Requested-With'] == 'XMLHttpRequest'
   end
 
   def handle_error(exception)
-    puts "!!!!!!!!!! error !!!  #{exception}   ajax : #{ajax?}"
-#    puts "!!!!!!!!!!???  #{clean_backtrace(exception).join("\n  ")}"
-    log_error(exception)
-    Exceptional.handle (exception, "error detected\n ajax request?: #{ajax?}")
-
+    puts "regular error"
+    custom_log_error exception
     if ajax?
-      puts "ajax error"
       render :text => 'Error happened', :status => 500
     else
-      puts "not ajax error"
       render :template => "/common/error.html.erb"
+    end
+  end
+
+  def handle_routing_error(error)
+    puts "routing error"
+    if ajax?
+      custom_log_error exception
+      render :text => 'Error happened', :status => 500
+    else
+#      render :template => "/common/error.html.erb"
+      redirect_to '/404.html'
+    end
+  end
+
+  def custom_log_error(error)
+    log_error(error)
+    if ENV["RAILS_ENV"] == 'development'
+      puts "!!!!!!!!!! error !!!  #{error}   ajax : #{ajax?}"
+    elsif ENV["RAILS_ENV"] == 'production'
+      Exceptional.handle(exception, "error detected\n ajax request?: #{ajax?}")
     end
   end
 

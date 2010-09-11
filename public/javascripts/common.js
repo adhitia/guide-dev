@@ -20,7 +20,7 @@ if (!window.common) {
                 case 401: common.setLocation('/unauthenticated'); break;
                 case 403: common.setLocation('/unauthorized'); break;
             // zero is from post requests
-                case 500, 0: common.setLocation('/error'); break;
+                case 500, 404, 0: common.setLocation('/error'); break;
             }
         }
     });
