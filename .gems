@@ -1,4 +1,6 @@
-thoughtbot-paperclip
+thoughtbot-paperclip --source gems.github.com
 oauth2
 jdpace-weatherman
 rails --version 2.3.5
+
+
