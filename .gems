@@ -3,5 +3,6 @@ oauth2
 jdpace-weatherman --source gems.github.com
 rails --version 2.3.5
 aws-s3
+exceptional
 
 

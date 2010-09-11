@@ -108,6 +108,8 @@ class ApplicationController < ActionController::Base
     puts "!!!!!!!!!! error !!!  #{exception}   ajax : #{ajax?}"
 #    puts "!!!!!!!!!!???  #{clean_backtrace(exception).join("\n  ")}"
     log_error(exception)
+    Exceptional.handle (exception, "error detected\n ajax request?: #{ajax?}")
+
     if ajax?
       puts "ajax error"
       render :text => 'Error happened', :status => 500

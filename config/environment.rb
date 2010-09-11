@@ -52,6 +52,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'oauth2'
 
+  config.gem 'exceptional'
+
 
 #  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
 #    if html_tag.start_with? "<label"
