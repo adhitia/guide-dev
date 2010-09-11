@@ -98,11 +98,14 @@ class UsersController < ApplicationController
     end
 
     @user = User.new(params[:user])
+    @user.name = '' if @user.name.blank?
     @user.name.gsub! /[\s]+/, ' '
     @user.name.strip!
+
     if request.post?
+
       if @user.save
-        session[:id] = user.id # Remember the user's id during this session
+        session[:id] = @user.id # Remember the user's id during this session
         if session[:return_to]
           redirect_to session[:return_to]
         else
