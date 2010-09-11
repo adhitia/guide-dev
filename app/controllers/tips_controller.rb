@@ -52,7 +52,7 @@ class TipsController < ApplicationController
       
       errors = flatten errors 
       if !errors.empty?
-        puts "!!!!!!!!!!!!!! #{errors.inspect}"
+#        puts "!!!!!!!!!!!!!! #{errors.inspect}"
         raise ActiveRecord::Rollback
       end
     end

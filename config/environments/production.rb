@@ -29,8 +29,8 @@ config.action_view.cache_template_loading            = true
 
 
 
-WEB_ROOT = 'http://guiderer.heroku.com'
-FACEBOOK_APP_ID = 'e8a82604ae771543db615e26aeb68c59'
-FACEBOOK_APP_SECRET = 'b2c7f0025850a6d3fd88c56a93ab8e0c'
+WEB_ROOT = 'http://guiderer.com'
+FACEBOOK_APP_ID = 'e8151ae0a6068749b2fcd78207f82f0d'
+FACEBOOK_APP_SECRET = '7e7f08f3d89b53d56521fffe3d4ae5d3'
 
 

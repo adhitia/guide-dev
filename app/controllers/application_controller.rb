@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ajax?
-    puts "!!!!!!!!! #{request.headers['X-Requested-With']} - #{params['X-Requested-With']}"
+#    puts "!!!!!!!!! #{request.headers['X-Requested-With']} - #{params['X-Requested-With']}"
     request.headers['X-Requested-With'] == 'XMLHttpRequest' || params['X-Requested-With'] == 'XMLHttpRequest'
   end
 
