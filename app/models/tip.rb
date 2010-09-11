@@ -12,7 +12,7 @@ class Tip < ActiveRecord::Base
                     :storage => :s3,
                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
                     :path => "/:class/:attachment/:id/:style.:extension",
-                    :bucket => 'guiderer',
+#                    :bucket => 'guiderer',
                     :default_style => :medium,
                     :default_url => "/images/tip_missing.gif"
   before_validation :download_remote_image, :if => :image_url_provided?

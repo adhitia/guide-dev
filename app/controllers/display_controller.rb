@@ -130,7 +130,7 @@ class DisplayController < ApplicationController
   def get_forecast_weather_dot_com(location_code)
     WeatherMan.partner_id = '1180784909'
     WeatherMan.license_key = '0e1b5b7c95d8cdd8'
-    days_fetch = 4;
+    days_fetch = 3;
 
     location = WeatherMan.new(location_code)
     weather = location.fetch(:days => days_fetch + 1, :unit => 'm') # , :current_conditions => true
