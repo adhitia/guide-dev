@@ -6,6 +6,7 @@ class TipsController < ApplicationController
     @full_access = true
 
     @calendar = Calendar.find(params[:id])
+
     @tip = Tip.new(:name => params[:new_tip_name])
     @tip.author_id= @current_user.id;
     @tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location_id => @calendar.location_id,
@@ -17,8 +18,10 @@ class TipsController < ApplicationController
     @place.calendar = @calendar
     @place.tip = @tip
 
-    @tip.save
-    @place.save
+    Tip.transaction do
+      @tip.save
+      @place.save
+    end
 
     render :partial => "tips/#{params[:result]}", :locals => {:place => @place, :label => params[:label]}
 #    render :partial => "tips/edit", :locals => {:place => @place}

@@ -40,7 +40,7 @@ class UtilController < ApplicationController
 
     result = [];
     WeatherMan.search(q).each do |l|
-      result.push({:label => l.name, :id => l.id}) 
+      result.push({:label => l.name, :id => l.id})
     end
 
     render :json => result
