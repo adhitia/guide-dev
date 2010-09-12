@@ -2,7 +2,7 @@ class CommonMailer < ActionMailer::Base
   
   def contact_us(name, email, message)
     @from = email
-    @recipients = "nikita.rybak@gmail.com"
+    @recipients = CONTACT_EMAILS_TO
     @subject = "User contact"
     @sent_on = Time.now
     @message = message;

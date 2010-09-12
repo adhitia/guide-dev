@@ -20,3 +20,4 @@ Paperclip.options[:command_path] = "/opt/local/bin"
 # configure action mailer
 config.action_mailer.delivery_method = :sendmail
 config.action_mailer.raise_delivery_errors = true
+
