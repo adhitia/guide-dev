@@ -8,7 +8,7 @@ db/*.sqlite3
 *~
 .DS_Store
 memo.txt
-test.rb
+/test.rb
 weather_com.txt
 pics/*
 save/*

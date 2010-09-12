@@ -1,9 +1,17 @@
 require 'test_helper'
 
 class TipsControllerTest < ActionController::TestCase
+  def setup
+    # almost all requests are expected to be xhr
+    @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+  end
+
+
+
+
   test "create" do
-    get :create, {:id => 1, :new_tip_name => 'my tip'}, {:id => 1}
-    assert_template 'tips/_edit_row'
+    get :create, {:id => 1, :new_tip_name => 'my tip', :result => 'edit'}, {:id => 1}
+    assert_template 'tips/_edit'
     assert_response :success
   end
 
@@ -22,6 +30,7 @@ class TipsControllerTest < ActionController::TestCase
     tip_data['1']['name'] = 'Ipanema beach'
     tip_data['2']['url'] = 'museum.org'
     tip_data['2']['address'] = {'address' => 'museum st. 1'}
+
     get :update, {:id => 1, :tips => tip_data}, {:id => 1}
     assert_response :success
     assert_equal 'Ipanema beach', Tip.find(1).name
@@ -40,8 +49,9 @@ class TipsControllerTest < ActionController::TestCase
   end
 
   test "follow url" do
+    @request.env['HTTP_X_REQUESTED_WITH'] = nil
     get :follow_url, {:id => 1, :tip_id => 2}
-    assert_redirected_to 'go-museum.com'
+    assert_redirected_to 'http://go-museum.com'
   end
 
   test "unbind" do

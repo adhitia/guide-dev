@@ -32,7 +32,7 @@ class TipsController < ApplicationController
     @full_access = true;
 
     @calendar = Calendar.find(params[:id])
-    errors = {};
+    @errors = {};
 
     Tip.transaction do
       params[:tips].each_pair do |id, tip_data|
@@ -45,22 +45,19 @@ class TipsController < ApplicationController
         tip_data.delete :address
         tip.update_attributes tip_data
 
-        errors["tips[#{id}]"] = tip.errors_as_hash
+        @errors["tips[#{id}]"] = tip.errors_as_hash
       end
 
 
       
-      errors = flatten errors 
-      if !errors.empty?
-#        puts "!!!!!!!!!!!!!! #{errors.inspect}"
+      @errors = flatten @errors
+      if !@errors.empty?
+#        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
         raise ActiveRecord::Rollback
       end
     end
 
-    render :text => {:errors => errors}.to_json
-#    render :json => {}
-#    render :json => errors
-#    render :text => 'dummy response'
+    render :text => {:errors => @errors}.to_json
   end
 
   def follow_url

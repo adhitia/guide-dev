@@ -4,6 +4,7 @@ tip1:
   id: 1
   name: 'beach'
   description: 'place near the see'
+  author_id: 1
 
 tip2:
   id: 2
@@ -11,5 +12,6 @@ tip2:
   description: 'very good place'
   url: 'go-museum.com'
   phone: 'call-museum'
+  author_id: 1
   
 
