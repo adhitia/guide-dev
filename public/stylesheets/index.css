@@ -707,6 +707,10 @@ border-radius: 4px;
     display: inline-block;
 }
 
+.about-guiderer h4 {
+    margin-bottom: 0;
+}
+
 #contact-page .emails {
     margin-top: 20px;
     margin-bottom: 20px;
