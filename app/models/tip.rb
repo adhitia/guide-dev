@@ -8,7 +8,7 @@ class Tip < ActiveRecord::Base
 
   # include Paperclip
   has_attached_file :image, :styles => { :medium => "200x200>", :thumb => "100x100#" , :small => "100x100>",
-                                          :square => "200x200#" , :original => "300x300>" }, # override 'original' style
+                                          :square => "200x200#" , :original => "400x400>" }, # override 'original' style
                     :storage => :s3,
                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
                     :path => "/:class/:attachment/:id/:style.:extension",
