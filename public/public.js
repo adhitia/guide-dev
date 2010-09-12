@@ -172,7 +172,7 @@ if (!window._guiderer) {
     // initialize guides
     $(document).ready(function() {
         $('div.guiderer').each(function() {
-            _guiderer.init(this);
+            _guiderer.init($(this));
         });
     });
 }
