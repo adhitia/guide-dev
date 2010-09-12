@@ -24,7 +24,6 @@ class TipsController < ApplicationController
     end
 
     render :partial => "tips/#{params[:result]}", :locals => {:place => @place, :label => params[:label]}
-#    render :partial => "tips/edit", :locals => {:place => @place}
   end
 
   def update

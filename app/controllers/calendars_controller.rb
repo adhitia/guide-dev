@@ -2,13 +2,13 @@ require 'rubygems'
 require 'weather_man'
 
 class CalendarsController < ApplicationController
-
-  before_filter :set_user
+#  before_filter :set_user
   before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
 
 
   def show
-    @calendar = Calendar.find(params[:id])
+    @calendar = verify_guide params[:id]
+    return if @calendar.nil?
     @full_access = @current_user && (@calendar.user.id == @current_user.id);
 
     @today = Date.today.cwday - 1;
@@ -62,16 +62,6 @@ class CalendarsController < ApplicationController
       return
     end
 
-#    @errors = {};
-#    @errors["calendar_name_location"] = "" if params[:calendar_name_location].blank?
-#    @errors["calendar_name_target"] = "" if params[:calendar_name_target].blank?
-#    @errors["location_code"] = "" if params[:location_code].blank?
-#
-#    if not @errors.blank?
-#      render :action => :new
-#      return
-#    end
-
     params['tip_name'] = Hash.new({})
 
     render :action => :new_overview
@@ -88,9 +78,7 @@ class CalendarsController < ApplicationController
   end
 
   def update
-    @ajax = true
     return unless authorize_guide params[:id]
-
     @calendar = Calendar.find(params[:id])
 
     if !params[:location_name].blank?
@@ -106,41 +94,6 @@ class CalendarsController < ApplicationController
     render :text => 'dummy response'
   end
 
-#  def change_access_type
-#    return unless authorize_guide params[:id]
-#
-#    @calendar = Calendar.find(params[:id])
-#    @new_value = params[:access_type] == "true" ? true : false;
-#    @calendar.public = @new_value
-#    @calendar.save
-#
-#    render :text => 'dummy response'
-#  end
-
-#  def update
-#    @calendar = Calendar.find(params[:id])
-#    location_code = params[:location_code]
-#    location_name = params[:location_name]
-#    loc = find_or_create_location location_code, location_name
-#    @calendar.location_id = loc.id;
-#
-#    if location_code == ''
-#      flash[:error] = 'Please select location.';
-#      render :action => "edit"
-#      return
-#    end
-#
-#    respond_to do |format|
-#      if @calendar.update_attributes(params[:calendar])
-#        flash[:notice] = 'Calendar was successfully updated.'
-#        format.html { redirect_to(@calendar) }
-#      else
-#        format.html { render :action => "edit" }
-#      end
-#    end
-#  end
-
-#
 #  def advertise_choose
 #    @calendar = Calendar.find(params[:id])
 #    @ads = Advertisement.find_all_by_calendar_id params[:id]
@@ -195,7 +148,8 @@ class CalendarsController < ApplicationController
   end
 
   def share
-    @calendar = Calendar.find(params[:id])
+    @calendar = verify_guide params[:id]
+    return if @calendar.nil?
     @layouts = GuideLayout.find_all_by_public true
   end
 
@@ -210,8 +164,6 @@ class CalendarsController < ApplicationController
       @calendar.name_location = params[:calendar_name_location]
       @calendar.name_target = params[:calendar_name_target]
       @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
-#     @calendar.view_count = 0;
-#     @calendar.click_count = 0;
       @calendar.user = @current_user
 
       @calendar.location_id = find_or_create_location
@@ -228,8 +180,6 @@ class CalendarsController < ApplicationController
             tip.name = name
             tip.author_id = @current_user.id
             if tip.invalid?
-#              puts "!!!!!!!!!!!!! #{tip.errors_as_hash.inspect} ! #{tip.phone.nil?} ! #{tip.url.nil?} !"
-#              puts "!!!!!!!!!!!!! #{tip.errors.on :phone} !"
               @errors[param_name] = tip.errors.on :name
               next
             end
@@ -248,7 +198,6 @@ class CalendarsController < ApplicationController
       end
 
       if !@errors.empty?
-#        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
         render :action => :new_overview
         raise ActiveRecord::Rollback
       else
@@ -260,7 +209,7 @@ class CalendarsController < ApplicationController
 
 
   def find_or_create_location(location_code = params[:location_code], location_name = params[:location_name])
-    return nil if location_code.blank?
+    return nil if location_code.blank? || location_name.blank?
 
     location = Location.find_by_code location_code
     if location == nil
@@ -274,7 +223,6 @@ class CalendarsController < ApplicationController
     Calendar.new({
             :name_location => params[:calendar_name_location],
             :name_target => params[:calendar_name_target],
-#            :location_id => find_or_create_location(params[:location_code], params[:location_name])
             :location_id => find_or_create_location
     })
   end

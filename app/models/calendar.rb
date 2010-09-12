@@ -27,10 +27,15 @@ class Calendar < ActiveRecord::Base
   end
 
   def errors_as_hash
-    {
-            :calendar_name_location => errors.on(:name_location),
-            :calendar_name_target => errors.on(:name_target),
-            :location_name => errors.on(:location_id)
-    }
+    result = {}
+    result[:calendar_name_location] = errors.on(:name_location) if !errors.on(:name_location).blank?
+    result[:calendar_name_target] = errors.on(:name_target) if !errors.on(:name_target).blank?
+    result[:location_name] = errors.on(:location_id) if !errors.on(:location_id).blank?
+    result
+#    {
+#            :calendar_name_location => errors.on(:name_location),
+#            :calendar_name_target => errors.on(:name_target),
+#            :location_name => errors.on(:location_id)
+#    }
   end
 end

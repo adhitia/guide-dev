@@ -48,4 +48,10 @@ class ActiveSupport::TestCase
 
 
   protected
+
+  # check that no validation errors
+  def assert_no_errors
+    errors = assigns["errors"] || {} 
+    assert_equal({}, errors, "errors found: #{errors.inspect}")
+  end
 end

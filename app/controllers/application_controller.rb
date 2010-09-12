@@ -42,7 +42,8 @@ class ApplicationController < ActionController::Base
 
   def authorize_guide(guide_id)
     return false if not authenticate
-    guide = Calendar.find(guide_id)
+    guide = verify_guide guide_id
+    return if guide.nil?
 
     if guide.user_id != @current_user.id
       # action forbidden
@@ -76,6 +77,21 @@ class ApplicationController < ActionController::Base
     end
 
     return true
+  end
+
+  # check that guide is present
+  def verify_guide guide_id
+    guide = Calendar.find_by_id(guide_id)
+    if guide.nil?
+      if ajax?
+        render :text => "Guide with id [#{guide_id}] isn't found", :status => 404
+      else
+        flash[:error] = "The guide you requested can't be found."
+        render :template => 'common/missing'
+      end
+    end
+
+    guide
   end
 
   def empty?(s)
