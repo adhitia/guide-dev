@@ -79,12 +79,12 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "edit guide by day - no user" do
     get :edit_day, {:id => 1, :weekday_id => 3}
-    assert_response 401
+    assert_redirected_to 'login'
   end
 
   test "edit guide by day - wrong user" do
     get :edit_day, {:id => 1, :weekday_id => 3}, {:id => 2}
-    assert_response 403
+    assert_redirected_to 'unauthorized'
   end
 
   test "edit guide by condition" do
@@ -95,12 +95,12 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "edit guide by condition - no user" do
     get :edit_condition, {:id => 1, :condition_id => 3}
-    assert_response 401
+    assert_redirected_to 'login'
   end
 
   test "edit guide by condition - wrong user" do
     get :edit_condition, {:id => 1, :condition_id => 3}, {:id => 2}
-    assert_response 403
+    assert_redirected_to 'unauthorized'
   end
 
   test "search" do
