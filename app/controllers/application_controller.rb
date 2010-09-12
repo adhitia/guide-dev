@@ -102,7 +102,6 @@ class ApplicationController < ActionController::Base
       custom_log_error exception
       render :text => 'Error happened', :status => 500
     else
-#      render :template => "/common/error.html.erb"
       redirect_to '/404.html'
     end
   end

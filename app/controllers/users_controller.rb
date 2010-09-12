@@ -103,7 +103,6 @@ class UsersController < ApplicationController
     @user.name.strip!
 
     if request.post?
-
       if @user.save
         session[:id] = @user.id # Remember the user's id during this session
         if session[:return_to]
