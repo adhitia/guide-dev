@@ -14,7 +14,7 @@ class Tip < ActiveRecord::Base
                     :path => "/:class/:attachment/:id/:style.:extension",
 #                    :bucket => 'guiderer',
                     :default_style => :medium,
-                    :default_url => "/images/tip_missing.gif"
+                    :default_url => "#{WEB_ROOT}/images/tip_missing.gif"
   before_validation :download_remote_image, :if => :image_url_provided?
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
 
