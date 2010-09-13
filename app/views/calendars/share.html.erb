@@ -23,11 +23,11 @@ Add those imports to the 'head' tag of your page.
 
 <P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
 <p><span class="headtextlighter">What your widget looks like</span></p>
-<div id="preview_guide" class=""></div>
+<div id="preview_guide" class="" server="<%=WEB_ROOT%>"></div>
 
 <div id="preview_template" class="hidden">
   <% escape do %>
-    <div class="guiderer" guide_id="{calendar_id}" guide_style="{style_id}">
+    <div class="guiderer" guide_id="{calendar_id}" guide_style="{style_id}" server="<%=WEB_ROOT%>">
       <%= link_to "Find more #{@calendar.name_location} guides on Guiderer!", search_url(:search_location => @calendar.location.name) %>
     </div>
   <% end %>

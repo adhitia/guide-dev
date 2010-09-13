@@ -98,13 +98,15 @@ class ApplicationController < ActionController::Base
     return s == nil || s.strip.empty?;
   end
 
+  # request.xhr? isn't good enough, because we have iframes with images submitted in background
+  # They all have 'X-Requested-With' parameter set 
   def ajax?
     request.headers['X-Requested-With'] == 'XMLHttpRequest' || params['X-Requested-With'] == 'XMLHttpRequest'
   end
 
-  def handle_error(exception)
+  def handle_error(error)
     puts "regular error"
-    custom_log_error exception
+    custom_log_error error
     if ajax?
       render :text => 'Error happened', :status => 500
     else
@@ -115,7 +117,7 @@ class ApplicationController < ActionController::Base
   def handle_routing_error(error)
     puts "routing error"
     if ajax?
-      custom_log_error exception
+      custom_log_error error
       render :text => 'Error happened', :status => 500
     else
       redirect_to '/404.html'
@@ -127,10 +129,12 @@ class ApplicationController < ActionController::Base
     if ENV["RAILS_ENV"] == 'development'
       puts "!!!!!!!!!! error !!!  #{error}   ajax : #{ajax?}"
     elsif ENV["RAILS_ENV"] == 'production'
-      Exceptional.handle(exception, "error detected\n ajax request?: #{ajax?}")
+      Exceptional.handle(error, "error detected\n ajax request?: #{ajax?}")
     end
   end
 
+  # no ie (except guide viewers) so far
+  # fix it some time later
   def ban_ie
     if request.env['HTTP_USER_AGENT'] =~ /MSIE/
       redirect_to :controller => :common, :action => :internet_explorer

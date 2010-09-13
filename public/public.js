@@ -1,52 +1,3 @@
-/*
-
-if (!window._cal) {
-    _cal = {
-        render_calendar: function(target_id, id, style, day) {
-            if (jQuery().qtip) {
-                $('#' + target_id + ' td.tip').qtip("destroy");
-            }
-            $('#' + target_id).html('');
-
-            $.ajax({
-                url: '/guides/' + id + '/' + style,
-                type: 'GET',
-                data: {
-                    'day' : day,
-                    'target_id' : target_id
-                },
-                dataType: 'jsonp',
-                success: function(res) {
-                    $('#' + target_id).html(res);
-                },
-                error: function(r, s, e) {
-                    $('#' + target_id).html('error has occurred');
-                }
-            });
-        },
-
-
-        vote: function(el) {
-            var root = $(el).parents('.guiderer')[0];
-            var id = $(root).attr('cal_id');
-            var vote = $(el).attr('title');
-
-            $.ajax({
-                url: '/guides/' + id + '/vote/' + vote,
-                type: 'GET',
-                dataType: 'jsonp',
-                success: function() {
-                    $(root).find('.inner').addClass('voted').css('width', vote * 20);
-                },
-                error: function(r, s, e) {
-                }
-            });
-        }
-    }
-}
-*/
-
-
 $(document).ready(function() {
     $(window).load(function(){
         _guiderer.render_all(document);
@@ -81,8 +32,10 @@ if (!window._guiderer) {
 
             var id = target.attr('guide_id');
             var style = target.attr('guide_style');
-            if (!id || !style) {
-                throw "Guide id or style isn't set.";
+            var server = target.attr('server');
+            if (!id || !style || !server) {
+                alert(server);
+                throw "Guide id or style or server isn't set.";
             }
 
             if (jQuery().qtip) {
@@ -90,11 +43,10 @@ if (!window._guiderer) {
             }
 
             $.ajax({
-                url: '/guides/' + id + '/' + style,
+                url: server + '/guides/' + id + '/' + style,
                 type: 'GET',
                 data: {
-                    'day' : day//,
-//                    'target_id' : target_id
+                    'day' : day
                 },
                 dataType: 'jsonp',
                 success: function(res) {
@@ -131,7 +83,6 @@ if (!window._guiderer) {
                 });
             });
             root.find('div.guide-info > div.qtip-content').each(function() {
-//                alert('!' + $(this).parent().find('div.guiderer-logo').length);
                 $(this).parent().find('div.guiderer-logo').qtip({
                     content: $(this).html(),
                     hide: {
@@ -154,10 +105,11 @@ if (!window._guiderer) {
             if (!id) {
                 throw "No guide id found in root element.";
             }
+            var server = $(root).attr('server');
             var vote = $(el).attr('title');
 
             $.ajax({
-                url: '/guides/' + id + '/vote/' + vote,
+                url: server + '/guides/' + id + '/vote/' + vote,
                 type: 'GET',
                 dataType: 'jsonp',
                 success: function() {
