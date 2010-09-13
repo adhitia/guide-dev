@@ -1,8 +1,9 @@
-//$(document).ready(function() {
-    $(document).load(function(){
+$(document).ready(function() {
+//    $(document).load(function(){
+    alert('!');
         _guiderer.render_all(document);
-    });
-//});
+//    });
+});
 
 
 if (!window._guiderer) {
