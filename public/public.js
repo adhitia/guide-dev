@@ -49,6 +49,7 @@ if (!window._guiderer) {
                     'day' : day
                 },
                 dataType: 'jsonp',
+                cache: false,
                 success: function(res) {
                     var el = $(res);
                     target.html('');
@@ -112,6 +113,7 @@ if (!window._guiderer) {
                 url: server + '/guides/' + id + '/vote/' + vote,
                 type: 'GET',
                 dataType: 'jsonp',
+                cache: false,
                 success: function() {
                     $(root).find('.inner').addClass('voted').css('width', vote * 20);
                 },
