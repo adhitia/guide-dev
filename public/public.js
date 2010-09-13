@@ -55,7 +55,9 @@ if (!window._guiderer) {
 //                    var el = $(res);
                     target.html('');
                     target.append(res);
+                    alert(0);
                     target.load(function() {
+                        alert(1);
 //                        _guiderer.init(el);
                         _guiderer.init(target);
                     });
