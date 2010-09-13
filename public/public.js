@@ -77,7 +77,7 @@ if (!window._guiderer) {
                     },
                     position: {
                         adjust: {
-                            screen: true // Keep the tooltip on-screen at all times
+                            screen: true
                         }
                     }
                 });
@@ -91,7 +91,7 @@ if (!window._guiderer) {
                     },
                     position: {
                         adjust: {
-                            screen: true // Keep the tooltip on-screen at all times
+                            screen: true
                         }
                     }
                 });
@@ -122,10 +122,10 @@ if (!window._guiderer) {
     };
 
     // initialize guides
-    $(document).ready(function() {
-        $('div.guiderer').each(function() {
-            _guiderer.init($(this));
-        });
-    });
+//    $(document).ready(function() {
+//        $('div.guiderer').each(function() {
+//            _guiderer.init($(this));
+//        });
+//    });
 }
 
