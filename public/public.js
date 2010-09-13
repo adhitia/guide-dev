@@ -1,6 +1,6 @@
 $(document).ready(function() {
 //    $(document).load(function(){
-    alert('!');
+//    alert('!');
         _guiderer.render_all(document);
 //    });
 });
@@ -52,11 +52,12 @@ if (!window._guiderer) {
                 dataType: 'jsonp',
                 cache: false,
                 success: function(res) {
-                    var el = $(res);
+//                    var el = $(res);
                     target.html('');
-                    target.append(el);
-                    el.load(function() {
-                        _guiderer.init(el);
+                    target.append(res);
+                    target.load(function() {
+//                        _guiderer.init(el);
+                        _guiderer.init(target);
                     });
                 },
                 error: function(r, s, e) {
