@@ -1,8 +1,8 @@
-$(document).ready(function() {
-    $(window).load(function(){
+//$(document).ready(function() {
+    $(document).load(function(){
         _guiderer.render_all(document);
     });
-});
+//});
 
 
 if (!window._guiderer) {
@@ -54,7 +54,9 @@ if (!window._guiderer) {
                     var el = $(res);
                     target.html('');
                     target.append(el);
-                    _guiderer.init(el);
+                    el.load(function() {
+                        _guiderer.init(el);
+                    });
                 },
                 error: function(r, s, e) {
                     target.html('error has occurred');
