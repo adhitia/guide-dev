@@ -55,8 +55,8 @@ if (!window._guiderer) {
 //                    var el = $(res);
                     target.html('');
                     target.append(res);
-                    alert(0);
-                    target.load(function() {
+                    alert('0 ' + target.find('.guiderer-resource').length);
+                    target.find('.guiderer-resource').load(function() {
                         alert(1);
 //                        _guiderer.init(el);
                         _guiderer.init(target);
