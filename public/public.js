@@ -22,7 +22,6 @@ if (!window._guiderer) {
                 day = 0;
             }
 
-//            alert(target);
             target = $(target);
             if (!target.hasClass('guiderer')) {
                 target = target.parents('.guiderer');
@@ -122,12 +121,5 @@ if (!window._guiderer) {
             });
         }
     };
-
-    // initialize guides
-//    $(document).ready(function() {
-//        $('div.guiderer').each(function() {
-//            _guiderer.init($(this));
-//        });
-//    });
 }
 

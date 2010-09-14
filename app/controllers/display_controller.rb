@@ -45,6 +45,7 @@ class DisplayController < ApplicationController
       tip.tip.view_count += 1;
       tip.tip.save;
     end
+    @tips.sort_by! {|sp| sp.condition.id}
     @calendar.view_count += 1;
     @calendar.save
 
