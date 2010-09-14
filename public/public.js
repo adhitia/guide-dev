@@ -34,7 +34,6 @@ if (!window._guiderer) {
             var style = target.attr('guide_style');
             var server = target.attr('server');
             if (!id || !style || !server) {
-                alert(server);
                 throw "Guide id or style or server isn't set.";
             }
 
