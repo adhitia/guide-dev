@@ -13,6 +13,19 @@
 
     <p>Name of establishment or attraction eg: Renzos Pizza, Eiffel Tower, Limelight Club</p>
 
+    <p>
+      For some ideas on <b><%= h params[:calendar_name_location] %></b>, you can visit
+      <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= h params[:location_name] %>&fulltext=Search">
+        WikiTravel
+      </a>
+      or
+      <a href="http://www.tripadvisor.com/Search?q=<%= h params[:location_name] %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
+        TripAdvisor
+      </a>
+    </p>
+
+
+
     <table border="1" cellpadding="10" cellspacing="0" style="width:100%;background-color:#547085;">
       <tbody>
       <tr>
