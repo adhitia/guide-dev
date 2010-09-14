@@ -141,7 +141,11 @@ class CalendarsController < ApplicationController
     location = params[:search_location];
     if !location.blank?
       location = location.gsub('%', '\%').gsub('_', '\_')
-      @guides = Calendar.find(:all, :conditions=> ["locations.name like ? and public = ?", "%" + location + "%", true], :include=>"location")
+      @guides = Calendar.find(
+              :all,
+              :conditions=> ["LOWER(locations.name) like ? and public = ?", "%" + location.downcase + "%", true],
+              :include=>"location"
+      )
     else
       @guides = Calendar.find(:all, :conditions => ["public = ?", true], :include => "location")
     end

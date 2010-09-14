@@ -553,7 +553,9 @@ h1 {
     display: table;
 }
 
-
+img.button:hover {
+    cursor: pointer; 
+}
 
 
 
