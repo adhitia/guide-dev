@@ -94,6 +94,21 @@ class ApplicationController < ActionController::Base
     guide
   end
 
+  # check that guide is present
+  def verify_tip id
+    result = Tip.find_by_id(id)
+    if result.nil?
+      if ajax?
+        render :text => "Tip with id [#{id}] isn't found", :status => 404
+      else
+        flash[:error] = "The tip you requested can't be found."
+        render :template => 'common/missing'
+      end
+    end
+
+    result
+  end
+
   def empty?(s)
     return s == nil || s.strip.empty?;
   end
@@ -105,7 +120,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_error(error)
-    puts "regular error"
+#    puts "regular error"
     custom_log_error error
     if ajax?
       render :text => 'Error happened', :status => 500

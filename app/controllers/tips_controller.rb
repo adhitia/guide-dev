@@ -51,8 +51,7 @@ class TipsController < ApplicationController
       
       @errors = flatten @errors
       if !@errors.empty?
-#        puts "!!!!!!!!!!!!!! #{@errors.inspect}"
-        raise ActiveRecord::Rollback
+        raise ActiveRecord::Rollback.new
       end
     end
 
@@ -60,8 +59,11 @@ class TipsController < ApplicationController
   end
 
   def follow_url
-    @calendar = Calendar.find(params[:id])
-    @tip = Tip.find(params[:tip_id])
+    @calendar = verify_guide params[:id]
+    return if @calendar.nil?
+    @tip = verify_tip params[:tip_id]
+    return if @tip.nil?
+
     @tip.click_count += 1;
     @tip.save;
     @calendar.click_count += 1;
@@ -84,7 +86,6 @@ class TipsController < ApplicationController
     occurrence.delete
     occurrence.tip.delete
 
-#    render :text => 'dummy response'
     render :partial => 'tips/no_tip_tile', :locals => {:condition => occurrence.condition, :day => occurrence.weekday}
   end
 

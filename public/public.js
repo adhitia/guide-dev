@@ -52,15 +52,9 @@ if (!window._guiderer) {
                 dataType: 'jsonp',
                 cache: false,
                 success: function(res) {
-//                    var el = $(res);
                     target.html('');
                     target.append(res);
-//                    alert('0 ' + target.find('.guiderer-resource').length);
-//                    target.find('.guiderer-resource').load(function() {
-//                        alert(1);
-//                        _guiderer.init(el);
-                        _guiderer.init(target);
-//                    });
+                    _guiderer.init(target);
                 },
                 error: function(r, s, e) {
                     target.html('error has occurred');
