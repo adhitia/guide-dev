@@ -45,7 +45,6 @@ class WeatherMan
     api_url = weather_url(options)
 
     response = self.class.fetch_response(api_url)
-    puts "*******************\n#{response}\n***********!!!\n"
     WeatherManResponse.new(response, api_url)
   end
 
@@ -99,6 +98,7 @@ class WeatherMan
     # Fetch Response from the api
     def self.fetch_response(api_url)
       xml_data = Net::HTTP.get_response(URI.parse(api_url)).body
+      puts "*******************\n#{xml_data}\n***********!!!\n"
       response = XmlSimple.xml_in(xml_data)
 
       # Check if a response was returned at all
