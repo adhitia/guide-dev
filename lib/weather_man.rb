@@ -55,12 +55,12 @@ class WeatherMan
 
     response = fetch_response(search_url(:where => where))
 
-    # response processing fixed by Nikita Rybak
     raise "no response came from weather.com" if response.nil?
     response = response['search'] unless response['search'].nil?
     raise "no response came from weather.com" if response['loc'].nil?
 
-    response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['__content__'])}
+#    response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['__content__'])}
+    response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['content'])}
   end
 
   protected
@@ -98,8 +98,12 @@ class WeatherMan
     # Fetch Response from the api
     def self.fetch_response(api_url)
       xml_data = Net::HTTP.get_response(URI.parse(api_url)).body
-      puts "*******************\n#{xml_data}\n***********!!!\n"
-      response = XmlSimple.xml_in(xml_data)
+#      puts "!!!!!!!!! #{XmlSimple.DEF_FORCE_ARRAY}"
+#      XmlSimple.DEF_FORCE_ARRAY = true
+#      XmlSimple.new.handle_options
+#      puts "*******************\n#{xml_data}\n***********!!!\n"
+#      response = XmlSimple.xml_in(xml_data, {'ForceArray' => true})
+      response = XmlSimple.new.xml_in(xml_data, {'forcearray' => false})
 
       # Check if a response was returned at all
       raise(WeatherMan::NoResponseError, "WeatherMan Error: No Response.") unless response
