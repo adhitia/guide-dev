@@ -4,5 +4,5 @@ oauth2
 rails --version 2.3.5
 aws-s3
 exceptional
-prawn --source gems.github.com --pre 
+prawn --source gems.github.com 
 
