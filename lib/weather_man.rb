@@ -45,6 +45,7 @@ class WeatherMan
     api_url = weather_url(options)
 
     response = self.class.fetch_response(api_url)
+    puts "*******************\n#{response}\n***********!!!\n"
     WeatherManResponse.new(response, api_url)
   end
 
