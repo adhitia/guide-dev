@@ -5,15 +5,12 @@ require 'calendars_helper'
 class DisplayController < ApplicationController
   layout nil
 
-  after_filter :jsonp #, :except => :public
-
-
-#  def public
-#    render :file => 'app/views/display/public.js.erb'
-#  end
+  after_filter :jsonp
 
 
   def display
+    response.headers['Cache-Control'] = 'public, max-age=300'
+
     @calendar = Calendar.find params[:id]
     @weekdays = Weekday.all
     @day = params[:day]
@@ -116,8 +113,6 @@ class DisplayController < ApplicationController
       forecast.save
     end
 
-#    puts "!!!!!!!!!!!!! #{forecast.data[0].date}"
-#    puts "!!!!!!!!!!!!! #{forecast.data[0].date.class}"
     if days == :all
       forecast.data[start, forecast.data.length - start]
     else
@@ -129,19 +124,11 @@ class DisplayController < ApplicationController
   
 
   def get_forecast_weather_dot_com(location_code)
-    WeatherMan.partner_id = '1180784909'
-    WeatherMan.license_key = '0e1b5b7c95d8cdd8'
     days_fetch = 3;
 
     location = WeatherMan.new(location_code)
     weather = location.fetch(:days => days_fetch + 1, :unit => 'm') # , :current_conditions => true
     
-#    puts "******************* #{weather.local_time}"
-#    d = weather.forecast[0].date
-#    puts "******************* #{d.to_s}"
-#    puts "******************* #{Date.parse d.to_s}"
-#    puts "******************* #{weather.forecast[1].date.class}"
-#    puts "******************* #{weather.forecast.length}"
     result = Array.new
     for day in 0 .. weather.forecast.length - 1
       forecast = weather.forecast[day]

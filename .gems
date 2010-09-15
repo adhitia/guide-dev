@@ -1,8 +1,8 @@
 thoughtbot-paperclip --source gems.github.com
 oauth2
-jdpace-weatherman --source gems.github.com
+#jdpace-weatherman --source gems.github.com
 rails --version 2.3.5
 aws-s3
 exceptional
-
+prawn --source gems.github.com --pre 
 

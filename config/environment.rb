@@ -9,6 +9,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   require 'active_record'
+  require 'weather_man'
+
 #  config.action_controller.consider_all_requests_local = true
 
   # Settings in config/environments/* take precedence over those specified here.
@@ -20,6 +22,7 @@ Rails::Initializer.run do |config|
 
   config.gem "aws-s3", :lib => "aws/s3"
   config.gem "thoughtbot-paperclip", :lib => 'paperclip', :source =>  'http://gems.github.com'
+  config.gem "prawn", :source =>  'http://gems.github.com'
 
 #  config.gem "factory_girl"
 
@@ -44,23 +47,8 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 
   config.gem 'oauth2'
-
   config.gem 'exceptional'
 
-
-#  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-#    if html_tag.start_with? "<label"
-#      "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe!
-#    else
-#      if instance.error_message.kind_of?(Array)
-#        %(<span class='fieldWithErrors'>#{html_tag}</span>
-#        <span class="validation-error">&nbsp;#{instance.error_message.join(',')}</span>)
-#      else
-#        %(<span class='fieldWithErrors'>#{html_tag}</span>
-#        <span class="validation-error">&nbsp;#{instance.error_message}</span>)
-#      end
-#    end
-#  end
 
   class ActiveRecord::Base
     def errors_as_hash
@@ -71,4 +59,8 @@ Rails::Initializer.run do |config|
       result
     end
   end
+
+
+  WeatherMan.partner_id = '1180784909'
+  WeatherMan.license_key = '0e1b5b7c95d8cdd8'
 end

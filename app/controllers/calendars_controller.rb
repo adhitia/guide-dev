@@ -93,50 +93,7 @@ class CalendarsController < ApplicationController
 
     render :text => 'dummy response'
   end
-
-#  def advertise_choose
-#    @calendar = Calendar.find(params[:id])
-#    @ads = Advertisement.find_all_by_calendar_id params[:id]
-#    puts @ads.length
-#    @weekdays = Weekday.all
-#    @conditions = Condition.all
-#  end
-#
-#  def advertise
-#    @calendar = Calendar.find(params[:id])
-#    Condition.all.each do |condition|
-#      p = params["condition_" + condition.id.to_s];
-#      puts p
-#      if p != nil
-#        Weekday.all.each do |day|
-#          if (p.index('all') || p.index(day.id.to_s))
-#            ad = Advertisement.new
-#            ad.weekday = day;
-#            ad.condition = condition;
-#            ad.calendar = @calendar;
-#            ad.user = @current_user;
-#            ad.views_total = 0;
-#            ad.views_paid = 1000;
-#            if !ad.save
-#              respond_to do |format|
-#                flash[:notice] = 'Unable to book ads.'
-#                format.html { render :action => "advertise_choose" }
-#              end
-#              return
-#            end
-#          end
-#        end
-#      end
-#    end
-#  end
-#
-#  def ads
-#    @calendar = Calendar.find(params[:id])
-#    @weekdays = Weekday.all
-#    @conditions = Condition.all
-#    @ads = Advertisement.find_all_by_calendar_id_and_user_id params[:id], @current_user.id
-#  end
-
+  
   def search
     location = params[:search_location];
     if !location.blank?
