@@ -19,8 +19,6 @@ class DisplayController < ApplicationController
     else
       @day = @day.to_i
     end
-#    start_date = Date.today + @day
-#    @dow = Weekday.find(start_date.cwday);
 
 
     # protect ourselves from bad indexes

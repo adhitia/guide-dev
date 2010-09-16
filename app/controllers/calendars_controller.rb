@@ -21,7 +21,6 @@ class CalendarsController < ApplicationController
   end
 
   def edit_day
-    @ajax = true
     return unless authorize_guide params[:id]
 
     @calendar = Calendar.find(params[:id])
@@ -29,11 +28,22 @@ class CalendarsController < ApplicationController
     @weekdays = Weekday.all
     @conditions = Condition.all
 
+#    @tips = @calendar.show_places.
+#            reject { |t| t.weekday.id != @edit_for.id }
+#    @conditions.each do |c|
+#      if !@tips.detect {|t| t.condition.id == c.id}
+#        @tips.push ShowPlace.new
+#      end
+#    end
+#            sort_by { |t| t.condition.id}
+
+
+
+#    render :partial => 'edit_tab'
     render :partial => 'edit_day'
   end
 
   def edit_condition
-    @ajax = true
     return unless authorize_guide params[:id]
 
     @calendar = Calendar.find(params[:id])

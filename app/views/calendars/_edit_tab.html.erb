@@ -2,7 +2,7 @@
 
     <div class="edit-tips-batch">
 
-      <% @weekdays.each do |day| %>
+      <% @tips.each do |tip| %>
           <% place = @calendar.show_places.detect { |t| t.condition.id == @edit_for.id and t.weekday.id == day.id } %>
 
           <div>

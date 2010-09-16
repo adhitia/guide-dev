@@ -1,3 +1,7 @@
+# slightly modified version of jdpace's weatherman gem
+# had to modify because idiots at Amazon monkeypatched xml-simple gem:
+# http://rubyforge.org/tracker/index.php?func=detail&aid=28569&group_id=2409&atid=9356
+
 require 'net/http'
 require 'xmlsimple'
 require 'weather_man_response'
@@ -98,11 +102,6 @@ class WeatherMan
     # Fetch Response from the api
     def self.fetch_response(api_url)
       xml_data = Net::HTTP.get_response(URI.parse(api_url)).body
-#      puts "!!!!!!!!! #{XmlSimple.DEF_FORCE_ARRAY}"
-#      XmlSimple.DEF_FORCE_ARRAY = true
-#      XmlSimple.new.handle_options
-#      puts "*******************\n#{xml_data}\n***********!!!\n"
-#      response = XmlSimple.xml_in(xml_data, {'ForceArray' => true})
       response = XmlSimple.new.xml_in(xml_data, {'forcearray' => false})
 
       # Check if a response was returned at all

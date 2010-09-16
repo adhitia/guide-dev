@@ -6,7 +6,6 @@ class WeatherManResponse
   attr_reader :current_conditions, :forecast, :api_url, :unit_temperature, :unit_distance, :unit_speed, :unit_pressure, :links, :local_time
 
   def initialize(xml, url = nil)
-    puts "***!!!!!!!!!!!!!!!!!\n#{xml.inspect}\n***********!!!\n"
     xml = xml['weather'] unless xml['weather'].nil?
     @current_conditions = xml['cc'] ? build_current_conditions(xml['cc']) : nil
     @forecast = xml['dayf'] ? build_forecast(xml['dayf']['day']) : nil
