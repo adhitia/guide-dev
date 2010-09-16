@@ -1,6 +1,3 @@
-<% tip = place.tip %>
-
-
 <div class="tip-show">
   <div class="tip-name"><%= h tip.name %></div>
 
@@ -26,7 +23,7 @@
 
         <% if !tip.url.blank? %>
           website:
-          <a href="/guides/<%= place.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+          <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
             <%= h shorten(tip.url, 35) %>
           </a>
         <% end %>

@@ -26,8 +26,6 @@ class CalendarsControllerTest < ActionController::TestCase
   end
 
   test "create guide" do
-#    puts "!!!!!!!!! #{assigns}"
-#    assigns["errors"] = {}
     get :create, {:calendar_name_location => 'Rio', :calendar_name_target => 'kids',
                    :location_code => 'BRXX0201', :location_name => 'Rio de Janeiro, Brazil'}, {:id => 1}
     assert_template :new_overview

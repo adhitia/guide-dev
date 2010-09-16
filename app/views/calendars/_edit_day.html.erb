@@ -3,20 +3,20 @@
     <div class="edit-tips-batch">
 
       <% @conditions.each do |condition| %>
-          <% place = @calendar.show_places.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id } %>
+          <% tip = @calendar.tips.detect { |t| t.condition.id == condition.id and t.weekday.id == @edit_for.id } %>
 
           <div>
 
-            <% if place != nil then %>
+            <% if tip != nil then %>
                 <h2 class="tip-tab">
                   <%= condition.full_name %>
                   <span class="accordion-header-right">
-                    <%= h place.tip.name %>
+                    <%= h tip.name %>
                   </span>
                 </h2>
 
                 <div class="tip-edit">
-                  <%= render :partial => 'tips/edit', :locals => {:place => place} %>
+                  <%= render :partial => 'tips/edit', :locals => {:tip => tip} %>
                 </div>
             <% else %>
                 <h2 class="no-tip-tab">

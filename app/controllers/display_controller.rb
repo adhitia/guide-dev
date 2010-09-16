@@ -35,11 +35,11 @@ class DisplayController < ApplicationController
     @dow = Weekday.find(@weather_forecast.date.cwday);
     @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
 
-    @tips = @calendar.show_places.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
+    @tips = @calendar.tips.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
     @tips = @tips.sort_by {|sp| sp.condition.id }
     @tips.each do |tip|
-      tip.tip.view_count += 1;
-      tip.tip.save;
+      tip.view_count += 1;
+      tip.save;
     end
     @calendar.view_count += 1;
     @calendar.save

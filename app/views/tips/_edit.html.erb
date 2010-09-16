@@ -1,7 +1,6 @@
-<% tip = place.tip %>
 
 
-<div  id="tips_<%= place.id %>" class="edit-tip-root" form_prefix="tips[<%= tip.id %>]" city="<%= place.calendar.location.name %>">
+<div  id="tips_<%= tip.id %>" class="edit-tip-root" form_prefix="tips[<%= tip.id %>]" city="<%= tip.calendar.location.name %>">
 
 
 <% fields_for "tips", tip, :index => tip.id do |tip_form| %>
@@ -43,20 +42,20 @@
     <div class="upload_image">
       <ul>
         <% if tip.image.exists? -%>
-            <li><a href="#tip-<%=place.id%>-current-image"><span>current image</span></a></li>
+            <li><a href="#tip-<%=tip.id%>-current-image"><span>current image</span></a></li>
         <% end -%>
-        <li><a href="#tip-<%=place.id%>-upload-google"><span>google suggestions</span></a></li>
-        <li><a href="#tip-<%=place.id%>-upload-drive"><span>upload image</span></a></li>
+        <li><a href="#tip-<%=tip.id%>-upload-google"><span>google suggestions</span></a></li>
+        <li><a href="#tip-<%=tip.id%>-upload-drive"><span>upload image</span></a></li>
       </ul>
       <% if tip.image.exists? -%>
-          <div id="tip-<%=place.id%>-current-image" style="padding:10px;">
+          <div id="tip-<%=tip.id%>-current-image" style="padding:10px;">
               <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url %>
           </div>
       <% end -%>
-      <div id="tip-<%=place.id%>-upload-google" style="padding:10px;">
+      <div id="tip-<%=tip.id%>-upload-google" style="padding:10px;">
         <div class="google-image-choices"></div>
       </div>
-      <div id="tip-<%=place.id%>-upload-drive" style="padding:10px;">
+      <div id="tip-<%=tip.id%>-upload-drive" style="padding:10px;">
         <%= tip_form.label :image %><br/>
         <%= tip_form.file_field :image %>
       </div>

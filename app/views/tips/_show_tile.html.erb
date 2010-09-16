@@ -1,7 +1,6 @@
-<% tip = place.tip %>
-<% calendar = place.calendar %>
+<% calendar = tip.calendar %>
 
-<div id="tip_<%=place.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= place.id %>" calendar_id="<%= calendar.id %>"
+<div id="tip_<%=tip.id%>" class="tip-tile" tip_id="<%= tip.id %>" place_id="<%= tip.id %>" calendar_id="<%= calendar.id %>"
 >
 
 
@@ -16,15 +15,15 @@
 
       <!--edit tip in overlay-->
       <!--link goes here-->
-      <a class="edit-tip icon-small" rel="#tip_<%=place.id%> .edit-tip-overlay" href="/tips/<%=place.id%>/edit" title="edit" ></a>
+      <a class="edit-tip icon-small" rel="#tip_<%=tip.id%> .edit-tip-overlay" href="/tips/<%=tip.id%>/edit" title="edit" ></a>
 
       <!--content goes here, do not touch-->
       <div class="edit-tip-overlay">
 
-        <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{place.id}") do %>
+        <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{tip.id}") do %>
         <div class="content"></div>
         <div align="center">
-          <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=place.id%>', <%=place.calendar.id%>);">
+          <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=tip.id%>', <%=tip.calendar.id%>);">
             save
           </button>
         </div>
@@ -34,7 +33,7 @@
 
       <!--view full tip-->
       <!--link here-->
-      <a class="view-tip icon-small" title="view" rel="#tip_<%=place.id%> .full-tip-overlay" href="/tips/<%=place.id%>"></a>
+      <a class="view-tip icon-small" title="view" rel="#tip_<%=tip.id%> .full-tip-overlay" href="/tips/<%=tip.id%>"></a>
       <div class="full-tip-overlay">
         <!--contents here-->
         <div class="content"></div>

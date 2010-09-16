@@ -150,20 +150,18 @@ class CalendarsController < ApplicationController
             tip = Tip.new
             tip.name = name
             tip.author_id = @current_user.id
+
+            tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location => @calendar.location, :tip => tip
+            tip.condition_id = c.id
+            tip.weekday_id = day.id
+            tip.calendar_id = @calendar.id
+
             if tip.invalid?
               @errors[param_name] = tip.errors.on :name
               next
             end
 
-            tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location => @calendar.location, :tip => tip
             tip.save
-
-            where = ShowPlace.new
-            where.condition = c
-            where.weekday = day
-            where.calendar = @calendar
-            where.tip = tip
-            where.save
           end
         end
       end

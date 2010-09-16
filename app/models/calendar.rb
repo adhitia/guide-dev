@@ -1,8 +1,8 @@
 class Calendar < ActiveRecord::Base
-  has_many :show_places
+  has_many :tips
   belongs_to :user
   belongs_to :location
-  accepts_nested_attributes_for :show_places
+  accepts_nested_attributes_for :tips
   accepts_nested_attributes_for :location
 
   validates_presence_of :location_id
@@ -32,10 +32,5 @@ class Calendar < ActiveRecord::Base
     result[:calendar_name_target] = errors.on(:name_target) if !errors.on(:name_target).blank?
     result[:location_name] = errors.on(:location_id) if !errors.on(:location_id).blank?
     result
-#    {
-#            :calendar_name_location => errors.on(:name_location),
-#            :calendar_name_target => errors.on(:name_target),
-#            :location_name => errors.on(:location_id)
-#    }
   end
 end

@@ -4,25 +4,6 @@ require 'uri'
 class UtilController < ApplicationController
   layout nil
 
-#  def check_location
-#    q = params[:q];
-#    if q == nil
-#      q = params[:term]
-#    end
-#    if q == nil || q == ''
-#      render :text => ''
-#      return
-#    end
-#
-#    result = "";
-#    WeatherMan.search(q).each do |l|
-#      result += "\n" + l.name + "|" + l.id
-#      puts "found #{l.name}"
-#    end
-#
-#    render :text => result
-#  end
-
   def check_location
     @ajax = true
 

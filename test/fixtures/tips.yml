@@ -5,6 +5,9 @@ tip1:
   name: 'beach'
   description: 'place near the see'
   author_id: 1
+  condition_id: 1
+  weekday_id: 2
+  calendar_id: 1
 
 tip2:
   id: 2
@@ -13,5 +16,8 @@ tip2:
   url: 'go-museum.com'
   phone: 'call-museum'
   author_id: 1
-  
+  condition_id: 2
+  weekday_id: 2
+  calendar_id: 1
+
 

@@ -4,15 +4,19 @@ class Tip < ActiveRecord::Base
   attr_accessor :image_url
 
   has_one :address
-  has_many :show_places
+  belongs_to :calendar
+  belongs_to :condition
+  belongs_to :weekday
+
 
   # include Paperclip
   has_attached_file :image, :styles => { :medium => "200x200>", :thumb => "100x100#" , :small => "100x100>",
-                                          :square => "200x200#" , :original => "400x400>" }, # override 'original' style
+                                          :square => "200x200#"},
+                    # override 'original' style by    , :original => "400x400>"
+
                     :storage => :s3,
                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
                     :path => "/:class/:attachment/:id/:style.:extension",
-#                    :bucket => 'guiderer',
                     :default_style => :medium,
                     :default_url => "#{WEB_ROOT}/images/tip_missing.gif"
   before_validation :download_remote_image, :if => :image_url_provided?
@@ -20,7 +24,7 @@ class Tip < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
 
-  validates_presence_of :author_id
+  validates_presence_of :author_id, :condition_id, :weekday_id, :calendar_id
   validates_length_of :name, :in => 1..25,
                       :too_long => "{{count}} characters max",
                       :too_short => "required field"

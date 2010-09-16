@@ -12,18 +12,18 @@ class TipsController < ApplicationController
     @tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location_id => @calendar.location_id,
                                :tip_id => @tip.id
 
-    @place = ShowPlace.new;
-    @place.condition_id = params[:condition_id]
-    @place.weekday_id = params[:weekday_id]
-    @place.calendar = @calendar
-    @place.tip = @tip
+#    @place = ShowPlace.new;
+    @tip.condition_id = params[:condition_id]
+    @tip.weekday_id = params[:weekday_id]
+    @tip.calendar = @calendar
+#    @place.tip = @tip
 
-    Tip.transaction do
+#    Tip.transaction do
       @tip.save
-      @place.save
-    end
+#      @place.save
+#    end
 
-    render :partial => "tips/#{params[:result]}", :locals => {:place => @place, :label => params[:label]}
+    render :partial => "tips/#{params[:result]}", :locals => {:tip => @tip}
   end
 
   def update
@@ -79,66 +79,65 @@ class TipsController < ApplicationController
   # removes binding between tip and calendar
   # for now, also removes tip
   def unbind
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    return unless authorize_guide occurrence.calendar_id
+    tip = Tip.find(params[:occurrence_id])
+    return unless authorize_guide tip.calendar_id
     @full_access = true
 
-    occurrence.delete
-    occurrence.tip.delete
+    tip.delete
 
-    render :partial => 'tips/no_tip_tile', :locals => {:condition => occurrence.condition, :day => occurrence.weekday}
+    render :partial => 'tips/no_tip_tile', :locals => {:condition => tip.condition, :day => tip.weekday}
   end
 
   # moves tip to a different place
   def move
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    return unless authorize_guide occurrence.calendar_id
+    tip = Tip.find(params[:occurrence_id])
+    return unless authorize_guide tip.calendar_id
 
-    condition = Condition.find(params[:condition_id])
-    weekday = Weekday.find(params[:weekday_id])
-    occurrence.condition = condition
-    occurrence.weekday = weekday
-    occurrence.save
+#    tip.condition = Condition.find(params[:condition_id])
+#    tip.weekday = Weekday.find(params[:weekday_id])
+    tip.condition_id = params[:condition_id]
+    tip.weekday_id = params[:weekday_id]
+    tip.save
 
     render :text => 'dummy response'
   end
 
   # switches two tips in one calendar
   def switch
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    return unless authorize_guide occurrence.calendar_id
+    tip = Tip.find(params[:occurrence_id])
+    return unless authorize_guide tip.calendar_id
 
-    target = ShowPlace.find(params[:target_id])
+    target = Tip.find(params[:target_id])
 
     # switch weekday and condition
-    weekday = occurrence.weekday
-    condition = occurrence.condition
-    occurrence.weekday = target.weekday
-    occurrence.condition = target.condition
-    target.weekday = weekday
-    target.condition = condition
+    weekday = tip.weekday_id
+    condition = tip.condition_id
+    tip.weekday_id = target.weekday_id
+    tip.condition_id = target.condition_id
+    target.weekday_id = weekday
+    target.condition_id = condition
 
-    occurrence.save
+    tip.save
     target.save
 
     render :text => 'dummy response'
   end
 
   def show
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    render :partial => 'tips/show', :locals => {:place => occurrence}
+    tip = Tip.find(params[:occurrence_id])
+    render :partial => 'tips/show', :locals => {:tip => tip}
   end
 
   def edit
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    return unless authorize_guide occurrence.calendar_id
-    render :partial => 'tips/edit', :locals => {:place => occurrence}
+    tip = Tip.find(params[:occurrence_id])
+    return unless authorize_guide tip.calendar_id
+    render :partial => 'tips/edit', :locals => {:tip => tip}
   end
 
   def tile
-    occurrence = ShowPlace.find(params[:occurrence_id])
-    @full_access = @current_user && (occurrence.calendar.user.id == @current_user.id);
-    render :partial => 'tips/show_tile', :locals => {:place => occurrence}
+    tip = Tip.find(params[:occurrence_id])
+    @full_access = @current_user && (tip.calendar.user.id == @current_user.id);
+    render :partial => 'tips/show_tile', :locals => {:tip => tip}
   end
 
 end

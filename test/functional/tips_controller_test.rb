@@ -96,10 +96,7 @@ class TipsControllerTest < ActionController::TestCase
   test "unbind" do
     get :unbind, {:occurrence_id => 1}, {:id => 1}
     assert_response :success
-    assert_equal 1, Calendar.find(1).show_places.size
-    assert_raise(ActiveRecord::RecordNotFound) {
-      ShowPlace.find(1)
-    }
+    assert_equal 1, Calendar.find(1).tips.size
     assert_raise(ActiveRecord::RecordNotFound) {
       Tip.find(1)
     }
@@ -118,9 +115,9 @@ class TipsControllerTest < ActionController::TestCase
   test "move" do
     get :move, {:occurrence_id => 1, :condition_id => 4, :weekday_id => 3}, {:id => 1}
     assert_response :success
-    assert_equal 2, Calendar.find(1).show_places.size
-    assert_equal 4, ShowPlace.find(1).condition_id
-    assert_equal 3, ShowPlace.find(1).weekday_id
+    assert_equal 2, Calendar.find(1).tips.size
+    assert_equal 4, Tip.find(1).condition_id
+    assert_equal 3, Tip.find(1).weekday_id
   end
 
   test "move - no user" do
@@ -136,11 +133,11 @@ class TipsControllerTest < ActionController::TestCase
   test "switch" do
     get :switch, {:occurrence_id => 1, :target_id => 2}, {:id => 1}
     assert_response :success
-    assert_equal 2, Calendar.find(1).show_places.size
-    assert_equal 2, ShowPlace.find(1).condition_id
-    assert_equal 2, ShowPlace.find(1).weekday_id
-    assert_equal 1, ShowPlace.find(2).condition_id
-    assert_equal 2, ShowPlace.find(2).weekday_id
+    assert_equal 2, Calendar.find(1).tips.size
+    assert_equal 2, Tip.find(1).condition_id
+    assert_equal 2, Tip.find(1).weekday_id
+    assert_equal 1, Tip.find(2).condition_id
+    assert_equal 2, Tip.find(2).weekday_id
   end
 
   test "switch - no user" do
