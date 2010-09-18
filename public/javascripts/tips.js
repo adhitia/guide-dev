@@ -1,4 +1,18 @@
 if (!window.tips) var tips = {
+    saveTab: function(formId, after) {
+//        var root = $('#' + formId);
+//
+//        var toDelete = [];
+//        root.find('div.edit-tip-root').each(function() {
+//            var el = $(this);
+//            if (!el.hasClass('new-tip-root')) {
+//                var name = el.find('input.tip_name').val();
+//            }
+//        });
+
+        tips.save(formId, null, after);
+    },
+
     save: function(formId, calendarId, after) {
         common.clearValidationErrors();
         common.setLoadingGlobal();
@@ -20,15 +34,16 @@ if (!window.tips) var tips = {
         });
     },
 
-    save_overlay: function(formId, calendarId) {
+    save_overlay: function(current) {
+        var form = $(current).parents('form');
+
         common.clearValidationErrors();
         common.setLoadingGlobal();
-        $('#' + formId).ajaxSubmit({
+        form.ajaxSubmit({
             type: 'POST',
             cache: false,
             iframe: true,
             dataType: "json",
-//            async: false,
             success: function(r) {
                 common.stopLoadingGlobal();
 
@@ -36,8 +51,12 @@ if (!window.tips) var tips = {
                     return;
                 }
 
-                var tile = $('#' + formId).parents('.tip-tile');
-                tile.find('.edit-tip').data('overlay').close();
+                var tile = form.parents('.tip-tile,.no-tip-tile');
+                tile.find('.edit-tip,.create-tip').data('overlay').close();
+                if (r.new_tip_id != null) {
+//                    alert(r.new_tip_id);
+                    tile.attr('place_id', r.new_tip_id);
+                }
                 calendar.updateTile(tile);
             }
         });
@@ -203,7 +222,7 @@ if (!window.tips) var tips = {
 
             },
             error: function(a, b, c) {
-                alert('error ' + a + ' | ' + b + ' | ' + c);
+//                alert('error ' + a + ' | ' + b + ' | ' + c);
             }
         });
 //        alert(23);
@@ -227,20 +246,54 @@ if (!window.tips) var tips = {
     },
 
     init: function(root) {
+        root = $(root);
+
         // image suggestions
         $(root).find('.upload_image').tabs();
         $(root).find('.tip_name').blur(function() {
-            var row = $(this).parents('.edit-tip-root')[0];
-            var imageSearch = new google.search.ImageSearch();
-            imageSearch.setSearchCompleteCallback(this, tips.drawSearchResults, [imageSearch, row]);
-            imageSearch.execute($(this).val() + ' ' + $(row).attr('city'));
+            if (common.trim($(this).val()) != '') {
+                var row = $(this).parents('.edit-tip-root')[0];
+                var imageSearch = new google.search.ImageSearch();
+                imageSearch.setSearchCompleteCallback(this, tips.drawSearchResults, [imageSearch, row]);
+                imageSearch.execute($(this).val() + ' ' + $(row).attr('city'));
+            }
         });
         $(root).find('.tip_name').blur();
 
 
         common.imageHelper(root);
 
+        // disable tip inputs if name isn't present
+        // not used currently
+        /*
+        $(root).find('div.edit-tip-root').each(function() {
+            var current = $(this);
+            var nameInput = current.find('input.tip_name');
 
+            function set_disabled(val) {
+                nameInput.toggleClass('disabled-tip');
+                current.find('input,textarea').each(function() {
+                    var input = $(this);
+                    if (!input.hasClass('tip_name')) {
+                        input.attr('disabled', val);
+                    }
+                });
+            }
+            function toggle() {
+                if (nameInput.hasClass('disabled-tip')) {
+                    if (common.trim(nameInput.val()) != '') {
+                        set_disabled(false);
+                    }
+                } else {
+                    if (common.trim(nameInput.val()) == '') {
+                        set_disabled(true);
+                    }
+                }
+            }
+            nameInput.keyup(toggle);
+            toggle();
+        });
+*/
 
 
 
@@ -248,7 +301,7 @@ if (!window.tips) var tips = {
         if ($('#view_tips').length > 0) {
 
             // remove tip handler
-            $(root).find('.tip-tile .delete-tip').click(function() {
+            root.find('div.tip-tile a.delete-tip').click(function() {
                 var root = $(this).parents('.tip-tile');
                 var place_id = root.attr('place_id');
                 var calendar_id = root.attr('calendar_id');
@@ -269,13 +322,13 @@ if (!window.tips) var tips = {
 
             // drag'n'drop
             // workaround for the case when editing is not accessible
-            if ($('.move-tip').length > 0) {
-                $(root).find('.tip-tile').draggable({
-                    handle: '.move-tip',
+            if (root.find('a.move-tip').length > 0) {
+                root.find('div.tip-tile').draggable({
+                    handle: 'a.move-tip',
                     revert: 'invalid'
                 });
             }
-            $(root).find('.tip-tile').droppable({
+            root.find('div.tip-tile').droppable({
                 hoverClass: 'droppable-active',
                 drop: function(event, ui) {
                     var container_from = ui.draggable.parent();
@@ -301,8 +354,7 @@ if (!window.tips) var tips = {
                     });
                 }
             });
-//            alert('! ' + $(root).find('.tip-tile').length);
-            $(root).find('.no-tip-tile').droppable({
+            root.find('div.no-tip-tile').droppable({
                 hoverClass: 'droppable-active',
                 drop: function(event, ui) {
                     var container_from = ui.draggable.parent();
@@ -330,7 +382,7 @@ if (!window.tips) var tips = {
                 }
             });
 
-            $(root).find('.view-tip').overlay({
+            $(root).find('a.view-tip').overlay({
 //                effect: 'apple',
                 closeOnClick: true,
                 closeOnEsc: true,
@@ -376,7 +428,7 @@ if (!window.tips) var tips = {
 
 
 
-            $(root).find('.edit-tip').overlay({
+            $(root).find('a.edit-tip,a.create-tip').overlay({
                 mask: {
                     color: 'grey',
                     loadSpeed: 200,
@@ -399,6 +451,9 @@ if (!window.tips) var tips = {
                     });
                 }
             });
+
+
+
         }
 
     }

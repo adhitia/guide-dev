@@ -322,7 +322,7 @@ border-radius: 4px;
 	font-size:14px;
 	font-weight:normal;
 	border-bottom:1px solid #ddd;
-	cursor:pointer;
+	/*cursor:pointer;*/
 }
 /* right part of accordion header */
 .edit-tips-batch h2 .accordion-header-right {
@@ -356,6 +356,11 @@ border-radius: 4px;
     padding: 10px;
     overflow: hidden;
     zoom: 1;
+}
+
+.new-tip-root {
+}
+.new-tip-root input {
 }
 
 .edit-tip-root .left-pane {

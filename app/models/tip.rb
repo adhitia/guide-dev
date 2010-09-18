@@ -7,6 +7,7 @@ class Tip < ActiveRecord::Base
   belongs_to :calendar
   belongs_to :condition
   belongs_to :weekday
+  belongs_to :author, :class_name => 'User' 
 
 
   # include Paperclip
@@ -22,10 +23,10 @@ class Tip < ActiveRecord::Base
   before_validation :download_remote_image, :if => :image_url_provided?
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
 
-  accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :address, :allow_destroy => true
 
   validates_presence_of :author_id, :condition_id, :weekday_id, :calendar_id
-  validates_length_of :name, :in => 1..25,
+  validates_length_of :name, :in => 1..25,  # allow no name, denoting no tip
                       :too_long => "{{count}} characters max",
                       :too_short => "required field"
   validates_length_of :url, :phone, :maximum => 255,
@@ -34,6 +35,10 @@ class Tip < ActiveRecord::Base
                       :too_long => "no more than {{count}} characters expected"
 
 
+
+  def image_exists?
+    !self.image_remote_url.blank?
+  end
 
 private
   # to make paperclip load urls

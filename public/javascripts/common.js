@@ -29,7 +29,7 @@ if (!window.common) {
 
     var common = {
         setLocation: function (location) {
-            if (window.location.href.indexOf(location) < 0)
+//            if (window.location.href.indexOf(location) < 0)
                 window.location.replace(location);
         },
 
@@ -95,6 +95,10 @@ if (!window.common) {
             });
         },
 
+        trim: function(s) {
+            return s.replace(/^\s+|\s+$/g, '');
+        },
+
         clearValidationErrors: function() {
             $('.validation-error').html('');
             $('input.invalid,textarea.invalid').removeClass('invalid');
@@ -103,6 +107,7 @@ if (!window.common) {
         validationErrors: function(errors) {
             var errorsFound = false;
             if (errors != null) {
+                var focused = false;
                 for (var key in errors) {
                     var message = errors[key];
                     if (message == null) {
@@ -113,6 +118,10 @@ if (!window.common) {
                     // highlight corresponding input field
                     var searchKey = key.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
                     var e = $('input[name=' + searchKey + '],textarea[name=' + searchKey + ']');
+                    if (!focused) {
+                        e.focus();
+                        focused = true;
+                    }
                     if (e.length != 1) {
                         throw "One input element has to be present for parameter [" + key + "], while " + e.length + " found.";
                     }
@@ -129,6 +138,29 @@ if (!window.common) {
                 }
             }
             return errorsFound;
+        },
+
+
+        init: function(root) {
+            root = $(root);
+            root.find('input.watermark').each(function(i) {
+                $(this).Watermark($(this).attr('title'));
+            });
+
+            root.find('input.text-limit').keyup(function() {
+                var text = $(this).val();
+                var limit = $(this).attr('textLimit');
+                if (text.length > limit) {
+                    text = text.substring(0, limit);
+                    $(this).val(text);
+                }
+            });
+
+            // remove watermarks before form is submitted
+            root.find('form.with-watermark').submit(function (){
+                $.Watermark.HideAll();
+                return true;
+            });
         }
     };
 
@@ -148,24 +180,7 @@ if (!window.common) {
 
 
     $(document).ready(function() {
-        $('input.watermark').each(function(i) {
-            $(this).Watermark($(this).attr('title'));
-        });
-
-        $('input.text-limit').keyup(function() {
-            var text = $(this).val();
-            var limit = $(this).attr('textLimit');
-            if (text.length > limit) {
-                text = text.substring(0, limit);
-                $(this).val(text);
-            }
-        });
-
-        // remove watermarks before form is submitted
-        $('form.with-watermark').submit(function (){
-            $.Watermark.HideAll();
-            return true;
-        });
+        common.init(document);
     });
 }
 

@@ -9,12 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100916054922) do
+ActiveRecord::Schema.define(:version => 20100917035016) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
-    t.float    "lat"
-    t.float    "lng"
+    t.float    "lat",         :default => 0.0
+    t.float    "lng",         :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location_id"

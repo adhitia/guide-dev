@@ -1,8 +1,28 @@
-<div class="no-tip-tile" align="center">
+
+<div class="no-tip-tile" align="center" id="no_tip_<%=condition.id%>_<%=day.id%>">
   <% if @full_access %>
-    <button type="button" onclick="tips.create($(this).parents('.tip-container'), <%=condition.id%>, <%=day.id%>, 'show_tile');">
+
+    <!--<button type="button" onclick="tips.create($(this).parents('.tip-container'), <%=condition.id%>, <%=day.id%>, 'show_tile');">
       create tip
-    </button>
+    </button>-->
+
+      <a class="create-tip" rel="#no_tip_<%=condition.id%>_<%=day.id%> .edit-tip-overlay"
+         href="/guides/<%=@calendar.id%>/tips/new?condition_id=<%=condition.id%>&weekday_id=<%=day.id%>">create tip</a>
+
+
+      <div class="edit-tip-overlay">
+        <% form_tag("/guides/#{@calendar.id}/tips/update", :method => "post") do %>
+        <input type="hidden" name="require_tip" value="true">
+        <div class="content"></div>
+        <div align="center">
+          <button type="button" onclick="tips.save_overlay(this);">
+            save
+          </button>
+        </div>
+        <% end %>
+      </div>
+
+
   <% else %>
     no tip
   <% end %>

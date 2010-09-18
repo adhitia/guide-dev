@@ -30,11 +30,13 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_guide_condition 'guides/:id/edit_condition/:condition_id', :controller => :calendars, :action => :edit_condition
   map.update_tips 'guides/:id/tips/update', :controller => :tips, :action => :update, :conditions => { :method => :post }
   map.create_tip  'guides/:id/tips/create', :controller => :tips, :action => :create, :conditions => { :method => :post }
+  map.create_tip  'guides/:id/tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
   map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
   map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
 #  map.change_access_type 'guides/:id'
 
+#  map.new_tip   'tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
   map.edit_tip  'tips/:occurrence_id/edit', :controller => :tips, :action => :edit, :conditions => { :method => :get }
   map.show_tip  'tips/:occurrence_id', :controller => :tips, :action => :show, :conditions => { :method => :get }
 

@@ -2,7 +2,7 @@
   <div class="tip-name"><%= h tip.name %></div>
 
   <div class="tip-details">
-      <% if tip.image.exists? %>
+      <% if tip.image_exists? %>
           <%= image_tag tip.image.url(:medium), {:align=>"left", :style=>"margin:10px;"} %>
       <% else %>
       <% end %>

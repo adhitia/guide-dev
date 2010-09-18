@@ -21,9 +21,11 @@
       <div class="edit-tip-overlay">
 
         <% form_tag("/guides/#{calendar.id}/tips/update", :method => "post", :id => "edit_tip_form_#{tip.id}") do %>
+        <input type="hidden" name="require_tip" value="true">
         <div class="content"></div>
         <div align="center">
-          <button type="button" onclick="tips.save_overlay('edit_tip_form_<%=tip.id%>', <%=tip.calendar.id%>);">
+          <!--<button type="button" onclick="tips.save_overlay('edit_tip_form_<%=tip.id%>');">-->
+          <button type="button" onclick="tips.save_overlay(this);">
             save
           </button>
         </div>

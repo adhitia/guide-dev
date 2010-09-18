@@ -16,4 +16,9 @@ class Weekday < ActiveRecord::Base
   def last?
     id == 7
   end
+
+  def full_name
+    name
+  end
+
 end

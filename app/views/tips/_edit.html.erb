@@ -1,9 +1,11 @@
 
 
-<div  id="tips_<%= tip.id %>" class="edit-tip-root" form_prefix="tips[<%= tip.id %>]" city="<%= tip.calendar.location.name %>">
+<% form_prefix = tip.id.nil? ? "tips_new[#{tip.condition.id}][#{tip.weekday.id}]" : "tips[#{tip.id}]" %>
+<% current_id = tip.id.nil? ? "tips_new_#{tip.condition.id}_#{tip.weekday.id}" : "tips_#{tip.id}"  %>
+<div class="edit-tip-root <%=tip.id.nil? ? 'new-tip-root' : ''%>" form_prefix="<%= form_prefix %>" city="<%= tip.calendar.location.name %>">
 
 
-<% fields_for "tips", tip, :index => tip.id do |tip_form| %>
+<% fields_for form_prefix, tip do |tip_form| %>
 
 <div class="left-pane">
 
@@ -41,21 +43,21 @@
   <div class="input-row">
     <div class="upload_image">
       <ul>
-        <% if tip.image.exists? -%>
-            <li><a href="#tip-<%=tip.id%>-current-image"><span>current image</span></a></li>
+        <% if tip.image_exists? -%>
+            <li><a href="#<%=current_id%>-current-image"><span>current image</span></a></li>
         <% end -%>
-        <li><a href="#tip-<%=tip.id%>-upload-google"><span>google suggestions</span></a></li>
-        <li><a href="#tip-<%=tip.id%>-upload-drive"><span>upload image</span></a></li>
+        <li><a href="#<%=current_id%>-upload-google"><span>google suggestions</span></a></li>
+        <li><a href="#<%=current_id%>-upload-drive"><span>upload image</span></a></li>
       </ul>
-      <% if tip.image.exists? -%>
-          <div id="tip-<%=tip.id%>-current-image" style="padding:10px;">
+      <% if tip.image_exists? -%>
+          <div id="<%=current_id%>-current-image" style="padding:10px;">
               <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url %>
           </div>
       <% end -%>
-      <div id="tip-<%=tip.id%>-upload-google" style="padding:10px;">
+      <div id="<%=current_id%>-upload-google" style="padding:10px;">
         <div class="google-image-choices"></div>
       </div>
-      <div id="tip-<%=tip.id%>-upload-drive" style="padding:10px;">
+      <div id="<%=current_id%>-upload-drive" style="padding:10px;">
         <%= tip_form.label :image %><br/>
         <%= tip_form.file_field :image %>
       </div>

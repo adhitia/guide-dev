@@ -2,8 +2,7 @@ require 'rubygems'
 require 'weather_man'
 
 class CalendarsController < ApplicationController
-#  before_filter :set_user
-  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
+  before_filter :ban_ie
 
 
   def show
@@ -23,24 +22,24 @@ class CalendarsController < ApplicationController
   def edit_day
     return unless authorize_guide params[:id]
 
-    @calendar = Calendar.find(params[:id])
+    @calendar = Calendar.find params[:id]
     @edit_for = Weekday.find params[:weekday_id]
-    @weekdays = Weekday.all
-    @conditions = Condition.all
 
-#    @tips = @calendar.show_places.
-#            reject { |t| t.weekday.id != @edit_for.id }
-#    @conditions.each do |c|
-#      if !@tips.detect {|t| t.condition.id == c.id}
-#        @tips.push ShowPlace.new
-#      end
-#    end
-#            sort_by { |t| t.condition.id}
+    @tips = @calendar.tips.reject { |t| t.weekday.id != @edit_for.id }
+    Condition.all.each do |c|
+      if !@tips.detect {|t| t.condition.id == c.id}
+        @tips.push Tip.new(
+                :address => Address.new,
+                :calendar => @calendar,
+                :condition => c,
+                :weekday => @edit_for
+        )
+      end
+    end
+    @tips = @tips.sort_by {|t| t.condition.id}
+    @labels = @tips.map {|t| t.condition.full_name }
 
-
-
-#    render :partial => 'edit_tab'
-    render :partial => 'edit_day'
+    render :partial => 'edit_tab'
   end
 
   def edit_condition
@@ -48,10 +47,22 @@ class CalendarsController < ApplicationController
 
     @calendar = Calendar.find(params[:id])
     @edit_for = Condition.find params[:condition_id]
-    @weekdays = Weekday.all
-    @conditions = Condition.all
 
-    render :partial => 'edit_condition'
+    @tips = @calendar.tips.reject { |t| t.condition.id != @edit_for.id }
+    Weekday.all.each do |day|
+      if !@tips.detect {|t| t.weekday.id == day.id}
+        @tips.push Tip.new(
+                :address => Address.new,
+                :calendar => @calendar,
+                :weekday => day,
+                :condition => @edit_for
+        )
+      end
+    end
+    @tips = @tips.sort_by {|t| t.weekday.id}
+    @labels = @tips.map {|t| t.weekday.name }
+
+    render :partial => 'edit_tab'
   end
 
   def create
