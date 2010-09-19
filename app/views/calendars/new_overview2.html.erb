@@ -1,0 +1,107 @@
+<div id="new_guide_overview_page">
+
+  <h1>Tip Matrix: Add your tips for the entire week</h1>
+
+
+  Drag places onto the map. Click to edit.
+  <div id="place-pool">
+    <% @places.each do |place| %>
+        <div class="place-tag">
+          <a title="edit" href="javascript:"><%= h place %></a>
+          <input type="text" style="display:none" value="<%= h place %>" class="text-limit" textLimit="25"
+                 maxlength="25" autocomplete="off">
+        </div>
+    <% end %>
+  </div>
+
+
+
+  <h2> <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
+  <form id="calendar_overview_form" action="<%= create_guide_path %>" method="POST">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+    <input name="step" type="hidden" value="overview">
+
+    <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
+    <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
+    <input type="hidden" name="location_code" value="<%= params[:location_code] %>">
+    <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
+
+
+    <div id="selected-tips">
+      <div class="table-row">
+        <div class="table-cell table-label"></div>
+        <% @weekdays.each do |day| %>
+            <div class="table-cell table-label">
+              <%= day.name %>
+            </div>
+        <% end %>
+      </div>
+      <% @conditions.each do |condition| %>
+          <div class="table-row">
+            <div class="table-cell table-label">
+              <%= condition.full_name %>
+            </div>
+            <% @weekdays.each do |day| %>
+                <div class="table-cell placeholder" condition_id="<%=condition.id%>" weekday_id="<%=day.id%>"></div>
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+
+  </form>
+
+  <div class="button-panel">
+    <a href="javascript:" onclick="$('#calendar_overview_form').submit();" class="button">
+      save and add details &gt;&gt;
+    </a>
+  </div>
+
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#place-pool .place-tag a').click(function() {
+            $(this).hide();
+            $(this).parent().find('input').show().focus();
+        });
+        $('#place-pool .place-tag input').blur(function() {
+            var val = $(this).val();
+            if (common.trim(val) == '') {
+                $(this).parent().remove();
+                return;
+            }
+            $(this).hide();
+            $(this).parent().find('a').text(val).show();
+        });
+
+        //        $('#place-pool .place-tag').draggable();
+        //        $('#place-pool').sortable({
+        //            helper: 'clone'
+        //        });
+        $('#place-pool .place-tag').draggable({
+            revert: 'invalid',
+            helper: 'clone'
+        });
+        $('#place-pool').droppable({
+            accept: ".place-tag",
+            hoverClass: 'droppable-active',
+            drop: function(ev, ui) {
+                var place = $(this);
+                ui.draggable.appendTo(place);
+                ui.draggable.css('left', 0).css('top', 0);
+            }
+        });
+        $('#selected-tips .placeholder').droppable({
+            accept: ".place-tag",
+            hoverClass: 'droppable-active',
+            drop: function(ev, ui) {
+                var place = $(this);
+                ui.draggable.appendTo(place);
+                ui.draggable.css('left', 0).css('top', 0);
+            }
+        });
+        //        $('#place-pool').disableSelection();
+    });
+</script>

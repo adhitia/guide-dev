@@ -71,7 +71,10 @@ class CalendarsController < ApplicationController
     @weekdays = Weekday.all
     @conditions = Condition.all
 
-    if (params[:step] == 'overview')
+    if (params[:step] == 'list-places')
+      create_list
+      return
+    elsif (params[:step] == 'overview')
       create_overview
       return
     end
@@ -85,7 +88,8 @@ class CalendarsController < ApplicationController
 
     params['tip_name'] = Hash.new({})
 
-    render :action => :new_overview
+#    render :action => :new_overview
+    render :action => :new_places
   end
 
 
@@ -184,7 +188,18 @@ class CalendarsController < ApplicationController
         redirect_to :action => :edit, :id => @calendar.id
       end
     end
+  end
 
+
+  def create_list
+    @places = read_places(params['day-places']) + read_places(params['dinner-places']) + read_places(params['night-places'])
+
+    params['tip_name'] = Hash.new({})
+    render :action => :new_overview2
+  end
+
+  def read_places(text)
+    text.scan(/^\s*(\S.*)\s*$/).map {|c| c[0].strip }
   end
 
 
