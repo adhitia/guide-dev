@@ -179,7 +179,7 @@ if (!window.tips) var tips = {
         var lng = $(result).find('.local_result_lng').html();
         var google_url = $(result).data('result_url');
         var phone = $(result).data('result_phone');
-        if (phone.startsWith('(0xx)')) {
+        if (phone != null && phone.startsWith('(0xx)')) {
             phone = phone.substring('(0xx)'.length);
         }
 

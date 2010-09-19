@@ -557,6 +557,7 @@ border-radius: 4px;
 }
 #new-guide-places .places-list {
     font-size:150%;
+    width: 290px;
 }
 
 h1 {
@@ -608,7 +609,7 @@ img.button:hover {
 }
 
 #selected-tips {
-    /*margin: 10px;*/
+    margin: 20px 0;
 }
 #selected-tips .droppable-active {
     background-color: lightblue;
@@ -625,7 +626,9 @@ img.button:hover {
 #selected-tips .placeholder {
     overflow: hidden;
     background-color:#547085;
+    cursor: pointer;
 }
+
 #selected-tips .table-row {
     overflow: hidden;
     white-space: nowrap;

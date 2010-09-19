@@ -2,21 +2,21 @@
 
   <h1>Tip Matrix: Add your tips for the entire week</h1>
 
+  <h2> <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
 
   Drag places onto the map. Click to edit.
   <div id="place-pool">
     <% @places.each do |place| %>
         <div class="place-tag">
           <a title="edit" href="javascript:"><%= h place %></a>
-          <input type="text" style="display:none" value="<%= h place %>" class="text-limit" textLimit="25"
-                 maxlength="25" autocomplete="off">
+          <input type="text" style="display:none" value="<%= h place %>" maxlength="25" autocomplete="off">
         </div>
     <% end %>
   </div>
 
 
 
-  <h2> <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
+
   <form id="calendar_overview_form" action="<%= create_guide_path %>" method="POST">
     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
     <input name="step" type="hidden" value="overview">
@@ -62,28 +62,38 @@
 
 <script>
     $(document).ready(function() {
-        $('#place-pool .place-tag a').click(function() {
-            $(this).hide();
-            $(this).parent().find('input').show().focus();
-        });
-        $('#place-pool .place-tag input').blur(function() {
-            var val = $(this).val();
-            if (common.trim(val) == '') {
-                $(this).parent().remove();
-                return;
+        function initTags(root) {
+            var tags;
+            if (root.hasClass('place-tag')) {
+                tags = root;
+            } else {
+                tags = root.find('.place-tag');
             }
-            $(this).hide();
-            $(this).parent().find('a').text(val).show();
-        });
 
-        //        $('#place-pool .place-tag').draggable();
-        //        $('#place-pool').sortable({
-        //            helper: 'clone'
-        //        });
-        $('#place-pool .place-tag').draggable({
-            revert: 'invalid',
-            helper: 'clone'
-        });
+            // edit tag
+            tags.find('a').click(function() {
+                $(this).hide();
+                $(this).parent().find('input').show().focus();
+            });
+            tags.find('input').blur(function() {
+                var val = $(this).val();
+                if (common.trim(val) == '') {
+                    $(this).parent().remove();
+                    return;
+                }
+                $(this).hide();
+                $(this).parent().find('a').text(val).show();
+            });
+
+            // drag'n'drop
+            tags.draggable({
+                revert: 'invalid',
+                helper: 'clone'
+            });
+        }
+        initTags($('#place-pool'));
+
+
         $('#place-pool').droppable({
             accept: ".place-tag",
             hoverClass: 'droppable-active',
@@ -93,15 +103,40 @@
                 ui.draggable.css('left', 0).css('top', 0);
             }
         });
+
+        function addTag(place, tag) {
+            var condition_id = place.attr('condition_id');
+            var weekday_id = place.attr('weekday_id');
+            if (condition_id != null && weekday_id != null) {
+                tag.find('input').attr('name', 'tip_name[' + condition_id + '][' + weekday_id + ']');
+            }
+            place.append(tag);
+        }
         $('#selected-tips .placeholder').droppable({
             accept: ".place-tag",
             hoverClass: 'droppable-active',
             drop: function(ev, ui) {
                 var place = $(this);
-                ui.draggable.appendTo(place);
+                if (place.find('.place-tag').length > 0) {
+                    // switch places
+                    addTag(ui.draggable.parent(), place.find('.place-tag'));
+//                    place.find('.place-tag').appendTo(ui.draggable.parent());
+                }
+                addTag(place, ui.draggable);
+//                ui.draggable.appendTo(place);
                 ui.draggable.css('left', 0).css('top', 0);
             }
         });
-        //        $('#place-pool').disableSelection();
+        $('#selected-tips .placeholder').click(function() {
+            if (common.trim($(this).html()) != '') {
+                return;
+            }
+            var tag = $('<div></div>').addClass('place-tag');
+            tag.append($('<a></a>').attr('href', 'javascript:').attr('title', 'edit').hide());
+            tag.append($('<input>').attr('type', 'text').attr('maxlength', 25).attr('autocomplete', 'off'));
+            $(this).append(tag);
+            initTags(tag);
+            tag.find('input').focus();
+        });
     });
 </script>

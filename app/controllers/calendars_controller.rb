@@ -158,35 +158,41 @@ class CalendarsController < ApplicationController
 
       @errors = {}
       Condition.all.each do |c|
+        if !params['tip_name'] || !params['tip_name'][c.id.to_s]
+          next
+        end
         Weekday.all.each do |day|
+          if !params['tip_name'][c.id.to_s][day.id.to_s]
+            next
+          end
           name = params['tip_name'][c.id.to_s][day.id.to_s];
           param_name = "tip_name[#{c.id}][#{day.id}]";
-          if !empty?(name)
+#          if !empty?(name)
             tip = Tip.new
             tip.name = name
             tip.author_id = @current_user.id
 
-            tip.address = Address.new :address => '', :lat => 0, :lng => 0, :location => @calendar.location, :tip => tip
+            tip.address = Address.new :address => '', :location => @calendar.location, :tip => tip
             tip.condition_id = c.id
             tip.weekday_id = day.id
             tip.calendar_id = @calendar.id
 
-            if tip.invalid?
-              @errors[param_name] = tip.errors.on :name
-              next
-            end
+#            if tip.invalid?
+#              @errors[param_name] = tip.errors.on :name
+#              next
+#            end
 
             tip.save
-          end
+#          end
         end
       end
 
-      if !@errors.empty?
-        render :action => :new_overview
-        raise ActiveRecord::Rollback
-      else
+#      if !@errors.empty?
+#        render :action => :new_overview
+#        raise ActiveRecord::Rollback
+#      else
         redirect_to :action => :edit, :id => @calendar.id
-      end
+#      end
     end
   end
 
@@ -199,7 +205,7 @@ class CalendarsController < ApplicationController
   end
 
   def read_places(text)
-    text.scan(/^\s*(\S.*)\s*$/).map {|c| c[0].strip }
+    text.scan(/^\s*(\S.*)\s*$/).map {|c| c[0].strip[0, 25] }
   end
 
 
