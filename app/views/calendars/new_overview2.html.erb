@@ -1,10 +1,10 @@
 <div id="new_guide_overview_page">
 
-  <h1>Tip Matrix: Add your tips for the entire week</h1>
+  <h1>Tip Matrix: Schedule your tips over the week</h1>
 
   <h2> <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
 
-  Drag places onto the map. Click to edit.
+  Drag places onto the matriz. Click schedule slot to add or edit tip recommendations.
   <div id="place-pool">
     <% @places.each do |place| %>
         <div class="place-tag">

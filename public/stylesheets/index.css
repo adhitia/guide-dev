@@ -557,7 +557,7 @@ border-radius: 4px;
 }
 #new-guide-places .places-list {
     font-size:150%;
-    width: 290px;
+    width: 220px;
 }
 
 h1 {
@@ -575,7 +575,6 @@ img.button:hover {
 #place-pool {
     padding: 10px;
     width:500px;
-    height:150px;
     background-color:white;
     list-style-type: none;
 }
