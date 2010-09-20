@@ -9,11 +9,11 @@ class Condition < ActiveRecord::Base
     Condition.find(id - 1)
   end
 
-  def first?
-    id == 1
-  end
+#  def first?
+#    id == 1
+#  end
 
-  def last?
-    id == 11
-  end
+#  def last?
+#    id == 11
+#  end
 end

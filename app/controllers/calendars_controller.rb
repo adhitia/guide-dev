@@ -28,6 +28,8 @@ class CalendarsController < ApplicationController
 
     @calendar = Calendar.find params[:id]
     @edit_for = Weekday.find params[:weekday_id]
+    @edit_prev = Weekday.find_by_id(@edit_for.id - 1)  
+    @edit_next = Weekday.find_by_id(@edit_for.id + 1)
 
     @tips = @calendar.tips.reject { |t| t.weekday.id != @edit_for.id }
     @calendar.conditions.each do |c|
@@ -51,6 +53,8 @@ class CalendarsController < ApplicationController
 
     @calendar = Calendar.find(params[:id])
     @edit_for = Condition.find params[:condition_id]
+    @edit_prev = @calendar.conditions.find_by_id(@edit_for.id - 1)  
+    @edit_next = @calendar.conditions.find_by_id(@edit_for.id + 1)
 
     @tips = @calendar.tips.reject { |t| t.condition.id != @edit_for.id }
     Weekday.all.each do |day|
@@ -84,6 +88,7 @@ class CalendarsController < ApplicationController
     end
 
     guide = read_guide
+    guide.guide_type_id = 1
     if guide.invalid?
       @errors = guide.errors_as_hash
       render :action => :new
@@ -155,6 +160,7 @@ class CalendarsController < ApplicationController
       @calendar.name_target = params[:calendar_name_target]
       @calendar.name = @calendar.name_location + ' for ' + @calendar.name_target
       @calendar.user = @current_user
+      @calendar.guide_type = GuideType.find params[:guide_type_id]
 
       @calendar.location_id = find_or_create_location
 
@@ -228,7 +234,8 @@ class CalendarsController < ApplicationController
     Calendar.new({
             :name_location => params[:calendar_name_location],
             :name_target => params[:calendar_name_target],
-            :location_id => find_or_create_location
+            :location_id => find_or_create_location,
+            :user_id => @current_user.id
     })
   end
 end

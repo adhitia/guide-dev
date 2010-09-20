@@ -574,10 +574,11 @@ img.button:hover {
 
 #place-pool {
     padding: 10px;
-    width:500px;
-    height:150px;
+    /*width:500px;*/
+    height:100px;
     background-color:white;
     list-style-type: none;
+    margin-bottom: 20px;
 }
 
 #new_guide_overview_page .place-tag {
@@ -599,22 +600,22 @@ img.button:hover {
     margin: 2px 2px 2px 0px;
     border: 1px solid #3E6D8E;
 }
-#selected-tips .place-tag {
+.selected-tips .place-tag {
     width: 115px;
     height: 19px;
 }
-#selected-tips .place-tag a {
+.selected-tips .place-tag a {
     width: 100%;
     height: 100%;
 }
 
-#selected-tips {
-    margin: 20px 0;
-}
-#selected-tips .droppable-active {
+/*.selected-tips {*/
+    /*margin: 20px 0;*/
+/*}*/
+.selected-tips .droppable-active {
     background-color: lightblue;
 }
-#selected-tips .table-cell {
+.selected-tips .table-cell {
     display: inline-block;
     height: 25px;
     width: 123px;
@@ -623,21 +624,77 @@ img.button:hover {
     float:left;
     /*padding: 2px;*/
 }
-#selected-tips .placeholder {
-    overflow: hidden;
+.selected-tips .placeholder {
+    overflow: visible;
     background-color:#547085;
     cursor: pointer;
 }
 
-#selected-tips .table-row {
+.selected-tips .table-row {
     overflow: hidden;
     white-space: nowrap;
+    margin-top:-1px;
 }
-#selected-tips .table-label {
+.selected-tips .table-label {
     text-align: center;
     vertical-align: middle;
 }
 
 .ui-tabs .ui-tabs-nav li a {
-    padding: 0.5em 0.1em;
+    padding-left: 0.1em;
+    padding-right: 0.1em; 
+}
+
+
+
+ul.guide-type-tabs {
+    margin:0 !important;
+    padding:0;
+    height:30px;
+    border-bottom:1px solid white;
+}
+.guide-type-tabs li {
+    float:left;
+    padding:0;
+    margin:0;
+    list-style-type:none;
+}
+
+.guide-type-tabs li a {
+    float:left;
+    font-size:13px;
+    display:block;
+    padding:5px 30px;
+    text-decoration:none;
+    border:1px solid white;
+    border-bottom:0px;
+    height:18px;
+    background-color:#89a;	
+    color:#fff;
+    margin-right:2px;
+    position:relative;
+    top:1px;
+    outline:0;
+    -moz-border-radius:4px 4px 0 0;
+}
+.guide-type-tabs a:hover {
+    background-color:#678;
+    /*color:#333;*/
+}
+.guide-type-tabs a.current {
+    background-color:#658296;
+    /*border-bottom:2px solid #658296;*/
+    /*color:#000;*/
+    cursor:default;
+}
+
+div.guide-type-panes > div {
+    /*color:#fff;*/
+    display:none;
+    /*border:1px solid #666;*/
+    /*border-width:0 1px 1px 1px;*/
+    /*min-height:150px;*/
+    /*padding:15px 20px;*/
+    /*background-color:#ddd;*/
+    /*background:#4F5C6A;*/
 }
