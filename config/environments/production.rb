@@ -33,6 +33,7 @@ WEB_ROOT = 'http://guiderer.com'
 FACEBOOK_APP_ID = 'e8151ae0a6068749b2fcd78207f82f0d'
 FACEBOOK_APP_SECRET = '7e7f08f3d89b53d56521fffe3d4ae5d3'
 
-CONTACT_EMAILS_TO = "support@guiderer.com"
+#CONTACT_EMAILS_TO = "support@guiderer.com"
+CONTACT_EMAILS_TO = "nikita.rybak@gmail.com"
 
 

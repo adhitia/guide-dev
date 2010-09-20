@@ -140,13 +140,13 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_log_error(error)
-    Exception
     puts "!!!!!!!!!!!!! error found:\n #{error} \n"
 #    puts "!!!!!!!!!!!!! \n#{error.backtrace.join('\n')} \n"
     log_error(error)
     if ENV["RAILS_ENV"] == 'development'
       puts "!!!!!!!!!! error !!!  #{error}   ajax : #{ajax?}"
     elsif ENV["RAILS_ENV"] == 'production'
+      Exceptional.context(:params => params, :fullpath => request.fullpath)
       Exceptional.handle(error, "error detected\n ajax request?: #{ajax?}")
     end
   end
