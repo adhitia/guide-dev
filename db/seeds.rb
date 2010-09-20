@@ -16,6 +16,10 @@ def create_with_id(id, obj)
 end
 
 
+GuideType.delete_all
+create_with_id 1, GuideType.new(:name => 'Simple')
+create_with_id 2, GuideType.new(:name => 'Full')
+
 Condition.delete_all
 create_with_id 1,  Condition.new(:guide_type_id => 2, :group => "day",       :name => "Morning", :weather => "sunny", :full_name => "Sunny Morning")
 create_with_id 2,  Condition.new(:guide_type_id => 2, :group => "day",       :name => "Morning", :weather => "lousy", :full_name => "Lousy Morning")
