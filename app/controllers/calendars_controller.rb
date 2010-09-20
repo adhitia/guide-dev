@@ -12,7 +12,11 @@ class CalendarsController < ApplicationController
 
     @today = Date.today.cwday - 1;
     @weekdays = Weekday.all
-    @conditions = Condition.all
+    @conditions = @calendar.conditions
+#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.guide_type.inspect}"
+#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.guide_type.conditions.inspect}"
+#    puts "!!!!!!!!!!!!!!!!!!! #{Condition.find(13).guide_type.conditions.inspect}"
+#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.conditions.inspect}"
   end
 
   def new
@@ -26,7 +30,7 @@ class CalendarsController < ApplicationController
     @edit_for = Weekday.find params[:weekday_id]
 
     @tips = @calendar.tips.reject { |t| t.weekday.id != @edit_for.id }
-    Condition.all.each do |c|
+    @calendar.conditions.each do |c|
       if !@tips.detect {|t| t.condition.id == c.id}
         @tips.push Tip.new(
                 :address => Address.new,
@@ -99,7 +103,7 @@ class CalendarsController < ApplicationController
 
     @calendar = Calendar.find(params[:id])
     @weekdays = Weekday.all
-    @conditions = Condition.all
+    @conditions = @calendar.conditions
   end
 
   def update

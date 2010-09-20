@@ -1,7 +1,9 @@
 class Calendar < ActiveRecord::Base
+  has_many :conditions, :through => :guide_type
   has_many :tips
   belongs_to :user
   belongs_to :location
+  belongs_to :guide_type
   accepts_nested_attributes_for :tips
   accepts_nested_attributes_for :location
 

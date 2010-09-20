@@ -637,3 +637,7 @@ img.button:hover {
     text-align: center;
     vertical-align: middle;
 }
+
+.ui-tabs .ui-tabs-nav li a {
+    padding: 0.5em 0.1em;
+}
