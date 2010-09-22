@@ -89,7 +89,7 @@
             <!--left labels-->
             <div style="padding:10px">
             <%= condition.weather ? condition.weather : '' %> <%= condition.name %>
-            <% if @full_access %>
+            <% if false %>
                 <br/>
                 <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
             <% end %>

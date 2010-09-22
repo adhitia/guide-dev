@@ -136,12 +136,15 @@ $(document).ready(function() {
                 tips.init(ui.panel);
             },
             select: function(event, ui) {
+                alert('!');
                 var url = $.data(ui.tab, 'load.tabs');
                 if (url == 'toggle-tabs') {
+                    // disabled for now
                     var name = $(ui.tab).attr('target');
                     calendar.selectTab(name);
                     return false;
                 }
+                tips.saveTab('edit_tips_form', null);
                 common.setLoading(ui.panel);
             },
             show: function(event, ui) {

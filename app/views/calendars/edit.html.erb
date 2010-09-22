@@ -9,9 +9,10 @@
           <a style="width:100%;" title="<%= day.name %>" href="/guides/<%= @calendar.id %>/edit_day/<%= day.id %>"><span><%= day.name %></span></a>
         </li>
       <% end %>
-      <li style="float:right;"><a target="<%=@conditions[0].full_name%>" href="toggle-tabs">View by tip category</a></li>
+      <!--<li style="float:right;"><a target="<%=@conditions[0].full_name%>" href="toggle-tabs">View by tip category</a></li>-->
     </span>
 
+    <!--
     <span class="edit-calendar-tabs-conditions">
       <% @conditions.each do |cond| %>
         <li style="min-width:6%;">
@@ -20,6 +21,7 @@
       <% end %>
       <li style="float:right;"><a target="<%=@weekdays[0].name%>" href="toggle-tabs">View by Weekday</a></li>
     </span>
+    -->
   </ul>
 
 </div>

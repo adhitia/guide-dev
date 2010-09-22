@@ -66,7 +66,11 @@ class WeatherMan
     return [] if response['loc'].nil?
 
 #    response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['__content__'])}
-    response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['content'])}
+    if response['loc'].class == ::Array
+      response['loc'].map {|location| Location.new('code' => location['id'], 'name' => location['content'])}
+    else
+      [Location.new('code' => response['loc']['id'], 'name' => response['loc']['content'])]
+    end
   end
 
   protected
