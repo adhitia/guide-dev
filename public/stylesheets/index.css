@@ -697,3 +697,51 @@ div.guide-type-panes > div {
     /*background-color:#ddd;*/
     /*background:#4F5C6A;*/
 }
+
+#edit_calendar_tabs > ul {
+    margin:0 !important;
+    padding:0;
+    height:30px;
+    border-bottom:1px solid white;
+}
+
+#edit_calendar_tabs > ul li {
+    float:left;
+    padding:0;
+    margin:0;
+    list-style-type:none;
+}
+
+
+#edit_calendar_tabs > ul a {
+    /*float:left;*/
+    display:block;
+    padding:5px 30px;
+    text-decoration:none;
+    border:1px solid white;
+    border-bottom:0px;
+    height:18px;
+    background-color:#89a;	
+    color:#fff;
+    margin-right:2px;
+    position:relative;
+    top:1px;
+    outline:0;
+    -moz-border-radius:4px 4px 0 0;
+}
+#edit_calendar_tabs > ul a:hover {
+    background-color:#678;
+}
+#edit_calendar_tabs > ul a.current {
+    background-color:#658296;
+    cursor:default;
+}
+
+
+#edit_calendar_tabs > .tab-content {
+    background-color:white;
+    color: black;
+    overflow: hidden;
+}
+
+

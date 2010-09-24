@@ -1,26 +1,31 @@
 if (!window.calendar) var calendar = {
-    toggleTabs: function() {
-        $("#edit_calendar_tabs .ui-tabs-nav li").each(function() {
-            $(this).toggleClass('hidden');
-        });
-    },
+//    toggleTabs: function() {
+//        $("#edit_calendar_tabs .ui-tabs-nav li").each(function() {
+//            $(this).toggleClass('hidden');
+//        });
+//    },
 
     selectTab: function(name) {
-        var a = $('#edit_calendar_tabs .ui-tabs-nav a[title="' + name.replace(/_/g, ' ') + '"]');
-        if (a.parent().hasClass('hidden')) {
-            calendar.toggleTabs();
-        }
+        var a = $('#edit_calendar_tabs > ul a[title="' + name.replace(/_/g, ' ') + '"]');
+//        if (a.parent().hasClass('hidden')) {
+//            calendar.toggleTabs();
+//        }
         a.click();
     },
 
     selectNext: function() {
-        var current = $('#edit_calendar_tabs').tabs('option', 'selected');
-        $('#edit_calendar_tabs').tabs('select', current + 1);
+//        alert('??');
+//        alert($('#edit_calendar_tabs').data('tabs'));
+//        $('#edit_calendar_tabs').data('tabs').next();
+//        var current = $('#edit_calendar_tabs').tabs('option', 'selected');
+//        $('#edit_calendar_tabs').tabs('select', current + 1);
+        $('#edit_calendar_tabs > ul').data('tabs').next();
     },
 
     selectPrevious: function() {
-        var current = $('#edit_calendar_tabs').tabs('option', 'selected');
-        $('#edit_calendar_tabs').tabs('select', current - 1);
+//        var current = $('#edit_calendar_tabs').tabs('option', 'selected');
+//        $('#edit_calendar_tabs').tabs('select', current - 1);
+        $('#edit_calendar_tabs > ul').data('tabs').prev();
     },
 
     updateTile: function(tile) {
@@ -126,6 +131,7 @@ if (!window.calendar) var calendar = {
 $(document).ready(function() {
     // show tabs on edit calendars page
     if ($("#edit_calendar_tabs").length > 0) {
+        /*
         $("#edit_calendar_tabs").tabs({
             ajaxOptions: {
                 //            error: function(xhr, status, index, anchor) {
@@ -136,16 +142,21 @@ $(document).ready(function() {
                 tips.init(ui.panel);
             },
             select: function(event, ui) {
-                alert('!');
                 var url = $.data(ui.tab, 'load.tabs');
-                if (url == 'toggle-tabs') {
+                var current = $('#edit_calendar_tabs').tabs('option', 'selected');
+//                if (url == 'toggle-tabs') {
                     // disabled for now
-                    var name = $(ui.tab).attr('target');
-                    calendar.selectTab(name);
-                    return false;
+//                    var name = $(ui.tab).attr('target');
+//                    calendar.selectTab(name);
+//                    return false;
+//                }
+                if (!$(ui.tab).data('saved')) {
+                    $(ui.tab).data('saved', true);
+                    tips.saveTab('edit_tips_form', function() {
+                        common.setLoading(ui.panel);
+//                        $(ui.tab).data('saved', false);
+                    });
                 }
-                tips.saveTab('edit_tips_form', null);
-                common.setLoading(ui.panel);
             },
             show: function(event, ui) {
                 window.location.hash = ui.tab.hash;
@@ -154,6 +165,30 @@ $(document).ready(function() {
 
         $('#edit_calendar_tabs .edit-calendar-tabs-conditions li').each(function() {
             $(this).addClass('hidden');
+        });
+        calendar.selectTab(common.getHash());
+*/
+        //
+        $("#edit_calendar_tabs > ul").fpTabs("div.tab-content", {
+//            history: true,
+            onClick: function(event, tabIndex) {
+                tips.init($('div.tab-content'));
+                window.location.hash = this.getCurrentTab().attr('title');
+            },
+            onBeforeClick: function(event, tabIndex) {
+                var form = $('#edit_tips_form');
+                if (form.length > 0 && !form.data('saved')) {
+//                    alert('saving...');
+                    form.data('saved', true);
+                    var tabs = this;
+                    tips.saveTab('edit_tips_form', function() {
+                        tabs.click(tabIndex);
+                    });
+
+                    return false;
+                }
+            },
+            effect: 'ajax'
         });
         calendar.selectTab(common.getHash());
     }

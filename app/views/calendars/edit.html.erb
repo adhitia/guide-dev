@@ -3,14 +3,14 @@
 
 <div id="edit_calendar_tabs" width="100%">
   <ul>
-    <span class="edit-calendar-tabs-weekdays">
+    <!--<span class="edit-calendar-tabs-weekdays">-->
       <% @weekdays.each do |day| %>
         <li style="width:12%;">
           <a style="width:100%;" title="<%= day.name %>" href="/guides/<%= @calendar.id %>/edit_day/<%= day.id %>"><span><%= day.name %></span></a>
         </li>
       <% end %>
       <!--<li style="float:right;"><a target="<%=@conditions[0].full_name%>" href="toggle-tabs">View by tip category</a></li>-->
-    </span>
+    <!--</span>-->
 
     <!--
     <span class="edit-calendar-tabs-conditions">
@@ -23,6 +23,8 @@
     </span>
     -->
   </ul>
+
+  <div class="tab-content"></div>
 
 </div>
 

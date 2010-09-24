@@ -63,7 +63,11 @@ if (!window.common) {
             });
         },
 
-        setLoadingGlobal: function() {
+        setLoadingGlobal: function(text) {
+            if (text == null || text == undefined) {
+                text = '';
+            }
+            $('#global-loading-indicator > span').html(text);
             $('#global-loading-indicator').show();
         },
 

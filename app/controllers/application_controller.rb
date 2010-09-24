@@ -120,6 +120,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_error(error)
+# http://fairleads.blogspot.com/2007/06/ruby-yield.html   
 #    puts "regular error"
     custom_log_error error
     if ajax?
@@ -147,7 +148,7 @@ class ApplicationController < ActionController::Base
       puts "!!!!!!!!!! error !!!    ajax : #{ajax?}  \n#{error.backtrace.join("\n")}\n"
     elsif ENV["RAILS_ENV"] == 'production'
       Exceptional.context(:params => params, :fullpath => request.fullpath)
-      Exceptional.handle(error, "error detected\n")
+      Exceptional.handle(error, "error detected.\n")
     end
   end
 

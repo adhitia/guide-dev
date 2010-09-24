@@ -20,12 +20,12 @@
 
     <div class="button-panel">
       <% if !@edit_prev.nil? %>
-          <a href="javascript:" onclick="tips.saveTab('edit_tips_form', function() {calendar.selectPrevious();});" class="button">
+          <a href="javascript:" onclick="calendar.selectPrevious();" class="button">
             &lt;&lt; Save and edit <%= @edit_prev.name %> tips
           </a>
       <% end %>
       <% if !@edit_next.nil? %>
-          <a href="javascript:" onclick="tips.saveTab('edit_tips_form', function() {calendar.selectNext();});" class="button">
+          <a href="javascript:" onclick="calendar.selectNext();" class="button">
             Save and edit <%= @edit_next.name %> tips &gt;&gt;
           </a>
       <% end %>
