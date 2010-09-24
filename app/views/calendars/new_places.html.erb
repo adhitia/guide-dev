@@ -1,8 +1,8 @@
 <div id="new-guide-places">
   <h1>List your recommended places</h1>
 
-  <p>Enter name of establishment or attraction eg: Renzos Pizza, Eiffel Tower, Limelight Club</p>
-  <p>
+  <p>Enter NAME of establishments or attractions, one per line, eg:
+  <DIV style="background-color:white;color:black;width:30%;padding:5px;">Renzos Pizza<BR>Eiffel Tower<BR>Limelight Club<BR>etc.</div><BR><BR><div >
     For some ideas on <b><%= h params[:calendar_name_location] %></b>, you can visit
     <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= h params[:location_name] %>&fulltext=Search">
       WikiTravel
@@ -11,7 +11,7 @@
     <a href="http://www.tripadvisor.com/Search?q=<%= h params[:location_name] %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
       TripAdvisor
     </a>
-  </p>
+  </div>
 
   <form id="new-guide-places-form" style="overflow:hidden;" method="POST" action="<%= create_guide_path %>">
     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
@@ -25,15 +25,15 @@
 
     <div class="places-box">
       <h2>Day</h2>
-      <textarea name="day-places" rows="30" class="places-list" ></textarea>
+      <textarea name="day-places" cols="15" rows="20" class="places-list" ></textarea>
     </div>
     <div class="places-box">
       <h2>Dinner</h2>
-      <textarea name="dinner-places" rows="30" class="places-list"></textarea>
+      <textarea name="dinner-places" rows="20" cols="15" class="places-list"></textarea>
     </div>
     <div class="places-box">
       <h2>Night</h2>
-      <textarea name="night-places" rows="30" class="places-list"></textarea>
+      <textarea name="night-places" rows="20" cols="15" class="places-list"></textarea>
     </div>
   </form>
 
