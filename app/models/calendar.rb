@@ -12,6 +12,8 @@ class Calendar < ActiveRecord::Base
                       :too_long => "no more than {{count}} characters expected",
                       :too_short => "at least {{count}} characters expected"
 
+#  before_save :update_completed_percentage
+
   def rating_num
     if votes_num == 0
       0
@@ -34,5 +36,18 @@ class Calendar < ActiveRecord::Base
     result[:calendar_name_target] = errors.on(:name_target) if !errors.on(:name_target).blank?
     result[:location_name] = errors.on(:location_id) if !errors.on(:location_id).blank?
     result
+  end
+
+  def update_completed_percentage
+    completed = 0
+    total = conditions.size * Weekday.all.size
+    tips.each do |tip|
+      if tip.description.blank?
+        completed += 0.5
+      else
+        completed += 1
+      end
+    end
+    self.completed_percentage = (completed * 100.0 / total).round
   end
 end

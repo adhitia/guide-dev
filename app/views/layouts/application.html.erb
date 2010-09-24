@@ -10,6 +10,10 @@
   <!-- workaround for 'tick is not defined' ga error -->
   <script type="text/javascript">if( !tick ) { var tick = function(){}; }</script>
 
+  <!-- Sets version for each changeable resource here -->
+  <!-- Increment when put changed in production to make user's browsers reload resources -->
+  <%= resource_version = 5 %>
+
   <%= stylesheet_link_tag 'scaffold' %>
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 
@@ -23,9 +27,9 @@
   <!--<script type="text/javascript" src="/jquery/jquery-ui-1.8.2.custom.min.js" ></script>-->
 
   <script type="text/javascript" src="/public.js"></script>
-  <script type="text/javascript" src="/javascripts/tips.js?_version=4"></script>
-  <script type="text/javascript" src="/javascripts/guides.js?_version=4"></script>
-  <script type="text/javascript" src="/javascripts/common.js?_version=4"></script>
+  <script type="text/javascript" src="/javascripts/tips.js?_version=<%=resource_version%>"></script>
+  <script type="text/javascript" src="/javascripts/guides.js?_version=<%=resource_version%>"></script>
+  <script type="text/javascript" src="/javascripts/common.js?_version=<%=resource_version%>"></script>
 
   <script type="text/javascript" src="/jquery/jquery.watermarkinput.js"></script>
   <script type="text/javascript" src="/jquery/jquery.dataTables.min.js"></script>
@@ -36,7 +40,7 @@
   <!-- 'tabs' plugin renamed to 'fpTabs' to avoid conflict with jqueryui 'tabs'. Be adviced if update library -->
   <script type="text/javascript" src="/jquery/jquery.tools.min.js" ></script>
 
-  <link href="/stylesheets/index.css?_version=4" media="screen" rel="stylesheet" type="text/css"/>
+  <link href="/stylesheets/index.css?_version=<%=resource_version%>" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_table.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_page.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_table_jui.css" media="screen" rel="stylesheet" type="text/css"/>

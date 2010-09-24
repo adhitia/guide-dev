@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100920061410) do
+ActiveRecord::Schema.define(:version => 20100924233204) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -36,18 +36,19 @@ ActiveRecord::Schema.define(:version => 20100920061410) do
   create_table "calendars", :force => true do |t|
     t.string   "name"
     t.string   "author"
-    t.integer  "view_count",    :default => 0
-    t.integer  "click_count",   :default => 0
+    t.integer  "view_count",           :default => 0
+    t.integer  "click_count",          :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "location_id"
-    t.integer  "votes_sum",     :default => 0
-    t.integer  "votes_num",     :default => 0
+    t.integer  "votes_sum",            :default => 0
+    t.integer  "votes_num",            :default => 0
     t.string   "name_location"
     t.string   "name_target"
-    t.boolean  "public",        :default => false
+    t.boolean  "public",               :default => false
     t.integer  "guide_type_id"
+    t.integer  "completed_percentage", :default => 0
   end
 
   create_table "conditions", :force => true do |t|

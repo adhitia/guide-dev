@@ -13,6 +13,7 @@
     <th class="sorting">Location</th>
     <th class="sorting">Views</th>
     <th class="sorting">Rating</th>
+    <th class="sorting">Completed</th>
     <th class="sorting">Created</th>
   </tr>
   </thead>
@@ -26,6 +27,7 @@
     <td><%=h calendar.location.name %></td>
     <td><%=h calendar.view_count %></td>
     <td><%=h calendar.rating_str %></td>
+    <td><%=h calendar.completed_percentage %>%</td>
     <td><%=h calendar.created_at.strftime "%B %d, %Y" %></td>
   </tr>
 <% end %>

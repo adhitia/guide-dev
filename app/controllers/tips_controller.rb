@@ -18,6 +18,9 @@ class TipsController < ApplicationController
 
     @tip.save
 
+    @calendar.update_completed_percentage
+    @calendar.save
+
     render :partial => "tips/#{params[:result]}", :locals => {:tip => @tip}
   end
 
@@ -96,6 +99,9 @@ class TipsController < ApplicationController
       if !@errors.empty?
         raise ActiveRecord::Rollback.new
       end
+      
+      @calendar.update_completed_percentage
+      @calendar.save
     end
 
     render :text => {:errors => @errors, :new_tip_id => new_tip_id}.to_json
@@ -127,6 +133,9 @@ class TipsController < ApplicationController
     @full_access = true
 
     tip.delete
+
+    tip.calendar.update_completed_percentage
+    tip.calendar.save
 
     render :partial => 'tips/no_tip_tile', :locals => {:condition => tip.condition, :day => tip.weekday}
   end
