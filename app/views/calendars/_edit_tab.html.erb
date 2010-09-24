@@ -19,14 +19,14 @@
 
 
     <div class="button-panel">
-      <% if !@edit_for.first? %>
+      <% if !@edit_prev.nil? %>
           <a href="javascript:" onclick="tips.saveTab('edit_tips_form', function() {calendar.selectPrevious();});" class="button">
-            &lt;&lt; Save and edit <%= @edit_for.prev.name %> tips
+            &lt;&lt; Save and edit <%= @edit_prev.name %> tips
           </a>
       <% end %>
-      <% if !@edit_for.last? %>
+      <% if !@edit_next.nil? %>
           <a href="javascript:" onclick="tips.saveTab('edit_tips_form', function() {calendar.selectNext();});" class="button">
-            Save and edit <%= @edit_for.next.name %> tips &gt;&gt;
+            Save and edit <%= @edit_next.name %> tips &gt;&gt;
           </a>
       <% end %>
       <a href="javascript:" onclick="tips.saveTab('edit_tips_form', function() {common.setLocation('/guides/<%=@calendar.id%>/');});" class="button">

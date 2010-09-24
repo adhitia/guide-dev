@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917035016) do
+ActiveRecord::Schema.define(:version => 20100920061410) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -47,11 +47,14 @@ ActiveRecord::Schema.define(:version => 20100917035016) do
     t.string   "name_location"
     t.string   "name_target"
     t.boolean  "public",        :default => false
+    t.integer  "guide_type_id"
   end
 
   create_table "conditions", :force => true do |t|
     t.string   "name"
     t.string   "weather"
+    t.string   "full_name"
+    t.integer  "guide_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "group"
@@ -63,6 +66,10 @@ ActiveRecord::Schema.define(:version => 20100917035016) do
     t.boolean  "public",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "guide_types", :force => true do |t|
+    t.string "name"
   end
 
   create_table "locations", :force => true do |t|

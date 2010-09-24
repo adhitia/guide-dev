@@ -9,16 +9,16 @@ class Weekday < ActiveRecord::Base
     Weekday.find(((id + 5) % 7) + 1)
   end
 
-  def first?
-    id == 1
-  end
+#  def first?
+#    id == 1
+#  end
+#
+#  def last?
+#    id == 7
+#  end
 
-  def last?
-    id == 7
-  end
-
-  def full_name
-    name
-  end
+#  def full_name
+#    name
+#  end
 
 end

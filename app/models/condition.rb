@@ -1,5 +1,5 @@
 class Condition < ActiveRecord::Base
-  attr_protected
+  belongs_to :guide_type
 
   def next
     Condition.find(id + 1)
@@ -9,24 +9,11 @@ class Condition < ActiveRecord::Base
     Condition.find(id - 1)
   end
 
-  def first?
-    id == 1
-  end
+#  def first?
+#    id == 1
+#  end
 
-  def last?
-    # TODO replace number with actual value 
-    id == 11
-  end
-
-  def full_name
-    if weather == nil
-      if group == 'dinner'
-        name.capitalize + ' ' + group.capitalize
-      else
-        name
-      end
-    else
-      weather.capitalize + ' ' + name.capitalize
-    end
-  end
+#  def last?
+#    id == 11
+#  end
 end

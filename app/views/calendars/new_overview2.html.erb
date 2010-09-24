@@ -14,47 +14,60 @@
     <% end %>
   </div>
 
+  You can select preferred guide type.
+  <ul class="guide-type-tabs">
+    <% GuideType.all.each do |guide_type| %>
+        <li><a href=""><%= guide_type.name %></a></li>
+    <% end %>
+  </ul>
+
+  <div class="guide-type-panes">
+    <% GuideType.all.each do |guide_type| %>
+        <div>
+          <form action="<%= create_guide_path %>" method="POST">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+            <input name="step" type="hidden" value="overview">
+
+            <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
+            <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
+            <input type="hidden" name="location_code" value="<%= params[:location_code] %>">
+            <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
+            <input type="hidden" name="guide_type_id" value="<%= guide_type.id %>">
 
 
-
-  <form id="calendar_overview_form" action="<%= create_guide_path %>" method="POST">
-    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
-    <input name="step" type="hidden" value="overview">
-
-    <input type="hidden" name="calendar_name_location" value="<%= params[:calendar_name_location] %>">
-    <input type="hidden" name="calendar_name_target" value="<%= params[:calendar_name_target] %>">
-    <input type="hidden" name="location_code" value="<%= params[:location_code] %>">
-    <input type="hidden" name="location_name" value="<%= params[:location_name] %>">
-
-
-    <div id="selected-tips">
-      <div class="table-row">
-        <div class="table-cell table-label"></div>
-        <% @weekdays.each do |day| %>
-            <div class="table-cell table-label">
-              <%= day.name %>
+            <div class="selected-tips">
+              <div class="table-row">
+                <div class="table-cell table-label"></div>
+                <% @weekdays.each do |day| %>
+                    <div class="table-cell table-label">
+                      <%= day.name %>
+                    </div>
+                <% end %>
+              </div>
+              <% guide_type.conditions.each do |condition| %>
+                  <div class="table-row">
+                    <div class="table-cell table-label">
+                      <%= condition.full_name %>
+                    </div>
+                    <% @weekdays.each do |day| %>
+                        <div class="table-cell placeholder" condition_id="<%=condition.id%>" weekday_id="<%=day.id%>"></div>
+                    <% end %>
+                  </div>
+              <% end %>
             </div>
-        <% end %>
-      </div>
-      <% @conditions.each do |condition| %>
-          <div class="table-row">
-            <div class="table-cell table-label">
-              <%= condition.full_name %>
+
+            <div class="button-panel">
+              <a href="javascript:" onclick="$(this).parents('form').submit();" class="button">
+                save and add details &gt;&gt;
+              </a>
             </div>
-            <% @weekdays.each do |day| %>
-                <div class="table-cell placeholder" condition_id="<%=condition.id%>" weekday_id="<%=day.id%>"></div>
-            <% end %>
-          </div>
-      <% end %>
-    </div>
 
-  </form>
+          </form>
 
-  <div class="button-panel">
-    <a href="javascript:" onclick="$('#calendar_overview_form').submit();" class="button">
-      save and add details &gt;&gt;
-    </a>
+        </div>
+    <% end %>
   </div>
+
 
 
 </div>
@@ -62,6 +75,10 @@
 
 <script>
     $(document).ready(function() {
+        $("ul.guide-type-tabs").fpTabs("div.guide-type-panes > div");
+
+//        var root = $('#new_guide_overview_page');
+
         function initTags(root) {
             var tags;
             if (root.hasClass('place-tag')) {
@@ -83,6 +100,11 @@
                 }
                 $(this).hide();
                 $(this).parent().find('a').text(val).show();
+            }).keypress(function(e) {
+                if(e.which == 13) {
+                    $(this).blur();
+                    return false;
+                }
             });
 
             // drag'n'drop
@@ -112,7 +134,7 @@
             }
             place.append(tag);
         }
-        $('#selected-tips .placeholder').droppable({
+        $('div.selected-tips .placeholder').droppable({
             accept: ".place-tag",
             hoverClass: 'droppable-active',
             drop: function(ev, ui) {
@@ -127,7 +149,7 @@
                 ui.draggable.css('left', 0).css('top', 0);
             }
         });
-        $('#selected-tips .placeholder').click(function() {
+        $('div.selected-tips .placeholder').click(function() {
             if (common.trim($(this).html()) != '') {
                 return;
             }

@@ -74,7 +74,7 @@
     <% @conditions.each do |condition| %>
 
         <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
-        <% if condition.group != prev_cond.group %>
+        <% if condition.group != prev_cond.group && !condition.group.nil? %>
             <tr>
               <td class="headtext" colspan="20" align="center" style="background-color:#006699;">
                 <%= condition.group %>

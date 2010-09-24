@@ -121,7 +121,7 @@
     <% @tips.each do |tip| %>
 
         <!-- put condition type (dinner, party, etc), if necessary -->
-        <% if tip.condition.group != condition.group %>
+        <% if tip.condition.group != condition.group && !tip.condition.group.nil? %>
             <div class="condition-group">
               <%= tip.condition.group %>
             </div>
