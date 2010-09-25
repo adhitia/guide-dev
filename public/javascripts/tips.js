@@ -157,10 +157,14 @@ if (!window.tips) var tips = {
                 + '<span class="local_result_lng">' + result.lng + '</span>'
                 + '</a></li>');
                 list.append(e);
-                e.find('a').data('result_url', result.url);
+
+                var a = e.find('a');
+                a.data('result_url', result.url);
                 if (result.phoneNumbers && result.phoneNumbers.length > 0) {
-                    e.find('a').data('result_phone', result.phoneNumbers[0].number);
+                    a.data('result_phone', result.phoneNumbers[0].number);
                 }
+                a.data('title', result.titleNoFormatting);
+                //titleNoFormatting
 //                e.find('a').data('static_map_url', result.staticMapUrl);
 //                for (k in result) {
 //                    console.log(k + " : " + result[k]);
@@ -172,16 +176,18 @@ if (!window.tips) var tips = {
     },
 
     selectLocalResult: function(result) {
-        var row = $(result).parents('.edit-tip-root')[0];
-        var container = $(result).parents('.local-search-container');
-        var addr = $(result).find('.local_result_address').html();
-        var lat = $(result).find('.local_result_lat').html();
-        var lng = $(result).find('.local_result_lng').html();
-        var google_url = $(result).data('result_url');
-        var phone = $(result).data('result_phone');
+        result = $(result);
+        var row = result.parents('.edit-tip-root')[0];
+        var container = result.parents('.local-search-container');
+        var addr = result.find('.local_result_address').html();
+        var lat = result.find('.local_result_lat').html();
+        var lng = result.find('.local_result_lng').html();
+        var google_url = result.data('result_url');
+        var phone = result.data('result_phone');
         if (phone != null && phone.startsWith('(0xx)')) {
             phone = phone.substring('(0xx)'.length);
         }
+        var title = result.data('title');
 
 //        var ajax_form = $('#fetch_remote_content_form');
 //        ajax_form.attr('action', url);
@@ -218,6 +224,7 @@ if (!window.tips) var tips = {
                 $(row).find('.tip_address_lng').val(lng);
                 $(row).find('.tip_url').val(url);
                 $(row).find('.tip_phone').val(phone);
+                $(row).find('.tip_name').val(title);
 //                $(row).find('.map_url').val(google_url);
 
             },
@@ -237,10 +244,14 @@ if (!window.tips) var tips = {
             common.setLoading(container);
 
             var root = $(anchor).parents('.edit-tip-root')[0];
+            var name = $(root).find('.tip_name').val();
+            if (common.trim(name) == '') {
+                return;
+            }
             var ls = new google.search.LocalSearch();
             ls.setCenterPoint($(root).attr('city'));
             ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
-            ls.execute($(root).find('.tip_name').val());
+            ls.execute(name);
         }
         container.toggle();
     },
