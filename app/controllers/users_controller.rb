@@ -33,14 +33,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = verify_user params[:id]
     if @current_user && (@user.id == @current_user.id)
       render :action => 'home'
     end
   end
 
   def home
-    return unless authenticate
+    authenticate
     @user = @current_user
   end
 
@@ -50,9 +50,7 @@ class UsersController < ApplicationController
 #  end
 
   def edit
-    return unless authorize_user params[:id]
-
-    @user = User.find(params[:id])
+    @user = authorize_user params[:id]
   end
 
 #  def create
@@ -70,9 +68,8 @@ class UsersController < ApplicationController
 #  end
 
   def update
-    return unless authorize_user params[:id]
+    @user = authorize_user params[:id]
 
-    @user = User.find(params[:id])
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'

@@ -7,26 +7,19 @@ class CalendarsController < ApplicationController
 
   def show
     @calendar = verify_guide params[:id]
-    return if @calendar.nil?
     @full_access = @current_user && (@calendar.user.id == @current_user.id);
 
     @today = Date.today.cwday - 1;
     @weekdays = Weekday.all
     @conditions = @calendar.conditions
-#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.guide_type.inspect}"
-#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.guide_type.conditions.inspect}"
-#    puts "!!!!!!!!!!!!!!!!!!! #{Condition.find(13).guide_type.conditions.inspect}"
-#    puts "!!!!!!!!!!!!!!!!!!! #{@calendar.conditions.inspect}"
   end
 
   def new
-    return unless authenticate
+    authenticate
   end
 
   def edit_day
-    return unless authorize_guide params[:id]
-
-    @calendar = Calendar.find params[:id]
+    @calendar = authorize_guide params[:id]
     @edit_for = Weekday.find params[:weekday_id]
     @edit_prev = Weekday.find_by_id(@edit_for.id - 1)  
     @edit_next = Weekday.find_by_id(@edit_for.id + 1)
@@ -49,9 +42,7 @@ class CalendarsController < ApplicationController
   end
 
   def edit_condition
-    return unless authorize_guide params[:id]
-
-    @calendar = Calendar.find(params[:id])
+    @calendar = authorize_guide params[:id]
     @edit_for = Condition.find params[:condition_id]
     @edit_prev = @calendar.conditions.find_by_id(@edit_for.id - 1)  
     @edit_next = @calendar.conditions.find_by_id(@edit_for.id + 1)
@@ -74,7 +65,7 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    return unless authenticate
+    authenticate
 
     @weekdays = Weekday.all
     @conditions = Condition.all
@@ -104,16 +95,13 @@ class CalendarsController < ApplicationController
 
 
   def edit
-    return unless authorize_guide params[:id]
-
-    @calendar = Calendar.find(params[:id])
+    @calendar = authorize_guide params[:id]
     @weekdays = Weekday.all
     @conditions = @calendar.conditions
   end
 
   def update
-    return unless authorize_guide params[:id]
-    @calendar = Calendar.find(params[:id])
+    @calendar = authorize_guide params[:id]
 
     if !params[:location_name].blank?
       @calendar.location_id = find_or_create_location;
@@ -144,7 +132,6 @@ class CalendarsController < ApplicationController
 
   def share
     @calendar = verify_guide params[:id]
-    return if @calendar.nil?
     @layouts = GuideLayout.find_all_by_public true
   end
 

@@ -106,7 +106,7 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "edit guide - wrong user" do
     get :edit, {:id => 1}, {:id => 2}
-    assert_redirected_to 'unauthorized'
+    assert_template 'common/unauthorized'
   end
 
   test "edit guide by day" do
@@ -122,7 +122,7 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "edit guide by day - wrong user" do
     get :edit_day, {:id => 1, :weekday_id => 3}, {:id => 2}
-    assert_redirected_to 'unauthorized'
+    assert_template 'common/unauthorized'
   end
 
   test "edit guide by condition" do
@@ -144,7 +144,7 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "edit guide by condition - wrong user" do
     get :edit_condition, {:id => 1, :condition_id => 3}, {:id => 2}
-    assert_redirected_to 'unauthorized'
+    assert_template 'common/unauthorized'
   end
 
   test "search" do
@@ -186,7 +186,7 @@ class CalendarsControllerTest < ActionController::TestCase
 
   test "update guide - wrong user" do
     get :update, {:id => 1, :location_name => 'Moscow', :location_code => 'Code', :access_type => 'false'}, {:id => 2}
-    assert_redirected_to 'unauthorized'
+    assert_template 'common/unauthorized'
   end
 
   test "share" do

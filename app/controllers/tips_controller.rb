@@ -2,10 +2,8 @@ class TipsController < ApplicationController
   before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
 
   def create
-    return unless authorize_guide params[:id]
+    @calendar = authorize_guide params[:id]
     @full_access = true
-
-    @calendar = Calendar.find(params[:id])
 
     @tip = Tip.new(:name => params[:new_tip_name])
     @tip.author_id= @current_user.id;
@@ -25,10 +23,9 @@ class TipsController < ApplicationController
   end
 
   def new
-    return unless authorize_guide params[:id]
+    @calendar = authorize_guide params[:id]
     @full_access = true
 
-    @calendar = Calendar.find(params[:id])
     tip = Tip.new(
             :address => Address.new,
             :calendar => @calendar,
@@ -39,10 +36,9 @@ class TipsController < ApplicationController
   end
 
   def update
-    return unless authorize_guide params[:id]
+    @calendar = authorize_guide params[:id]
     @full_access = true;
 
-    @calendar = Calendar.find(params[:id])
     @errors = {};
     new_tip_id = nil
 
@@ -109,9 +105,7 @@ class TipsController < ApplicationController
 
   def follow_url
     @calendar = verify_guide params[:id]
-    return if @calendar.nil?
     @tip = verify_tip params[:tip_id]
-    return if @tip.nil?
 
     @tip.click_count += 1;
     @tip.save;
@@ -128,8 +122,8 @@ class TipsController < ApplicationController
   # removes binding between tip and calendar
   # for now, also removes tip
   def unbind
-    tip = Tip.find(params[:occurrence_id])
-    return unless authorize_guide tip.calendar_id
+    tip = verify_tip params[:occurrence_id]
+    authorize_guide tip.calendar_id
     @full_access = true
 
     tip.delete
@@ -142,8 +136,8 @@ class TipsController < ApplicationController
 
   # moves tip to a different place
   def move
-    tip = Tip.find(params[:occurrence_id])
-    return unless authorize_guide tip.calendar_id
+    tip = verify_tip params[:occurrence_id]
+    authorize_guide tip.calendar_id
 
 #    tip.condition = Condition.find(params[:condition_id])
 #    tip.weekday = Weekday.find(params[:weekday_id])
@@ -156,8 +150,8 @@ class TipsController < ApplicationController
 
   # switches two tips in one calendar
   def switch
-    tip = Tip.find(params[:occurrence_id])
-    return unless authorize_guide tip.calendar_id
+    tip = verify_tip params[:occurrence_id]
+    authorize_guide tip.calendar_id
 
     target = Tip.find(params[:target_id])
 
@@ -176,18 +170,18 @@ class TipsController < ApplicationController
   end
 
   def show
-    tip = Tip.find(params[:occurrence_id])
+    tip = verify_tip params[:occurrence_id]
     render :partial => 'tips/show', :locals => {:tip => tip}
   end
 
   def edit
-    tip = Tip.find(params[:occurrence_id])
-    return unless authorize_guide tip.calendar_id
+    tip = verify_tip params[:occurrence_id]
+    authorize_guide tip.calendar_id
     render :partial => 'tips/edit', :locals => {:tip => tip}
   end
 
   def tile
-    tip = Tip.find(params[:occurrence_id])
+    tip = verify_tip params[:occurrence_id]
     @full_access = @current_user && (tip.calendar.user.id == @current_user.id);
     render :partial => 'tips/show_tile', :locals => {:tip => tip}
   end

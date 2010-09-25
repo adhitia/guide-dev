@@ -21,9 +21,9 @@ module ApplicationHelper
     result
   end
 
-  def empty?(s)
-    return s == nil || s.strip.empty?;
-  end
+#  def empty?(s)
+#    return s == nil || s.strip.empty?;
+#  end
 
   def escape(&block)
     text = capture(&block)

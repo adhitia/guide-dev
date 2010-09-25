@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::Base
+  class AuthenticationError < StandardError
+  end
+  class AuthorizationError < StandardError
+  end
+  class ResourceNotFoundError < StandardError
+  end
+
   rescue_from Exception, :with => :handle_error
-  rescue_from ActionController::RoutingError, :with => :handle_routing_error
+  rescue_from ActionController::RoutingError, :with => :handle_resource_not_found_error
+  rescue_from AuthenticationError, :with => :handle_authentication_error
+  rescue_from AuthorizationError, :with => :handle_authorization_error
+  rescue_from ResourceNotFoundError, :with => :handle_resource_not_found_error
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -9,6 +19,8 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # flattens hash keys just like similar method in Array
+  # used for error reporting
   def flatten(hash, result = {}, prefix = "")
     hash.each do |key, value|
       if value.class == Hash
@@ -26,92 +38,50 @@ class ApplicationController < ActionController::Base
 
 
   def authenticate
-    return true if @current_user
-
-    # redirect user
-    if ajax?
-      render :text => 'Please login first', :status => 401
-    else
-      flash[:error] = 'Oops. You need to login before you can view that page.'
-      session[:return_to] = request.request_uri
-      redirect_to :controller => :users, :action => 'login'
-    end
-
-    return false
+    raise AuthenticationError.new if @current_user.nil?
+    @current_user
   end
 
   def authorize_guide(guide_id)
-    return false if not authenticate
+    authenticate
+
     guide = verify_guide guide_id
-    return if guide.nil?
-
-    if guide.user_id != @current_user.id
-      # action forbidden
-      if ajax?
-        render :text => 'Operation is not permitted', :status => 403
-      else
-        flash[:error] = "You're not authorized to perform this operation"
-        session[:return_to] = request.request_uri
-        redirect_to :controller => :common, :action => :unauthorized
-      end
-      return false
-    end
-
-    return true
-  end
-
-  def authorize_user(user_id)
-    return false if not authenticate
-    user = User.find user_id
-
-    if user.id != @current_user.id
-      # action forbidden
-      if ajax?
-        render :text => 'Operation is not permitted', :status => 403
-      else
-        flash[:error] = "You're not authorized to perform this operation"
-        session[:return_to] = request.request_uri
-        redirect_to :controller => :common, :action => :unauthorized
-      end
-      return false
-    end
-
-    return true
-  end
-
-  # check that guide is present
-  def verify_guide guide_id
-    guide = Calendar.find_by_id(guide_id)
-    if guide.nil?
-      if ajax?
-        render :text => "Guide with id [#{guide_id}] isn't found", :status => 404
-      else
-        flash[:error] = "The guide you requested can't be found."
-        render :template => 'common/missing'
-      end
-    end
-
+    raise AuthorizationError.new('This operation can be performed by guide owner only.') if guide.user_id != @current_user.id
     guide
   end
 
-  # check that guide is present
-  def verify_tip id
-    result = Tip.find_by_id(id)
-    if result.nil?
-      if ajax?
-        render :text => "Tip with id [#{id}] isn't found", :status => 404
-      else
-        flash[:error] = "The tip you requested can't be found."
-        render :template => 'common/missing'
-      end
-    end
+  def authorize_user(user_id)
+    authenticate
 
+    user = verify_user user_id
+    raise AuthorizationError.new("You are not authorized to perform this operation.") if user.id != @current_user.id
+    user
+  end
+
+  # check that guide is present
+  def verify_guide id
+    result = Calendar.find_by_id(id)
+    raise ResourceNotFoundError.new("Guide with id \"#{id}\" can't be found") if result.nil?
     result
   end
 
-  def empty?(s)
-    return s == nil || s.strip.empty?;
+  # check that tip is present
+  def verify_tip id
+    result = Tip.find_by_id(id)
+    raise ResourceNotFoundError.new("Tip with id \"#{id}\" can't be found") if result.nil?
+    result
   end
+
+  # check that user is present
+  def verify_user id
+    result = User.find_by_id(id)
+    raise ResourceNotFoundError.new("User with id \"#{id}\" can't be found") if result.nil?
+    result
+  end
+
+#  def empty?(s)
+#    return s == nil || s.strip.empty?;
+#  end
 
   # request.xhr? isn't good enough, because we have iframes with images submitted in background
   # They all have 'X-Requested-With' parameter set 
@@ -120,8 +90,6 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_error(error)
-# http://fairleads.blogspot.com/2007/06/ruby-yield.html   
-#    puts "regular error"
     custom_log_error error
     if ajax?
       render :text => 'Error happened', :status => 500
@@ -130,15 +98,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_routing_error(error)
-    puts "routing error"
-    if ajax?
-      custom_log_error error
-      render :text => 'Error happened', :status => 500
-    else
-      redirect_to '/404.html'
-    end
-  end
+#  def handle_routing_error(error)
+#    puts "routing error"
+#    if ajax?
+#      custom_log_error error
+#      render :text => 'Error happened', :status => 500
+#    else
+#      redirect_to '/404.html'
+#    end
+#  end
 
   def custom_log_error(error)
     puts "!!!!!!!!!!!!! error found:\n #{error} \n"
@@ -159,4 +127,36 @@ class ApplicationController < ActionController::Base
       redirect_to :controller => :common, :action => :internet_explorer
     end
   end
+
+  def handle_authentication_error(error)
+    if ajax?
+      render :text => 'Please login first', :status => 401
+    else
+      # redirect user
+      flash[:error] = 'Oops. You need to login before you can view that page.'
+      session[:return_to] = request.request_uri
+      redirect_to :controller => :users, :action => 'login'
+    end
+  end
+
+  def handle_authorization_error(error)
+    if ajax?
+      render :text => error.message, :status => 403
+    else
+      flash[:error] = error.message
+      session[:return_to] = request.request_uri
+      render :template => 'common/unauthorized'
+    end
+  end
+
+  def handle_resource_not_found_error(error)
+    if ajax?
+      custom_log_error error
+      render :text => error.message, :status => 404
+    else
+      flash[:error] = error.message
+      render :template => 'common/missing'
+    end
+  end
+
 end
