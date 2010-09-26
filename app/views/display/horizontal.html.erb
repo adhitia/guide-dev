@@ -1,69 +1,87 @@
+
 <!--<script class="guiderer-resource" type="text/javascript" src="<%=WEB_ROOT%>/jquery/jquery.qtip-1.0.0-rc3.js"></script>-->
 <link href="<%=WEB_ROOT%>/public.css" media="screen" rel="stylesheet" type="text/css"/>
 
+<% root_class = ".guide-template-#{@template_id}" %>
+
+<!--condition bar takes additional space-->
+<% has_condition_bar = @tips.select{|tip| !tip.condition.group.nil?}.length > 0 %>
+
 <style type="text/css">
-    .guide-template-2 {
-        width: 210px;
+    .guide-template-1 {
         background-color: #FFFFFF;
         border: 2px solid gray;
         -moz-border-radius: 8px;
         -webkit-border-radius: 8px;
         border-radius: 8px;
         padding: 2px;
+        display:inline-block;
+        overflow: hidden;
     }
 
     /* guide head */
-    .guide-template-2 .guide-head {
+    .guide-template-1 .guide-head {
         background-color:#DBDABD;
         color: #000000;
         font-size: small;
         font-weight: bold;
         text-align: center;
+        width: 120px;
+        display: inline-block;
+        vertical-align:top;
+        height: 100%;
     }
 
-    .guide-template-2 .guide-head .guide-name {
+    .guide-template-1 .guide-head .guide-name {
         color: white;
     }
 
-    .guide-template-2 .guide-head .guide-description {
+    .guide-template-1 .guide-head .guide-description {
     }
 
-    .guide-template-2 .guide-head .guide-dow {
+    .guide-template-1 .guide-head .guide-dow {
+    }
+
+
+    .guide-template-1 .condition-bar {
+        height: 20px;
+    }
+    .guide-template-1 .condition-group {
+        background-color:gray;
+        /*margin-top:2px;*/
+        text-align:center;
+        /*display:inline-block;*/
+        /*border: 1px solid;*/
+        /*float: left;*/
+        margin: 0 1px;
+        padding: 0;
+        border: 0;
     }
 
 
     /* tips, main part */
-    .guide-template-2 .tip-handle {
-        cursor: pointer;
-        background-color: green;
-        border: 1px solid white;
-        padding: 3px;
-    }
-    .guide-template-2 .guide-tip-selected .tip-handle {
-        background-color: lightgreen;
-        cursor: auto;
+    .guide-template-1 .guide-tips {
+        display: inline-block;
+        vertical-align:top;
+        height: 100%;
+        position: relative;
     }
 
-    .guide-template-2 .guide-tip-selected .guide-tip-body {
-        display: block !important;
-        /*height: 0 !important;*/
-        overflow: hidden;
-    }
-
-    .guide-template-2 .guide-tip-body {
+    .guide-template-1 .guide-tip {
         -moz-border-radius: 6px;
         -webkit-border-radius: 6px;
         border-radius: 6px;
         border: 1px solid lightgray;
         padding: 2px;
-        height: 200px;
-        width: 200px;
+        height: 96px;
+        width: 96px;
         background-repeat: no-repeat;
         margin: 2px;
-        display: none;
+        display:inline-block;
+        vertical-align: top;
     }
 
-    .guide-template-2 .guide-tip-body .tip-legend {
+    .guide-template-1 .guide-tip .tip-legend {
         opacity: 0.6;
         background-color: white;
         font-size: small;
@@ -71,34 +89,39 @@
         margin: 2px;
     }
 
-    .guide-template-2 .guide-tip-body .tip-legend .tip-condition {
+    .guide-template-1 .guide-tip .tip-legend .tip-condition {
     }
 
-    .guide-template-2 .guide-tip-body .tip-legend .tip-name {
+    .guide-template-1 .guide-tip .tip-legend .tip-name {
         font-weight: bold;
     }
 
 
     /* guide footer */
-    .guide-template-2 .guide-footer {
+    .guide-template-1 .guide-footer {
         background-color: #DBDABD;
         color: #000000;
         font-size: small;
+        width: 110px;
+        display: inline-block;
+        vertical-align:top;
+        height: 100%;
+        text-align: center;
     }
 
-    .guide-template-2 .guide-footer .select-day {
+    .guide-template-1 .guide-footer .select-day {
         text-align: center;
         color: #666666;
     }
-    .guide-template-2 .guide-footer .select-day .previous-day {
+    .guide-template-1 .guide-footer .select-day .previous-day {
         /*background: url("/images/arrowleft.gif") no-repeat;*/
         /*width: 12px;*/
         /*height: 12px;*/
     }
-    .guide-template-2 .guide-footer .select-day .next-day {
+    .guide-template-1 .guide-footer .select-day .next-day {
     }
 
-    .guide-template-2 .guide-footer .guide-info {
+    .guide-template-1 .guide-footer .guide-info {
         font-size: x-small;
         color: #666666;
     }
@@ -113,7 +136,7 @@
 
 
 <!-- main guide container -->
-<div class="guide-template-2">
+<div class="guide-template-1" style="height:<%= has_condition_bar ? '124px' : '106px' %>">
   <!--header-->
   <div class="guide-head">
     <div class="guide-name">
@@ -125,29 +148,42 @@
 
   <!--tips-->
   <div class="guide-tips">
-    <% prev_cond = nil %>
-    <% @tips.each do |tip| %>
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tbody>
 
-        <div class="guide-tip <%= prev_cond.nil? ? 'guide-tip-selected' : '' %>" tip_id="<%=tip.id%>">
-        <!--create header to click-->
-        <div class="tip-handle" onclick="switch_tips(this);">
-          <%= tip.condition.full_name %>
-        </div>
+      <% if has_condition_bar %>
+        <tr class="condition-bar">
+          <% @tips.map { |t| t.condition.group }.uniq.each do |group| %>
+              <% columns = @tips.select { |t| t.condition.group == group }.length %>
+              <td colspan="<%= columns %>">
+                <div class="condition-group">
+                  <%= group %>
+                </div>
+              </td>
+          <% end %>
+        </tr>
+      <% end %>
 
-        <div class="guide-tip-body" style="background-image:url('<%=tip.image.url(:square)%>');">
-          <div class="tip-legend">
-            <span class="tip-condition"><%= tip.condition.name %>:</span>
-            <span class="tip-name"><%= tip.name %></span>
+      <tr>
+        <% @tips.each do |tip| %>
+            <td>
+            <div class="guide-tip guide-tip-body" style="background-image:url('<%=tip.image.url(:thumb)%>');">
+              <div class="tip-legend">
+                <span class="tip-condition"><%= tip.condition.name %>:</span>
+                <span class="tip-name"><%= tip.name %></span>
 
-            <div class="full_tip" style="visibility:hidden;display:none;">
-              <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
+                <div class="full_tip" style="visibility:hidden;display:none;">
+                  <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        </div>
+            </td>
+        <% end %>
+      </tr>
+      </tbody>
+    </table>
 
-        <% prev_cond = tip.condition %>
-    <% end %>
+
   </div>
 
   <!--footer-->
@@ -197,19 +233,12 @@
       <div class="qtip-content" style="display:none;">
         <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
       </div>
+
     </div>
 
   </div>
 </div>
 
 
-<script type="text/javascript">
-    function switch_tips(clicked) {
-        var newTip = $(clicked).parents('.guide-tip');
-        var oldTip = newTip.parent().find('.guide-tip-selected');
-        oldTip.find('.guide-tip-body').slideUp(500);
-        newTip.find('.guide-tip-body').slideDown(500);
-        oldTip.removeClass('guide-tip-selected');
-        newTip.addClass('guide-tip-selected');
-    }
-</script>
+
+

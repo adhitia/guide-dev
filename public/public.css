@@ -1,3 +1,6 @@
+.starbar {
+    position: relative;
+}
 
 .starbar .outer {
     background: url(/images/stars.png) no-repeat 0 0;
@@ -19,6 +22,7 @@
 .starbar a {
     position: absolute;
     height: 20px;
+    left: 0;
 }
 
 .starbar a:hover {

@@ -1,0 +1,3 @@
+<div class="guiderer" guide_id="<%=guide.id%>" guide_style="<%=style_id%>" server="<%=WEB_ROOT%>">
+  <%= link_to "Find more #{guide.name_location} guides on Guiderer!", search_url(:search_location => guide.location.name) %>
+</div>

@@ -8,11 +8,14 @@
 Your guides
 </h2>
 
+<% @user.calendars.each do |guide| %>
+    <%= render :partial => 'calendars/widget', :locals => {:guide => guide, :style_id => 3} %>
+<% end %>
 
 
 
 
-<table id="calendar_search_result" width=950px class="display" border="0" cellpadding="0" cellspacing="0">
+<!--<table id="calendar_search_result" width=950px class="display" border="0" cellpadding="0" cellspacing="0">
   <thead>
   <tr>
     <th class="sorting">Name</th>
@@ -38,7 +41,7 @@ Your guides
   </tr>
 <% end %>
 </tbody>
-</table>
+</table>-->
 
 <script type="text/javascript">
     $(document).ready(function() {

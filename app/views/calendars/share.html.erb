@@ -17,8 +17,6 @@ Add those imports to the 'head' tag of your page.
     <input type="radio" name="preview_type" id="preview_type_<%=layout.id%>" onchange="change_style(this);"/>
 <% end %>
 </div>
-      <!--<p> Tiny= 200 pixels wide, Small= 300 pixels wide, Normal= 600 pixels wide</P>-->
-
 
 <textarea id="preview_html" rows="7" cols="120"></textarea>
 
@@ -28,9 +26,7 @@ Add those imports to the 'head' tag of your page.
 
 <div id="preview_template" class="hidden">
   <% escape do %>
-    <div class="guiderer" guide_id="{calendar_id}" guide_style="{style_id}" server="<%=WEB_ROOT%>">
-      <%= link_to "Find more #{@calendar.name_location} guides on Guiderer!", search_url(:search_location => @calendar.location.name) %>
-    </div>
+<%= render :partial => 'widget', :locals => {:guide => @calendar, :style_id => '{style_id}'} %>
   <% end %>
 </div>
 
