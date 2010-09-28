@@ -250,6 +250,7 @@ if (!window.tips) var tips = {
             }
             var ls = new google.search.LocalSearch();
             ls.setCenterPoint($(root).attr('city'));
+            ls.setResultSetSize(8);
             ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
             ls.execute(name);
         }
