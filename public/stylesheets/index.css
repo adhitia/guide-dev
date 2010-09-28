@@ -591,6 +591,7 @@ img.button:hover {
 }
 
 #new_guide_overview_page .place-tag a {
+    vertical-align: bottom;
     background-color: #E0EAF1;
     color: #3E6D8E;
     padding: 3px 4px;

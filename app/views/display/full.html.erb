@@ -1,1 +1,124 @@
-another guide
+
+<style type="text/css">
+  .guide-template-full {
+      background-color:azure;
+      color:black;
+  }
+
+  .guide-template-full a {
+      color: blue;
+  }
+
+
+  /*head*/
+  .guide-template-full .guide-head {
+      text-align: center;
+  }
+
+  /* tip labels */
+  .guide-template-full .weekday-label {
+      height: 25px;
+      padding:5px;
+      text-align:center;
+  }
+  .guide-template-full .condition-label {
+      width: 50px;
+      padding:10px;
+      font-weight: bold;
+  }
+
+
+  /* footer */
+  .guide-template-full .guide-footer .vote {
+      display: inline-block;
+      margin-left: 70px;
+  }
+  .guide-template-full .guide-footer .vote .starbar {
+      display: inline-block;
+  }
+  .guide-template-full .guide-footer .guide-info {
+      display: inline-block;
+      float: right;
+      margin-right: 50px;
+  }
+</style>
+
+
+
+<table class="guide-template-full" border="0" cellpadding="0" cellspacing="0">
+  <thead>
+  
+  <tr>
+    <th class="guide-head" colspan="8">
+      <div class="guide-name">
+        <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
+      </div>
+      <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
+    </th>
+  </tr>
+
+  <tr>
+    <th></th>
+    <% @weekdays.each do |day| %>
+        <th class="weekday-label">
+          <%= day.name %>
+        </th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @calendar.conditions.each do |condition| %>
+      <% tips = @calendar.tips.select { |tip| tip.condition_id == condition.id } %>
+      <% if tips.length > 0 %>
+          <tr>
+            <td class="condition-label"><%= condition.full_name %></td>
+            <% @weekdays.each do |day| %>
+                <% tip = tips.find { |tip| tip.weekday_id == day.id } %>
+                <td>
+                      <%= render :partial => 'display/tip/small', :locals => {:tip => tip} %>
+                </td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+
+  <tfoot>
+  <tr>
+    <th colspan="8" class="guide-footer">
+
+      <!-- ratings go here -->
+      <div class="vote">
+        Rate this guide:
+        <div class="starbar">
+          <div class="outer">
+            <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+              <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
+              <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
+              <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
+              <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
+              <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- links and other info -->
+      <div class="guide-info">
+        <div class="guiderer-logo">
+          <a href="<%= WEB_ROOT %>"> Powered by
+          <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
+        </div>
+
+        <div class="qtip-content" style="display:none;">
+          <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
+        </div>
+
+      </div>
+
+
+    </th>
+  </tr>
+  </tfoot>
+</table>

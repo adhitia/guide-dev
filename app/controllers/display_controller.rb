@@ -3,7 +3,7 @@ require 'weather_man'
 require 'calendars_helper'
 
 class DisplayController < ApplicationController
-  layout nil
+  layout 'widget'
 
   after_filter :jsonp
 

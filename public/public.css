@@ -1,44 +1,48 @@
-.starbar {
+/* this file contains styles for guide widgets */
+
+
+
+
+.guiderer .starbar {
     position: relative;
 }
 
-.starbar .outer {
+.guiderer .starbar .outer {
     background: url(/images/stars.png) no-repeat 0 0;
     height: 20px;
     width: 100px;
 }
 
-.starbar .inner {
+.guiderer .starbar .inner {
     background: url(/images/stars.png) no-repeat 0 -20px;
     height: 20px;
     /*width: 70px;*/
 }
 
-.starbar .voted {
+.guiderer .starbar .voted {
   background-position: 0 -40px;
   /*width: 40px;*/
 }
 
-.starbar a {
+.guiderer .starbar a {
     position: absolute;
     height: 20px;
     left: 0;
 }
 
-.starbar a:hover {
+.guiderer .starbar a:hover {
   background: transparent url(/images/stars.png) no-repeat scroll 0 -60px;
 }
 
-.starbar a.s1  { width:  20px; }
-.starbar a.s2  { width:  40px; }
-.starbar a.s3  { width:  60px; }
-.starbar a.s4  { width:  80px; }
-.starbar a.s5  { width: 100px; }
+.guiderer .starbar a.s1  { width:  20px; }
+.guiderer .starbar a.s2  { width:  40px; }
+.guiderer .starbar a.s3  { width:  60px; }
+.guiderer .starbar a.s4  { width:  80px; }
+.guiderer .starbar a.s5  { width: 100px; }
 
 
-
-
-.tip-show {
+/*hover with tip details*/
+.guiderer .tip-show {
     min-width: 200px;
     min-height: 200px;
     max-width: 600px;
@@ -46,24 +50,68 @@
     padding: 5px;
 }
 
-.tip-show .tip-name {
+.guiderer .tip-show .tip-name {
     color: #666666;
     font-weight: bold;
     font-size: larger;
 }
-.tip-show .tip-details {
+.guiderer .tip-show .tip-details {
     overflow:hidden;
     zoom:1;
     margin-bottom:10px;
 }
-.tip-show .tip-map {
+.guiderer .tip-show .tip-map {
     margin-top:10px;
     text-align:center;
 }
 
-.tip-show  a {
+.guiderer .tip-show  a {
     color: black;
 }
-.tip-show a:visited {
+.guiderer .tip-show a:visited {
     color: black;
+}
+
+
+
+
+
+
+
+/* tip templates */
+.guiderer .tip-element-small {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid lightgray;
+    padding: 2px;
+    height: 96px;
+    width: 96px;
+    background-repeat: no-repeat;
+    margin: 2px;
+    /*display:inline-block;*/
+    /*vertical-align: top;*/
+}
+.guiderer .tip-element-small.guide-tip-none {
+    background-color: lightgray;
+}
+
+.guiderer .tip-element-small .tip-legend {
+    opacity: 0.6;
+    background-color: white;
+    font-size: small;
+    color: #222222;
+    margin: 2px;
+}
+
+.guiderer .tip-element-small .tip-legend .tip-condition {
+}
+
+.guiderer .tip-element-small .tip-legend .tip-name {
+    font-weight: bold;
+}
+
+.guiderer .tip-element-small .full_tip {
+    visibility:hidden;
+    display:none;
 }

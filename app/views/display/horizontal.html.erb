@@ -1,9 +1,4 @@
 
-<!--<script class="guiderer-resource" type="text/javascript" src="<%=WEB_ROOT%>/jquery/jquery.qtip-1.0.0-rc3.js"></script>-->
-<link href="<%=WEB_ROOT%>/public.css" media="screen" rel="stylesheet" type="text/css"/>
-
-<% root_class = ".guide-template-#{@template_id}" %>
-
 <!--condition bar takes additional space-->
 <% has_condition_bar = @tips.select{|tip| !tip.condition.group.nil?}.length > 0 %>
 
@@ -62,6 +57,7 @@
 
 
     /* tips, main part */
+
     .guide-template-1 .guide-tips {
         display: inline-block;
         vertical-align:top;
@@ -69,36 +65,6 @@
         position: relative;
         white-space: normal;
     }
-
-    .guide-template-1 .guide-tip {
-        -moz-border-radius: 6px;
-        -webkit-border-radius: 6px;
-        border-radius: 6px;
-        border: 1px solid lightgray;
-        padding: 2px;
-        height: 96px;
-        width: 96px;
-        background-repeat: no-repeat;
-        margin: 2px;
-        display:inline-block;
-        vertical-align: top;
-    }
-
-    .guide-template-1 .guide-tip .tip-legend {
-        opacity: 0.6;
-        background-color: white;
-        font-size: small;
-        color: #222222;
-        margin: 2px;
-    }
-
-    .guide-template-1 .guide-tip .tip-legend .tip-condition {
-    }
-
-    .guide-template-1 .guide-tip .tip-legend .tip-name {
-        font-weight: bold;
-    }
-
 
     /* guide footer */
     .guide-template-1 .guide-footer {
@@ -171,16 +137,7 @@
       <tr>
         <% @tips.each do |tip| %>
             <td>
-            <div class="guide-tip guide-tip-body" style="background-image:url('<%=tip.image.url(:thumb)%>');">
-              <div class="tip-legend">
-                <span class="tip-condition"><%= tip.condition.name %>:</span>
-                <span class="tip-name"><%= tip.name %></span>
-
-                <div class="full_tip" style="visibility:hidden;display:none;">
-                  <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
-                </div>
-              </div>
-            </div>
+              <%= render :partial => 'display/tip/small', :locals => {:tip => tip} %>
             </td>
         <% end %>
       </tr>

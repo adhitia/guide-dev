@@ -1,0 +1,19 @@
+<% if !tip.nil? %>
+
+<div class="guide-tip guide-tip-body tip-element-small" style="background-image:url('<%=tip.image.url(:thumb)%>');">
+  <div class="tip-legend">
+    <span class="tip-condition"><%= tip.condition.name %>:</span>
+    <span class="tip-name"><%= tip.name %></span>
+
+    <div class="full_tip">
+      <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
+    </div>
+  </div>
+</div>
+
+<% else %>
+
+    <div class="guide-tip-none tip-element-small">
+    </div>
+
+<% end %>
