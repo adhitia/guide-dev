@@ -27,14 +27,22 @@
             <%= h shorten(tip.url, 35) %>
           </a>
         <% end %>
+
   </div>
+
 
   <div class="tip-map">
     <% if tip.address.lat != 0 %>
         <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.address.lat %>+<%= tip.address.lng %>&amp;z=16" target="_blank">
           Directions and Map
         </a>:<br/>
-        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=560x300&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>" />
+        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=460x200&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>" />
     <% end %>
   </div>
+
+  <!--<br/>
+  <span class="st_email"></span>
+  <span class="st_facebook"></span>
+  <span class="st_twitter"></span>
+  <span class="st_sharethis" displayText="ShareThis"></span>-->
 </div>

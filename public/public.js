@@ -65,12 +65,12 @@ if (!window._guiderer) {
                 $(this).qtip({
                     content: $(this).find('.full_tip').html(),
                     hide: {
-                        delay: 500,
+                        delay: 2500,
                         fixed: true
                     },
                     style:  {
                         width: {
-                            max: 600,
+                            max: 500,
                             min: 200
                         }
                     },

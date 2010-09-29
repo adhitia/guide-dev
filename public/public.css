@@ -42,40 +42,47 @@
 
 
 /*hover with tip details*/
-.guiderer .tip-show {
+.qtip-content .tip-show {
     min-width: 200px;
     min-height: 200px;
-    max-width: 600px;
+    max-width: 500px;
     color:black;
     padding: 5px;
 }
 
-.guiderer .tip-show .tip-name {
+.qtip-content .tip-show .tip-name {
     color: #666666;
     font-weight: bold;
     font-size: larger;
 }
-.guiderer .tip-show .tip-details {
+.qtip-content .tip-show .tip-details {
     overflow:hidden;
     zoom:1;
     margin-bottom:10px;
 }
-.guiderer .tip-show .tip-map {
+.qtip-content .tip-show .tip-map {
     margin-top:10px;
     text-align:center;
 }
 
-.guiderer .tip-show  a {
+.qtip-content .tip-show  a {
     color: black;
 }
-.guiderer .tip-show a:visited {
+.qtip-content .tip-show a:visited {
     color: black;
 }
 
 
 
 
-
+.guiderer a {
+    color: #ffffff;
+}
+.guiderer a:visited {
+    color: #ffffff;
+}
+/*a { color: #ffffff; }*/
+/*a:visited { color: #ffffff; }*/
 
 
 /* tip templates */

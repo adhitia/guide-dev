@@ -17,6 +17,10 @@ body {
 	font-size: small;
 	color: #ffffff;
 }
+a { color: #ffffff; }
+a:visited { color: #ffffff; }
+/*a:hover { color: #fff; background-color:#000; }*/
+
 .headtextlighter {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: medium;
@@ -36,13 +40,9 @@ body {
 
 
 
-/*TODO deal with this later*/
-a { color: #ffffff; }
-a:visited { color: #ffffff; }
-/*a:hover { color: #fff; background-color:#000; }*/
 
 .local-search-launch {
-    color: black;
+    /*color: black;*/
 }
 
 .main-area {
@@ -749,5 +749,7 @@ div.guide-type-panes > div {
     color: black;
     overflow: hidden;
 }
-
+#edit_calendar_tabs > .tab-content a {
+    color: black;
+}
 
