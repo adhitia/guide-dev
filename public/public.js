@@ -38,7 +38,7 @@ if (!window._guiderer) {
     if (window.addthis == undefined) {
         load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca2e698028f31e3');
     }
-    load_css(server + 'public.css');
+    load_css(server + 'public.css?_version=1');
 
 
     _guiderer = {
