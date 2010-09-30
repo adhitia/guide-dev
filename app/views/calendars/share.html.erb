@@ -1,5 +1,8 @@
+<script type="text/javascript" src="<%= WEB_ROOT %>/public.js" class="guiderer-script"></script>
+
 <h1>Preview and get widget code</h1>
 
+<!--
 Add those imports to the 'head' tag of your page.
 <textarea id="preview_import" rows="4" cols="120">
   <% escape do %>
@@ -8,9 +11,10 @@ Add those imports to the 'head' tag of your page.
     <script type="text/javascript" src="<%=WEB_ROOT%>/jquery/jquery.qtip-1.0.0-rc3.js"></script>
   <% end %>
 </textarea>
+-->
 
 
-<P>Choose your prefered widget dimensions:</p>
+<P>Choose your preferred widget layout:</p>
 <div id="choose_style">
 <% @layouts.each do |layout|  %>
     <label for="preview_type_<%=layout.id%>"><%= layout.name %></label>

@@ -1,6 +1,5 @@
-
 <!--condition bar takes additional space-->
-<% has_condition_bar = @tips.select{|tip| !tip.condition.group.nil?}.length > 0 %>
+<% has_condition_bar = @tips.select { |tip| !tip.condition.group.nil? }.length > 0 %>
 
 <style type="text/css">
     .guide-template-1 {
@@ -10,21 +9,22 @@
         -webkit-border-radius: 8px;
         border-radius: 8px;
         padding: 2px;
-        display:inline-block;
+        display: inline-block;
         overflow: hidden;
         white-space: nowrap;
+        font-size: small;
     }
 
     /* guide head */
     .guide-template-1 .guide-head {
-        background-color:#DBDABD;
+        background-color: #DBDABD;
         color: #000000;
-        font-size: small;
+        font-size: medium;
         font-weight: bold;
         text-align: center;
         width: 120px;
         display: inline-block;
-        vertical-align:top;
+        vertical-align: top;
         height: 100%;
         white-space: normal;
     }
@@ -39,62 +39,27 @@
     .guide-template-1 .guide-head .guide-dow {
     }
 
-
     .guide-template-1 .condition-bar {
         height: 20px;
     }
+
     .guide-template-1 .condition-group {
-        background-color:gray;
-        /*margin-top:2px;*/
-        text-align:center;
-        /*display:inline-block;*/
-        /*border: 1px solid;*/
-        /*float: left;*/
+        background-color: gray;
+        text-align: center;
         margin: 0 1px;
         padding: 0;
         border: 0;
     }
 
-
     /* tips, main part */
-
     .guide-template-1 .guide-tips {
         display: inline-block;
-        vertical-align:top;
+        vertical-align: top;
         height: 100%;
         position: relative;
         white-space: normal;
     }
 
-    /* guide footer */
-    .guide-template-1 .guide-footer {
-        background-color: #DBDABD;
-        color: #000000;
-        font-size: small;
-        width: 110px;
-        display: inline-block;
-        vertical-align:top;
-        height: 100%;
-        text-align: center;
-        white-space: normal;
-    }
-
-    .guide-template-1 .guide-footer .select-day {
-        text-align: center;
-        color: #666666;
-    }
-    .guide-template-1 .guide-footer .select-day .previous-day {
-        /*background: url("/images/arrowleft.gif") no-repeat;*/
-        /*width: 12px;*/
-        /*height: 12px;*/
-    }
-    .guide-template-1 .guide-footer .select-day .next-day {
-    }
-
-    .guide-template-1 .guide-footer .guide-info {
-        font-size: x-small;
-        color: #666666;
-    }
 </style>
 
 
@@ -110,7 +75,7 @@
   <!--header-->
   <div class="guide-head">
     <div class="guide-name">
-      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
+      <a href="<%= WEB_ROOT %>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
     </div>
     <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
     <div class="guide-dow"><%= @dow.name %></div>
@@ -122,16 +87,16 @@
       <tbody>
 
       <% if has_condition_bar %>
-        <tr class="condition-bar">
-          <% @tips.map { |t| t.condition.group }.uniq.each do |group| %>
-              <% columns = @tips.select { |t| t.condition.group == group }.length %>
-              <td colspan="<%= columns %>">
-                <div class="condition-group">
-                  <%= group %>
-                </div>
-              </td>
-          <% end %>
-        </tr>
+          <tr class="condition-bar">
+            <% @tips.map { |t| t.condition.group }.uniq.each do |group| %>
+                <% columns = @tips.select { |t| t.condition.group == group }.length %>
+                <td colspan="<%= columns %>">
+                  <div class="condition-group">
+                    <%= group %>
+                  </div>
+                </td>
+            <% end %>
+          </tr>
       <% end %>
 
       <tr>
@@ -148,56 +113,7 @@
   </div>
 
   <!--footer-->
-  <div class="guide-footer">
-    <!-- date navigation -->
-    <div class="select-day">
-      <% if @day > 0 %>
-          <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
-            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowleft.gif"/>
-          </a>
-      <% end %>
-      <%= @dow.name %>
-      <% if @day < @forecast_full.length - 1 %>
-          <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View <%= @dow.next.name %>">
-            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
-          </a>
-      <% end %>
-    </div>
-
-    <div>
-      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>" target="_blank">
-        Whole week
-      </a>
-    </div>
-
-    <!-- ratings go here -->
-    Rate this guide:
-    <div class="starbar">
-      <div class="outer">
-        <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-          <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
-          <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
-          <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
-          <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
-          <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- links and other info -->
-    <div class="guide-info">
-      <div class="guiderer-logo">
-        <a href="<%= WEB_ROOT %>"> Powered by<br/>
-        <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
-      </div>
-
-      <div class="qtip-content" style="display:none;">
-        <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
-      </div>
-
-    </div>
-
-  </div>
+  <%= render :partial => 'display/footer/normal', :locals => {:guide => @calendar, :style => 'small'} %>
 </div>
 
 

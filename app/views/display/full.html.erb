@@ -26,21 +26,6 @@
       padding:10px;
       font-weight: bold;
   }
-
-
-  /* footer */
-  .guide-template-full .guide-footer .vote {
-      display: inline-block;
-      margin-left: 70px;
-  }
-  .guide-template-full .guide-footer .vote .starbar {
-      display: inline-block;
-  }
-  .guide-template-full .guide-footer .guide-info {
-      display: inline-block;
-      float: right;
-      margin-right: 50px;
-  }
 </style>
 
 
@@ -86,38 +71,9 @@
 
   <tfoot>
   <tr>
-    <th colspan="8" class="guide-footer">
-
-      <!-- ratings go here -->
-      <div class="vote">
-        Rate this guide:
-        <div class="starbar">
-          <div class="outer">
-            <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-              <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
-              <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
-              <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
-              <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
-              <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- links and other info -->
-      <div class="guide-info">
-        <div class="guiderer-logo">
-          <a href="<%= WEB_ROOT %>"> Powered by
-          <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
-        </div>
-
-        <div class="qtip-content" style="display:none;">
-          <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
-        </div>
-
-      </div>
-
-
+    <th></th>
+    <th colspan="7" class="guide-footer">
+      <%= render :partial => 'display/footer/normal', :locals => {:guide => @calendar, :style => 'flat', :show_week_navigation => false} %>
     </th>
   </tr>
   </tfoot>

@@ -1,0 +1,10 @@
+<div class="guide-tip-body tip-element-medium" style="background-image:url('<%=tip.image.url(:square)%>');">
+  <div class="tip-legend">
+    <span class="tip-condition"><%= tip.condition.name %>:</span>
+    <span class="tip-name"><%= tip.name %></span>
+
+    <div class="full_tip" style="visibility:hidden;display:none;">
+      <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<%
+  if !(defined?(show_week_navigation) == 'local-variable')
+    show_week_navigation = true
+  end
+%>
+
+<div class="guide-footer guide-footer-<%=style%>">
+  <% if show_week_navigation %>
+      <!-- date navigation -->
+      <div class="select-day">
+        <% if @day > 0 %>
+            <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
+              <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowleft.gif"/>
+            </a>
+        <% end %>
+        <%= @dow.name %>
+        <% if @day < @forecast_full.length - 1 %>
+            <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View <%= @dow.next.name %>">
+              <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
+            </a>
+        <% end %>
+      </div>
+
+      <div class="whole-week">
+        <a href="<%= WEB_ROOT %>/guides/<%= guide.id %>" target="_blank">
+          Whole week
+        </a>
+      </div>
+  <% end %>
+
+  <!-- ratings go here -->
+  <div class="vote">
+    Rate this guide:
+    <div class="starbar">
+      <div class="outer">
+        <div class="inner" style="width:<%=Integer(@rating*20)%>px">
+          <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
+          <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
+          <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
+          <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
+          <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- links and other info -->
+  <div class="guide-info">
+    <div class="guiderer-logo">
+      <a href="<%= WEB_ROOT %>"> Powered by
+        <!--<br/>-->
+        <div>
+          <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
+        </div>
+    </div>
+
+    <div class="qtip-content" style="display:none;">
+      <%= render :partial => 'display/hover/guide_info', :locals => {:guide => guide} %>
+    </div>
+
+  </div>
+
+
+  <div class="addthis-guide addthis_toolbox addthis_default_style"
+       url="<%= WEB_ROOT %>/guides/<%= guide.id %>"
+       title="<%= h guide.name %> travel guide"
+  >
+    <a class="addthis_button_preferred_1"></a>
+    <a class="addthis_button_preferred_2"></a>
+    <a class="addthis_button_preferred_3"></a>
+    <!--<a class="addthis_button_preferred_4"></a>-->
+    <a class="addthis_button_compact"></a>
+  </div>
+
+</div>

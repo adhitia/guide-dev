@@ -1,43 +1,44 @@
 <style type="text/css">
-  .guide-info-1 a {
-      color: blue;
-  }
-  .guide-info-1 a:hover {
-      color: blue;
-  }
+    .guide-info-1 a {
+        color: blue;
+    }
+
+    .guide-info-1 a:hover {
+        color: blue;
+    }
 </style>
 
 <div class="guide-info-1">
-<div>
-  Travel guide by <%= link_to guide.user.name, show_user_path(:id => guide.user.id) %>
+  <div>
+    Travel guide by <%= link_to guide.user.name, show_user_path(:id => guide.user.id) %>
+  </div>
+  <div>
+    <a href="<%= WEB_ROOT %>/guides/<%= guide.id %>/share">
+      Embed on your site or blog
+    </a>
+  </div>
+  <HR>
+  <div>
+    Find other guides for
+    <a href="<%= WEB_ROOT %>/guides?search_location=<%= guide.location.name %>">
+      <%= guide.location.name %>
+    </a>
+  </div>
+
+
+  <div>
+    For more info on <%= guide.location.name %>
+    <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= guide.location.name %>&fulltext=Search">
+      Visit WikiTravel
+    </a>
+    or
+    <a href="http://www.tripadvisor.com/Search?q=<%= guide.location.name %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
+      TripAdvisor
+    </a>
+    <HR>
+    BUILT ON AND POWERED BY
+    <a href="http://www.guiderer.com"> <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif"></a>
+    <BR>Create your own travel guide
+  </div>
 </div>
-<div>
-  <a href="<%= WEB_ROOT %>/guides/<%= guide.id %>/share">
-    Embed on your site or blog
-  </a>
-</div>
-<HR>
-<div>
-  Find other guides for
-  <a href="<%= WEB_ROOT %>/guides?search_location=<%= guide.location.name %>">
-    <%= guide.location.name %>
-  </a>
-</div>
 
-
-
-
-
-
-<div>
-  For more info on <%= guide.location.name %>
-  <a href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= guide.location.name %>&fulltext=Search">
-    Visit WikiTravel
-  </a>
-  or
-  <a href="http://www.tripadvisor.com/Search?q=<%= guide.location.name %>&sub-search=Search&geo=&where=nav&returnTo=__2F__">
-    TripAdvisor
-  </a>
-  <HR> BUILT ON AND POWERED BY <a href="http://www.guiderer.com"><img src="/images/guiderer-logo-trasnp-tiny.gif"></a> <BR>Create your own travel guide
-</div>
-</div>

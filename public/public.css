@@ -1,7 +1,9 @@
 /* this file contains styles for guide widgets */
 
 
-
+.guiderer {
+    font-family: serif;
+}
 
 .guiderer .starbar {
     position: relative;
@@ -75,17 +77,18 @@
 
 
 
-.guiderer a {
+/*.guiderer a {
     color: #ffffff;
 }
 .guiderer a:visited {
     color: #ffffff;
-}
+}*/
 /*a { color: #ffffff; }*/
 /*a:visited { color: #ffffff; }*/
 
 
 /* tip templates */
+/* small box (about 100px each side) */
 .guiderer .tip-element-small {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -122,3 +125,141 @@
     visibility:hidden;
     display:none;
 }
+
+/* medium box (about 200 pixels each side) */
+.guiderer .tip-element-medium {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid lightgray;
+    padding: 2px;
+    height: 196px;
+    width: 196px;
+    background-repeat: no-repeat;
+    margin: 2px;
+    display: none;
+}
+
+.guiderer .tip-element-medium .tip-legend {
+    opacity: 0.6;
+    background-color: white;
+    font-size: medium;
+    color: #222222;
+    margin: 2px;
+}
+
+.guiderer .tip-element-medium .tip-legend .tip-condition {
+}
+
+.guiderer .tip-element-medium .tip-legend .tip-name {
+    font-weight: bold;
+}
+
+
+
+/* guide footer, small version (about 100px wide) */
+.guiderer .guide-footer-small {
+    background-color: #DBDABD;
+    color: #000000;
+    font-size: small;
+    width: 106px;
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    text-align: center;
+    white-space: normal;
+}
+
+.guiderer .guide-footer-small .select-day {
+    text-align: center;
+    color: #666666;
+}
+
+.guiderer .guide-footer-small .select-day .previous-day {
+/*background: url("/images/arrowleft.gif") no-repeat;*/
+/*width: 12px;*/
+/*height: 12px;*/
+}
+
+.guiderer .guide-footer-small .select-day .next-day {
+}
+
+.guiderer .guide-footer-small .vote .starbar {
+    display: inline-block;
+    margin-top: -3px;
+}
+
+.guiderer .guide-footer-small .guide-info {
+    font-size: x-small;
+    color: #666666;
+}
+
+.guiderer .guide-footer-small .addthis-guide {
+    display: inline-block;
+    margin-top: 3px;
+    width: 90px;
+}
+
+
+/* guide footer, medium version (about 200px wide) */
+.guiderer .guide-footer-medium {
+    background-color: #DBDABD;
+    color: #000000;
+    font-size: small;
+    padding: 5px 10px;
+}
+.guiderer .guide-footer-medium .select-day {
+    color: #666666;
+    display:inline-block;
+    font-size: medium;
+}
+.guiderer .guide-footer-medium .whole-week {
+    display:inline-block;
+    float: right;
+    font-size: medium;
+}
+.guiderer .guide-footer-medium .vote {
+    white-space: nowrap;
+}
+.guiderer .guide-footer-medium .vote .starbar {
+    display: inline-block;
+}
+.guiderer .guide-footer-medium .guide-info {
+    font-size: x-small;
+    color: #666666;
+    display:inline-block;
+}
+.guiderer .guide-footer-medium .addthis-guide {
+    display:inline-block;
+    float: right;
+    margin-top: 5px;
+    width: 90px;
+}
+
+/* guide footer, one-line version */
+.guiderer .guide-footer-flat {
+}
+
+.guiderer .guide-footer-flat .vote {
+    display: inline-block;
+    float: left;
+    font-weight:normal;
+}
+.guiderer .guide-footer-flat .vote .starbar {
+    display: inline-block;
+}
+.guiderer .guide-footer-flat .guide-info {
+    display: inline-block;
+    float: right;
+    color: black;
+}
+.guiderer .guide-footer-flat .guide-info .guiderer-logo > div {
+    display: inline-block;
+}
+
+.guiderer .guide-footer-flat .addthis-guide {
+    float: right;
+    margin-right: 50px;
+}
+
+

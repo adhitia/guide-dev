@@ -1,12 +1,46 @@
-$(document).ready(function() {
-//    $(document).load(function(){
-//    alert('!');
-        _guiderer.render_all(document);
-//    });
-});
-
-
 if (!window._guiderer) {
+    // fetch location of guiderer server from script tag
+    var server = null;
+    var scripts = document.getElementsByTagName("script");
+    for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].className == 'guiderer-script') {
+            server = scripts[i].src.match(/http:\/\/.+\//);
+        }
+    }
+    if (server == null) {
+//        alert(null);
+        server = 'http://guiderer.com/';
+    }
+
+    // load necessary resources first
+    function load_javascript(src) {
+        var a = document.createElement('script');
+        a.type = 'text/javascript';
+        a.src = src;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(a, s);
+    }
+
+    function load_css(src) {
+        var a = document.createElement('link');
+        a.rel = 'stylesheet';
+        a.type = 'text/css';
+        a.href = src;
+        document.getElementsByTagName("head")[0].appendChild(a);
+    }
+
+    if (window.jQuery == undefined) {
+        load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
+    }
+    if (window.jQuery == undefined || jQuery().qtip == undefined) {
+        load_javascript(server + 'jquery/jquery.qtip-1.0.0-rc3.js');
+    }
+    if (window.addthis == undefined) {
+        load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca2e698028f31e3');
+    }
+    load_css(server + 'public.css');
+
+
     _guiderer = {
         render_all: function(root) {
             $(root).find('.guiderer').each(function(index) {
@@ -61,11 +95,23 @@ if (!window._guiderer) {
         },
 
         init: function(root) {
+            root.find('div.addthis-guide').each(function() {
+                var current = $(this);
+                var share_config = {};
+                share_config.url = current.attr('url');
+                share_config.title = current.attr('title');
+                if (current.attr('description') != null) {
+                    share_config.description = current.attr('description'); 
+                }
+                addthis.toolbox(this, {}, share_config);
+//                addthis.button(this, {}, share_config);
+            });
+
             root.find('div.guide-tip-body').each(function() {
                 $(this).qtip({
                     content: $(this).find('.full_tip').html(),
                     hide: {
-                        delay: 2500,
+                        delay: 500,
                         fixed: true
                     },
                     style:  {
@@ -120,5 +166,30 @@ if (!window._guiderer) {
             });
         }
     };
+    _guiderer.server = server;
+
+
+    function addEvent(elm, evType, fn, useCapture) {
+        //Credit: Function written by Scott Andrews
+        //(slightly modified)
+        var ret = 0;
+
+        if (elm.addEventListener)
+            ret = elm.addEventListener(evType, fn, useCapture);
+        else if (elm.attachEvent)
+            ret = elm.attachEvent('on' + evType, fn);
+        else
+            elm['on' + evType] = fn;
+
+        return ret;
+    }
+
+    // render all guides once page is loaded
+    addEvent(window, "load", function() {_guiderer.render_all(document);});
+
+
+//    $(document).ready(function() {
+//         _guiderer.render_all(document);
+//    });
 }
 

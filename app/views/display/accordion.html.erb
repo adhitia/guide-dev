@@ -1,13 +1,14 @@
 
 <style type="text/css">
     .guide-template-2 {
-        width: 210px;
+        width: 206px;
         background-color: #FFFFFF;
         border: 2px solid gray;
         -moz-border-radius: 8px;
         -webkit-border-radius: 8px;
         border-radius: 8px;
         padding: 2px;
+        font-size: medium;
     }
 
     /* guide head */
@@ -21,12 +22,14 @@
 
     .guide-template-2 .guide-head .guide-name {
         color: white;
+        font-size:medium;
     }
 
     .guide-template-2 .guide-head .guide-description {
     }
 
     .guide-template-2 .guide-head .guide-dow {
+        /*font-size: medium;*/
     }
 
 
@@ -44,61 +47,7 @@
 
     .guide-template-2 .guide-tip-selected .guide-tip-body {
         display: block !important;
-        /*height: 0 !important;*/
         overflow: hidden;
-    }
-
-    .guide-template-2 .guide-tip-body {
-        -moz-border-radius: 6px;
-        -webkit-border-radius: 6px;
-        border-radius: 6px;
-        border: 1px solid lightgray;
-        padding: 2px;
-        height: 200px;
-        width: 200px;
-        background-repeat: no-repeat;
-        margin: 2px;
-        display: none;
-    }
-
-    .guide-template-2 .guide-tip-body .tip-legend {
-        opacity: 0.6;
-        background-color: white;
-        font-size: small;
-        color: #222222;
-        margin: 2px;
-    }
-
-    .guide-template-2 .guide-tip-body .tip-legend .tip-condition {
-    }
-
-    .guide-template-2 .guide-tip-body .tip-legend .tip-name {
-        font-weight: bold;
-    }
-
-
-    /* guide footer */
-    .guide-template-2 .guide-footer {
-        background-color: #DBDABD;
-        color: #000000;
-        font-size: small;
-    }
-
-    .guide-template-2 .guide-footer .select-day {
-        text-align: center;
-        color: #666666;
-    }
-    .guide-template-2 .guide-footer .select-day .previous-day {
-        /*background: url("/images/arrowleft.gif") no-repeat;*/
-        /*width: 12px;*/
-        /*height: 12px;*/
-    }
-    .guide-template-2 .guide-footer .select-day .next-day {
-    }
-
-    .guide-template-2 .guide-footer .guide-info {
-        font-size: x-small;
-        color: #666666;
     }
 </style>
 
@@ -127,21 +76,12 @@
     <% @tips.each do |tip| %>
 
         <div class="guide-tip <%= prev_cond.nil? ? 'guide-tip-selected' : '' %>" tip_id="<%=tip.id%>">
-        <!--create header to click-->
-        <div class="tip-handle" onclick="switch_tips(this);">
-          <%= tip.condition.full_name %>
-        </div>
-
-        <div class="guide-tip-body" style="background-image:url('<%=tip.image.url(:square)%>');">
-          <div class="tip-legend">
-            <span class="tip-condition"><%= tip.condition.name %>:</span>
-            <span class="tip-name"><%= tip.name %></span>
-
-            <div class="full_tip" style="visibility:hidden;display:none;">
-              <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
-            </div>
+          <!--create header to click-->
+          <div class="tip-handle" onclick="switch_tips(this);">
+            <%= tip.condition.full_name %>
           </div>
-        </div>
+
+          <%= render :partial => 'display/tip/medium', :locals => {:tip => tip} %>
         </div>
 
         <% prev_cond = tip.condition %>
@@ -149,55 +89,8 @@
   </div>
 
   <!--footer-->
-  <div class="guide-footer">
-    <!-- date navigation -->
-    <div class="select-day">
-      <% if @day > 0 %>
-          <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
-            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowleft.gif"/>
-          </a>
-      <% end %>
-      <%= @dow.name %>
-      <% if @day < @forecast_full.length - 1 %>
-          <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View <%= @dow.next.name %>">
-            <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
-          </a>
-      <% end %>
-    </div>
+  <%= render :partial => 'display/footer/normal', :locals => {:guide => @calendar, :style => 'medium'} %>
 
-    <div>
-      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>" target="_blank">
-        Whole week
-      </a>
-    </div>
-
-    <!-- ratings go here -->
-    Rate this guide:
-    <div class="starbar">
-      <div class="outer">
-        <div class="inner" style="width:<%=Integer(@rating*20)%>px">
-          <a class="s5" onclick="_guiderer.vote(this);" title="5"></a>
-          <a class="s4" onclick="_guiderer.vote(this);" title="4"></a>
-          <a class="s3" onclick="_guiderer.vote(this);" title="3"></a>
-          <a class="s2" onclick="_guiderer.vote(this);" title="2"></a>
-          <a class="s1" onclick="_guiderer.vote(this);" title="1"></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- links and other info -->
-    <div class="guide-info">
-      <div class="guiderer-logo">
-        <a href="<%= WEB_ROOT %>"> Powered by<br/>
-        <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
-      </div>
-
-      <div class="qtip-content" style="display:none;">
-        <%= render :partial => 'display/hover/guide_info', :locals => {:guide => @calendar} %>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 
