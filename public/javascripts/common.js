@@ -103,6 +103,10 @@ if (!window.common) {
             return s.replace(/^\s+|\s+$/g, '');
         },
 
+        empty: function(s) {
+            return s == null || common.trim(s) == '';
+        },
+
         clearValidationErrors: function() {
             $('.validation-error').html('');
             $('input.invalid,textarea.invalid').removeClass('invalid');

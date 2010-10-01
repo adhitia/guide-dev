@@ -68,11 +68,14 @@
         });
 
 
-
-//        $('#new_calendar_form').submit(function() {
-//            $.Watermark.HideAll();
-//            return true;
-//        });
+        $('#calendar_name_location').blur(function() {
+            var loc = $(this).val();
+            var target = $('#calendar_location_name');
+            if (!common.empty(loc) && common.empty(target.val())) {
+                target.val(loc);
+                target.autocomplete('search');
+            }
+        });
     });
 
 </script>

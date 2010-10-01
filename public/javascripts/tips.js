@@ -114,14 +114,30 @@ if (!window.tips) var tips = {
         container.html('');
         if (searcher.results && searcher.results.length > 0) {
             container.append('<input type="hidden" class="tip_image_url" name="' + $(root).attr('form_prefix') + '[image_url]">');
-            for (var i = 0; i < searcher.results.length; i++) {
-                var result = searcher.results[i];
-                var html = "" +
-                           "<div class='full-image' full_url='" + result.url + "'>" +
-                           "<img class='google_image' src='" + result.tbUrl + "' onclick='javascript:tips.selectGoogleImage(this, \"" + result.url + "\");' >" +
-                           "</div>";
-                container.append(html);
+
+            var scrollable = $('<div></div>').addClass('scrollable');
+            var items = $('<div></div>').addClass('items');
+            var n = searcher.results.length;
+            var groupSize = 3;
+            for (var p = 0; p < (n + groupSize - 1) / groupSize; ++p) {
+                var page = $('<div></div>');
+                for (var i = 0; i < groupSize && p * groupSize + i < n; ++i) {
+                    var result = searcher.results[p * groupSize + i];
+                    var html = "" +
+                               "<div class='full-image' full_url='" + result.url + "'>" +
+                               "<img class='google_image' src='" + result.tbUrl +
+                               "' onclick='javascript:tips.selectGoogleImage(this, \"" + result.url + "\");' >" +
+                               "</div>";
+                    page.append(html);
+                }
+                items.append(page);
             }
+            scrollable.append(items);
+
+            container.append('<a class="prev browse left"></a>');
+            container.append(scrollable);
+            container.append('<a class="next browse right"></a>');
+            scrollable.scrollable();
         } else {
             container.html('no results found');
         }
@@ -266,6 +282,7 @@ if (!window.tips) var tips = {
             if (common.trim($(this).val()) != '') {
                 var row = $(this).parents('.edit-tip-root')[0];
                 var imageSearch = new google.search.ImageSearch();
+                imageSearch.setResultSetSize(8);
                 imageSearch.setSearchCompleteCallback(this, tips.drawSearchResults, [imageSearch, row]);
                 imageSearch.execute($(this).val() + ' ' + $(row).attr('city'));
             }
