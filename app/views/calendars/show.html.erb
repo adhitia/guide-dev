@@ -24,7 +24,7 @@
         <p>All guides are private when created, to allow author to fill in content.</p>
         Current state: <span class="current-access-type"><%= @calendar.public? ? 'Public' : 'Private' %></span>
         <input type="checkbox" id="guide_active" onchange="calendar.updateAccessType(this);" <%= 'checked="checked"' if @calendar.public? %> />
-        <label for="guide_active">Change</label>
+        <label id="guide_active_label" for="guide_active">Make this guide <%= @calendar.public? ? 'private' : 'public' %></label>
       </div>
   <% end %>
 

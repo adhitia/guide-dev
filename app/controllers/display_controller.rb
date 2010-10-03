@@ -1,3 +1,5 @@
+# Serves all needs of guiderer html widget
+
 require 'rubygems'
 require 'weather_man'
 require 'calendars_helper'
@@ -51,14 +53,21 @@ class DisplayController < ApplicationController
   end
 
 
-  # vote for the calendar
+  # vote for the guide
   def vote
-    @calendar = Calendar.find(params[:id])
     vote = params[:vote].to_i
+    old_vote = cookies["guide_vote_#{params[:id]}"]
 
-    @calendar.votes_sum += vote
-    @calendar.votes_num += 1
-    @calendar.save
+    @guide = Calendar.find(params[:id], :lock => true)
+    if old_vote.nil?
+      @guide.votes_sum += vote
+      @guide.votes_num += 1
+    else
+      @guide.votes_sum += vote - old_vote.to_i
+    end
+    @guide.save
+
+    cookies["guide_vote_#{@guide.id}"] = vote
 
     render :text => 'dummy response'
   end

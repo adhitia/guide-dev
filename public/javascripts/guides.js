@@ -63,6 +63,7 @@ if (!window.calendar) var calendar = {
             success: function() {
                 common.stopLoadingGlobal();
                 $(target).parent().find('.current-access-type').html(public ? 'Public' : 'Private');
+                $('#guide_active_label').html('Make this guide ' + (public ? 'Private' : 'Public'));
                 $(target).button('enable');
             }
         });

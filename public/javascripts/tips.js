@@ -123,12 +123,11 @@ if (!window.tips) var tips = {
                 var page = $('<div></div>');
                 for (var i = 0; i < groupSize && p * groupSize + i < n; ++i) {
                     var result = searcher.results[p * groupSize + i];
-                    var html = "" +
-                               "<div class='full-image' full_url='" + result.url + "'>" +
-                               "<img class='google_image' src='" + result.tbUrl +
-                               "' onclick='javascript:tips.selectGoogleImage(this, \"" + result.url + "\");' >" +
-                               "</div>";
-                    page.append(html);
+                    var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl).click(function() {
+                        tips.selectGoogleImage(this, result.url);
+                    });
+                    var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
+                    page.append(element);
                 }
                 items.append(page);
             }
@@ -156,48 +155,42 @@ if (!window.tips) var tips = {
         }
     },
 
-    processLocalSearchResults: function(searcher, root) {
+    processLocalSearchResults: function(searcher, root, search_term) {
+        var trigger = $(root).find('.local-search-launch');
         var container = $(root).find('.local-search-container');
         container.html('');
         if (searcher.results && searcher.results.length > 0) {
-            container.append('Click to select result<br/>');
+            container.append('Select to prefill other fields<br/>');
             var list = $('<ul></ul>');
             container.append(list);
             for (var i = 0; i < searcher.results.length; i++) {
                 var result = searcher.results[i];
-                var e = $('<li>'
-                + ' <a href="javascript:" onclick="tips.selectLocalResult(this);">'
-                + result.titleNoFormatting + '<br/>'
-                + '<span class="local_result_address">' + result.streetAddress + '</span><br/>'
-                + '<span class="local_result_lat">' + result.lat + '</span>'
-                + '<span class="local_result_lng">' + result.lng + '</span>'
-                + '</a></li>');
-                list.append(e);
+                var a = $('<a></a>').attr('href', 'javascript:')
+                        .text(result.titleNoFormatting + ' - ' + result.streetAddress)
+                        .click(tips.selectLocalResult);
+                list.append($('<li></li>').append(a));
 
-                var a = e.find('a');
                 a.data('result_url', result.url);
                 if (result.phoneNumbers && result.phoneNumbers.length > 0) {
                     a.data('result_phone', result.phoneNumbers[0].number);
                 }
                 a.data('title', result.titleNoFormatting);
-                //titleNoFormatting
-//                e.find('a').data('static_map_url', result.staticMapUrl);
-//                for (k in result) {
-//                    console.log(k + " : " + result[k]);
-//                }
+                a.data('local_result_address', result.streetAddress);
+                a.data('local_result_lat', result.lat);
+                a.data('local_result_lng', result.lng);
             }
         } else {
             container.append('no results found');
         }
     },
 
-    selectLocalResult: function(result) {
-        result = $(result);
+    selectLocalResult: function() {
+        var result = $(this);
         var row = result.parents('.edit-tip-root')[0];
         var container = result.parents('.local-search-container');
-        var addr = result.find('.local_result_address').html();
-        var lat = result.find('.local_result_lat').html();
-        var lng = result.find('.local_result_lng').html();
+        var addr = result.data('local_result_address');
+        var lat = result.data('local_result_lat');
+        var lng = result.data('local_result_lng');
         var google_url = result.data('result_url');
         var phone = result.data('result_phone');
         if (phone != null && phone.startsWith('(0xx)')) {
@@ -205,13 +198,16 @@ if (!window.tips) var tips = {
         }
         var title = result.data('title');
 
-//        var ajax_form = $('#fetch_remote_content_form');
-//        ajax_form.attr('action', url);
-//        $(row).find('.local-search-launch').click();
+        var tooltip = $(row).find('.local-search-launch').data('tooltip');
+        tooltip.state = 'fetching url';
+//        trigger.data('tooltip').getConf().events = {
+//            def: 'click,',
+//            tooltip: 'click,'
+//        };
         container.html('');
 
         // fetch website url
-        common.setLoading(container);
+        common.setLoading(container, 'Loading..');
         $.ajax({
             url: '/fetch_gmaps_data',
             data: {'url' : google_url},
@@ -219,8 +215,8 @@ if (!window.tips) var tips = {
             cache: false,
             dataType: "html",
             success: function(r) {
+                tooltip.state = '';
                 r = $(r);
-//                var url = r.find('.pp-authority-page a').html();
                 var url = r.find('.pp-authority-page a').attr('href');
                 if (url == null) {
                     url = google_url;
@@ -229,26 +225,23 @@ if (!window.tips) var tips = {
                     url = re.exec(url).toString();
                     url = url.substr(2, url.length - 3);
                 }
-//                alert(url);
                 r.remove();
 
-                $(row).find('.local-search-launch').click();
+                tooltip.hide();
                 container.html('');
 
-                $(row).find('.tip_address_street').val(addr);
-                $(row).find('.tip_address_lat').val(lat);
-                $(row).find('.tip_address_lng').val(lng);
-                $(row).find('.tip_url').val(url);
-                $(row).find('.tip_phone').val(phone);
-                $(row).find('.tip_name').val(title);
-//                $(row).find('.map_url').val(google_url);
-
+                $(row).find('input.tip_address_street').val(addr);
+                $(row).find('input.tip_address_lat').val(lat);
+                $(row).find('input.tip_address_lng').val(lng);
+                $(row).find('input.tip_url').val(url);
+                $(row).find('input.tip_phone').val(phone);
+                common.set_value($(row).find('input.tip_name'), title);
             },
             error: function(a, b, c) {
-//                alert('error ' + a + ' | ' + b + ' | ' + c);
+                tooltip.state = '';
+                tooltip.hide();
             }
         });
-//        alert(23);
     },
 
     /**
@@ -269,6 +262,7 @@ if (!window.tips) var tips = {
             ls.setResultSetSize(8);
             ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
             ls.execute(name);
+            alert('st')
         }
         container.toggle();
     },
@@ -288,6 +282,47 @@ if (!window.tips) var tips = {
             }
         });
         $(root).find('.tip_name').blur();
+
+        $(root).find('a.local-search-launch').tooltip({
+            onShow: function() {
+                var root = this.getTrigger().parents('.edit-tip-root');
+                var input = root.find('input.tip_name');
+                var value = input.val();
+                var pastValue = input.data('pastValue');
+
+                input.data('pastValue', value);
+                if (value.length < 2) {
+                    this.getTip().html('Enter tip name and use this button to suggest address, phone and url.');
+                    return;
+                }
+
+                if (pastValue == value) {
+                    return;
+                }
+
+                common.setLoading(this.getTip(), 'Searching...');
+
+                var ls = new google.search.LocalSearch();
+                ls.setCenterPoint(root.attr('city'));
+                ls.setResultSetSize(8);
+                ls.setSearchCompleteCallback(this.getTrigger()[0], tips.processLocalSearchResults, [ls, root, value]);
+                ls.execute(value);
+            },
+            onBeforeHide: function() {
+                if (this.state == 'fetching url') {
+                    return false;
+                }
+            },
+//            events: {
+//                def: 'click, blur',
+//                tooltip: 'click, blur'
+//            },
+            relative: true,
+//            tip: '.local-search-container',
+            delay: 500,
+            predelay: 100,
+            position: 'bottom center'
+        });
 
 
         common.imageHelper(root);
@@ -487,7 +522,6 @@ if (!window.tips) var tips = {
 
     }
 };
-
 
 google.load('search', '1');
 google.load('maps', '3', {'other_params' : 'sensor=false'});

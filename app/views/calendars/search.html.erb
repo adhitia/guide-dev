@@ -8,7 +8,7 @@
     <th class="sorting">Name</th>
     <th class="sorting">Location</th>
     <th class="sorting">Author</th>
-    <th class="sorting">Views</th>
+    <!--<th class="sorting">Views</th>-->
     <th class="sorting">Rating</th>
     <th class="sorting">Completed</th>
     <th class="sorting">Created</th>
@@ -23,7 +23,7 @@
     </span></td>
     <td><%=h calendar.location.name %></td>
     <td><%= link_to calendar.user.name, show_user_path(:id => calendar.user) %></td>
-    <td><%=h calendar.view_count %></td>
+    <!--<td><%=h calendar.view_count %></td>-->
     <td><%=h calendar.rating_str %></td>
     <td><%=h calendar.completed_percentage %>%</td>
     <td><%=h calendar.created_at.strftime "%B %d, %Y" %></td>
@@ -44,6 +44,19 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#calendar_search_result').dataTable();
+        $('#calendar_search_result').dataTable({
+            'aoColumns': [
+                {},
+                {},
+                {},
+//                {},
+                {},
+                {"sType": "percent"},
+                {}
+            ]
+        });
     });
+// percent       
 </script>
+
+

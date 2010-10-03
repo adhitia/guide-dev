@@ -36,7 +36,7 @@ if (!window._guiderer) {
         load_javascript(server + 'jquery/jquery.qtip-1.0.0-rc3.js');
     }
     if (window.addthis == undefined) {
-        load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca2e698028f31e3');
+        load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer');
     }
     load_css(server + 'public.css?_version=1');
 
@@ -101,9 +101,15 @@ if (!window._guiderer) {
                 share_config.url = current.attr('url');
                 share_config.title = current.attr('title');
                 if (current.attr('description') != null) {
-                    share_config.description = current.attr('description'); 
+                    share_config.description = current.attr('description');
                 }
-                addthis.toolbox(this, {}, share_config);
+
+                var ui_config = {
+                    data_track_clickback: false,
+                    data_track_linkback: false
+                };
+
+                addthis.toolbox(this, ui_config, share_config);
 //                addthis.button(this, {}, share_config);
             });
 
@@ -167,6 +173,11 @@ if (!window._guiderer) {
         }
     };
     _guiderer.server = server;
+
+    var addthis_config = {
+        data_track_clickback: false,
+        data_track_linkback: false
+    };
 
 
     function addEvent(elm, evType, fn, useCapture) {

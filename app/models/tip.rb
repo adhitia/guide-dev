@@ -1,6 +1,8 @@
 require 'open-uri'
 
 class Tip < ActiveRecord::Base
+  MAX_NAME_LENGTH = 35
+
   attr_accessor :image_url
 
   has_one :address
@@ -26,7 +28,7 @@ class Tip < ActiveRecord::Base
   accepts_nested_attributes_for :address, :allow_destroy => true
 
   validates_presence_of :author_id, :condition_id, :weekday_id, :calendar_id
-  validates_length_of :name, :in => 1..25,  # allow no name, denoting no tip
+  validates_length_of :name, :in => 1..MAX_NAME_LENGTH,  # allow no name, denoting no tip
                       :too_long => "{{count}} characters max",
                       :too_short => "required field"
   validates_length_of :url, :phone, :maximum => 255,
@@ -39,6 +41,10 @@ class Tip < ActiveRecord::Base
   def image_exists?
     !self.image_remote_url.blank?
   end
+
+#  def self.max_name_length
+#    35
+#  end
 
 private
   # to make paperclip load urls

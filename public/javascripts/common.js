@@ -100,11 +100,24 @@ if (!window.common) {
         },
 
         trim: function(s) {
-            return s.replace(/^\s+|\s+$/g, '');
+            return (s + '').replace(/^\s+|\s+$/g, '');
         },
 
         empty: function(s) {
+//            alert(typeof s);
             return s == null || common.trim(s) == '';
+        },
+
+        // sets input value, truncating it if it's longer than allowed
+        set_value: function(input, value) {
+            input = $(input);
+            var maxlength = input.attr('maxlength');
+            if (maxlength != null) {
+                if (value.length > maxlength) {
+                    value = value.substr(0, maxlength);
+                }
+            }
+            input.val(value);
         },
 
         clearValidationErrors: function() {
@@ -155,14 +168,14 @@ if (!window.common) {
                 $(this).Watermark($(this).attr('title'));
             });
 
-            root.find('input.text-limit').keyup(function() {
-                var text = $(this).val();
-                var limit = $(this).attr('textLimit');
-                if (text.length > limit) {
-                    text = text.substring(0, limit);
-                    $(this).val(text);
-                }
-            });
+//            root.find('input.text-limit').keyup(function() {
+//                var text = $(this).val();
+//                var limit = $(this).attr('textLimit');
+//                if (text.length > limit) {
+//                    text = text.substring(0, limit);
+//                    $(this).val(text);
+//                }
+//            });
 
             // remove watermarks before form is submitted
             root.find('form.with-watermark').submit(function (){
@@ -190,5 +203,21 @@ if (!window.common) {
     $(document).ready(function() {
         common.init(document);
     });
+
+    jQuery.fn.dataTableExt.oSort['percent-asc']  = function(a,b) {
+        var x = (a == "-") ? 0 : a.replace( /%/, "" );
+        var y = (b == "-") ? 0 : b.replace( /%/, "" );
+        x = parseFloat( x );
+        y = parseFloat( y );
+        return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['percent-desc'] = function(a,b) {
+        var x = (a == "-") ? 0 : a.replace( /%/, "" );
+        var y = (b == "-") ? 0 : b.replace( /%/, "" );
+        x = parseFloat( x );
+        y = parseFloat( y );
+        return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+    };
 }
 

@@ -796,3 +796,18 @@ div.guide-type-panes > div {
 .google-image-choices a.disabled {
 	visibility:hidden !important;
 }
+
+
+/*
+.tooltip {
+	display:none;
+	background:transparent url(/tools/img/tooltip/black_arrow.png);
+	font-size:12px;
+	height:70px;
+	width:160px;
+	padding:25px;
+    background-color: white;
+    border: solid black 1px;
+    color: black;
+    z-index:10003;
+}*/
