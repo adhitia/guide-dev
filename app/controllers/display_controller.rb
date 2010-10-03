@@ -39,10 +39,6 @@ class DisplayController < ApplicationController
 
     @tips = @calendar.tips.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
     @tips = @tips.sort_by {|t| t.condition.id }
-#    @tips.each do |tip|
-#      tip.view_count += 1;
-#      tip.save;
-#    end
 #    @calendar.view_count += 1;
 #    @calendar.save
 
