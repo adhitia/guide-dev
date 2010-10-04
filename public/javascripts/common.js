@@ -182,6 +182,79 @@ if (!window.common) {
                 $.Watermark.HideAll();
                 return true;
             });
+        },
+
+        position_tooltip: function(trigger, tip) {
+            var window_x = trigger.offset().left - $(window).scrollLeft();
+            var window_y = trigger.offset().top - $(window).scrollTop();
+
+            var available_left = window_x;
+            var available_right = $(window).width() - window_x - trigger.width();
+            var available_top = window_y;
+            var available_bottom = $(window).height() - window_y - trigger.height();
+
+            var x, y;
+            var margin = 20;
+            // now, find the best side to present content
+            if (Math.max(available_left, available_right) * tip.height()
+                    > Math.max(available_top, available_bottom) * tip.width()) {
+                if (available_left > available_right) {
+                    x = -tip.width() - margin;
+                } else {
+                    x = trigger.width() + margin;
+                }
+                y = ($(window).height() - tip.height()) / 2.0 - window_y;
+//                console.log('do x, y : ' + y);
+                if (y > trigger.height()) {
+                    y = trigger.height();
+                } else if (y < -tip.height()) {
+                    y = -tip.height();
+                }
+            } else {
+                if (available_top > available_bottom) {
+                    y = -tip.height() - margin;
+                } else {
+                    y = trigger.height() + margin;
+                }
+                x = ($(window).width() - tip.width()) / 2.0 - window_x;
+//                console.log('do y, x : ' + x);
+                if (x > trigger.width()) {
+                    x = trigger.width();
+                } else if (x < -tip.width()) {
+                    x = -tip.width();
+                }
+            }
+
+//            console.log(x + '   ' + y + '  ---  ' + trigger.width() + ' ' + trigger.height() + '  ---  ' + tip.width() + ' ' + tip.height());
+            tip.css({
+                position: 'absolute',
+                top: y,
+                left: x
+            });
+        },
+
+        show_tooltip: function(trigger, tip) {
+            // remove closing timer, if necessary
+            if (tip.data('timeout-var') != null) {
+                clearTimeout(tip.data('timeout-var'));
+                tip.data('timeout-var', null);
+            }
+
+//            common.position_tooltip(trigger, tip);
+
+            // close all other tips
+            $('div.tooltip-content').hide();
+
+            tip.show();
+            common.position_tooltip(trigger, tip);
+        },
+
+        hide_tooltip: function(tip) {
+            var t = setTimeout(function() {
+                tip.hide();
+                tip.data('timeout-var', null);
+            }, 500);
+            tip.data('timeout-var', t);
         }
     };
 

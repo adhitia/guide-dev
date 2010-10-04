@@ -167,11 +167,12 @@ textarea.invalid {
 
 #view_tips .tip-tile {
     width:110px;
-    overflow:hidden;
+    /*overflow:hidden;*/
     background-color:white;
     margin:5px;
     align:center;
     height:180px;
+    position: relative;
 }
 
 #view_tips td.tip-container {
@@ -202,6 +203,14 @@ textarea.invalid {
 
 #view_tips .tip-tile:hover .icon-small {
     opacity: 0.8;
+}
+
+#view_tips .tip-tile > div.tooltip-content {
+    /*display: none;*/
+    /*max-width: 500px;*/
+    /*z-index: 20005;*/
+    /*min-width: 200px;*/
+    /*min-height: 200px;*/
 }
 
 #view_tips .no-tip-tile {
@@ -392,12 +401,15 @@ border-radius: 4px;
     height:162px;
 }
 
-.tip-show {
+/*.tip-show {
     min-width: 200px;
     min-height: 200px;
-    max-width: 600px;
+    max-width: 500px;
     color:black;
     padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 20003;
 }
 
 .tip-show .tip-name {
@@ -420,6 +432,45 @@ border-radius: 4px;
 }
 .tip-show a:visited {
     color: black;
+}*/
+
+/*hover with tip details*/
+.tip-tile .full_tip .tip-show {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 500px;
+    /*width: 500px;*/
+    color: black;
+    padding: 5px;
+    background-color: azure;
+    border: solid black 1px;
+}
+
+.tip-tile .full_tip .tip-show .tip-name {
+    color: #666666;
+    font-weight: bold;
+    font-size: larger;
+}
+.tip-tile .full_tip .tip-show .tip-details {
+    overflow: hidden;
+    zoom: 1;
+    margin-bottom: 10px;
+}
+.tip-tile .full_tip .tip-show .tip-map {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.tip-tile .full_tip .tip-show  a {
+    color: black;
+}
+.tip-tile .full_tip .tip-show a:visited {
+    color: black;
+}
+.tip-tile .full_tip {
+    display: none;
+    z-index: 10003;
+    position: absolute;
 }
 
 

@@ -44,36 +44,44 @@
 
 
 /*hover with tip details*/
-.qtip-content .tip-show {
+.guiderer .full_tip .tip-show {
     min-width: 200px;
     min-height: 200px;
     max-width: 500px;
-    color:black;
+    color: black;
     padding: 5px;
+    background-color: azure;
+    border: solid black 1px;
 }
 
-.qtip-content .tip-show .tip-name {
+.guiderer .full_tip .tip-show .tip-name {
     color: #666666;
     font-weight: bold;
     font-size: larger;
 }
-.qtip-content .tip-show .tip-details {
-    overflow:hidden;
-    zoom:1;
-    margin-bottom:10px;
+.guiderer .full_tip .tip-show .tip-details {
+    overflow: hidden;
+    zoom: 1;
+    margin-bottom: 10px;
 }
-.qtip-content .tip-show .tip-map {
-    margin-top:10px;
-    text-align:center;
-}
-
-.qtip-content .tip-show  a {
-    color: black;
-}
-.qtip-content .tip-show a:visited {
-    color: black;
+.guiderer .full_tip .tip-show .tip-map {
+    margin-top: 10px;
+    text-align: center;
 }
 
+.guiderer .full_tip .tip-show  a {
+    color: black;
+}
+.guiderer .full_tip .tip-show a:visited {
+    color: black;
+}
+.guiderer .full_tip {
+    display: none;
+    z-index: 10003;
+}
+.guiderer .guide-tip-body {
+    position: relative;
+}
 
 
 
@@ -119,11 +127,6 @@
 
 .guiderer .tip-element-small .tip-legend .tip-name {
     font-weight: bold;
-}
-
-.guiderer .tip-element-small .full_tip {
-    visibility:hidden;
-    display:none;
 }
 
 /* medium box (about 200 pixels each side) */
@@ -253,13 +256,26 @@
     float: right;
     color: black;
 }
-.guiderer .guide-footer-flat .guide-info .guiderer-logo > div {
+.guiderer .guide-footer-flat .guide-info .guiderer-logo > div.image-wrapper {
     display: inline-block;
 }
 
 .guiderer .guide-footer-flat .addthis-guide {
     float: right;
     margin-right: 50px;
+}
+
+
+/* for all footers */
+.guiderer .guide-info .guiderer-logo {
+    position: relative;
+}
+.guiderer .guide-info .tooltip-content {
+    border: 1px solid black;
+    background-color: azure;
+    width: 300px;
+    font-size: medium;
+    z-index: 20003;
 }
 
 

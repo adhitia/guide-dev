@@ -32,13 +32,13 @@ if (!window._guiderer) {
     if (window.jQuery == undefined) {
         load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
     }
-    if (window.jQuery == undefined || jQuery().qtip == undefined) {
-        load_javascript(server + 'jquery/jquery.qtip-1.0.0-rc3.js');
-    }
+//    if (window.jQuery == undefined || jQuery().qtip == undefined) {
+//        load_javascript(server + 'jquery/jquery.qtip-1.0.0-rc3.js');
+//    }
     if (window.addthis == undefined) {
         load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer');
     }
-    load_css(server + 'public.css?_version=1');
+    load_css(server + 'public.css?_version=2');
 
 
     _guiderer = {
@@ -69,10 +69,6 @@ if (!window._guiderer) {
             var server = target.attr('server');
             if (!id || !style || !server) {
                 throw "Guide id or style or server isn't set.";
-            }
-
-            if (jQuery().qtip) {
-                target.find('td.tip').qtip("destroy");
             }
 
             $.ajax({
@@ -110,42 +106,97 @@ if (!window._guiderer) {
                 };
 
                 addthis.toolbox(this, ui_config, share_config);
-//                addthis.button(this, {}, share_config);
             });
 
-            root.find('div.guide-tip-body').each(function() {
-                $(this).qtip({
-                    content: $(this).find('.full_tip').html(),
-                    hide: {
-                        delay: 500,
-                        fixed: true
-                    },
-                    style:  {
-                        width: {
-                            max: 500,
-                            min: 200
-                        }
-                    },
-                    position: {
-                        adjust: {
-                            screen: true
-                        }
+            var position_tooltip = function(trigger, tip) {
+                var window_x = trigger.offset().left - $(window).scrollLeft();
+                var window_y = trigger.offset().top - $(window).scrollTop();
+
+                var available_left = window_x;
+                var available_right = $(window).width() - window_x - trigger.width();
+                var available_top = window_y;
+                var available_bottom = $(window).height() - window_y - trigger.height();
+
+                var x, y;
+                var margin = 20;
+                // now, find the best side to present content
+                if (Math.max(available_left, available_right) * tip.height()
+                        > Math.max(available_top, available_bottom) * tip.width()) {
+                    if (available_left > available_right) {
+                        x = -tip.width() - margin;
+                    } else {
+                        x = trigger.width() + margin;
                     }
+                    y = ($(window).height() - tip.height()) / 2.0 - window_y;
+                    if (y > trigger.height()) {
+                        y = trigger.height();
+                    } else if (y < -tip.height()) {
+                        y = -tip.height();
+                    }
+                } else {
+                    if (available_top > available_bottom) {
+                        y = -tip.height() - margin;
+                    } else {
+                        y = trigger.height() + margin;
+                    }
+                    x = ($(window).width() - tip.width()) / 2.0 - window_x;
+                    if (x > trigger.width()) {
+                        x = trigger.width();
+                    } else if (x < -tip.width()) {
+                        x = -tip.width();
+                    }
+                }
+
+                tip.css({
+                    position: 'absolute',
+                    top: y,
+                    left: x
                 });
+            };
+
+            var show_tooltip = function(trigger, tip) {
+                // remove closing timer, if necessary
+                if (tip.data('timeout-var') != null) {
+                    clearTimeout(tip.data('timeout-var'));
+                    tip.data('timeout-var', null);
+                }
+
+                position_tooltip(trigger, tip);
+
+                // close all other tips
+                $('div.guiderer div.full_tip').hide();
+
+                tip.show();
+            };
+
+            var hide_tooltip = function(tip) {
+                var t = setTimeout(function() {
+                    tip.hide();
+                    tip.data('timeout-var', null);
+                }, 500);
+                tip.data('timeout-var', t);
+            };
+
+            // setup tooltip for each particular tip
+            root.find('div.guide-tip-body').hover(function() {
+                var trigger = $(this);
+                var tip = $(this).find('.full_tip');
+                show_tooltip(trigger, tip);
+            },
+            function() {
+                var tip = $(this).find('.full_tip');
+                hide_tooltip(tip);
             });
-            root.find('div.guide-info > div.qtip-content').each(function() {
-                $(this).parent().find('div.guiderer-logo').qtip({
-                    content: $(this).html(),
-                    hide: {
-                        delay: 500,
-                        fixed: true
-                    },
-                    position: {
-                        adjust: {
-                            screen: true
-                        }
-                    }
-                });
+
+            // setup guide info tooltip
+            root.find('div.guide-info div.guiderer-logo').hover(function() {
+                var trigger = $(this);
+                var tip = $(this).find('.tooltip-content');
+                show_tooltip(trigger, tip);
+            },
+            function() {
+                var tip = $(this).find('.tooltip-content');
+                hide_tooltip(tip);
             });
         },
 
@@ -170,6 +221,10 @@ if (!window._guiderer) {
                 error: function(r, s, e) {
                 }
             });
+        },
+
+        display_tip: function(trigger, tip) {
+            tip.css({'po' : ''});
         }
     };
     _guiderer.server = server;

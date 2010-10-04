@@ -48,14 +48,13 @@
   <div class="guide-info">
     <div class="guiderer-logo">
       <a href="<%= WEB_ROOT %>"> Powered by
-        <!--<br/>-->
-        <div>
+        <div class='image-wrapper'>
           <img src="<%= WEB_ROOT %>/images/guiderer-logo-trasnp-tiny.gif" heigth=35 width=80 border="none"></a>
         </div>
-    </div>
 
-    <div class="qtip-content" style="display:none;">
-      <%= render :partial => 'display/hover/guide_info', :locals => {:guide => guide} %>
+        <div class="tooltip-content" style="display:none;">
+          <%= render :partial => 'display/hover/guide_info', :locals => {:guide => guide} %>
+        </div>
     </div>
 
   </div>

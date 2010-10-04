@@ -43,7 +43,10 @@
 
     </div>
   <% else %>
-    <div class="view-tip-hover"></div>
+      <!--view-tip-hover-->
+    <div class="full_tip tooltip-content">
+      <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
+    </div>
   <% end %>
 
   <div style="-moz-border-radius: 6px;-webkit-border-radius: 6px; border-radius: 6px; border: 1px solid lightgray;

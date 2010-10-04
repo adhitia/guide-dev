@@ -465,10 +465,18 @@ if (!window.tips) var tips = {
             });
 
 
-            $(root).find('div.view-tip-hover').each(function() {
+            $(root).find('div.tip-tile > div.tooltip-content').each(function() {
                 var tile = $(this).parents('div.tip-tile');
+                var tip = $(this);
                 var place_id = tile.attr('place_id');
-                tile.qtip({
+                tile.hover(function() {
+                    common.show_tooltip(tile, tip);
+//                    alert(tip.width());
+                },
+                function() {
+                    common.hide_tooltip(tip);
+                });
+                /*tile.qtip({
                     content: {
                         url: '/tips/' + place_id
                     },
@@ -487,7 +495,7 @@ if (!window.tips) var tips = {
                             min: 200
                         }
                     }
-                });
+                });*/
             });
 
 

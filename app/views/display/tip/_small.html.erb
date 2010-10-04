@@ -4,10 +4,10 @@
   <div class="tip-legend">
     <span class="tip-condition"><%= tip.condition.name %>:</span>
     <span class="tip-name"><%= tip.name %></span>
+  </div>
 
-    <div class="full_tip">
-      <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
-    </div>
+  <div class="full_tip">
+    <%= render :partial => 'display/hover/normal', :locals => {:tip => tip} %>
   </div>
 </div>
 
