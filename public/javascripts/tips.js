@@ -138,7 +138,7 @@ if (!window.tips) var tips = {
             container.append('<a class="next browse right"></a>');
             scrollable.scrollable();
         } else {
-            container.html('no results found');
+            container.html('No results found, check spelling.');
         }
         common.imageHelper(container);
     },
@@ -467,7 +467,8 @@ if (!window.tips) var tips = {
 
             $(root).find('div.tip-tile > div.tooltip-content').each(function() {
                 var tile = $(this).parents('div.tip-tile');
-                var tip = $(this);
+                var tip = $
+                        (this);
                 var place_id = tile.attr('place_id');
                 tile.hover(function() {
                     common.show_tooltip(tile, tip);
