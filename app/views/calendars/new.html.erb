@@ -5,14 +5,22 @@
 <form id="new_calendar_form" name="new_calendar_form" class="with-watermark" action="<%= create_guide_path %>" method="POST">
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
 
-  <h1>Create a Guide</h1>
+  <h1>Create a Travel Guide</h1>
+<div style="width:700px;margin-left:100px;font-size:large" align="left"><P>There are four steps to creating a Guiderer travel guide:</P>
+<p>1) Name you guide</P>
+<P>2) List your travel tips</P>
+<P>3) Schedule your tips over week calendar</P>
+<P>4) Add details to your tips, like photos and contact info.</P></div>
+<P></P>
+<div style="width:700px;margin-left:100px;font-size:medium" align="left"><P>Afterwards, You can turn your guide into a: <BR>-  Widget and place it on your blog or site,<BR>- Booklet to give to customer,<BR>- An Iphone App,<BR>- Domain with your guide.</P>
+<P>The whole process takes less than 30 minutes and can make you a super-star, of sorts.</P></div>
 
-  <div class="name-area">
-    <h3>GUIDE NAME</h3>
+  <div class="name-area" style="width:700px;margin-left:100px;background-color:#0066CC;border-radius:15px;padding:10px" >
+    <h2 align="left">Step 1: Guide Name</h2>
 
     <div>
       <div class="column">
-        <input id="calendar_name_location" class="watermark" title="location" name="calendar_name_location"
+        <input id="calendar_name_location" class="watermark" title="city or region" name="calendar_name_location"
                type="text" value="<%= params[:calendar_name_location] %>" size="20" maxlength="20">
       </div>
       FOR
@@ -21,13 +29,13 @@
                type="text" value="<%= params[:calendar_name_target] %>" size="20" maxlength="20">
       </div>
     </div>
-    <p class="hint"> E.g., Rio for Partiers, Big Apple for Families </p>
+    <p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests </p>
 
-  </div>
+ 
 
 
   <div class="location-area">
-    <h4>Use weather info for </h4>
+    <h4>Use weather info for which city?</h4>
 
     <div class="input-area">
       <input id="calendar_location_name" name="location_name" size="25" value="<%= params[:location_name] %>" type="text" >
@@ -41,11 +49,11 @@
 
   <div class="button-panel">
     <a href="javascript:" onclick="$('#new_calendar_form').submit();" class="button">
-      NEXT
+      Proceed to step 2: List your points of interest
     </a>
   </div>
 
-</form>
+</form>  </div>
 
 
 

@@ -1,10 +1,10 @@
 <div id="new_guide_overview_page">
 
-  <h1>Tip Matrix: Schedule your tips over the week</h1>
+  <h1>Schedule your points of interest over the week</h1>
 
-  <h2> <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
+  <h2> Your guide: <%= h(params[:calendar_name_location]) + ' for ' + h(params[:calendar_name_target]) %> </h2>
 
-  Drag places onto the matriz. Click schedule slot to add or edit tip recommendations.
+  Drag your points of interest over the weekdays. You can add more travel tips by clicking on each slots. 
   <div id="place-pool">
     <% @places.each do |place| %>
         <div class="place-tag">
@@ -58,7 +58,7 @@
 
             <div class="button-panel">
               <a href="javascript:" onclick="$(this).parents('form').submit();" class="button">
-                save and add details &gt;&gt;
+                Proceed to Step 4: Add details to your Points of Interest;
               </a>
             </div>
 
