@@ -127,7 +127,6 @@ if (!window.tips) var tips = {
                     img.bind('click', {url: result.url}, function(event) {
                         tips.selectGoogleImage(this, event.data.url);
                     });
-//                    img.attr('onclick', 'tips.selectGoogleImage(this, "' + result.url + '");');
                     var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
                     page.append(element);
                 }
@@ -275,12 +274,16 @@ if (!window.tips) var tips = {
         // image suggestions
         $(root).find('.upload_image').tabs();
         $(root).find('.tip_name').blur(function() {
-            if (common.trim($(this).val()) != '') {
-                var row = $(this).parents('.edit-tip-root')[0];
+            var input = $(this);
+            var value = input.val();
+            var pastValue = input.data('pastValue-imageSearch');
+            if (!common.empty(value) && value != pastValue) {
+                var row = input.parents('.edit-tip-root')[0];
                 var imageSearch = new google.search.ImageSearch();
                 imageSearch.setResultSetSize(8);
                 imageSearch.setSearchCompleteCallback(this, tips.drawSearchResults, [imageSearch, row]);
-                imageSearch.execute($(this).val() + ' ' + $(row).attr('city'));
+                imageSearch.execute(value + ' ' + $(row).attr('city'));
+                input.data('pastValue-imageSearch', value);
             }
         });
         $(root).find('.tip_name').blur();
@@ -309,6 +312,8 @@ if (!window.tips) var tips = {
                 ls.setResultSetSize(8);
                 ls.setSearchCompleteCallback(this.getTrigger()[0], tips.processLocalSearchResults, [ls, root, value]);
                 ls.execute(value);
+
+                input.blur();
             },
             onBeforeHide: function() {
                 if (this.state == 'fetching url') {
