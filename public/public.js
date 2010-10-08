@@ -1,52 +1,16 @@
 if (!window._guiderer) {
-    // fetch location of guiderer server from script tag
-    var server = null;
-    var scripts = document.getElementsByTagName("script");
-    for (var i = 0; i < scripts.length; i++) {
-        if (scripts[i].className == 'guiderer-script') {
-            server = scripts[i].src.match(/http:\/\/.+\//);
-            break;
-        }
-    }
-    if (server == null) {
-        server = 'http://guiderer.com/';
-    }
 
-    // load necessary resources first
-    function load_javascript(src) {
-        var a = document.createElement('script');
-        a.type = 'text/javascript';
-        a.src = src;
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(a, s);
-    }
+    _guiderer = {};
 
-    function load_css(src) {
-        var a = document.createElement('link');
-        a.rel = 'stylesheet';
-        a.type = 'text/css';
-        a.href = src;
-        document.getElementsByTagName("head")[0].appendChild(a);
-    }
-
-    if (window.jQuery == undefined) {
-        load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
-    }
-    if (window.addthis == undefined) {
-        load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer');
-    }
-    load_css(server + 'public.css?_version=3');
-
-
-    _guiderer = {
-        render_all: function(root) {
-//            console.log(window.jQuery + '   ' + window.$);
+    // initialize
+    _guiderer.setup_library = function($) {
+        _guiderer.render_all = function(root) {
             $(root).find('.guiderer').each(function(index) {
                 _guiderer.render(this);
             })
-        },
+        };
 
-        render: function(target, day) {
+        _guiderer.render = function(target, day) {
             if (target == undefined) {
                 throw "Target element must be passed into render.";
             }
@@ -56,7 +20,7 @@ if (!window._guiderer) {
 
             target = $(target);
             if (!target.hasClass('guiderer')) {
-                target = target.parents('.guiderer');
+                target = target.closest('.guiderer');
             }
             if (target.length == 0) {
                 throw "Can't find adequate target.";
@@ -86,9 +50,9 @@ if (!window._guiderer) {
                     target.html('error has occurred');
                 }
             });
-        },
+        };
 
-        init: function(root) {
+        _guiderer.init = function(root) {
             root.find('div.addthis-guide').each(function() {
                 var current = $(this);
                 var share_config = {};
@@ -127,7 +91,6 @@ if (!window._guiderer) {
                                 },
                                 dataType: 'jsonp',
                                 success: function(data) {
-//                                    console.log(data);
                                     twit_area.data('twit_state', 'loaded');
                                     if (data.results.length == 0) {
                                         twit_area.html('no twits');
@@ -163,16 +126,16 @@ if (!window._guiderer) {
                 var tooltip = $(this).find('.tooltip-content');
                 _guiderer.tooltip(trigger, tooltip, function() {$('div.guiderer div.full_tip').hide();});
             });
-        },
+        };
 
 
-        vote: function(el) {
-            var root = $(el).parents('.guiderer')[0];
-            var id = $(root).attr('guide_id');
+        _guiderer.vote = function(el) {
+            var root = $(el).closest('.guiderer');
+            var id = root.attr('guide_id');
             if (!id) {
                 throw "No guide id found in root element.";
             }
-            var server = $(root).attr('server');
+            var server = root.attr('server');
             var vote = $(el).attr('title');
 
             $.ajax({
@@ -181,14 +144,14 @@ if (!window._guiderer) {
                 dataType: 'jsonp',
                 cache: false,
                 success: function() {
-                    $(root).find('.inner').addClass('voted').css('width', vote * 20);
+                    root.find('.inner').addClass('voted').css('width', vote * 20);
                 },
                 error: function(r, s, e) {
                 }
             });
-        },
+        };
 
-        tooltip: function(trigger, tooltip, on_before_show) {
+        _guiderer.tooltip = function(trigger, tooltip, on_before_show) {
             var position_tooltip = function(trigger, tip) {
                 var window_x = trigger.offset().left - $(window).scrollLeft();
                 var window_y = trigger.offset().top - $(window).scrollTop();
@@ -258,17 +221,11 @@ if (!window._guiderer) {
                 }, 500);
                 tooltip.data('hover-timeout-var', t);
             });
-        }
-    };
-    _guiderer.server = server;
-
-    var addthis_config = {
-        data_track_clickback: false,
-        data_track_linkback: false
+        };
     };
 
 
-    function addEvent(elm, evType, fn, useCapture) {
+    _guiderer.addEvent = function(elm, evType, fn, useCapture) {
         //Credit: Function written by Scott Andrews
         //(slightly modified)
         var ret = 0;
@@ -282,19 +239,75 @@ if (!window._guiderer) {
         }
 
         return ret;
-    }
+    };
 
     // render all guides once page is loaded
-//    window.onload = function() {_guiderer.render_all(document);};
-    addEvent(window, "load", function() {
-        setTimeout(function() {
+    _guiderer.addEvent(window, "load", function() {
+        // fetch location of guiderer server from script tag
+        var server = null;
+        var scripts = document.getElementsByTagName("script");
+        for (var i = 0; i < scripts.length; i++) {
+            if (scripts[i].className == 'guiderer-script') {
+                server = scripts[i].src.match(/http:\/\/.+\//);
+                break;
+            }
+        }
+        if (server == null) {
+            server = 'http://guiderer.com/';
+        }
+        _guiderer.server = server;
+
+        // each 'script' tag will have onload event
+        // _guiderer object will be initialized only when last library is loaded
+        var left_to_load = 0;
+        function init() {
+            --left_to_load;
+            if (left_to_load > 0) {
+                return;
+            }
+            addthis.init();
+            _guiderer.setup_library(jQuery);
             _guiderer.render_all(document);
-        }, 500);
+        }
+
+        // load necessary resources first
+        function load_javascript(src) {
+            var a = document.createElement('script');
+            a.type = 'text/javascript';
+            a.src = src;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(a, s);
+
+            ++left_to_load;
+            _guiderer.addEvent(a, 'load', init, false);
+        }
+
+        function load_css(src) {
+            var a = document.createElement('link');
+            a.rel = 'stylesheet';
+            a.type = 'text/css';
+            a.href = src;
+            document.getElementsByTagName("head")[0].appendChild(a);
+
+//            ++left_to_load;
+//            _guiderer.addEvent(a, 'load', init, false);
+        }
+
+        if (window.jQuery == undefined) {
+            load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
+        }
+        if (window.addthis == undefined) {
+            load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1');
+        }
+        load_css(server + 'public.css?_version=3');
+
     }, false);
 
 
-//    $(document).ready(function() {
-//         _guiderer.render_all(document);
-//    });
+    // configure addthis globally
+//    var addthis_config = {
+//        data_track_clickback: false,
+//        data_track_linkback: false
+//    };
 }
 
