@@ -123,9 +123,11 @@ if (!window.tips) var tips = {
                 var page = $('<div></div>');
                 for (var i = 0; i < groupSize && p * groupSize + i < n; ++i) {
                     var result = searcher.results[p * groupSize + i];
-                    var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl).click(function() {
-                        tips.selectGoogleImage(this, result.url);
-                    });
+                    var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl);
+//                    img.click(function() {
+//                        tips.selectGoogleImage(this, result.url);
+//                    });
+                    img.attr('onclick', 'tips.selectGoogleImage(this, "' + result.url + '");');
                     var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
                     page.append(element);
                 }

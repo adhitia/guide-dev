@@ -56,6 +56,8 @@ private
     self.image_remote_url = image_url
   end
   def do_download_remote_image
+# http://wikitravel.org/upload/en/2/24/Brazil_-_Rio_de_Janeiro.jpg
+    puts "getting image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{image_url}"
     io = open(image_url)
     def io.original_filename; base_uri.path.split('/').last; end
     io.original_filename.blank? ? nil : io
