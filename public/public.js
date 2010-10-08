@@ -255,7 +255,7 @@ if (!window._guiderer) {
                 var t = setTimeout(function() {
                     tooltip.hide();
                     tooltip.data('hover-timeout-var', null);
-                }, 1000);
+                }, 500);
                 tooltip.data('hover-timeout-var', t);
             });
         }
