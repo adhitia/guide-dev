@@ -2,47 +2,71 @@
   <div class="tip-name"><%= h tip.name %></div>
 
   <div class="tip-details">
-      <% if tip.image_exists? %>
-          <%= image_tag tip.image.url(:medium), {:align=>"left", :style=>"margin:10px;"} %>
-      <% else %>
-      <% end %>
-      <p>
-      <%= h tip.description %>
-      </p>
-
-      <% if !tip.address.address.blank? -%>
-          <p>
-             Address: <%= h tip.address.address %>
-          </p>
-      <% end -%>
-        <% if !tip.phone.blank? %>
-          <p>
-            Phone: <%= h tip.phone %>
-          </p>
-        <% end %>
-
-        <% if !tip.url.blank? %>
-          website:
-          <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-            <%= h shorten(tip.url, 35) %>
-          </a>
-        <% end %>
-
-  </div>
-
-
-  <div class="tip-map">
-    <% if tip.address.lat != 0 %>
-        <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.address.lat %>+<%= tip.address.lng %>&amp;z=16" target="_blank">
-          Directions and Map
-        </a>:<br/>
-        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=460x200&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>" />
+    <% if tip.image_exists? %>
+        <%= image_tag tip.image.url(:medium), {:align=>"left", :style=>"margin:10px;"} %>
+    <% else %>
     <% end %>
+    <p>
+      <%= h tip.description %>
+    </p>
+
+    <% if !tip.address.address.blank? -%>
+        <p>
+          Address: <%= h tip.address.address %>
+        </p>
+    <% end -%>
+    <% if !tip.phone.blank? %>
+        <p>
+          Phone: <%= h tip.phone %>
+        </p>
+    <% end %>
+
+    <% if !tip.url.blank? %>
+        website:
+        <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+          <%= h shorten(tip.url, 35) %>
+        </a>
+    <% end %>
+
   </div>
 
-  <!--<br/>
-  <span class="st_email"></span>
-  <span class="st_facebook"></span>
-  <span class="st_twitter"></span>
-  <span class="st_sharethis" displayText="ShareThis"></span>-->
+  <div class="tooltip-row">
+    <% tip_map = false %>
+      <% if tip.address.lat != 0 %>
+        <% tip_map = true %>
+        <div class="tip-map">
+          <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.address.lat %>+<%= tip.address.lng %>&amp;z=16" target="_blank">
+            Directions and Map
+          </a>:<br/>
+          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=200x200&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>"/>
+        </div>
+      <% end %>
+
+    <!--<p>abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+    abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc </p>-->
+
+    <div class="twits-all">
+      <div class="twits-container">
+        <h4><%=h tip.name %> twits</h4>
+        <div class="twits" data-query="<%= h(tip.calendar.location.name + ', ' + tip.name) %>">
+          Loading...
+        </div>
+      </div>
+      <div class="twits-container">
+        <h4><%= tip.condition.full_name %> twits</h4>
+        <div class="twits" data-query="<%= h(tip.calendar.location.name + ', ' + tip.condition.full_name) %>">
+          Loading...
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

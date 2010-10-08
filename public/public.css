@@ -47,7 +47,8 @@
 .guiderer .full_tip .tip-show {
     min-width: 200px;
     min-height: 200px;
-    max-width: 500px;
+    /*max-width: 500px;*/
+    width: 500px;
     color: black;
     padding: 5px;
     background-color: azure;
@@ -64,16 +65,49 @@
     zoom: 1;
     margin-bottom: 10px;
 }
-.guiderer .full_tip .tip-show .tip-map {
-    margin-top: 10px;
-    text-align: center;
-}
-
 .guiderer .full_tip .tip-show  a {
     color: black;
 }
 .guiderer .full_tip .tip-show a:visited {
     color: black;
+}
+.guiderer .full_tip .tip-show .tooltip-row {
+    /*width: 100%;*/
+    /*white-space: nowrap;*/
+    overflow: hidden;
+    zoom: 1;
+    margin: 10px;
+}
+.guiderer .full_tip .tip-show .tip-map {
+    text-align: center;
+    display: inline-block;
+    margin: 0 0 10px 10px;
+    float: right;
+}
+.guiderer .full_tip .tip-show .twits-all {
+    /*display: inline-block;*/
+    margin: 10px 10px 10px 0;
+    /*width: 270px;*/
+    /*width: 270px;*/
+    vertical-align:top;
+    white-space: normal;
+}
+.guiderer .full_tip .tip-show .twits-all .twits-container {
+    /*display: inline-block;*/
+    width: 100%;
+    padding-bottom: 10px;
+}
+.guiderer .full_tip .tip-show .twits-all .twits-container h4 {
+    margin: 10px 0;
+}
+.guiderer .full_tip .tip-show .twits-all .twits-container .twits ul {
+    padding-left: 15px;
+}
+.guiderer .full_tip .tip-show .twits-all .twits-container .twits ul li {
+    margin-bottom: 5px;
+}
+.guiderer .full_tip .tip-show .twits-all .twits-container .twits .twit-user {
+    font-weight: bold;
 }
 .guiderer .full_tip {
     display: none;
@@ -82,6 +116,7 @@
 .guiderer .guide-tip-body {
     position: relative;
 }
+
 
 
 
@@ -263,6 +298,7 @@
 .guiderer .guide-footer-flat .addthis-guide {
     float: right;
     margin-right: 50px;
+    width: 100px;
 }
 
 

@@ -5,10 +5,10 @@ if (!window._guiderer) {
     for (var i = 0; i < scripts.length; i++) {
         if (scripts[i].className == 'guiderer-script') {
             server = scripts[i].src.match(/http:\/\/.+\//);
+            break;
         }
     }
     if (server == null) {
-//        alert(null);
         server = 'http://guiderer.com/';
     }
 
@@ -32,17 +32,15 @@ if (!window._guiderer) {
     if (window.jQuery == undefined) {
         load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
     }
-//    if (window.jQuery == undefined || jQuery().qtip == undefined) {
-//        load_javascript(server + 'jquery/jquery.qtip-1.0.0-rc3.js');
-//    }
     if (window.addthis == undefined) {
         load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer');
     }
-    load_css(server + 'public.css?_version=2');
+    load_css(server + 'public.css?_version=3');
 
 
     _guiderer = {
         render_all: function(root) {
+//            console.log(window.jQuery + '   ' + window.$);
             $(root).find('.guiderer').each(function(index) {
                 _guiderer.render(this);
             })
@@ -108,6 +106,89 @@ if (!window._guiderer) {
                 addthis.toolbox(this, ui_config, share_config);
             });
 
+            // setup tooltip for each particular tip
+            root.find('div.guide-tip-body').each(function() {
+                var trigger = $(this);
+                var tooltip = $(this).find('.full_tip');
+                _guiderer.tooltip(trigger, tooltip, function(trigger, tooltip) {
+                    // hide all other tooltips
+                    $('div.guiderer div.full_tip').hide();
+
+                    tooltip.find('.twits').each(function() {
+                        var twit_area = $(this);
+                        if (!twit_area.data('twit_state')) {
+                            twit_area.data('twit_state', 'loading');
+                            $.ajax({
+                                url: 'http://search.twitter.com/search.json',
+                                data: {
+//                                    'result_type': 'popular',
+                                    lang: 'en',
+                                    'q' : twit_area.attr('data-query')
+                                },
+                                dataType: 'jsonp',
+                                success: function(data) {
+//                                    console.log(data);
+                                    twit_area.data('twit_state', 'loaded');
+                                    if (data.results.length == 0) {
+                                        twit_area.html('no twits');
+                                        return;
+                                    }
+
+                                    var ul = $('<ul></ul>');
+                                    for (var i = 0; i < Math.min(data.results.length, 3); ++i) {
+                                        var twit = data.results[i];
+
+                                        // replace urls with links in the text 
+                                        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+                                        var text = twit.text.replace(exp, "<a href='$1'>$1</a>");
+
+                                        var user_element = $('<span></span>').addClass('twit-user').text(twit.from_user).append(': ');
+                                        var text_element = $('<span></span>').addClass('twit-text').html(text);
+                                        ul.append($('<li></li>').append(user_element).append(text_element));
+                                    }
+                                    twit_area.html(ul);
+                                },
+                                error: function(r, s, e) {
+                                    twit_area.html('Failed to load twits.');
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            // setup guide info tooltip
+            root.find('div.guide-info div.guiderer-logo').each(function() {
+                var trigger = $(this);
+                var tooltip = $(this).find('.tooltip-content');
+                _guiderer.tooltip(trigger, tooltip, function() {$('div.guiderer div.full_tip').hide();});
+            });
+        },
+
+
+        vote: function(el) {
+            var root = $(el).parents('.guiderer')[0];
+            var id = $(root).attr('guide_id');
+            if (!id) {
+                throw "No guide id found in root element.";
+            }
+            var server = $(root).attr('server');
+            var vote = $(el).attr('title');
+
+            $.ajax({
+                url: server + '/guides/' + id + '/vote/' + vote,
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+                success: function() {
+                    $(root).find('.inner').addClass('voted').css('width', vote * 20);
+                },
+                error: function(r, s, e) {
+                }
+            });
+        },
+
+        tooltip: function(trigger, tooltip, on_before_show) {
             var position_tooltip = function(trigger, tip) {
                 var window_x = trigger.offset().left - $(window).scrollLeft();
                 var window_y = trigger.offset().top - $(window).scrollTop();
@@ -154,77 +235,29 @@ if (!window._guiderer) {
                 });
             };
 
-            var show_tooltip = function(trigger, tip) {
-                // remove closing timer, if necessary
-                if (tip.data('timeout-var') != null) {
-                    clearTimeout(tip.data('timeout-var'));
-                    tip.data('timeout-var', null);
-                }
-
-                position_tooltip(trigger, tip);
-
-                // close all other tips
-                $('div.guiderer div.full_tip').hide();
-
-                tip.show();
-            };
-
-            var hide_tooltip = function(tip) {
-                var t = setTimeout(function() {
-                    tip.hide();
-                    tip.data('timeout-var', null);
-                }, 500);
-                tip.data('timeout-var', t);
-            };
-
             // setup tooltip for each particular tip
-            root.find('div.guide-tip-body').hover(function() {
-                var trigger = $(this);
-                var tip = $(this).find('.full_tip');
-                show_tooltip(trigger, tip);
-            },
-            function() {
-                var tip = $(this).find('.full_tip');
-                hide_tooltip(tip);
-            });
-
-            // setup guide info tooltip
-            root.find('div.guide-info div.guiderer-logo').hover(function() {
-                var trigger = $(this);
-                var tip = $(this).find('.tooltip-content');
-                show_tooltip(trigger, tip);
-            },
-            function() {
-                var tip = $(this).find('.tooltip-content');
-                hide_tooltip(tip);
-            });
-        },
-
-
-        vote: function(el) {
-            var root = $(el).parents('.guiderer')[0];
-            var id = $(root).attr('guide_id');
-            if (!id) {
-                throw "No guide id found in root element.";
-            }
-            var server = $(root).attr('server');
-            var vote = $(el).attr('title');
-
-            $.ajax({
-                url: server + '/guides/' + id + '/vote/' + vote,
-                type: 'GET',
-                dataType: 'jsonp',
-                cache: false,
-                success: function() {
-                    $(root).find('.inner').addClass('voted').css('width', vote * 20);
-                },
-                error: function(r, s, e) {
+            trigger.hover(function() {
+                // remove closing timer, if necessary
+                if (tooltip.data('hover-timeout-var') != null) {
+                    clearTimeout(tooltip.data('hover-timeout-var'));
+                    tooltip.data('hover-timeout-var', null);
                 }
-            });
-        },
 
-        display_tip: function(trigger, tip) {
-            tip.css({'po' : ''});
+                position_tooltip(trigger, tooltip);
+
+                if (on_before_show) {
+                    on_before_show(trigger, tooltip);
+                }
+
+                tooltip.show();
+            },
+            function() {
+                var t = setTimeout(function() {
+                    tooltip.hide();
+                    tooltip.data('hover-timeout-var', null);
+                }, 1000);
+                tooltip.data('hover-timeout-var', t);
+            });
         }
     };
     _guiderer.server = server;
@@ -240,18 +273,24 @@ if (!window._guiderer) {
         //(slightly modified)
         var ret = 0;
 
-        if (elm.addEventListener)
+        if (elm.addEventListener) {
             ret = elm.addEventListener(evType, fn, useCapture);
-        else if (elm.attachEvent)
+        } else if (elm.attachEvent) {
             ret = elm.attachEvent('on' + evType, fn);
-        else
+        } else {
             elm['on' + evType] = fn;
+        }
 
         return ret;
     }
 
     // render all guides once page is loaded
-    addEvent(window, "load", function() {_guiderer.render_all(document);});
+//    window.onload = function() {_guiderer.render_all(document);};
+    addEvent(window, "load", function() {
+        setTimeout(function() {
+            _guiderer.render_all(document);
+        }, 500);
+    }, false);
 
 
 //    $(document).ready(function() {
