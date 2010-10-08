@@ -124,10 +124,10 @@ if (!window.tips) var tips = {
                 for (var i = 0; i < groupSize && p * groupSize + i < n; ++i) {
                     var result = searcher.results[p * groupSize + i];
                     var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl);
-//                    img.click(function() {
-//                        tips.selectGoogleImage(this, result.url);
-//                    });
-                    img.attr('onclick', 'tips.selectGoogleImage(this, "' + result.url + '");');
+                    img.bind('click', {url: result.url}, function(event) {
+                        tips.selectGoogleImage(this, event.data.url);
+                    });
+//                    img.attr('onclick', 'tips.selectGoogleImage(this, "' + result.url + '");');
                     var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
                     page.append(element);
                 }
