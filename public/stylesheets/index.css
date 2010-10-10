@@ -301,7 +301,8 @@ border-radius: 4px;
 }
 
 #view_tips .guide-access-type .current-access-type {
-    font-weight: bold;
+    	font-family: Geneva, Arial, Helvetica, sans-serif;
+ font-weight: bold;
 }
 
 #view_tips .guide-access-type {
@@ -334,6 +335,7 @@ border-radius: 4px;
 	background: #ccc url(/images/h30.png) ;
 	margin:0;
 	padding:5px 15px;
+		font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size:14px;
 	font-weight:normal;
 	border-bottom:1px solid #ddd;
@@ -358,6 +360,7 @@ border-radius: 4px;
 
 /* a title inside pane */
 .edit-tips-batch .tip-edit h3 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 0 -5px 0;
 	font-size:16px;
@@ -417,7 +420,8 @@ border-radius: 4px;
 
 .tip-show .tip-name {
     color: #666666;
-    font-weight: bold;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
     font-size: 40px;
 }
 .tip-show .tip-details {
@@ -451,7 +455,8 @@ border-radius: 4px;
 
 .tip-tile .full_tip .tip-show .tip-name {
     color: #666666;
-    font-weight: bold;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold;
     font-size: larger;
 }
 .tip-tile .full_tip .tip-show .tip-details {
@@ -496,7 +501,8 @@ border-radius: 4px;
 
 #home-page > .section h1 {
     background-color: #437888;
-    font-weight: normal;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-weight: normal;
     font-size: x-large;
     display: block;
 
@@ -525,7 +531,8 @@ border-radius: 4px;
 }
 
 #home-page #search_location {
-    font-size: large;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size: large;
     font-weight: bold;
 }
 
@@ -600,7 +607,8 @@ border-radius: 4px;
 #contact-page .emails {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-weight: bold;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-weight: bold;
 }
 
 #contact-page .contact-form {
@@ -617,7 +625,8 @@ border-radius: 4px;
     margin: 20px;
 }
 #new-guide-places .places-list {
-    font-size:150%;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:150%;
     width: 220px;
 }
 
@@ -723,7 +732,8 @@ ul.guide-type-tabs {
 
 .guide-type-tabs li a {
     float:left;
-    font-size:13px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:13px;
     display:block;
     padding:5px 30px;
     text-decoration:none;
@@ -856,7 +866,8 @@ div.guide-type-panes > div {
 .tooltip {
 	display:none;
 	background:transparent url(/tools/img/tooltip/black_arrow.png);
-	font-size:12px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:12px;
 	height:70px;
 	width:160px;
 	padding:25px;
