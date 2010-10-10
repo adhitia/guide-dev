@@ -5,7 +5,7 @@
   <b>Location:</b>
   <span>
     <% if @full_access %>
-    <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> </a>
+    <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> [Edit]</a>
     <span class="edit-area hidden" style="position:relative;">
       <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
       <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
@@ -46,6 +46,9 @@
   <%= h @calendar.click_count %>
 
 -->
+
+  
+
   <div class="button-panel">
     <a href="/guides/<%= @calendar.id %>/share" class="button">
       view live version and get script
