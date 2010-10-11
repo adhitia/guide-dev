@@ -39,7 +39,10 @@ class Tip < ActiveRecord::Base
 
 
   def image_exists?
-    !self.image_remote_url.blank?
+#    puts "!!!!!!!#{image.url}"
+#    image.url != ''
+    self.image.file?
+#    !self.image_remote_url.blank?
   end
 
 #  def self.max_name_length
