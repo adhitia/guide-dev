@@ -27,7 +27,11 @@
             <%= h shorten(tip.url, 35) %>
           </a>
         <% end %>
-
+  <span class="headtextdarker"><b><%= h tip.name %></b><br/></span>
+    <span class="textgraysmall">
+      Views= <%= tip.view_count %>
+      Clicks= <%= tip.click_count %>
+    </span>
   </div>
 
 

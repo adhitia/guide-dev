@@ -112,7 +112,7 @@ textarea.invalid {
     height:100px;
     width:100px;
     margin: 5px;
-    opacity: 0.7;
+    opacity: 0.8;
     overflow: hidden;
     padding: 2px;
     display:table-cell;
@@ -131,8 +131,8 @@ textarea.invalid {
     overflow: hidden;
     padding: 2px;
 
-    border-color:red;
-    border-width:3px;
+    border-color:green;
+    border-width:5px;
 }
 
 .google-image-choices .google_image {
@@ -171,7 +171,6 @@ textarea.invalid {
     background-color:white;
     margin:5px;
     align:center;
-    height:180px;
     position: relative;
 }
 
@@ -198,7 +197,7 @@ textarea.invalid {
 #view_tips .tip-tile .tip-name {
     color: #666666;
     font-weight: bold;
-    font-size: medium;
+    font-size: large;
 }
 
 #view_tips .tip-tile:hover .icon-small {
@@ -218,7 +217,6 @@ textarea.invalid {
     width:110px;
     overflow:hidden;
     padding:5px;
-    height:180px;
 }
 
 #view_tips .droppable-active {
@@ -303,7 +301,8 @@ border-radius: 4px;
 }
 
 #view_tips .guide-access-type .current-access-type {
-    font-weight: bold;
+    	font-family: Geneva, Arial, Helvetica, sans-serif;
+ font-weight: bold;
 }
 
 #view_tips .guide-access-type {
@@ -317,8 +316,9 @@ border-radius: 4px;
     position:absolute;
     background-color:white;
     display:none;
-    border: 1px solid black;
-    width:260px;
+    border: 3px solid gray;
+    width:460px;
+    z-index:10;
     color:black !important;
 }
 .local-search-container a {
@@ -335,6 +335,7 @@ border-radius: 4px;
 	background: #ccc url(/images/h30.png) ;
 	margin:0;
 	padding:5px 15px;
+		font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size:14px;
 	font-weight:normal;
 	border-bottom:1px solid #ddd;
@@ -359,6 +360,7 @@ border-radius: 4px;
 
 /* a title inside pane */
 .edit-tips-batch .tip-edit h3 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-weight:normal;
 	margin:0 0 -5px 0;
 	font-size:16px;
@@ -382,15 +384,19 @@ border-radius: 4px;
 .edit-tip-root .left-pane {
     /*position: relative;*/
     float: left;
-    width: 49%;
+    width: 35%;
 }
 
 .edit-tip-root .right-pane {
     position: relative;
     float: left;
-    width: 50%;
+    width: 35%;
 }
-
+.edit-tip-root .middle-pane {
+    position: relative;
+    float: left;
+    width: 17%;
+}
 .edit-tip-root .input-row {
     overflow: hidden;
     zoom: 1;
@@ -414,8 +420,9 @@ border-radius: 4px;
 
 .tip-show .tip-name {
     color: #666666;
-    font-weight: bold;
-    font-size: larger;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+    font-size: 40px;
 }
 .tip-show .tip-details {
     overflow:hidden;
@@ -442,13 +449,14 @@ border-radius: 4px;
     /*width: 500px;*/
     color: black;
     padding: 5px;
-    background-color: azure;
+    background-color: white;
     border: solid black 1px;
 }
 
 .tip-tile .full_tip .tip-show .tip-name {
     color: #666666;
-    font-weight: bold;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold;
     font-size: larger;
 }
 .tip-tile .full_tip .tip-show .tip-details {
@@ -493,7 +501,8 @@ border-radius: 4px;
 
 #home-page > .section h1 {
     background-color: #437888;
-    font-weight: normal;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-weight: normal;
     font-size: x-large;
     display: block;
 
@@ -522,7 +531,8 @@ border-radius: 4px;
 }
 
 #home-page #search_location {
-    font-size: large;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size: large;
     font-weight: bold;
 }
 
@@ -597,7 +607,8 @@ border-radius: 4px;
 #contact-page .emails {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-weight: bold;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-weight: bold;
 }
 
 #contact-page .contact-form {
@@ -614,7 +625,8 @@ border-radius: 4px;
     margin: 20px;
 }
 #new-guide-places .places-list {
-    font-size:150%;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:150%;
     width: 220px;
 }
 
@@ -720,7 +732,8 @@ ul.guide-type-tabs {
 
 .guide-type-tabs li a {
     float:left;
-    font-size:13px;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:13px;
     display:block;
     padding:5px 30px;
     text-decoration:none;
@@ -812,7 +825,7 @@ div.guide-type-panes > div {
 	position:relative;
 	overflow:hidden;
 	height:115px;
-    width: 350px;
+    width: 850px;
     float:left;
 }
 .google-image-choices .scrollable .items {
@@ -853,7 +866,8 @@ div.guide-type-panes > div {
 .tooltip {
 	display:none;
 	background:transparent url(/tools/img/tooltip/black_arrow.png);
-	font-size:12px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+     font-size:12px;
 	height:70px;
 	width:160px;
 	padding:25px;

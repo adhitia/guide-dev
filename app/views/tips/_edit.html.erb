@@ -12,44 +12,49 @@
   <div class="input-row">
     Name
     <span style="float:right;">
-      <!-- onclick="tips.loadLocalSuggestions(this);"-->
-      <!--title="use name to suggest address, phone and url"-->
-      <a href="javascript:" class="local-search-launch">autofill</a>
-      <div class="local-search-container"></div>
       <%= tip_form.text_field :name, :size => 30, :class => 'tip_name', :maxlength => Tip::MAX_NAME_LENGTH %>
     </span>
   </div>
   <div class="input-row">
     <%= tip_form.label :url %> <%= tip_form.text_field :url, :size => 30, :class => 'tip_url', :style => "float:right;" %>
   </div>
+  
   <div class="input-row">
-    <%= tip_form.label :description %>
-    <span style="float:right;"><%= tip_form.text_area(:description, :rows => 8, :cols => 35) %></span>
+      <% tip_form.fields_for tip.address do |address_form| %>
+          <%= address_form.label :address, 'Street Address' %>
+          <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :style => "float:right;" %>
+          <%= address_form.hidden_field :lat, :class => 'tip_address_lat' %>
+          <%= address_form.hidden_field :lng, :class => 'tip_address_lng' %>
+      <% end %>
+    </div>
+  
+    <div class="input-row">
+      <%= tip_form.label :phone %> <%= tip_form.text_field :phone, :size => 30, :class => 'tip_phone', :style => "float:right;" %>
   </div>
+  
+ 
 </div>
-
-<div class="right-pane">
-  <div class="input-row">
-    <% tip_form.fields_for tip.address do |address_form| %>
-        <%= address_form.label :address, 'Street Address' %>
-        <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :style => "float:right;" %>
-        <%= address_form.hidden_field :lat, :class => 'tip_address_lat' %>
-        <%= address_form.hidden_field :lng, :class => 'tip_address_lng' %>
-    <% end %>
+<div class="middle-pane" style="top:54px">
+<a href="javascript:" class="local-search-launch"> <img src="/images/autofillbutton.png" ></a>
+      <div class="local-search-container"></div></div>
+ <div class="input-row">
+    <%= tip_form.label :description %> - One sentence on why your readers should visit
+    <span style="float:right;"><%= tip_form.text_area(:description, :rows => 5, :cols => 52) %></span>
   </div>
 
-  <div class="input-row">
-    <%= tip_form.label :phone %> <%= tip_form.text_field :phone, :size => 30, :class => 'tip_phone', :style => "float:right;" %>
-  </div>
 
-  <div class="input-row">
+
+
+
+  <div class="input-row" style="clear:both" >
+  Define an image for this point of interest
     <div class="upload_image">
       <ul>
         <% if tip.image_exists? -%>
-            <li><a href="#<%=current_id%>-current-image"><span>current image</span></a></li>
+            <li><a href="#<%=current_id%>-current-image"><span>Current image</span></a></li>
         <% end -%>
-        <li><a href="#<%=current_id%>-upload-google"><span>google suggestions</span></a></li>
-        <li><a href="#<%=current_id%>-upload-drive"><span>upload image</span></a></li>
+        <li><a href="#<%=current_id%>-upload-google"><span>Google suggestions</span></a></li>
+        <li><a href="#<%=current_id%>-upload-drive"><span>Upload image</span></a></li>
       </ul>
       <% if tip.image_exists? -%>
           <div id="<%=current_id%>-current-image" style="padding:10px;">
@@ -66,9 +71,6 @@
 
     </div>
   </div>
-</div>
-
-
 
 <% end %>
 
