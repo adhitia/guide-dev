@@ -58,10 +58,13 @@ Add those imports to the 'head' tag of your page.
         target.attr('guide_style', style_id);
         target.addClass("guiderer");
 //        alert(target.length);
-        _guiderer.render(target);
+        if (_guiderer.render) {
+            _guiderer.render(target);
+        }
     };
 
   $(document).ready(function() {
-    $('#choose_style').buttonset();
+      $('#preview_type_1').click();
+      $('#choose_style').buttonset();
   });
 </script>
