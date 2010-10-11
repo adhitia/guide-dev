@@ -861,6 +861,27 @@ div.guide-type-panes > div {
 	visibility:hidden !important;
 }
 
+#map-canvas {
+    width:100%;
+    height:600px;
+}
+.map-info-window {
+    color: black;
+    padding: 0 10px 10px 10px;
+    overflow: hidden;
+}
+.map-info-window h3 {
+    margin: 0;
+}
+.map-info-window p {
+    margin: 9px 0;
+}
+.map-info-window a {
+    color: blue;
+}
+.map-info-window a:hover {
+    color: blue;
+}
 
 /*
 .tooltip {

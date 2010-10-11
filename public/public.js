@@ -74,49 +74,52 @@ if (!window._guiderer) {
             root.find('div.guide-tip-body').each(function() {
                 var trigger = $(this);
                 var tooltip = $(this).find('.full_tip');
-                _guiderer.tooltip(trigger, tooltip, function(trigger, tooltip) {
-                    // hide all other tooltips
-                    $('div.guiderer div.full_tip').hide();
+                _guiderer.tooltip(trigger, tooltip, {
+                    on_before_show: function(trigger, tooltip) {
+                        // hide all other tooltips
+                        $('div.guiderer div.full_tip').hide();
+                        $('div.guiderer div.guide-info .tooltip-content').hide();
 
-                    tooltip.find('.twits').each(function() {
-                        var twit_area = $(this);
-                        if (!twit_area.data('twit_state')) {
-                            twit_area.data('twit_state', 'loading');
-                            $.ajax({
-                                url: 'http://search.twitter.com/search.json',
-                                data: {
-//                                    'result_type': 'popular',
-                                    lang: 'en',
-                                    'q' : twit_area.attr('data-query')
-                                },
-                                dataType: 'jsonp',
-                                success: function(data) {
-                                    twit_area.data('twit_state', 'loaded');
-                                    if (data.results.length == 0) {
-                                        twit_area.html('no twits');
-                                        return;
+                        tooltip.find('.twits').each(function() {
+                            var twit_area = $(this);
+                            if (!twit_area.data('twit_state')) {
+                                twit_area.data('twit_state', 'loading');
+                                $.ajax({
+                                    url: 'http://search.twitter.com/search.json',
+                                    data: {
+                                        //                                    'result_type': 'popular',
+                                        lang: 'en',
+                                        'q' : twit_area.attr('data-query')
+                                    },
+                                    dataType: 'jsonp',
+                                    success: function(data) {
+                                        twit_area.data('twit_state', 'loaded');
+                                        if (data.results.length == 0) {
+                                            twit_area.html('no twits');
+                                            return;
+                                        }
+
+                                        var ul = $('<ul></ul>');
+                                        for (var i = 0; i < Math.min(data.results.length, 3); ++i) {
+                                            var twit = data.results[i];
+
+                                            // replace urls with links in the text
+                                            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+                                            var text = twit.text.replace(exp, "<a href='$1'>$1</a>");
+
+                                            var user_element = $('<span></span>').addClass('twit-user').text(twit.from_user).append(': ');
+                                            var text_element = $('<span></span>').addClass('twit-text').html(text);
+                                            ul.append($('<li></li>').append(user_element).append(text_element));
+                                        }
+                                        twit_area.html(ul);
+                                    },
+                                    error: function(r, s, e) {
+                                        twit_area.html('Failed to load twits.');
                                     }
-
-                                    var ul = $('<ul></ul>');
-                                    for (var i = 0; i < Math.min(data.results.length, 3); ++i) {
-                                        var twit = data.results[i];
-
-                                        // replace urls with links in the text 
-                                        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-                                        var text = twit.text.replace(exp, "<a href='$1'>$1</a>");
-
-                                        var user_element = $('<span></span>').addClass('twit-user').text(twit.from_user).append(': ');
-                                        var text_element = $('<span></span>').addClass('twit-text').html(text);
-                                        ul.append($('<li></li>').append(user_element).append(text_element));
-                                    }
-                                    twit_area.html(ul);
-                                },
-                                error: function(r, s, e) {
-                                    twit_area.html('Failed to load twits.');
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
                 });
             });
 
@@ -124,7 +127,61 @@ if (!window._guiderer) {
             root.find('div.guide-info div.guiderer-logo').each(function() {
                 var trigger = $(this);
                 var tooltip = $(this).find('.tooltip-content');
-                _guiderer.tooltip(trigger, tooltip, function() {$('div.guiderer div.full_tip').hide();});
+                _guiderer.tooltip(trigger, tooltip, {
+                    on_before_show: function() {
+                        $('div.guiderer div.full_tip').hide();
+                        $('div.guiderer div.guide-info .tooltip-content').hide();
+                    },
+
+                    on_show: function() {
+                        // build map only after tooltip is shown
+
+                        var map_container = tooltip.find('.guide-map');
+                        if (!map_container.data('map-state')) {
+                            map_container.data('map-state', 'loading');
+
+
+                            var markers = [];
+                            var bounds = new google.maps.LatLngBounds();
+                            root.find('.guiderer-data .guiderer-tip-data').each(function() {
+                                var el = $(this);
+                                var lat = el.attr('data-lat');
+                                var lng = el.attr('data-lng');
+                                if (lat != '0.0') {
+                                    var name = el.attr('data-name');
+                                    var point = new google.maps.LatLng(lat, lng);
+                                    var marker = new google.maps.Marker({
+                                        position: point,
+                                        title: name
+                                    });
+                                    markers.push(marker);
+                                    bounds.extend(point);
+                                }
+                            });
+
+                            if (markers.length == 0) {
+                                map_container.hide();
+                                return;
+                            }
+                            map_container.show();
+                            var map = new google.maps.Map(map_container[0], {
+                                zoom: 11,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            });
+                            map.fitBounds(bounds);
+
+                            var click_handler = function() {
+                                window.location = _guiderer.server + 'guides/' + root.attr('guide_id') + '/map';
+                            };
+
+                            for (var i = 0; i < markers.length; ++i) {
+                                markers[i].setMap(map);
+                                google.maps.event.addListener(markers[i], 'click', click_handler);
+                            }
+                            google.maps.event.addListener(map, 'click', click_handler);
+                        }
+                    }
+                });
             });
         };
 
@@ -151,7 +208,9 @@ if (!window._guiderer) {
             });
         };
 
-        _guiderer.tooltip = function(trigger, tooltip, on_before_show) {
+        _guiderer.tooltip = function(trigger, tooltip, options) {
+            if (!options) options = {};
+
             var position_tooltip = function(trigger, tip) {
                 var window_x = trigger.offset().left - $(window).scrollLeft();
                 var window_y = trigger.offset().top - $(window).scrollTop();
@@ -208,11 +267,15 @@ if (!window._guiderer) {
 
                 position_tooltip(trigger, tooltip);
 
-                if (on_before_show) {
-                    on_before_show(trigger, tooltip);
+                if (options.on_before_show) {
+                    options.on_before_show(trigger, tooltip);
                 }
 
                 tooltip.show();
+
+                if (options.on_show) {
+                    options.on_show(trigger, tooltip);
+                }
             },
             function() {
                 var t = setTimeout(function() {
@@ -257,6 +320,7 @@ if (!window._guiderer) {
         }
         _guiderer.server = server;
 
+
         // each 'script' tag will have onload event
         // _guiderer object will be initialized only when last library is loaded
         var left_to_load = 0;
@@ -265,13 +329,14 @@ if (!window._guiderer) {
             if (left_to_load > 0) {
                 return;
             }
+
             addthis.init();
             _guiderer.setup_library(jQuery);
             _guiderer.render_all(document);
         }
 
         // load necessary resources first
-        function load_javascript(src) {
+        function load_javascript(src, callback) {
             var a = document.createElement('script');
             a.type = 'text/javascript';
             a.src = src;
@@ -279,7 +344,7 @@ if (!window._guiderer) {
             s.parentNode.insertBefore(a, s);
 
             ++left_to_load;
-            _guiderer.addEvent(a, 'load', init, false);
+            _guiderer.addEvent(a, 'load', callback, false);
         }
 
         function load_css(src) {
@@ -288,18 +353,26 @@ if (!window._guiderer) {
             a.type = 'text/css';
             a.href = src;
             document.getElementsByTagName("head")[0].appendChild(a);
-
-//            ++left_to_load;
-//            _guiderer.addEvent(a, 'load', init, false);
         }
 
+        var load_google_apis = function() {
+            if (window.google.maps == undefined) {
+                ++left_to_load;
+                google.load("maps", "3", {'callback': init, 'other_params' : 'sensor=false'});
+            }
+        };
+        if (window.google == undefined) {
+            load_javascript('http://www.google.com/jsapi', function() {load_google_apis(); init();});
+        } else {
+            load_google_apis();
+        }
         if (window.jQuery == undefined) {
-            load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js');
+            load_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js', init);
         }
         if (window.addthis == undefined) {
-            load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1');
+            load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1', init);
         }
-        load_css(server + 'public.css?_version=3');
+        load_css(server + 'public.css?_version=4');
 
     }, false);
 

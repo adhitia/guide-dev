@@ -135,6 +135,10 @@ class CalendarsController < ApplicationController
     @layouts = GuideLayout.find_all_by_public true
   end
 
+  def map
+    @guide = verify_guide params[:id]
+  end
+
 
 
   protected

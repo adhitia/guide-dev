@@ -1,9 +1,7 @@
-<!--<script class="guiderer-resource" type="text/javascript" src="<%= WEB_ROOT %>/jquery/jquery.qtip-1.0.0-rc3.js"></script>-->
-<!--<link href="<%= WEB_ROOT %>/public.css?_version=3" media="screen" rel="stylesheet" type="text/css"/>-->
-
-<!--<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>-->
-<!--<script type="text/javascript">stLight.options({publisher:'3273a669-56a2-4e1b-a6db-43d7249a98da'});</script>-->
-
-
+<div class="guiderer-data" style="display:none;">
+  <% @calendar.tips.each do |tip| %>
+      <div class="guiderer-tip-data" data-name="<%=h tip.name%>" data-lat="<%=tip.address.lat%>" data-lng="<%=tip.address.lng%>"></div>
+  <% end %>
+</div>
 
 <%= yield %>
