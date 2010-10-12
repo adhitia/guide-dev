@@ -39,15 +39,8 @@ class Tip < ActiveRecord::Base
 
 
   def image_exists?
-#    puts "!!!!!!!#{image.url}"
-#    image.url != ''
     self.image.file?
-#    !self.image_remote_url.blank?
   end
-
-#  def self.max_name_length
-#    35
-#  end
 
 private
   # to make paperclip load urls

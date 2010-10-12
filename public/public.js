@@ -87,7 +87,7 @@ if (!window._guiderer) {
                                 $.ajax({
                                     url: 'http://search.twitter.com/search.json',
                                     data: {
-                                        //                                    'result_type': 'popular',
+                                        //'result_type': 'popular',
                                         lang: 'en',
                                         'q' : twit_area.attr('data-query')
                                     },
@@ -105,7 +105,7 @@ if (!window._guiderer) {
 
                                             // replace urls with links in the text
                                             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-                                            var text = twit.text.replace(exp, "<a href='$1'>$1</a>");
+                                            var text = twit.text.replace(exp, "<a href='$1' target='_blank'>$1</a>");
 
                                             var user_element = $('<span></span>').addClass('twit-user').text(twit.from_user).append(': ');
                                             var text_element = $('<span></span>').addClass('twit-text').html(text);
