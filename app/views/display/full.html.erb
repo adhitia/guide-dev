@@ -4,6 +4,7 @@
       background-color: azure;
       color: black;
       font-size: medium;
+      display: inline-block;
   }
 
   .guide-template-full a {
@@ -22,60 +23,87 @@
       padding:5px;
       text-align:center;
   }
-  .guide-template-full .condition-label {
+  /*.guide-template-full .condition-label {
       width: 50px;
       padding:10px;
       font-weight: bold;
+  }*/
+
+
+  .guide-template-full .guide-tip-body {
+      display: block !important;
+      /*overflow: hidden;*/
   }
+
+
+.guide-template-full .day-group {
+    /*width: 190px;*/
+    border: 2px solid beige;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    float: left;
+    /*display:table-cell;*/
+    /*display: inline-block;*/
+    margin-right: 5px;
+    padding: 5px 0;
+}
+
+
+.guide-template-full .condition-label {
+    /*width: 100px;
+    height: 100%;
+    background-color:#006699;
+    float: left;*/
+    padding: 3px 20px;
+    text-align: center;
+    background-color: lightBlue;
+    color: black;
+}
+
 </style>
 
+<div class="guide-template-full">
 
-
-<table class="guide-template-full" border="0" cellpadding="0" cellspacing="0">
-  <thead>
-  
-  <tr>
-    <th class="guide-head" colspan="8">
+<div class="guide-head">
       <div class="guide-name">
         <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
       </div>
       <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
-    </th>
-  </tr>
+    </div>
 
-  <tr>
-    <th></th>
-    <% @weekdays.each do |day| %>
-        <th class="weekday-label">
-          <%= day.name %>
-        </th>
-    <% end %>
-  </tr>
-  </thead>
+  <div style="display:inline-block;">
+<% @tips.each_index do |day| %>
+      <% size = 0 %>
+      <% @tips[day].each {|condition, tips| size += tips.size;} %>
+      <% break if size == 0 %>
 
-  <tbody>
-  <% @calendar.conditions.each do |condition| %>
-      <% tips = @calendar.tips.select { |tip| tip.condition_id == condition.id } %>
-      <% if tips.length > 0 %>
-          <tr>
-            <td class="condition-label"><%= condition.full_name %></td>
-            <% @weekdays.each do |day| %>
-                <% tip = tips.find { |tip| tip.weekday_id == day.id } %>
-                <td>
-                      <%= render :partial => 'display/tip/small', :locals => {:tip => tip} %>
-                </td>
+    <div class="day-group">
+      <div class="day-header">
+        Day <%= day + 1 %>
+      </div>
+
+      <% @calendar.conditions.each do |condition| %>
+          <% if @tips[day][condition.id].size > 0 %>
+          <div class="condition-label">
+            <%= h condition.full_name %>
+          </div>
+          <% end %>
+
+          <!--<div class="condition-group">-->
+            <% @tips[day][condition.id].each do |tip| %>
+                <%= render :partial => 'display/tip/medium', :locals => {:tip => tip} %>
             <% end %>
-          </tr>
+          <!--</div>-->
       <% end %>
-  <% end %>
-  </tbody>
+    </div>
+<% end %>
+  </div>
 
-  <tfoot>
-  <tr>
-    <th></th>
-    <th colspan="7" class="guide-footer">
+    <div class="guide-footer">
       <%= render :partial => 'display/footer/normal', :locals => {:guide => @calendar, :style => 'flat', :show_week_navigation => false} %>
-    </th>
-  </tr>
-  </tfoot>
-</table>
+    </div>
+
+</div>
+
+

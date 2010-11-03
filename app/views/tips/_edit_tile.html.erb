@@ -1,0 +1,39 @@
+<% guide = tip.calendar %>
+
+<div class="edit-tip-tile" data-id="<%= tip.id %>" data-guide-id="<%= guide.id %>"
+     data-day="<%= tip.day %>" data-condition-id="<%= tip.condition.id %>" data-rank="<%= tip.rank %>">
+  <div class="view">
+    <%= image_tag tip.image.url(:thumb), {:class => 'tip-icon', :align=>"left"} %>
+    <%= h tip.name %>
+
+    <!--
+    <% if !tip.url.blank? %>
+        <span class="tip-url">
+            <a href='<% h tip.url %>' target='_blank'><%= h(shorten(tip.url, 25)) %></a>
+        </span>
+    <% end %>
+    -->
+
+    <a class="delete-tip">x</a>
+  </div>
+
+  <div class="tooltip-content">
+    <%= render :partial => 'tips/tooltip_small', :locals => {:tip => tip} %>
+  </div>
+
+
+
+    <% form_for(tip, :url => "/guides/#{@guide.id}/tips/update", :html => {:method => "post", :style => "", :class => 'tip-form'}) do |form| %>
+      <div class="edit-tip-root full">
+      <div class="tip-name-area">
+        <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
+        <!--<button class="tip-cancel" type="button">Cancel</button>-->
+        <button class="tip-update" type="button">Update</button>
+      </div>
+
+
+      <%= render :partial => 'tips/edit', :locals => {:tip => tip, :form => form} %>
+      </div>
+    <% end %>
+</div>
+

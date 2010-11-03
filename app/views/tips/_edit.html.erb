@@ -1,77 +1,50 @@
+<div class="edit-area">
+  <%= form.hidden_field :id %>
+  <div style="overflow: hidden; zoom: 1; height: 130px;">
 
+  <div class="autosuggestions"></div>
 
-<% form_prefix = tip.id.nil? ? "tips_new[#{tip.condition.id}][#{tip.weekday.id}]" : "tips[#{tip.id}]" %>
-<% current_id = tip.id.nil? ? "tips_new_#{tip.condition.id}_#{tip.weekday.id}" : "tips_#{tip.id}"  %>
-<div class="edit-tip-root <%=tip.id.nil? ? 'new-tip-root' : ''%>" form_prefix="<%= form_prefix %>" city="<%= tip.calendar.location.name %>">
-
-
-<% fields_for form_prefix, tip do |tip_form| %>
-
-<div class="left-pane">
-
-  <div class="input-row">
-    Name
-    <span style="float:right;">
-      <%= tip_form.text_field :name, :size => 30, :class => 'tip_name', :maxlength => Tip::MAX_NAME_LENGTH %>
-    </span>
-  </div>
-  <div class="input-row">
-    <%= tip_form.label :url %> <%= tip_form.text_field :url, :size => 30, :class => 'tip_url', :style => "float:right;" %>
-  </div>
-  
-  <div class="input-row">
-      <% tip_form.fields_for tip.address do |address_form| %>
-          <%= address_form.label :address, 'Street Address' %>
-          <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :style => "float:right;" %>
-          <%= address_form.hidden_field :lat, :class => 'tip_address_lat' %>
-          <%= address_form.hidden_field :lng, :class => 'tip_address_lng' %>
-      <% end %>
-    </div>
-  
+  <div class="tip-edit-column tip-edit-column-1">
     <div class="input-row">
-      <%= tip_form.label :phone %> <%= tip_form.text_field :phone, :size => 30, :class => 'tip_phone', :style => "float:right;" %>
-  </div>
-  
- 
-</div>
-<div class="middle-pane" style="top:54px">
-<a href="javascript:" class="local-search-launch"> <img src="/images/autofillbutton.png" ></a>
-      <div class="local-search-container"></div></div>
- <div class="input-row">
-    <%= tip_form.label :description %> - One sentence on why your readers should visit
-    <span style="float:right;"><%= tip_form.text_area(:description, :rows => 5, :cols => 52) %></span>
-  </div>
+        <%= form.label :url %> <%= form.text_field :url, :size => 30, :class => 'tip_url', :maxlength => 100 %>
+    </div>
 
+    <div class="input-row">
+    <% form.fields_for tip.address do |address_form| %>
+        <%= address_form.label :address, 'Street Address' %>
+        <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :maxlength => 100 %>
+        <%= address_form.hidden_field :lat, :class => 'tip_address_lat' %>
+        <%= address_form.hidden_field :lng, :class => 'tip_address_lng' %>
+    <% end %>
+    </div>
 
-
-
-
-  <div class="input-row" style="clear:both" >
-  Define an image for this point of interest
-    <div class="upload_image">
-      <ul>
-        <% if tip.image_exists? -%>
-            <li><a href="#<%=current_id%>-current-image"><span>Current image</span></a></li>
-        <% end -%>
-        <li><a href="#<%=current_id%>-upload-google"><span>Google suggestions</span></a></li>
-        <li><a href="#<%=current_id%>-upload-drive"><span>Upload image</span></a></li>
-      </ul>
-      <% if tip.image_exists? -%>
-          <div id="<%=current_id%>-current-image" style="padding:10px;">
-              <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url %>
-          </div>
-      <% end -%>
-      <div id="<%=current_id%>-upload-google" style="padding:10px;">
-        <div class="google-image-choices"></div>
-      </div>
-      <div id="<%=current_id%>-upload-drive" style="padding:10px;">
-        <%= tip_form.label :image %><br/>
-        <%= tip_form.file_field :image %>
-      </div>
-
+    <div class="input-row">
+        <%= form.label :phone %> <%= form.text_field :phone, :size => 30, :class => 'tip_phone', :maxlength => 100 %>
     </div>
   </div>
 
-<% end %>
+  <div class="tip-edit-column tip-edit-column-2">
+    <%= form.label :description, 'Description, a reason to visit' %>
+    <%= form.text_area(:description, :rows => 5, :cols => 46) %>
+  </div>
+  </div>
+
+  <div class="image-selection-area">
+    <div class="current-image">
+      <span class="label">current image</span>
+
+      <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url, :width => 100, :height => 100 %>
+    </div>
+    <div class="upload-image">
+      <span class="label">upload image</span>
+      <!--
+      <%= form.file_field :image, :size => 5 %>
+      -->
+    </div>
+    <div class="google-suggestions">
+      <span class="label">google suggestions</span>
+      <div class="content"></div>
+    </div>
+  </div>
 
 </div>

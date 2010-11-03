@@ -8,7 +8,7 @@ class Tip < ActiveRecord::Base
   has_one :address
   belongs_to :calendar
   belongs_to :condition
-  belongs_to :weekday
+#  belongs_to :weekday
   belongs_to :author, :class_name => 'User' 
 
 
@@ -27,7 +27,7 @@ class Tip < ActiveRecord::Base
 
   accepts_nested_attributes_for :address, :allow_destroy => true
 
-  validates_presence_of :author_id, :condition_id, :weekday_id, :calendar_id
+  validates_presence_of :author_id, :condition_id, :calendar_id
   validates_length_of :name, :in => 1..MAX_NAME_LENGTH,  # allow no name, denoting no tip
                       :too_long => "{{count}} characters max",
                       :too_short => "required field"

@@ -67,13 +67,14 @@
       <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
     </div>
     <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
-    <div class="guide-dow"><%= @dow.name %></div>
+    <div class="guide-dow">Day <%= @day + 1 %></div>
   </div>
 
   <!--tips-->
   <div class="guide-tips">
     <% prev_cond = nil %>
-    <% @tips.each do |tip| %>
+    <% @calendar.conditions.each do |condition| %>
+        <% @tips[@day][condition.id].each do |tip| %>
 
         <div class="guide-tip <%= prev_cond.nil? ? 'guide-tip-selected' : '' %>" tip_id="<%=tip.id%>">
           <!--create header to click-->
@@ -85,6 +86,7 @@
         </div>
 
         <% prev_cond = tip.condition %>
+        <% end %>
     <% end %>
   </div>
 

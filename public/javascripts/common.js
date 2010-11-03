@@ -33,15 +33,45 @@ if (!window.common) {
                 window.location.replace(location);
         },
 
-        setLoading: function(container, text) {
+        setLoading: function(target, text, container) {
             if (text == null || text == undefined) {
                 text = '';
             }
-            $(container).html('<span style="text-align:center;"><img src="/images/loading-indicator.gif">' + text + '</span>');
+            if (container == undefined) {
+                container = $('body');
+            }
+
+            var img = $('<img>').attr('src', '/images/loading-indicator.gif');
+            var caption = $('<span></span>').append(img).append('<br/>').append(text).css({
+                width: '150px'
+            });
+            caption.css({
+                top: (target.height() - 100)/2,
+                left: (target.width() - 150)/2
+            });
+
+            var e = $('<span></span>').addClass('loading-indicator').append(caption);
+            e.css({
+                top: target.offset().top - container.offset().top,
+                left: target.offset().left - container.offset().left,
+                width: target.width(),
+                height: target.height()
+            });
+
+            target.addClass('loading-element');
+            container.append(e);
+            target.data('loading-indicator', e);
         },
 
         stopLoading: function(container) {
-            $(container).html('');
+            container = $(container);
+            if (container.data('loading-indicator') != null) {
+                container.data('loading-indicator').remove();
+                container.data('loading-indicator', null);
+                container.removeClass('loading-element');
+            }
+//            $(container).show();
+//            $(container).html('');
         },
 
         /**
@@ -49,8 +79,13 @@ if (!window.common) {
          */
         imageHelper: function(root) {
             $(root).find('.full-image').each(function() {
-                $(this).qtip({
-                    content: '<img style="max-width:230px;max-height:230px;" src="' + $(this).attr('full_url') + '" alt="Loading..." />',
+                var tooltip = $('<div class="image-tooltip"><img style="max-width:230px;max-height:230px;" src="' + $(this).attr('full_url') + '" alt="Image is not accessible." /></div>');
+//                tooltip.hide().appendTo($(this));
+                tooltip.hide().appendTo($('body'));
+                common.tooltip($(this), tooltip, {});
+
+                /*$(this).qtip({
+                    content: '<div style="width:230px;height:230px;"><img style="max-width:230px;max-height:230px;" src="' + $(this).attr('full_url') + '" alt="Loading..." /></div>',
                     position: {
                         adjust: {
                             screen: true // Keep the tooltip on-screen at all times
@@ -59,7 +94,7 @@ if (!window.common) {
                     width: {
                         max: 500
                     }
-                });
+                });*/
             });
         },
 
@@ -104,8 +139,8 @@ if (!window.common) {
         },
 
         empty: function(s) {
-//            alert(typeof s);
-            return s == null || common.trim(s) == '';
+//            return s == null || common.trim(s) == '';
+            return s == null || /^\s*$/.test(s);
         },
 
         // sets input value, truncating it if it's longer than allowed
@@ -164,7 +199,7 @@ if (!window.common) {
 
         init: function(root) {
             root = $(root);
-            root.find('input.watermark').each(function(i) {
+            root.find('input.watermark').each(function() {
                 $(this).Watermark($(this).attr('title'));
             });
 
@@ -184,77 +219,104 @@ if (!window.common) {
             });
         },
 
-        position_tooltip: function(trigger, tip) {
-            var window_x = trigger.offset().left - $(window).scrollLeft();
-            var window_y = trigger.offset().top - $(window).scrollTop();
-
-            var available_left = window_x;
-            var available_right = $(window).width() - window_x - trigger.width();
-            var available_top = window_y;
-            var available_bottom = $(window).height() - window_y - trigger.height();
-
-            var x, y;
-            var margin = 20;
-            // now, find the best side to present content
-            if (Math.max(available_left, available_right) * tip.height()
-                    > Math.max(available_top, available_bottom) * tip.width()) {
-                if (available_left > available_right) {
-                    x = -tip.width() - margin;
-                } else {
-                    x = trigger.width() + margin;
+        runOnDelay: function(input, delay, callback) {
+            input.keyup(function() {
+                if (input.data('search-delay')) {
+                    clearTimeout(input.data('search-delay'));
                 }
-                y = ($(window).height() - tip.height()) / 2.0 - window_y;
-//                console.log('do x, y : ' + y);
-                if (y > trigger.height()) {
-                    y = trigger.height();
-                } else if (y < -tip.height()) {
-                    y = -tip.height();
-                }
-            } else {
-                if (available_top > available_bottom) {
-                    y = -tip.height() - margin;
-                } else {
-                    y = trigger.height() + margin;
-                }
-                x = ($(window).width() - tip.width()) / 2.0 - window_x;
-//                console.log('do y, x : ' + x);
-                if (x > trigger.width()) {
-                    x = trigger.width();
-                } else if (x < -tip.width()) {
-                    x = -tip.width();
-                }
-            }
-
-//            console.log(x + '   ' + y + '  ---  ' + trigger.width() + ' ' + trigger.height() + '  ---  ' + tip.width() + ' ' + tip.height());
-            tip.css({
-                position: 'absolute',
-                top: y,
-                left: x
+                var t = setTimeout(function() {
+                    input.data('search-delay', null);
+                    callback(input);
+                }, delay);
+                input.data('search-delay', t);
             });
         },
 
-        show_tooltip: function(trigger, tip) {
-            // remove closing timer, if necessary
-            if (tip.data('timeout-var') != null) {
-                clearTimeout(tip.data('timeout-var'));
-                tip.data('timeout-var', null);
+
+        // creates a tooltip when trigger element is hovered
+        // currently supported options: on_before_show, on_show, hide_delay
+        tooltip: function(trigger, tooltip, options) {
+            if (!options) options = {};
+            if (!options.hide_delay) {
+                // hide tooltip immediately when mouse left by default
+                options.hide_delay = 0;
             }
 
-//            common.position_tooltip(trigger, tip);
+            var position_tooltip = function(trigger, tip) {
+                // x and y positions relative to window
+                var window_x = trigger.offset().left - $(window).scrollLeft();
+                var window_y = trigger.offset().top - $(window).scrollTop();
 
-            // close all other tips
-            $('div.tooltip-content').hide();
+                // how much space we have in each direction
+                var available_left = window_x;
+                var available_right = $(window).width() - window_x - trigger.width();
+                var available_top = window_y;
+                var available_bottom = $(window).height() - window_y - trigger.height();
 
-            tip.show();
-            common.position_tooltip(trigger, tip);
-        },
+                var x, y;
+                var margin = 20;
+                // now, find the best side to present content
+                if (Math.max(available_left, available_right) * tip.height()
+                        > Math.max(available_top, available_bottom) * tip.width()) {
+                    if (available_left > available_right) {
+                        x = -tip.width() - margin;
+                    } else {
+                        x = trigger.width() + margin;
+                    }
+                    y = ($(window).height() - tip.height()) / 2.0 - window_y;
+                    if (y > trigger.height()) {
+                        y = trigger.height();
+                    } else if (y < -tip.height()) {
+                        y = -tip.height();
+                    }
+                } else {
+                    if (available_top > available_bottom) {
+                        y = -tip.height() - margin;
+                    } else {
+                        y = trigger.height() + margin;
+                    }
+                    x = ($(window).width() - tip.width()) / 2.0 - window_x;
+                    if (x > trigger.width()) {
+                        x = trigger.width();
+                    } else if (x < -tip.width()) {
+                        x = -tip.width();
+                    }
+                }
 
-        hide_tooltip: function(tip) {
-            var t = setTimeout(function() {
-                tip.hide();
-                tip.data('timeout-var', null);
-            }, 500);
-            tip.data('timeout-var', t);
+                tip.css({
+                    position: 'absolute',
+                    top: y + trigger.offset().top,
+                    left: x + trigger.offset().left
+                });
+            };
+
+            // setup tooltip for each particular tip
+            trigger.hover(function() {
+                // remove closing timer, if necessary
+                if (tooltip.data('hover-timeout-var') != null) {
+                    clearTimeout(tooltip.data('hover-timeout-var'));
+                    tooltip.data('hover-timeout-var', null);
+                }
+
+                position_tooltip(trigger, tooltip);
+
+                if (options.on_before_show) {
+                    options.on_before_show(trigger, tooltip);
+                }
+
+                tooltip.show();
+
+                if (options.on_show) {
+                    options.on_show(trigger, tooltip);
+                }
+            },
+            function() {
+                var t = setTimeout(function() {
+                    tooltip.hide();
+                    tooltip.data('hover-timeout-var', null);
+                }, options.hide_delay);
+                tooltip.data('hover-timeout-var', t);
+            });
         }
     };
 

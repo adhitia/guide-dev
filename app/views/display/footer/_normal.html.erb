@@ -9,13 +9,13 @@
       <!-- date navigation -->
       <div class="select-day">
         <% if @day > 0 %>
-            <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View <%= @dow.prev.name %>">
+            <a class="previous-day" href="javascript:" onclick="_guiderer.render(this, <%= @day - 1 %>);" title="View day <%= @day %>">
               <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowleft.gif"/>
             </a>
         <% end %>
-        <%= @dow.name %>
-        <% if @day < @forecast_full.length - 1 %>
-            <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View <%= @dow.next.name %>">
+        Day <%= @day + 1 %>
+        <% if @day < @tips.length - 1 %>
+            <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View day <%= @day + 2 %>">
               <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
             </a>
         <% end %>

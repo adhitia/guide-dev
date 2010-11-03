@@ -16,6 +16,7 @@ body {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
 	color: #ffffff;
+    height: 100%;
 }
 a { color: #ffffff; }
 a:visited { color: #ffffff; }
@@ -165,7 +166,225 @@ textarea.invalid {
     display:none;
 }
 
-#view_tips .tip-tile {
+/*
+#view_tips .condition-row {
+    height: 100px;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid white;
+}
+#view_tips .condition-row .condition-label-container {
+    width: 100px;
+    height: 100%;
+    background-color:#006699;
+    float: left;
+}
+#view_tips .condition-row .condition-label {
+    color: white;
+    margin: 25px 10px;
+}
+#view_tips .condition-group-label {
+    height: 30px;
+    background-color:#006699;
+    width: 100%;
+    color: #CCCCCC;
+}
+*/
+
+#edit_tips .new-tip-container {
+    width: 100%;
+    padding-right: 10px;
+    position: relative;
+}
+#edit_tips .edit-tip-root .tip-name-area {
+    display: inline-block;
+    border: 5px solid blue;
+    background-color: #0066CC;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    /*float: left;*/
+    /*width: 400px;*/
+}
+#edit_tips .edit-tip-root .tip-name-area > span {
+    /*width:40%;*/
+    /*display:inline-block;*/
+}
+#view_tips .edit-tip-root .tip-name-area .tip-name {
+    /*width: 50%;*/
+}
+#edit_tips .edit-tip-root .tip-name-area .tip-cancel {
+    display: none;
+}
+#edit_tips .edit-tip-root .tip-name-area .tip-save {
+    display: none;
+}
+#edit_tips .edit-tip-root .tip-name-area .tip-create {
+    display: none;
+}
+#edit_tips .edit-tip-root.full .tip-name-area .tip-cancel {
+    display: inline;
+}
+#edit_tips .edit-tip-root.full .tip-name-area .tip-save {
+    display: inline;
+}
+#edit_tips .edit-tip-root.full .tip-name-area .tip-create {
+    display: inline;
+}
+#edit_tips .edit-tip-root.full .tip-name-area {
+    border-bottom-color: #0066CC;
+    -moz-border-radius-bottom-right: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+#edit_tips .edit-tip-root .edit-area {
+    /*height: 200px;*/
+    display: none;
+    border: 5px solid blue;
+    background-color: #0066CC;
+    margin-top:-5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    /*overflow: hidden;*/
+    position: relative;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions {
+    /*height: 100%;*/
+    width: 200px;
+    height: 95%;
+    overflow: hidden;
+    /*background-color: #0099CC;*/
+    float: left;
+    /*position: relative;*/
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body {
+    margin: 5px;
+    width: 190px;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body:hover {
+    margin: 0;
+    border: 5px solid green;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    position: absolute;
+    background-color: #0077DD;
+    z-index: 3;
+    width: 300px;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions ul {
+    padding-left: 15px;
+    margin: 5px 0;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions ul a span.address {
+    display: none;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body:hover ul {
+    padding-left: 20px;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body:hover ul li {
+    margin-top: 3px;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body:hover ul a span.address {
+    display: inline;
+    color: lightgray;
+}
+
+
+
+#edit_tips .edit-tip-root .edit-area .tip-edit-column {
+    /*margin-left: 10px;*/
+    /*background-color: #0099CC;*/
+    height: 100%;
+    width: 380px;
+    float: left;
+}
+#edit_tips .edit-tip-root .edit-area .tip-edit-column-1 .input-row {
+    overflow: hidden;
+    zoom: 1;
+    margin: 10px;
+    height: 30px;
+}
+
+#edit_tips .edit-tip-root .edit-area .tip-edit-column-1 input {
+    float: right;
+}
+#edit_tips .edit-tip-root .edit-area .tip-edit-column-1 label {
+    float: left;
+}
+#edit_tips .edit-tip-root .edit-area .tip-edit-column-2 {
+    padding: 10px;
+}
+#edit_tips .edit-tip-root .edit-area .tip-edit-column-2 textarea {
+    margin-top: 3px;
+    height: 80px;
+}
+
+#edit_tips .edit-tip-root .image-selection-area {
+    /*height: 115px;*/
+}
+#edit_tips .edit-tip-root .image-selection-area > div {
+    display: inline-block;
+    vertical-align: top;
+    /*height: 120px;*/
+    margin-left: 5px;
+}
+#edit_tips .edit-tip-root .image-selection-area > div > .label {
+    background-color: #0099CC;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}
+#edit_tips .edit-tip-root .image-selection-area .current-image {
+    width: 100px;
+}
+#edit_tips .edit-tip-root .image-selection-area .upload-image {
+    width: 100px;
+}
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions {
+    width: 750px;
+}
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions > div.content {
+    min-height:100px;
+}
+
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions div.full-image {
+    /*border: 1px solid #CCCCCC;*/
+    height:100px;
+    width:100px;
+    /*margin: 5px;*/
+    opacity: 0.8;
+    /*overflow: hidden;*/
+    padding: 5px;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+    position: relative;
+}
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions div.full-image:hover {
+    opacity: 1;
+}
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions div.selected {
+    /*height:100px;*/
+    /*width:100px;*/
+    padding: 0;
+    opacity: 1;
+    /*overflow: hidden;*/
+    /*padding: 2px;*/
+
+    border: solid 5px green;
+}
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions .google_image {
+    max-height: 100px;
+    max-width: 100px;
+    /*float: left;*/
+}
+
+
+
+#edit_tips .tip-tile {
     width:110px;
     /*overflow:hidden;*/
     background-color:white;
@@ -174,37 +393,37 @@ textarea.invalid {
     position: relative;
 }
 
-#view_tips td.tip-container {
+#edit_tips td.tip-container {
     background-color:white;
 }
 
-#view_tips .tip-tile:hover {
+#edit_tips .tip-tile:hover {
 }
 
-#view_tips .tip-tile .move-tip {
+#edit_tips .tip-tile .move-tip {
     background: transparent url(/images/movetip.gif) no-repeat;
 }
-#view_tips .tip-tile .delete-tip {
+#edit_tips .tip-tile .delete-tip {
     background: transparent url(/images/deletetip.gif) no-repeat;
 }
-#view_tips .tip-tile .edit-tip {
+#edit_tips .tip-tile .edit-tip {
     background: transparent url(/images/edit-tip.gif) no-repeat;
 }
-#view_tips .tip-tile .view-tip {
+#edit_tips .tip-tile .view-tip {
     background: transparent url(/images/view-tip.gif) no-repeat;
 }
 
-#view_tips .tip-tile .tip-name {
+#edit_tips .tip-tile .tip-name {
     color: #666666;
     font-weight: bold;
     font-size: large;
 }
 
-#view_tips .tip-tile:hover .icon-small {
+#edit_tips .tip-tile:hover .icon-small {
     opacity: 0.8;
 }
 
-#view_tips .tip-tile > div.tooltip-content {
+#edit_tips .tip-tile > div.tooltip-content {
     /*display: none;*/
     /*max-width: 500px;*/
     /*z-index: 20005;*/
@@ -212,18 +431,18 @@ textarea.invalid {
     /*min-height: 200px;*/
 }
 
-#view_tips .no-tip-tile {
+#edit_tips .no-tip-tile {
     background-color:lightgray;
     width:110px;
     overflow:hidden;
     padding:5px;
 }
 
-#view_tips .droppable-active {
+#edit_tips .droppable-active {
     background-color: lightblue;
 }
 
-#view_tips .full-tip-overlay {
+#edit_tips .full-tip-overlay {
 	/* must be initially hidden */
 	display:none;
 
@@ -250,7 +469,7 @@ textarea.invalid {
     border-radius: 6px;
 }
 
-#view_tips .full-tip-overlay .close {
+#edit_tips .full-tip-overlay .close {
 	background-image:url(/images/close.png);
 	position:absolute;
 	right:-15px;
@@ -260,14 +479,8 @@ textarea.invalid {
 	width:35px;
 }
 
-.ui-corner-all { 
--moz-border-radius: 4px; 
--webkit-border-radius: 4px; 
-border-radius: 4px; 
-}
 
-
-#view_tips .edit-tip-overlay {
+#edit_tips .edit-tip-overlay {
 	/* must be initially hidden */
 	display:none;
 
@@ -290,7 +503,7 @@ border-radius: 4px;
     border-radius: 6px;
 }
 
-#view_tips .edit-tip-overlay .close {
+#edit_tips .edit-tip-overlay .close {
 	background-image:url(/images/close.png);
 	position:absolute;
 	right:-15px;
@@ -300,12 +513,12 @@ border-radius: 4px;
 	width:35px;
 }
 
-#view_tips .guide-access-type .current-access-type {
+#edit_tips .guide-access-type .current-access-type {
     	font-family: Geneva, Arial, Helvetica, sans-serif;
  font-weight: bold;
 }
 
-#view_tips .guide-access-type {
+#edit_tips .guide-access-type {
     margin-bottom: 30px;
     margin-top: 30px;
 }
@@ -370,7 +583,7 @@ border-radius: 4px;
 
 
 /* editing one single tip */
-.edit-tip-root {
+/*.edit-tip-root {
     padding: 10px;
     overflow: hidden;
     zoom: 1;
@@ -382,7 +595,7 @@ border-radius: 4px;
 }
 
 .edit-tip-root .left-pane {
-    /*position: relative;*/
+    *//*position: relative;*//*
     float: left;
     width: 35%;
 }
@@ -405,7 +618,7 @@ border-radius: 4px;
 
 .edit-tip-root .upload_image {
     height:162px;
-}
+}*/
 
 /*.tip-show {
     min-width: 200px;
@@ -883,17 +1096,232 @@ div.guide-type-panes > div {
     color: blue;
 }
 
-/*
-.tooltip {
-	display:none;
-	background:transparent url(/tools/img/tooltip/black_arrow.png);
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-     font-size:12px;
-	height:70px;
-	width:160px;
-	padding:25px;
-    background-color: white;
-    border: solid black 1px;
-    color: black;
-    z-index:10003;
+.loading-indicator {
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    z-index: 100000;
+    /*background-color: white;*/
+    /*opacity: 0.5;*/
+}
+.loading-indicator > span {
+    position: absolute;
+    text-align: center;
+}
+.loading-element {
+    opacity: 0.5;
+}
+
+
+#tips-matrix {
+    overflow: hidden;
+    zoom: 1;
+}
+
+#tips-matrix .day-header {
+    overflow: hidden;
+    zoom: 1;
+    text-align: center;
+}
+
+/*#tips-matrix .day-header > div {
+    width: 200px;
+    text-align: center;
+    float: left;
 }*/
+
+#tips-matrix .condition-label {
+    /*width: 100px;
+    height: 100%;
+    background-color:#006699;
+    float: left;*/
+    padding: 3px 20px;
+    text-align: center;
+    background-color: lightBlue;
+    color: black;
+}
+/*
+#tips-matrix .condition-label > h2 {
+    color: white;
+    margin: 25px 10px;
+}
+*/
+
+#tips-matrix .day-group {
+    width: 190px;
+    border: 2px solid beige;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    float: left;
+    /*display:table-cell;*/
+    /*display: inline-block;*/
+    margin-right: 5px;
+    padding: 5px 0;
+}
+
+#tips-matrix .condition-group {
+    overflow: hidden;
+    zoom: 1;
+    min-height: 25px;
+    /*display:table-row;*/
+}
+/*#tips-matrix .day-group .condition-group > h3 {
+    background-color: yellow;
+    color: black;
+    margin: 2px 0;
+}*/
+
+#tips-matrix .edit-tip-tile {
+    height: 40px;
+    margin: 2px 0;
+    border:1px solid aquamarine;
+    color: black;
+    background-color: aquamarine;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+#tips-matrix .edit-tip-tile .tooltip-content {
+    display: none;
+}
+
+#tips-matrix .edit-tip-tile .tip-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+#tips-matrix .edit-tip-tile .delete-tip {
+    position: absolute;
+    color: black;
+    top: 0;
+    right: 0;
+    font-size: x-large;
+    float: right;
+    margin-left: 5px;
+    /*width: 19px;*/
+    /*height: 19px;*/
+    opacity: 0.1;
+}
+#tips-matrix .edit-tip-tile:hover .delete-tip {
+    opacity: 1;
+}
+#tips-matrix .edit-tip-tile .tip-url {
+    vertical-align:bottom;
+    float:right;
+    color:gray;
+    font-size: xx-small;
+}
+#tips-matrix .edit-tip-tile-placeholder {
+    background-color: white;
+}
+
+.tip-tooltip {
+    min-width: 250px;
+    /*min-height: 200px;*/
+    /*max-width: 500px;*/
+    color:black;
+    /*padding: 5px;*/
+    background-color: white;
+    /*border: 1px solid black;*/
+    z-index: 20003;
+}
+
+.tip-tooltip > h3 {
+    margin: 5px 0;
+    /*color: #666666;*/
+    /*font-family: Geneva, Arial, Helvetica, sans-serif;*/
+	/*font-weight: bold;*/
+    /*font-size: 40px;*/
+}
+.tip-tooltip .images {
+    overflow: hidden;
+    zoom: 1;
+}
+.tip-tooltip .image {
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+.tip-tooltip .details {
+    overflow:hidden;
+    zoom:1;
+    /*margin-top:10px;*/
+}
+.tip-tooltip .details > ul {
+    padding-left: 20px;
+    margin: 5px 0;
+}
+.tip-tooltip .map {
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-left: 10px;
+}
+.tip-tooltip a {
+    color: black;
+}
+.tip-tooltip a:visited {
+    color: black;
+}
+
+
+/*
+.edit-tip-root .edit-area {
+    border: 5px solid blue;
+    background-color: #0066CC;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 1;
+}
+*/
+
+
+#edit_tips {
+    position: relative;
+}
+
+.edit-tip-tile .tip-form {
+    display: none;
+}
+
+.ui-corner-all {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#global-overlay {
+    z-index: 25000;
+    opacity: 0.4;
+    background-color: gray;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    display: none;
+}
+
+#edit-tip-container {
+    position: absolute;
+    width: 100%;
+    display: none;
+    z-index: 26000;
+}
+
+.image-tooltip {
+    /*width:230px;*/
+    /*height:230px;*/
+    min-width: 100px;
+    /*min-height: 100px;*/
+    background-color: white;
+    color: black;
+    z-index:40000;
+}

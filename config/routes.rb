@@ -1,15 +1,17 @@
 
+
 ActionController::Routing::Routes.draw do |map|
   map.resources :util
 
   map.with_options :controller => :tips do |tips|
     tips.follow_url 'guides/:id/tips/:tip_id/url', :action => 'follow_url'
 
-    map.tile 'occurrences/:occurrence_id/tile', :controller => :tips, :action => :tile
-    map.unbind_tip 'occurrences/:occurrence_id/unbind', :controller => :tips, :action => :unbind
-    map.move_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
-    map.switch_tips 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
+    tips.tile 'occurrences/:occurrence_id/tile', :controller => :tips, :action => :tile
+    tips.delete_tip 'tips/:id/delete', :controller => :tips, :action => :delete
+    tips.move_tip 'occurrences/:occurrence_id/move', :controller => :tips, :action => :move
+    tips.switch_tips 'occurrences/:occurrence_id/switch', :controller => :tips, :action => :switch
   end
+
 
   map.manage_user '/users/:id/manage', :controller => :users, :action => :manage
 
@@ -28,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.update_guide 'guides/:id/update', :controller => :calendars, :action => :update
   map.edit_guide_day 'guides/:id/edit_day/:weekday_id', :controller => :calendars, :action => :edit_day
   map.edit_guide_condition 'guides/:id/edit_condition/:condition_id', :controller => :calendars, :action => :edit_condition
+  map.update_matrix 'guides/:id/update_matrix', :controller => :calendars, :action => :update_matrix
   map.update_tips 'guides/:id/tips/update', :controller => :tips, :action => :update, :conditions => { :method => :post }
   map.create_tip  'guides/:id/tips/create', :controller => :tips, :action => :create, :conditions => { :method => :post }
   map.create_tip  'guides/:id/tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
@@ -68,11 +71,4 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'guides/:id/vote/:vote', :controller => :display, :action => :vote
   map.connect 'guides/:id/:layout', :controller => :display, :action => :display
-#  map.connect 'guides/:id/tiny', :controller => :display, :action => :tiny
-#  map.connect 'guides/:id/small', :controller => :display, :action => :small
-#  map.connect 'guides/:id/normal', :controller => :display, :action => :normal
-#  map.connect 'public.js', :controller => :display, :action => :public
-
-#  map.connect ':controller/:action/:id'
-#  map.connect ':controller/:action/:id.:format'
 end

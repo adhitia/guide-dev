@@ -1,5 +1,5 @@
 <!--condition bar takes additional space-->
-<% has_condition_bar = @tips.select { |tip| !tip.condition.group.nil? }.length > 0 %>
+<% has_condition_bar = @tips[@day].select { |condition_id, tips| tips.size > 0 && !Condition.find(condition_id).group.nil? }.size > 0 %>
 
 <style type="text/css">
     .guide-template-1 {
@@ -78,7 +78,7 @@
     <div class="guide-name">
       <a href="<%= WEB_ROOT %>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
     </div>
-    <div class="text"><%= @dow.name %><BR>Travel tips for <%= @calendar.location.name %></div>
+    <div class="text">Day <%= @day + 1 %><BR>Travel tips for <%= @calendar.location.name %></div>
     
   </div>
 
@@ -89,22 +89,26 @@
 
       <% if has_condition_bar %>
           <tr class="condition-bar">
-            <% @tips.map { |t| t.condition.group }.uniq.each do |group| %>
-                <% columns = @tips.select { |t| t.condition.group == group }.length %>
+            <% @tips[@day].map { |condition_id, tips| Condition.find(condition_id).group }.uniq.each do |group| %>
+                <% columns = @tips[@day].map { |condition_id, tips| Condition.find(condition_id).group == group ? tips : [] }.flatten.length %>
+                <% if columns > 0 %>
                 <td colspan="<%= columns %>">
                   <div class="condition-group">
                     <%= group %>
                   </div>
                 </td>
+                <% end %>
             <% end %>
           </tr>
       <% end %>
 
       <tr>
-        <% @tips.each do |tip| %>
+        <% @calendar.conditions.each do |condition| %>
+        <% @tips[@day][condition.id].each do |tip| %>
             <td>
               <%= render :partial => 'display/tip/small', :locals => {:tip => tip} %>
             </td>
+        <% end %>
         <% end %>
       </tr>
       </tbody>

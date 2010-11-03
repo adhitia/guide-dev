@@ -1,6 +1,6 @@
 class Calendar < ActiveRecord::Base
   has_many :conditions, :through => :guide_type
-  has_many :tips
+  has_many :tips, :order => 'day'
   belongs_to :user
   belongs_to :location
   belongs_to :guide_type
@@ -49,5 +49,44 @@ class Calendar < ActiveRecord::Base
       end
     end
     self.completed_percentage = (completed * 100.0 / total).round
+  end
+
+  def grouped_tips
+    groups = []
+    current_day = -1
+    current_condition = -1
+
+    tips.each do |tip|
+      if tip.day != current_day
+        if groups.size == DAY_LIMIT
+          break
+        end
+        # TODO handle somehow case of gaps in 'day' sequence
+        groups.push Hash.new
+        current_day = tip.day
+
+        conditions.each do |condition|
+          groups.last[condition.id] = []
+        end
+      end
+
+      groups.last[tip.condition_id].push tip
+    end
+
+    # empty day
+    if groups.size < DAY_LIMIT
+      groups.push Hash.new
+      conditions.each do |condition|
+        groups.last[condition.id] = []
+      end
+    end
+
+    groups.each do |group|
+      group.each_value do |group2|
+        group2.sort! {|tip1, tip2| tip1.rank <=> tip2.rank }
+      end
+    end
+
+    groups
   end
 end

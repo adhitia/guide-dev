@@ -75,6 +75,7 @@ if (!window._guiderer) {
                 var trigger = $(this);
                 var tooltip = $(this).find('.full_tip');
                 _guiderer.tooltip(trigger, tooltip, {
+                    hide_delay : 500,
                     on_before_show: function(trigger, tooltip) {
                         // hide all other tooltips
                         $('div.guiderer div.full_tip').hide();
@@ -128,6 +129,7 @@ if (!window._guiderer) {
                 var trigger = $(this);
                 var tooltip = $(this).find('.tooltip-content');
                 _guiderer.tooltip(trigger, tooltip, {
+                    hide_delay : 500,
                     on_before_show: function() {
                         $('div.guiderer div.full_tip').hide();
                         $('div.guiderer div.guide-info .tooltip-content').hide();
@@ -208,13 +210,21 @@ if (!window._guiderer) {
             });
         };
 
+        // creates a tooltip when trigger element is hovered 
+        // currently supported options: on_before_show, on_show, hide_delay
         _guiderer.tooltip = function(trigger, tooltip, options) {
             if (!options) options = {};
+            if (!options.hide_delay) {
+                // hide tooltip immediately when mouse left by default 
+                options.hide_delay = 0;
+            }
 
             var position_tooltip = function(trigger, tip) {
+                // x and y positions relative to window
                 var window_x = trigger.offset().left - $(window).scrollLeft();
                 var window_y = trigger.offset().top - $(window).scrollTop();
 
+                // how much space we have in each direction
                 var available_left = window_x;
                 var available_right = $(window).width() - window_x - trigger.width();
                 var available_top = window_y;
@@ -281,7 +291,7 @@ if (!window._guiderer) {
                 var t = setTimeout(function() {
                     tooltip.hide();
                     tooltip.data('hover-timeout-var', null);
-                }, 500);
+                }, options.hide_delay);
                 tooltip.data('hover-timeout-var', t);
             });
         };

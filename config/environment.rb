@@ -65,4 +65,7 @@ Rails::Initializer.run do |config|
 
   WeatherMan.partner_id = '1180784909'
   WeatherMan.license_key = '0e1b5b7c95d8cdd8'
+
+  # maximum number of days guide can have
+  DAY_LIMIT = 5
 end

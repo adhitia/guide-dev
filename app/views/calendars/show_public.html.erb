@@ -1,0 +1,29 @@
+<h1>Overview of "<%= h @guide.name %>" Guide</h1>
+
+<b>Location:</b> <%= h @guide.location.name %>
+<br/>
+
+<div class="button-panel">
+  <a href="/guides/<%= @guide.id %>/share" class="button">
+    View live version and get script
+  </a>
+  <a href="/guides/<%= @guide.id %>/map" class="button">
+    See the map
+  </a>
+</div>
+
+
+
+
+<%= render :partial => 'calendars/widget', :locals => {:guide => @guide, :style_id => '4'} %>
+
+
+
+<div class="button-panel">
+  <a href="/guides/<%= @guide.id %>/share" class="button">
+    Get script to embed widget
+  </a>
+  <a href="/guides/<%= @guide.id %>/map" class="button">
+    See the map
+  </a>
+</div>

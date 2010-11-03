@@ -57,7 +57,7 @@ if (!window.tips) var tips = {
 //                    alert(r.new_tip_id);
                     tile.attr('place_id', r.new_tip_id);
                 }
-                calendar.updateTile(tile);
+                guide.updateTile(tile);
             }
         });
     },
@@ -263,17 +263,26 @@ if (!window.tips) var tips = {
             ls.setResultSetSize(8);
             ls.setSearchCompleteCallback(anchor, tips.processLocalSearchResults, [ls, root]);
             ls.execute(name);
-            alert('st')
         }
         container.toggle();
     },
+
+    /*init_all: function(root) {
+        if (root.hasClass('edit-tip-tile')) {
+            tips.init(root);
+            return;
+        }
+        root.find('div.edit-tip-tile').each(function() {
+            tips.init($(this));
+        });
+    },*/
 
     init: function(root) {
         root = $(root);
 
         // image suggestions
-        $(root).find('.upload_image').tabs();
-        $(root).find('.tip_name').blur(function() {
+//        $(root).find('.upload_image').tabs();
+        /*$(root).find('.tip_name').blur(function() {
             var input = $(this);
             var value = input.val();
             var pastValue = input.data('pastValue-imageSearch');
@@ -286,9 +295,9 @@ if (!window.tips) var tips = {
                 input.data('pastValue-imageSearch', value);
             }
         });
-        $(root).find('.tip_name').blur();
+        $(root).find('.tip_name').blur();*/
 
-        $(root).find('a.local-search-launch').tooltip({
+        /*$(root).find('a.local-search-launch').tooltip({
             onShow: function() {
                 var root = this.getTrigger().parents('.edit-tip-root');
                 var input = root.find('input.tip_name');
@@ -329,10 +338,10 @@ if (!window.tips) var tips = {
             delay: 500,
             predelay: 100,
             position: 'bottom center'
-        });
+        });*/
 
 
-        common.imageHelper(root);
+//        common.imageHelper(root);
 
         // disable tip inputs if name isn't present
         // not used currently
@@ -368,38 +377,49 @@ if (!window.tips) var tips = {
 
 
 
-        // tips view page
-        if ($('#view_tips').length > 0) {
+        // tips edit page
+        if ($('#edit_tips').length > 0) {
+            var tips = root.hasClass('edit-tip-tile') ? root : root.find('div.edit-tip-tile');
+
+            var new_tip = root.find('div.new-tip-container');
+//            if (root.find('div.new-tip-container').length > 0) {
+//                tips = tips.add(root.find('div.new-tip-container')[0]);
+//            }
+
+
 
             // remove tip handler
-            root.find('div.tip-tile a.delete-tip').click(function() {
-                var root = $(this).parents('.tip-tile');
-                var place_id = root.attr('place_id');
-                var calendar_id = root.attr('calendar_id');
+            tips.find('a.delete-tip').click(function() {
+                var root = $(this).closest('.edit-tip-tile');
+                var id = root.data('id');
+//                var guide_id = root.data('guide-id');
+
                 common.confirm('Are you sure you want to delete this tip?', function() {
-                    common.setLoading(root);
+//                    common.setLoading(root);
+                    root.remove();
                     $.ajax({
-                        url: '/occurrences/' + place_id + '/unbind',
+                        url: '/tips/' + id + '/delete',
                         cache: false,
                         dataType: "html",
                         success: function(r) {
-                            var parent = root.parent();
-                            root.replaceWith(r);
-                            tips.init(parent);
+//                            var parent = root.parent();
+//                            root.replaceWith(r);
+//                            tips.init(parent);
                         }
                     });
                 });
+                return false;
             });
 
             // drag'n'drop
             // workaround for the case when editing is not accessible
-            if (root.find('a.move-tip').length > 0) {
+            /*if (root.find('a.move-tip').length > 0) {
                 root.find('div.tip-tile').draggable({
                     handle: 'a.move-tip',
                     revert: 'invalid'
                 });
-            }
-            root.find('div.tip-tile').droppable({
+            }*/
+            /*root.find('div.tip-tile').droppable({
                 hoverClass: 'droppable-active',
                 drop: function(event, ui) {
                     var container_from = ui.draggable.parent();
@@ -424,8 +444,8 @@ if (!window.tips) var tips = {
                         }
                     });
                 }
-            });
-            root.find('div.no-tip-tile').droppable({
+            });*/
+            /*root.find('div.no-tip-tile').droppable({
                 hoverClass: 'droppable-active',
                 drop: function(event, ui) {
                     var container_from = ui.draggable.parent();
@@ -451,9 +471,9 @@ if (!window.tips) var tips = {
                         }
                     });
                 }
-            });
+            });*/
 
-            $(root).find('a.view-tip').overlay({
+            /*$(root).find('a.view-tip').overlay({
 //                effect: 'apple',
                 closeOnClick: true,
                 closeOnEsc: true,
@@ -469,24 +489,17 @@ if (!window.tips) var tips = {
                         }
                     });
                 }
-            });
+            });*/
 
 
-            $(root).find('div.tip-tile > div.tooltip-content').each(function() {
-                var tile = $(this).parents('div.tip-tile');
-                var tip = $
-                        (this);
-                var place_id = tile.attr('place_id');
-                tile.hover(function() {
-                    common.show_tooltip(tile, tip);
-//                    alert(tip.width());
-                },
-                function() {
-                    common.hide_tooltip(tip);
-                });
-                /*tile.qtip({
-                    content: {
-                        url: '/tips/' + place_id
+            // view tip contents
+            tips.each(function() {
+                var trigger = $(this).find('.tip-icon');
+                var tip = $(this).find('.tooltip-content');
+                trigger.qtip({
+                    content: tip.html(),
+                    show: {
+                        delay: 300
                     },
                     hide: {
                         delay: 500,
@@ -499,16 +512,15 @@ if (!window.tips) var tips = {
                     },
                     style: {
                         width: {
-                            max: 600,
+                            max: 250,
                             min: 200
                         }
                     }
-                });*/
+                });
             });
 
 
-
-            $(root).find('a.edit-tip,a.create-tip').overlay({
+            /*$(root).find('a.edit-tip,a.create-tip').overlay({
                 mask: {
                     color: 'grey',
                     loadSpeed: 200,
@@ -530,10 +542,84 @@ if (!window.tips) var tips = {
                         }
                     });
                 }
+            });*/
+
+
+            // make tips draggable
+            var condition_groups = root.hasClass('condition-group') ? root : $(root).find('.condition-group');
+            condition_groups.sortable({
+                placeholder: 'edit-tip-tile edit-tip-tile-placeholder',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                connectWith: '.condition-group',
+                delay: 100,
+                distance: 5,
+                start: function(event, ui) {
+                    var tooltips = $('div.edit-tip-tile > .tip-icon');
+                    tooltips.qtip("hide");
+                    tooltips.qtip("disable");
+                },
+                stop: function(event, ui) {
+                    var tooltips = $('div.edit-tip-tile > .tip-icon');
+                    tooltips.qtip("enable");
+
+                    ui.item.data('last-drag-time', new Date().getTime());
+                },
+                update: function(event, ui) {
+//                    console.log('update ' + ui.item.data('id') + '  ' + (ui.sender ? ui.sender.data('condition') : ' null '));
+                    if (ui.sender == null) {
+                        guides.saveMatrix();
+                    }
+                }
+            }).disableSelection();
+
+
+
+            // open edit 'tab' on click
+            tips.click(function() {
+//                console.log('click');
+                if ($(this).data('state') == 'saving') {
+                    return;
+                }
+                var lastDrag = $(this).data('last-drag-time');
+                if (lastDrag && new Date().getTime() - lastDrag < 10) {
+                    return;
+                }
+
+                var root = $(this);
+//                var edit_area = root.find('div.edit-area');
+                var edit_form = root.find('form.tip-form');
+
+                var overlay = $('#global-overlay').css('height', ($('body').height() + 2) + 'px').show();
+                var position_y = root.offset().top + root.height() - $('#edit_tips').offset().top;
+                var container = $('#edit-tip-container').css('top', position_y + 'px');
+                container.append(edit_form);
+                edit_form.find('div.edit-area').show();
+
+                edit_form.data('origin-tip', root);
+
+                container.slideDown(500, function() {
+                    guides.loadTipSuggestions(edit_form.find('div.edit-tip-root'));
+                });
+                overlay.click(function() {
+                    container.slideUp(300, function() {
+                        overlay.hide();
+                        edit_form.appendTo(root);
+                    });
+                });
             });
 
 
-
+            tips.add(new_tip).find('.tip-update').click(guide.updateTip);
+            tips.add(new_tip).find('input.tip-name').keypress(function(e) {
+                if (e.which == 13) {
+                    guide.loadTipSuggestions(this);
+                    return false;
+                }
+            });
+            tips.add(new_tip).find('input.tip-name').each(function() {
+                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
+            });
         }
 
     }

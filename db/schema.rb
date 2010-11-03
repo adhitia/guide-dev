@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928110203) do
+ActiveRecord::Schema.define(:version => 20101022162152) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(:version => 20100928110203) do
 
   create_table "calendars", :force => true do |t|
     t.string   "name"
-    t.string   "author"
     t.integer  "view_count",           :default => 0
     t.integer  "click_count",          :default => 0
     t.datetime "created_at"
@@ -108,21 +107,25 @@ ActiveRecord::Schema.define(:version => 20100928110203) do
     t.integer  "condition_id"
     t.integer  "calendar_id"
     t.string   "name"
-    t.string   "description",        :default => ""
-    t.string   "url",                :default => ""
-    t.integer  "view_count",         :default => 0
-    t.integer  "click_count",        :default => 0
+    t.string   "description",                     :default => ""
+    t.string   "url",                             :default => ""
+    t.integer  "view_count",                      :default => 0
+    t.integer  "click_count",                     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean  "advertisement",      :default => false
+    t.boolean  "advertisement",                   :default => false
     t.integer  "author_id"
     t.string   "image_remote_url"
     t.string   "phone"
     t.integer  "weekday_id"
+    t.string   "good_on",            :limit => 7, :default => "xxxxxxx"
+    t.integer  "day",                             :default => 0
+    t.integer  "order",                           :default => 0
+    t.integer  "rank",                            :default => 0
   end
 
   create_table "users", :force => true do |t|

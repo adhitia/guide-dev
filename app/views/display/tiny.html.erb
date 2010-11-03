@@ -54,13 +54,17 @@
       <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
     </div>
     <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
-    <div class="guide-dow"><%= @dow.name %></div>
+    <div class="guide-dow">Day <%= @day + 1 %></div>
   </div>
 
   <!--tips-->
   <div class="guide-tips">
     <% condition = Condition.new %>
-    <% @tips.each do |tip| %>
+    <% @calendar.conditions.each do |condition| %>
+        <% if @tips[@day][condition.id].length > 0 %>
+        <% end %>
+
+        <% @tips[@day][condition.id].each do |tip| %>
 
         <!-- put condition type (dinner, party, etc), if necessary -->
         <% if tip.condition.group != condition.group && !tip.condition.group.nil? %>
@@ -72,6 +76,7 @@
         <%= render :partial => 'display/tip/small', :locals => {:tip => tip} %>
 
         <% condition = tip.condition %>
+        <% end %>
     <% end %>
   </div>
 

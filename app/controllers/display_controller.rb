@@ -24,21 +24,29 @@ class DisplayController < ApplicationController
 
 
     # protect ourselves from bad indexes
-    @forecast_full = get_forecast(@calendar.location.id)
-    if @day >= @forecast_full.length
-      @day = @forecast_full.length - 1
+#    @forecast_full = get_forecast(@calendar.location.id)
+#    if @day >= @forecast_full.length
+#      @day = @forecast_full.length - 1
+#    end
+#    if @day < 0
+#      @day = 0
+#    end
+
+    @tips = @calendar.grouped_tips
+    if @day >= @tips.length
+      @day = @tips.length - 1
     end
     if @day < 0
       @day = 0
     end
 
 
-    @weather_forecast = @forecast_full[@day]
-    @dow = Weekday.find(@weather_forecast.date.cwday);
-    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
+#    @weather_forecast = @forecast_full[@day]
+#    @dow = Weekday.find(@weather_forecast.date.cwday);
+#    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
 
-    @tips = @calendar.tips.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
-    @tips = @tips.sort_by {|t| t.condition.id }
+#    @tips = @calendar.tips.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
+#    @tips = @tips.sort_by {|t| t.condition.id }
 #    @calendar.view_count += 1;
 #    @calendar.save
 

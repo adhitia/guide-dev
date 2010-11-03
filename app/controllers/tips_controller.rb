@@ -1,25 +1,55 @@
 class TipsController < ApplicationController
-  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
+  before_filter :ban_ie
 
   def create
-    @calendar = authorize_guide params[:id]
+    @guide = authorize_guide params[:id]
     @full_access = true
 
-    @tip = Tip.new(:name => params[:new_tip_name])
-    @tip.author_id= @current_user.id;
-    @tip.address = Address.new :address => '', :location_id => @calendar.location_id,
-                               :tip_id => @tip.id
+    tip_data = params[:tip]
+    address = Address.new tip_data[:address]
+    tip_data.delete :address
 
-    @tip.condition_id = params[:condition_id]
-    @tip.weekday_id = params[:weekday_id]
-    @tip.calendar = @calendar
+    tip = Tip.new tip_data
+    tip.address = address
 
-    @tip.save
+    # seek for first empty spot
+    tips = @guide.grouped_tips
+    found = false
+    for day in (0..DAY_LIMIT - 1)
+      if day == tips.length
+        tip.condition_id = @guide.conditions[0].id
+        tip.day = day
+        found = true
+        break
+      end
 
-    @calendar.update_completed_percentage
-    @calendar.save
+      @guide.conditions.each do |condition|
+        if tips[day][condition.id].length == 0
+          tip.condition_id = condition.id
+          tip.day = day
+          found = true
+          break
+        end
+      end
+      if found
+        break
+      end
+    end
 
-    render :partial => "tips/#{params[:result]}", :locals => {:tip => @tip}
+    # no empty spots
+    if not found
+      tip.condition_id = @guide.conditions[0].id
+      tip.day = 0
+    end
+
+    tip.calendar_id = @guide.id
+    tip.author_id = @current_user.id
+    tip.save
+
+    @guide.update_completed_percentage
+    @guide.save
+
+    render :partial => 'edit_tile', :locals => {:tip => tip}
   end
 
   def new
@@ -36,13 +66,29 @@ class TipsController < ApplicationController
   end
 
   def update
-    @calendar = authorize_guide params[:id]
-    @full_access = true;
+    @guide = authorize_guide params[:id]
+#    @full_access = true;
 
     @errors = {};
-    new_tip_id = nil
+#    new_tip_id = nil
+
+    tip_data = params[:tip]
+    p "id !!!!!!!!!!!! #{tip_data[:id]}"
+    tip = Tip.find tip_data[:id], :lock => true
 
     Tip.transaction do
+      tip.address.update_attributes tip_data[:address]
+      tip_data.delete :address
+      tip.update_attributes tip_data
+      tip.save
+
+      p "errors????????????"
+      p tip.errors
+
+      @errors["tips[#{id}]"] = tip.errors_as_hash
+
+=begin
+
       if !params[:tips].nil?
         params[:tips].each_pair do |id, tip_data|
           tip = Tip.find id, :lock => true
@@ -60,17 +106,16 @@ class TipsController < ApplicationController
 #        end
         end
       end
+=end
 
-#      puts "!!!!!!!!!!!!!! require tip ?#{params[:require_tip]}?"
+=begin
 
       if !params[:tips_new].nil?
         params[:tips_new].each_pair do |condition_id, weekday_map|
           weekday_map.each_pair do |weekday_id, tip_data|
-#            puts "!!!!!!!!!!!  "
             if tip_data[:name].blank? && params[:require_tip].blank?
               next
             end
-#            if !tip_data[:name].blank?
               address = Address.new tip_data[:address]
               tip_data.delete :address
 
@@ -85,22 +130,23 @@ class TipsController < ApplicationController
               new_tip_id = tip.id
 
               @errors["tips_new[#{condition_id}][#{weekday_id}]"] = tip.errors_as_hash
-#              puts "!!!!!!!!!!!!!!!! new tip!\n #{tip.inspect} "
 #            end
           end
         end
       end
+=end
 
       @errors = flatten @errors
       if !@errors.empty?
         raise ActiveRecord::Rollback.new
       end
       
-      @calendar.update_completed_percentage
-      @calendar.save
+      @guide.update_completed_percentage
+      @guide.save
     end
 
-    render :text => {:errors => @errors, :new_tip_id => new_tip_id}.to_json
+#    render :text => {:errors => @errors, :new_tip_id => new_tip_id}.to_json
+    render :partial => 'edit_tile', :locals => {:tip => tip}
   end
 
   def follow_url
@@ -119,19 +165,17 @@ class TipsController < ApplicationController
     redirect_to url
   end
 
-  # removes binding between tip and calendar
-  # for now, also removes tip
-  def unbind
-    tip = verify_tip params[:occurrence_id]
+  # removes the tip
+  def delete
+    tip = verify_tip params[:id]
     authorize_guide tip.calendar_id
-    @full_access = true
 
     tip.delete
 
     tip.calendar.update_completed_percentage
     tip.calendar.save
 
-    render :partial => 'tips/no_tip_tile', :locals => {:condition => tip.condition, :day => tip.weekday}
+    render :text => 'dummy response'
   end
 
   # moves tip to a different place

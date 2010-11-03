@@ -1,175 +1,142 @@
-
-<div id="view_tips">
-  <h1>Overview of "<%= h @calendar.name %>" Guide</h1>
+<div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
+  <h1>Overview of "<%= h @guide.name %>" Guide</h1>
 
   <b>Location:</b>
   <span>
-    <% if @full_access %>
-    <a class="view-area" href="javascript:" onclick="calendar.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @calendar.location.name %> [Edit]</a>
+    <a class="view-area" href="javascript:" onclick="guide.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @guide.location.name %>
+      [Edit]</a>
     <span class="edit-area hidden" style="position:relative;">
-      <input type="text" value="<%= @calendar.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
-      <a href="javascript:" onclick="calendar.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
+      <input type="text" value="<%= @guide.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
+      <a href="javascript:" onclick="guide.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
     </span>
-    <% else %>
-      <%= h @calendar.location.name %>
-    <% end %>
   </span>
   <br/>
 
 
-  <% if @full_access %>
       <div class="guide-access-type">
         <h3>Access Type</h3>
-        <p>Public guides can be discovered by other users through search and featured on guiderer main page.</p>
-        <p>All guides are private when created, to allow author to fill in content.</p>
-        Current state: <span class="current-access-type"><%= @calendar.public? ? 'Public' : 'Private' %></span>
-        <input type="checkbox" id="guide_active" onchange="calendar.updateAccessType(this);" <%= 'checked="checked"' if @calendar.public? %> />
-        <label id="guide_active_label" for="guide_active">Make this guide <%= @calendar.public? ? 'private' : 'public' %></label>
-      </div>
-  <% end %>
 
-  <% if @full_access %>
+        <p>Public guides can be discovered by other users through search and featured on guiderer main page.</p>
+
+        <p>All guides are private when created, to allow author to fill in content.</p>
+        Current state: <span class="current-access-type"><%= @guide.public? ? 'Public' : 'Private' %></span>
+        <input type="checkbox" id="guide_active" onchange="guide.updateAccessType(this);" <%= 'checked="checked"' if @guide.public? %> />
+        <label id="guide_active_label" for="guide_active">Make this
+          guide <%= @guide.public? ? 'private' : 'public' %></label>
+      </div>
+
       <span class="hidden">
-        <% form_tag(update_guide_path(:id => @calendar), :method => 'post', :class => 'update-guide-form') do %>
+        <% form_tag(update_guide_path(:id => @guide), :method => 'post', :class => 'update-guide-form') do %>
             <input type="hidden" name="location_name" class="param_location_name">
             <input type="hidden" name="location_code" class="param_location_code">
             <input type="hidden" name="access_type" class="param_access_type">
         <% end %>
       </span>
-  <% end %>
 
-<!--
 
-  <b> Times Viewed:</b>
-  <%= h @calendar.view_count %>
-  <b> | Times Clicked:</b>
-  <%= h @calendar.click_count %>
+      <div class="new-tip-container edit-tip-root">
+        <% tip_model = Tip.new(:address => Address.new) %>
+        <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
+              <div class="tip-name-area">
+                <span>Create new tip: </span>
+                <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
+                <button class="tip-cancel" type="button">Cancel</button>
+                <button class="tip-create" type="button">Create</button>
+              </div>
 
--->
-
-  
+            <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
+        <% end %>
+      </div>
 
   <div class="button-panel">
-    <a href="/guides/<%= @calendar.id %>/share" class="button">
+    <a href="/guides/<%= @guide.id %>/share" class="button">
       View live version and get script
     </a>
-    <a href="/guides/<%= @calendar.id %>/map" class="button">
+    <a href="/guides/<%= @guide.id %>/map" class="button">
       See the map
     </a>
   </div>
 
 
+  <div id="tips-matrix">
+    <% tips = @guide.grouped_tips %>
 
+    <% tips.each_index do |day| %>
+        <div class="day-group" data-day="<%= day %>">
+          <div class="day-header">
+            Day <%= day + 1 %>
+          </div>
 
-  <table border="1" cellpadding="0" cellspacing="0">
+          <% @guide.conditions.each do |condition| %>
+              <div class="condition-label">
+                <%= h condition.full_name %>
+              </div>
 
-    <tr>
-      <th></th>
-      <% @weekdays.each do |day| %>
-          <th>
-            <div style="padding:10px">
-            <%= day.name %>
-            <% if @full_access %>
-                <br/>
-                <a href="/guides/<%= @calendar.id %>/edit#<%= day.name %>">edit</a>
-            <% end %>
-            </div>
-          </th>
-      <% end %>
-    </tr>
-
-    <% prev_cond = Condition.new %>
-    <% @conditions.each do |condition| %>
-
-        <!-- horizontal labels for 'day', 'dinner' and 'nigthlife' -->
-        <% if condition.group != prev_cond.group && !condition.group.nil? %>
-            <tr>
-              <td class="headtext" colspan="20" align="center" style="background-color:#006699;">
-                <%= condition.group %>
-              </td>
-            </tr>
-        <% end %>
-        <% prev_cond = condition %>
-
-        <tr>
-
-          <td>
-            <!--left labels-->
-            <div style="padding:10px">
-            <%= condition.weather ? condition.weather : '' %> <%= condition.name %>
-            <% if false %>
-                <br/>
-                <a href="/guides/<%= @calendar.id %>/edit#<%= condition.name %>">edit</a>
-            <% end %>
-            </div>
-          </td>
-
-          <% @weekdays.each do |day| %>
-              <% tip = @calendar.tips.detect { |t| t.condition.id == condition.id and t.weekday.id == day.id } %>
-
-              <td valign="top" class="tip-container" condition_id="<%= condition.id %>" day_id="<%= day.id %>">
-                <% if tip != nil then %>
-                    <%= render :partial => 'tips/show_tile', :locals => {:tip => tip} %>
-                <% else %>
-                    <%= render :partial => 'tips/no_tip_tile', :locals => {:condition => condition, :day => day} %>
+              <div class="condition-group" data-condition="<%= condition.id %>">
+                <% tips[day][condition.id].each do |tip| %>
+                    <%= render :partial => 'tips/edit_tile', :locals => {:tip => tip} %>
                 <% end %>
-              </td>
-
-
+              </div>
           <% end %>
-        </tr>
+        </div>
     <% end %>
 
-  </table>
+  </div>
 
 
-<div class="button-panel">
-  <a href="/guides/<%= @calendar.id %>/share" class="button">
-    Get script to embed widget
-  </a>
-  <a href="/guides/<%= @calendar.id %>/map" class="button">
-    See the map
-  </a>
+  <div class="button-panel">
+    <a href="/guides/<%= @guide.id %>/share" class="button">
+      Get script to embed widget
+    </a>
+    <a href="/guides/<%= @guide.id %>/map" class="button">
+      See the map
+    </a>
+  </div>
+
+
+  <div id="new_tip" style="display:none;">
+    <% form_tag("/guides/#{@guide.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
+        <input id="new_tip_name" name="new_tip_name"/>
+    <% end %>
+  </div>
+
+
+
+      <div id="edit-tip-container" class="">
+      </div>
+
 </div>
-
-
-
-<div id="new_tip" style="display:none;">
-  <% form_tag("/guides/#{@calendar.id}/tips/create", :method => "post", :id => 'new_tip_form') do %>
-      <input id="new_tip_name" name="new_tip_name"/>
-  <% end %>
-</div>
-
-</div>
-
 
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
-      // initialize autocomplete for locations
-      $('.location-input').each(function(i, e) {
-          calendar.locationInput(e, function(input, result) {
-              if (result == null) {
-                  return;
-              }
-              var root = input.parent().parent();
-              root.find('.view-area').html(result.label);
-              calendar.resetGuideLocation(root);
+    $(document).ready(function() {
+        // initialize autocomplete for locations
+        $('.location-input').each(function(i, e) {
+            guide.locationInput(e, function(input, result) {
+                if (result == null) {
+                    return;
+                }
+                var root = input.parent().parent();
+                root.find('.view-area').html(result.label);
+                guide.resetGuideLocation(root);
 
-              // Now save value.
-              common.setLoading($('.location-loading'), 'Saving...');
-              var form = $('#view_tips form.update-guide-form');
-              form.find('.param_location_name').val(result.label);
-              form.find('.param_location_code').val(result.id);
-              form.ajaxSubmit({
-                  success: function() {
-                      common.stopLoading($('.location-loading'));
-                  }
-              });
-          });
-      });
+                // Now save value.
+                common.setLoading($('.location-loading'), 'Saving...');
+                var form = $('#edit_tips form.update-guide-form');
+                form.find('.param_location_name').val(result.label);
+                form.find('.param_location_code').val(result.id);
+                form.ajaxSubmit({
+                    success: function() {
+                        common.stopLoading($('.location-loading'));
+                    }
+                });
+            });
+        });
 
-      $('#guide_active').button();
-  });
+        $('#guide_active').button();
+
+        $('div.new-tip-container .tip-cancel').click(guide.cancelTip);
+        $('div.new-tip-container .tip-create').click(guide.createTip);
+    });
 </script>

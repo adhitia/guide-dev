@@ -6,12 +6,18 @@ class CalendarsController < ApplicationController
 
 
   def show
-    @calendar = verify_guide params[:id]
-    @full_access = @current_user && (@calendar.user.id == @current_user.id);
+    @guide = verify_guide params[:id]
+    @full_access = @current_user && (@guide.user.id == @current_user.id);
 
     @today = Date.today.cwday - 1;
-    @weekdays = Weekday.all
-    @conditions = @calendar.conditions
+#    @weekdays = Weekday.all
+    @conditions = @guide.conditions
+
+    if @full_access
+      render :action => 'show'
+    else
+      render :action => 'show_public'
+    end
   end
 
   def new
@@ -67,29 +73,38 @@ class CalendarsController < ApplicationController
   def create
     authenticate
 
-    @weekdays = Weekday.all
+#    @weekdays = Weekday.all
     @conditions = Condition.all
 
-    if (params[:step] == 'list-places')
-      create_list
-      return
-    elsif (params[:step] == 'overview')
-      create_overview
-      return
-    end
+#    if (params[:step] == 'list-places')
+#      create_list
+#      return
+#    elsif (params[:step] == 'overview')
+#      create_overview
+#      return
+#    end
 
     guide = read_guide
     guide.guide_type_id = 1
+    guide.name = guide.name_location + ' for ' + guide.name_target
     if guide.invalid?
       @errors = guide.errors_as_hash
       render :action => :new
       return
     end
+    guide.save
 
-    params['tip_name'] = Hash.new({})
+#    @calendar = Calendar.new
+#    @calendar.name_location = params[:calendar_name_location]
+#    @calendar.name_target = params[:calendar_name_target]
+#    @calendar.user = @current_user
+#    @calendar.guide_type = GuideType.find params[:guide_type_id]
+#    @calendar.location_id = find_or_create_location
+
+#    params['tip_name'] = Hash.new({})
 
 #    render :action => :new_overview
-    render :action => :new_places
+    redirect_to :action => :show, :id => guide.id
   end
 
 
@@ -112,6 +127,32 @@ class CalendarsController < ApplicationController
     end
 
     @calendar.save
+
+    render :text => 'dummy response'
+  end
+
+  def update_matrix
+    @guide = authorize_guide params[:id]
+
+    Tip.transaction do
+      p "!!!!!!!!!!!"
+      p params[:data]
+      params[:data].each_pair do |day, condition_data|
+        condition_data.each_pair do |condition_id, tip_ids|
+          tip_ids.each_index do |tip_index|
+            tip = Tip.find tip_ids[tip_index]
+            if tip.calendar_id != @guide.id
+              raise "Found tip belonging to guide #{tip.calendar_id}, while #{@guide.id} expected."
+            end
+
+            tip.rank = tip_index
+            tip.condition_id = condition_id
+            tip.day = day
+            tip.save
+          end
+        end
+      end
+    end
 
     render :text => 'dummy response'
   end
