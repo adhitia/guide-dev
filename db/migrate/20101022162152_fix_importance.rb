@@ -5,7 +5,7 @@ class FixImportance < ActiveRecord::Migration
     add_column :tips, :rank, :integer, :default => 0
     Tip.update_all ["rank = ?", 0]
     Tip.all.each do |tip|
-      tip.day = tip.weekday_id - 1
+      tip.day = tip.weekday_id.nil? ? 0 : tip.weekday_id - 1
       tip.save
     end
   end
