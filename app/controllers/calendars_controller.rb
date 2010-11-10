@@ -135,8 +135,11 @@ class CalendarsController < ApplicationController
     @guide = authorize_guide params[:id]
 
     Tip.transaction do
-      p "!!!!!!!!!!!"
-      p params[:data]
+#      p "!!!!!!!!!!!"
+#      p params[:data]
+      if params[:data].blank?
+        params[:data] = {}
+      end
       params[:data].each_pair do |day, condition_data|
         condition_data.each_pair do |condition_id, tip_ids|
           tip_ids.each_index do |tip_index|

@@ -407,6 +407,7 @@ if (!window.tips) var tips = {
 //                            tips.init(parent);
                         }
                     });
+                    guide.saveMatrix();
                 });
                 return false;
             });

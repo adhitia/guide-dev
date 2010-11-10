@@ -133,7 +133,7 @@ if (!window.guide) var guide = {
                 setTimeout(function() {
                     response.animate({backgroundColor: '#7fffd4'}, 2000);
                 }, 3000);
-
+                guide.saveMatrix();
             }
         });
     },
