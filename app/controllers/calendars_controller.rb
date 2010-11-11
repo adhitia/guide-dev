@@ -14,9 +14,9 @@ class CalendarsController < ApplicationController
     @conditions = @guide.conditions
 
     if @full_access
-      render :action => 'show'
+      render :action => 'edit'
     else
-      render :action => 'show_public'
+      render :action => 'show'
     end
   end
 

@@ -98,12 +98,20 @@ if (!window.guide) var guide = {
 //        });
     },
 
-    cancelTip: function() {
+    closeTip: function() {
         var root = $(this).closest('div.edit-tip-root');
-        var edit_area = root.find('div.edit-area');
-        edit_area.slideUp(500, function() {
-            root.removeClass('full');
-        });
+        if (root.hasClass('new-tip-container')) {
+            var edit_area = root.find('div.edit-area');
+            edit_area.slideUp(500, function() {
+                root.removeClass('full');
+            });
+        } else {
+            var edit_form = root.find('form.tip-form');
+            $('#edit-tip-container').slideUp(300, function() {
+                $('#global-overlay').hide();
+                edit_form.appendTo(root);
+            });
+        }
     },
 
     createTip: function() {
@@ -124,7 +132,7 @@ if (!window.guide) var guide = {
                                ' div.condition-group[data-condition=' + response.data('condition-id') + ']');
 //                console.log(response.hasClass('edit-tip-tile'));
                 common.stopLoading(root);
-                guides.cancelTip.apply(root);
+                guides.closeTip.apply(root);
 
                 target.append(response);
                 tips.init(response);
@@ -134,6 +142,10 @@ if (!window.guide) var guide = {
                     response.animate({backgroundColor: '#7fffd4'}, 2000);
                 }, 3000);
                 guide.saveMatrix();
+
+                $.Watermark.HideAll();
+                root.find('input.tip-name').val('');
+                $.Watermark.ShowAll();
             }
         });
     },

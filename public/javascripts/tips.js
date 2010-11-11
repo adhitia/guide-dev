@@ -603,10 +603,7 @@ if (!window.tips) var tips = {
                     guides.loadTipSuggestions(edit_form.find('div.edit-tip-root'));
                 });
                 overlay.click(function() {
-                    container.slideUp(300, function() {
-                        overlay.hide();
-                        edit_form.appendTo(root);
-                    });
+                    guides.closeTip.apply(root);
                 });
             });
 
@@ -616,6 +613,12 @@ if (!window.tips) var tips = {
                 if (e.which == 13) {
                     guide.loadTipSuggestions(this);
                     return false;
+                }
+            });
+//            tips.add(new_tip).find('form').keyup(function(e) {
+            tips.add(new_tip).find('form').keyup(function(e) {
+                if (e.which == 27) {
+                    guides.closeTip.apply(root);
                 }
             });
             tips.add(new_tip).find('input.tip-name').each(function() {
