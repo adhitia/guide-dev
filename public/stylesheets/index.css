@@ -34,7 +34,14 @@ a:visited { color: #ffffff; }
 	text-indent: 0px;
 }
 
-
+.head2 {
+    background-color: #0088ee;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: large;
+    padding: 5px;
+    text-transform:capitalize;
+}
 
 
 
@@ -749,6 +756,9 @@ font-weight: bold;
     margin: 0 50px 0 0;
 }
 
+
+
+
 #home-page .new-guides {
     float: right;
     width: 355px;
@@ -1138,6 +1148,7 @@ div.guide-type-panes > div {
 #tips-matrix .day-header {
     overflow: hidden;
     zoom: 1;
+    font-size:24px;
     text-align: center;
 }
 

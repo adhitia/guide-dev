@@ -22,10 +22,10 @@ Add those imports to the 'head' tag of your page.
 <% end %>
 </div>
 
-<textarea id="preview_html" rows="7" cols="120"></textarea>
+<textarea id="preview_html" rows="3" cols="40"></textarea>
 
 <P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
-<p><span class="headtextlighter">What your widget looks like</span></p>
+<p><span class="head2">What your widget looks like</span></p>
 <div id="preview_guide" class="" server="<%=WEB_ROOT%>"></div>
 
 <div id="preview_template" class="hidden">
@@ -33,6 +33,11 @@ Add those imports to the 'head' tag of your page.
 <%= render :partial => 'widget', :locals => {:guide => @calendar, :style_id => '{style_id}'} %>
   <% end %>
 </div>
+
+
+
+
+
 
 <script type="text/javascript">
     var change_pane = function(id) {
