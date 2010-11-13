@@ -51,8 +51,8 @@
     width: 500px;
     color: black;
     padding: 5px;
-    background-color: azure;
-    border: solid black 1px;
+    background-color: white;
+    border: solid gray 5px;
 }
 
 .guiderer .full_tip .tip-show .tip-name {
@@ -151,7 +151,8 @@
 
 .guiderer .tip-element-small .tip-legend {
     opacity: 0.6;
-    background-color: white;
+    line-height: .5;
+    background-color: red;
     font-size: small;
     color: #222222;
     margin: 2px;
@@ -162,6 +163,8 @@
 
 .guiderer .tip-element-small .tip-legend .tip-name {
     font-weight: bold;
+    line-height: .7;
+
 }
 
 /* medium box (about 200 pixels each side) */
@@ -191,6 +194,8 @@
 
 .guiderer .tip-element-medium .tip-legend .tip-name {
     font-weight: bold;
+    line-height: .7;
+
 }
 
 
@@ -308,7 +313,7 @@
 }
 .guiderer .guide-info .tooltip-content {
     border: 1px solid black;
-    background-color: azure;
+    background-color: white;
     width: 300px;
     font-size: medium;
     z-index: 20003;

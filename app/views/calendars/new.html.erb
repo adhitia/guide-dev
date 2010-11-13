@@ -5,27 +5,38 @@
 
     <h1>Create a Travel Guide</h1>
 
-    <div style="width:700px;margin-left:100px;font-size:large" align="left">
+    <div style="width:700px;margin-left:100px;font-size:medium" align="left">
       <P>There are four steps to creating a Guiderer travel guide:</P>
+<ol>
+      <li>Name you guide</li>
 
-      <p>1) Name you guide</P>
+      <li>Add points of interest</li>
 
-      <P>2) List your travel tips</P>
-
-      <P>3) Schedule your tips over week calendar</P>
-
-      <P>4) Add details to your tips, like photos and contact info.</P></div>
-    <P></P>
+      <li>Arrange your points of interest into day tours</li>
+</ol>
+</div>
 
     <div style="width:700px;margin-left:100px;font-size:medium" align="left">
-      <P>Afterwards, You can turn your guide into a: <BR>- Widget and place it on your blog or site,<BR>- Booklet to
-        give to customer,<BR>- An Iphone App,<BR>- Domain with your guide.</P>
+      
+    <table cellspacing="15" cellpadding="4" valign="top">
+    <tr><td colspan="4">Afterwards, You can turn your guide into a:</td></tr>
+          <tr><td width="20%" valign="top" bgcolor="#CC9966">
+          <span style="font-size:larger">Widget</span> <br />
+          and place it on your blog or site</td>
+        <td width="20%" valign="top" bgcolor="#9999FF">  <span style="font-size:larger"> Booklet </span> <br />
+          to
+            give to customer</td>
+            <td width="20%" valign="top" bgcolor="#00CC66"><span style="font-size:larger">Iphone App </span> <br />
+            and mobilize it</td>
+      <td width="20%" valign="top" bgcolor="#FFCC00"><span style="font-size:larger"> ".com" Domain</span><br />
+        featuring your guide</td>
+  </tr></table>
 
-      <P>The whole process takes less than 30 minutes and can make you a super-star, of sorts.</P></div>
+      <P>The whole process takes less than 15 minutes and can make you a super-star, of sorts.</P></div>
 
     <div class="name-area" style="width:700px;margin-left:100px;background-color:#0066CC;border-radius:15px;padding:10px">
-      <h2 align="left">Step 1: Guide Name</h2>
-
+      <h2 align="left">Step 1: Name Your Guide</h2>
+<p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests, Hollywood for Movie Fans </p>
       <div>
         <div class="column">
           <input id="calendar_name_location" class="watermark" title="city or region" name="calendar_name_location"
@@ -37,7 +48,6 @@
                  type="text" value="<%= params[:calendar_name_target] %>" size="20" maxlength="20">
         </div>
       </div>
-      <p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests </p>
 
 
       <div class="location-area">
@@ -55,7 +65,7 @@
 
       <div class="button-panel">
         <a href="javascript:" onclick="$('#new_calendar_form').submit();" class="button">
-          Proceed to step 2: List your points of interest
+          Save and go to step 2: List your points of interest
         </a>
       </div>
     </div>

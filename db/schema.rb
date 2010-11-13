@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(:version => 20101022162152) do
     t.integer  "weekday_id"
     t.string   "good_on",            :limit => 7, :default => "xxxxxxx"
     t.integer  "day",                             :default => 0
-    t.integer  "order",                           :default => 0
     t.integer  "rank",                            :default => 0
   end
 
