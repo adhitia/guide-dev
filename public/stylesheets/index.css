@@ -206,6 +206,8 @@ textarea.invalid {
     padding: 5px;
     /*float: left;*/
     /*width: 400px;*/
+    position: relative;
+    z-index:100000;
 }
 #edit_tips .edit-tip-root .tip-name-area > span {
     /*width:40%;*/
@@ -521,6 +523,20 @@ textarea.invalid {
 #edit_tips .guide-access-type {
     margin-bottom: 30px;
     margin-top: 30px;
+}
+
+#edit_tips .guide-details {
+    border: 5px solid blue;
+    overflow: hidden;
+}
+#edit_tips .guide-details .edit-area {
+    display: none;
+}
+#edit_tips .guide-details .input-row {
+    text-align: center;
+}
+#edit_tips .guide-details .edit-column input {
+    float: right;
 }
 
 

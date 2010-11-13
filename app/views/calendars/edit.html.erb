@@ -1,6 +1,31 @@
 <div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
   <h1>Overview of "<%= h @guide.name %>" Guide</h1>
 
+  <div class="guide-details">
+    <a class="edit-link" href="javascript:" onclick="$(this).parent().find('.edit-area').toggle();">
+      <b><%= @guide.public? ? 'Public' : 'Private' %></b> guide for <b><%= h @guide.location.name %></b>. Click to edit.
+    </a>
+    <div class="edit-area">
+      <form>
+          <div class="input-row">
+            <div style="display:inline-block;">
+              <input class="watermark" title="city or region" name="calendar_name_location"
+                     type="text" value="<%= h @guide.name_location %>" size="20" maxlength="20">
+            </div>
+            FOR
+            <div style="display:inline-block;">
+              <input class="watermark" title="target group" name="calendar_name_target"
+                     type="text" value="<%= h @guide.name_target %>" size="20" maxlength="20">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <input type="text" name="location">
+          </div>
+      </form>
+    </div>
+  </div>
+
   <b>Location:</b>
   <span>
     <a class="view-area" href="javascript:" onclick="guide.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @guide.location.name %>
