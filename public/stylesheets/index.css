@@ -744,13 +744,13 @@ font-weight: bold;
 
 
 #home-page .new-guides {
-    float: right;
-    width: 355px;
+    float: left;
+    width: 936px;
 }
 
 #home-page .search-guides, #home-page .create-guide {
     float: left;
-    width: 520px;
+    width: 440px;
 }
 
 #home-page #search_location {

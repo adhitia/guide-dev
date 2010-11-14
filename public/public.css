@@ -151,8 +151,8 @@
 
 .guiderer .tip-element-small .tip-legend {
     opacity: 0.6;
-    line-height: .5;
-    background-color: red;
+    line-height: .8;
+    background-color: white;
     font-size: small;
     color: #222222;
     margin: 2px;
@@ -163,7 +163,7 @@
 
 .guiderer .tip-element-small .tip-legend .tip-name {
     font-weight: bold;
-    line-height: .7;
+    line-height: .8;
 
 }
 
@@ -194,7 +194,7 @@
 
 .guiderer .tip-element-medium .tip-legend .tip-name {
     font-weight: bold;
-    line-height: .7;
+    line-height: .8;
 
 }
 

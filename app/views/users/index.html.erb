@@ -1,15 +1,8 @@
 <div id="home-page">
-  <!--new guides-->
-  <div class="new-guides section">
-    <h1>Recently Created Guides</h1>
 
-    <% @recent_calendars.each do |calendar| %>
-        <div style="display:inline-block;vertical-align:text-top;">
-          <%= render :partial => 'calendars/widget', :locals => {:guide => calendar, :style_id => '1'} %>
-        </div>
-    <% end %>
-  </div>
 
+  
+  
   <!--search guides-->
   <div class="search-guides section">
     <h1>Want tips on a travel destination?</h1>
@@ -28,6 +21,21 @@
     Create your own travel guide, complete with suggestions on what to do during the day, night and dinner.
     <img class="button" align="right" onclick="window.location='/guides/new';" src="/images/guiderer-index_r12_c5.jpg"/>
   </div>
+  
+    <!--new guides-->
+    <div class="new-guides section">
+      <h1>Recently Created Guides</h1>
+  
+      <% @recent_calendars.each do |calendar| %>
+          <div style="display:inline-block;vertical-align:text-top;">
+            <%= render :partial => 'calendars/widget', :locals => {:guide => calendar, :style_id => '1'} %>
+          </div>
+      <% end %>
+    </div>
+  
+  
+  
+  
 </div>
 
 
