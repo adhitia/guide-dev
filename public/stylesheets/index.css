@@ -533,14 +533,18 @@ textarea.invalid {
 }
 
 #edit_tips .guide-details {
-    border: 5px solid blue;
+    /*border: 5px solid blue;*/
     overflow: hidden;
+    display: inline-block;
 }
 #edit_tips .guide-details .edit-area {
     display: none;
+    padding: 10px;
+    width: 970px;
 }
 #edit_tips .guide-details .input-row {
     text-align: center;
+    margin: 10px;
 }
 #edit_tips .guide-details .edit-column input {
     float: right;

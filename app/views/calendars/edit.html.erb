@@ -1,9 +1,9 @@
 <div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
   <h1>Step 2: Add points of interest on your day tours</h1>
-<P><span class="head2"><%= h @guide.name %> Guide</p></span>
+<P><span class="head2"><%= h @guide.name %> Guide</span></p>
 
   <div class="guide-details">
-    <a class="edit-link" href="javascript:" onclick="$(this).parent().find('.edit-area').toggle();">
+    <a class="edit-link" href="javascript:" onclick="">
       <b><%= @guide.public? ? 'Public' : 'Private' %></b> guide for <b><%= h @guide.location.name %></b>. Click to edit.
     </a>
     <div class="edit-area">
@@ -21,11 +21,25 @@
           </div>
 
           <div class="input-row">
-            <input type="text" name="location">
+            Location:
+            <%= render :partial => 'location_input', :locals => {:name => @guide.location.name, :code => @guide.location.code} %>  
+          </div>
+
+          <div class="input-row">
+            Access Type:
+            <input type="radio" name="access_type" value="public" <%= @guide.public? ? 'checked="checked"' : '' %> > public
+            <input type="radio" name="access_type" value="private" <%= @guide.public? ? '' : 'checked="checked"' %>> private
+          </div>
+
+          <div class="input-row">
+            <button>save changes</button>
+            <button>discard changes</button>
           </div>
       </form>
     </div>
   </div>
+
+  <br/>
 
   <b>Location:</b>
   <span>
@@ -36,7 +50,7 @@
       <a href="javascript:" onclick="guide.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
     </span>
   </span>
-  <br/></p>
+  <br/>
 
 
       <div class="guide-access-type">

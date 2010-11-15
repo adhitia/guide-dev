@@ -433,13 +433,66 @@ if (!window.guide) var guide = {
             img.parent().addClass('selected');
             root.find('.tip_image_url').val(url);
         }
-    }/*,
+    },
 
-    init: function(root) {
-        // tips edit page
-        if ($('#edit_tips').length > 0) {
-        }
-    }*/
+    init_location_input: function(root) {
+        var input = root.find('input[name=location_name]');
+        var input_code = root.find('input[name=location_code]');
+        input.autocomplete({
+            source: function(term, callback) {
+                var loading = root.find('.location-loading');
+                common.setLoading(loading, 'Loading...');
+                $.ajax({
+                    url: '/check_location',
+                    data: term,
+                    cache: false,
+                    dataType: "json",
+                    success: function(r) {
+                        $('.param_location_code').val('');
+                        common.stopLoading(loading);
+                        if (r.length == 0) {
+                            r = [{
+                                label : "No result found. <br/>" +
+                                          "Please ensure that full word is entered, <br/>" +
+                                          "like <b>New</b> or <b>New York</b>, but not <b>New Yo</b>.",
+                                id : 'no_result'
+                            }];
+                        }
+                        callback(r);
+                    }
+                });
+            },
+            delay: 1000,
+            focus: function(event, ui) {
+                return ui.item.id != 'no_result';
+            },
+            change: function(event, ui) {
+                callback(input, null);
+            },
+            select: function(event, ui) {
+                if (ui.item.id == 'no_result') {
+                    callback(input, null);
+                    return false;
+                }
+
+                callback(input, ui.item);
+            },
+
+            minLength: 2
+        });
+    },
+
+    init_edit_area: function(root) {
+        root.find('.edit-link').click(function() {
+            var edit_area = $(this).parent().find('.edit-area');
+            if (edit_area.is(':hidden')) {
+                edit_area.show('slow');
+            } else {
+                edit_area.hide('slow');
+            }
+        });
+        root.find('.location-input');
+    }
 };
 
 // have some 'aliases' for old code
@@ -447,67 +500,5 @@ window.calendar = window.guide;
 window.guides = window.guide;
 
 $(document).ready(function() {
-    // show tabs on edit calendars page
-    if ($("#edit_calendar_tabs").length > 0) {
-        /*
-        $("#edit_calendar_tabs").tabs({
-            ajaxOptions: {
-                //            error: function(xhr, status, index, anchor) {
-                //            }
-            },
-            load: function(event, ui) {
-                $('.ui-tabs-hide').html('');
-                tips.init(ui.panel);
-            },
-            select: function(event, ui) {
-                var url = $.data(ui.tab, 'load.tabs');
-                var current = $('#edit_calendar_tabs').tabs('option', 'selected');
-//                if (url == 'toggle-tabs') {
-                    // disabled for now
-//                    var name = $(ui.tab).attr('target');
-//                    calendar.selectTab(name);
-//                    return false;
-//                }
-                if (!$(ui.tab).data('saved')) {
-                    $(ui.tab).data('saved', true);
-                    tips.saveTab('edit_tips_form', function() {
-                        common.setLoading(ui.panel);
-//                        $(ui.tab).data('saved', false);
-                    });
-                }
-            },
-            show: function(event, ui) {
-                window.location.hash = ui.tab.hash;
-            }
-        });
-
-        $('#edit_calendar_tabs .edit-calendar-tabs-conditions li').each(function() {
-            $(this).addClass('hidden');
-        });
-        calendar.selectTab(common.getHash());
-*/
-        //
-        /*$("#edit_calendar_tabs > ul").fpTabs("div.tab-content", {
-//            history: true,
-            onClick: function(event, tabIndex) {
-                tips.init($('div.tab-content'));
-                window.location.hash = this.getCurrentTab().attr('title');
-            },
-            onBeforeClick: function(event, tabIndex) {
-                var form = $('#edit_tips_form');
-                if (form.length > 0 && !form.data('saved')) {
-//                    alert('saving...');
-                    form.data('saved', true);
-                    var tabs = this;
-                    tips.saveTab('edit_tips_form', function() {
-                        tabs.click(tabIndex);
-                    });
-
-                    return false;
-                }
-            },
-            effect: 'ajax'
-        });
-        guide.selectTab(common.getHash());*/
-    }
+    guide.init_edit_area($('div.guide-details'));
 });
