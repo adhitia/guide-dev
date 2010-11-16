@@ -1,17 +1,4 @@
 if (!window.guide) var guide = {
-    /*updateTile: function(tile) {
-        $.ajax({
-            url: '/occurrences/' + tile.attr('place_id') + '/tile',
-            cache: false,
-            dataType: "html",
-            success: function(r) {
-                var parent = tile.parent();
-                tile.replaceWith(r);
-                tips.init(parent);
-            }
-        });
-    },*/
-
     editGuideLocation: function(root) {
         $(root).find('.view-area').hide();
         $(root).find('.edit-area').show();
@@ -83,19 +70,6 @@ if (!window.guide) var guide = {
 
             minLength: 2
         });
-
-
-//        input.autocomplete('/check_location', {
-//            delay: 1000,
-//            minChars: 3,
-//            mustMatch: true,
-//            cacheLength: 1,
-//            matchSubset: false
-//        });
-//        input.result(function(event, data, formatted) {
-//            alert(data[0] + " : " + data[1]);
-//            calendar.resetGuideLocation(input);
-//        });
     },
 
     closeTip: function() {
@@ -112,11 +86,22 @@ if (!window.guide) var guide = {
                 edit_form.appendTo(root);
             });
         }
+        common.clearValidationErrors();
     },
 
     createTip: function() {
         var root = $(this).closest('div.edit-tip-root');
         var edit_area = root.find('div.edit-area');
+
+        $.Watermark.HideAll();
+        var errors = {};
+        if (root.find('input.tip-name').val().blank()) {
+            errors[root.find('input.tip-name').attr('name')] = 'required field';
+            common.validationErrors(errors, root);
+            $.Watermark.ShowAll();
+            return;
+        }
+        $.Watermark.ShowAll();
 
         common.setLoading(root, 'Creating tip...');
 
@@ -157,6 +142,13 @@ if (!window.guide) var guide = {
         var overlay = $('#global-overlay');
         var container = $('#edit-tip-container');
 
+        var errors = {};
+        if (form.find('input.tip-name').val().blank()) {
+            errors[form.find('input.tip-name').attr('name')] = 'required field';
+            common.validationErrors(errors, form);
+            return;
+        }
+
         tile.data('state', 'saving');
         var view = tile.find('div.view');
         view.html('');
@@ -167,14 +159,10 @@ if (!window.guide) var guide = {
             type: 'POST',
             cache: false,
             iframe: true,
-            dataType: "html",
             success: function(result) {
                 result = $(result);
                 tile.replaceWith(result);
-//                result.data('state', 'ready');
                 tips.init(result);
-//                result.css('background-color', 'gold');
-                //#4E1402
             }
         });
         container.slideUp(300, function() {
@@ -436,9 +424,14 @@ if (!window.guide) var guide = {
     },
 
     init_location_input: function(root) {
-        var input = root.find('input[name=location_name]');
+        var input_name = root.find('input[name=location_name]');
         var input_code = root.find('input[name=location_code]');
-        input.autocomplete({
+        input_name.data('last', input_name.val());
+
+        input_name.focus(function() {
+            this.select();
+        });
+        input_name.autocomplete({
             source: function(term, callback) {
                 var loading = root.find('.location-loading');
                 common.setLoading(loading, 'Loading...');
@@ -452,10 +445,10 @@ if (!window.guide) var guide = {
                         common.stopLoading(loading);
                         if (r.length == 0) {
                             r = [{
-                                label : "No result found. <br/>" +
+                                label: "No result found. <br/>" +
                                           "Please ensure that full word is entered, <br/>" +
                                           "like <b>New</b> or <b>New York</b>, but not <b>New Yo</b>.",
-                                id : 'no_result'
+                                id: 'no_result'
                             }];
                         }
                         callback(r);
@@ -467,15 +460,22 @@ if (!window.guide) var guide = {
                 return ui.item.id != 'no_result';
             },
             change: function(event, ui) {
-                callback(input, null);
+//                callback(input, null);
+//                console.log('change');
+                input_name.val(input_name.data('last'));
             },
             select: function(event, ui) {
                 if (ui.item.id == 'no_result') {
-                    callback(input, null);
+                    input_name.val(input_name.data('last'));
+//                    console.log('select none');
+//                    callback(input, null);
                     return false;
                 }
 
-                callback(input, ui.item);
+//                console.log('select ' + ui.item.label);
+                input_name.data('last', ui.item.label);
+                input_code.val(ui.item.id);
+//                callback(input, ui.item);
             },
 
             minLength: 2
@@ -483,15 +483,63 @@ if (!window.guide) var guide = {
     },
 
     init_edit_area: function(root) {
+        var form = root.find('form');
+        var edit_area = root.find('.edit-area');
+
+        // show/hide form when title link is clicked
         root.find('.edit-link').click(function() {
-            var edit_area = $(this).parent().find('.edit-area');
             if (edit_area.is(':hidden')) {
                 edit_area.show('slow');
             } else {
                 edit_area.hide('slow');
             }
         });
-        root.find('.location-input');
+
+        guide.init_location_input(root.find('.location-input'));
+
+        // how to submit form properly
+        form.submit(function() {
+            common.setLoading(root, 'Saving changes');
+
+            form.ajaxSubmit({
+                success: function(result) {
+                    if (result == 'error') {
+                        common.setLocation('/error');
+                        return;
+                    }
+
+                    common.stopLoading(root);
+                    if (common.validationErrors(result)) {
+                        return;
+                    }
+//                    if (result.startsWith('{')) {//{"errors":
+//                        var errors = eval('(' + result + ')').errors;
+//                        common.validationErrors(errors);
+//                        return;
+//                    }
+                    result = $(result);
+
+                    root.replaceWith(result);
+                    edit_area = result.find('.edit-area');
+                    edit_area.show();
+                    guide.init_edit_area(result);
+
+                    edit_area.hide('slow');
+                }
+            });
+
+            return false;
+        });
+
+        // reset button ignores hidden input elements by default, let's fix it
+        root.find('button.discard').click(function() {
+            root.find('input[type=hidden]').val(function() {
+                return $(this).data('original-value') || $(this).val();
+            });
+            common.clearValidationErrors();
+            root.find('.edit-link').click();
+            return true;
+        });
     }
 };
 

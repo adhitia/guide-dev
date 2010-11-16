@@ -92,6 +92,7 @@ class CalendarsController < ApplicationController
       render :action => :new
       return
     end
+    guide.public = false
     guide.save
 
 #    @calendar = Calendar.new
@@ -116,19 +117,23 @@ class CalendarsController < ApplicationController
   end
 
   def update
-    @calendar = authorize_guide params[:id]
+    @guide = authorize_guide params[:id]
 
-    if !params[:location_name].blank?
-      @calendar.location_id = find_or_create_location;
+    @guide.location_id = find_or_create_location
+
+    @guide.update_attributes params[:calendar]
+
+    if @guide.invalid?
+      @errors = @guide.errors_as_hash
+      @errors = flatten({:calendar => @errors})
+
+      render :text => {:errors => @errors}.to_json
+      return
     end
 
-    if !params[:access_type].blank?
-      @calendar.public = params[:access_type] == "true" ? true : false
-    end
+    @guide.save
 
-    @calendar.save
-
-    render :text => 'dummy response'
+    render :partial => 'edit_pane', :locals => {:guide => @guide}
   end
 
   def update_matrix

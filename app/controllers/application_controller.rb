@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
   def handle_error(error)
     custom_log_error error
     if ajax?
-      render :text => 'Error happened', :status => 500
+      render :text => 'error', :status => 500
     else
       render :template => "/common/error.html.erb"
     end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101022162152) do
+ActiveRecord::Schema.define(:version => 20101115181237) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -48,6 +48,12 @@ ActiveRecord::Schema.define(:version => 20101022162152) do
     t.boolean  "public",               :default => false
     t.integer  "guide_type_id"
     t.integer  "completed_percentage", :default => 0
+    t.string   "description",          :default => ""
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "image_remote_url"
   end
 
   create_table "conditions", :force => true do |t|
@@ -124,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20101022162152) do
     t.integer  "weekday_id"
     t.string   "good_on",            :limit => 7, :default => "xxxxxxx"
     t.integer  "day",                             :default => 0
+    t.integer  "order",                           :default => 0
     t.integer  "rank",                            :default => 0
   end
 

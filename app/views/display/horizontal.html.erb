@@ -18,7 +18,7 @@
     /* guide head */
     .guide-template-1 .guide-head {
         background-color: #DBDABD;
-        color: #000000;
+        color: #999999;
         font-size: medium;
         font-weight: bold;
         text-align: center;
@@ -32,6 +32,7 @@
 
     .guide-template-1 .guide-head .guide-name {
         color: white;
+        text-transform:capitalize;        
     }
 
     .guide-template-1 .guide-head .guide-description {
@@ -45,7 +46,7 @@
     }
 
     .guide-template-1 .condition-group {
-        background-color: gray;
+        background-color: #cccccc;
         text-align: center;
         margin: 0 1px;
         padding: 0;
@@ -78,7 +79,7 @@
     <div class="guide-name">
       <a href="<%= WEB_ROOT %>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
     </div>
-    <div class="text">Day <%= @day + 1 %><BR>Travel tips for <%= @calendar.location.name %></div>
+    <div class="guide-head">Day <%= @day + 1 %><BR>Travel tips for <%= @calendar.location.name %></div>
     
   </div>
 

@@ -28,11 +28,13 @@ Add those imports to the 'head' tag of your page.
 <p><span class="head2">What your widget looks like</span></p>
 <div id="preview_guide" class="" server="<%=WEB_ROOT%>"></div>
 
+<div id="bgblue" style="background-color:blue;">
+
 <div id="preview_template" class="hidden">
   <% escape do %>
 <%= render :partial => 'widget', :locals => {:guide => @calendar, :style_id => '{style_id}'} %>
   <% end %>
-</div>
+</div></div>
 
 
 

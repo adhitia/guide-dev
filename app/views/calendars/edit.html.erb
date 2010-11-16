@@ -1,92 +1,23 @@
 <div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
   <h1>Step 2: Add points of interest on your day tours</h1>
-<P><span class="head2"><%= h @guide.name %> Guide</span></p>
 
-  <div class="guide-details">
-    <a class="edit-link" href="javascript:" onclick="">
-      <b><%= @guide.public? ? 'Public' : 'Private' %></b> guide for <b><%= h @guide.location.name %></b>. Click to edit.
-    </a>
-    <div class="edit-area">
-      <form>
-          <div class="input-row">
-            <div style="display:inline-block;">
-              <input class="watermark" title="city or region" name="calendar_name_location"
-                     type="text" value="<%= h @guide.name_location %>" size="20" maxlength="20">
-            </div>
-            FOR
-            <div style="display:inline-block;">
-              <input class="watermark" title="target group" name="calendar_name_target"
-                     type="text" value="<%= h @guide.name_target %>" size="20" maxlength="20">
-            </div>
-          </div>
+  <%= render :partial => 'edit_pane', :locals => {:guide => @guide} %>
 
-          <div class="input-row">
-            Location:
-            <%= render :partial => 'location_input', :locals => {:name => @guide.location.name, :code => @guide.location.code} %>  
-          </div>
+  <div class="new-tip-container edit-tip-root">
+    <% tip_model = Tip.new(:address => Address.new) %>
+    <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
+        <div class="tip-name-area">
+          <span>Add a point of interest: </span>
+          <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH %>
+          <!--show no validation message for this field-->
+          <span class="validation-error tip[name]_error" style="display:none;"></span>
+          <button class="tip-cancel" type="button">Cancel</button>
+          <button class="tip-create" type="button">Create</button>
+        </div>
 
-          <div class="input-row">
-            Access Type:
-            <input type="radio" name="access_type" value="public" <%= @guide.public? ? 'checked="checked"' : '' %> > public
-            <input type="radio" name="access_type" value="private" <%= @guide.public? ? '' : 'checked="checked"' %>> private
-          </div>
-
-          <div class="input-row">
-            <button>save changes</button>
-            <button>discard changes</button>
-          </div>
-      </form>
-    </div>
+        <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
+    <% end %>
   </div>
-
-  <br/>
-
-  <b>Location:</b>
-  <span>
-    <a class="view-area" href="javascript:" onclick="guide.editGuideLocation(this.parentNode);" title="click to edit"> <%= h @guide.location.name %>
-      [Edit]</a>
-    <span class="edit-area hidden" style="position:relative;">
-      <input type="text" value="<%= @guide.location.name %>" class="location-input"/><span style="position:absolute;left:50%;" class="location-loading"></span>
-      <a href="javascript:" onclick="guide.resetGuideLocation(this.parentNode.parentNode);">[cancel]</a>
-    </span>
-  </span>
-  <br/>
-
-
-      <div class="guide-access-type">
-        <h3>Access Type</h3>
-
-        <p>Public guides can be discovered by other users through search and featured on guiderer main page.</p>
-
-        <p>All guides are private when created, to allow author to fill in content.</p>
-        Current state: <span class="current-access-type"><%= @guide.public? ? 'Public' : 'Private' %></span>
-        <input type="checkbox" id="guide_active" onchange="guide.updateAccessType(this);" <%= 'checked="checked"' if @guide.public? %> />
-        <label id="guide_active_label" for="guide_active">Make this
-          guide <%= @guide.public? ? 'private' : 'public' %></label>
-      </div>
-
-      <span class="hidden">
-        <% form_tag(update_guide_path(:id => @guide), :method => 'post', :class => 'update-guide-form') do %>
-            <input type="hidden" name="location_name" class="param_location_name">
-            <input type="hidden" name="location_code" class="param_location_code">
-            <input type="hidden" name="access_type" class="param_access_type">
-        <% end %>
-      </span>
-
-
-      <div class="new-tip-container edit-tip-root">
-        <% tip_model = Tip.new(:address => Address.new) %>
-        <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
-              <div class="tip-name-area">
-                <span>Add a point of interest: </span>
-                <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH %>
-                <button class="tip-cancel" type="button">Cancel</button>
-                <button class="tip-create" type="button">Create</button>
-              </div>
-
-            <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
-        <% end %>
-      </div>
 
   <BR><BR>
 
@@ -114,20 +45,21 @@
     <% end %>
 
   </div>
-<p> TIP! You can drag your points of interest around, to place them in the ideal time of day.</p>
+  <p> TIP! You can drag your points of interest around, to place them in the ideal time of day.</p>
 
- <div>
- 
- <div class="button-panel">
+  <div>
+
+    <div class="button-panel">
  <span class="head2">I am done creating my guide, for now:
     </span>
-    <a href="/guides/<%= @guide.id %>/share" class="button">
-      View live version
-    </a>
-    <a href="/guides/<%= @guide.id %>/map" class="button">
-      View map
-    </a>
-  </div></div>
+      <a href="/guides/<%= @guide.id %>/share" class="button">
+        View live version
+      </a>
+      <a href="/guides/<%= @guide.id %>/map" class="button">
+        View map
+      </a>
+    </div>
+  </div>
 
 
   <div id="new_tip" style="display:none;">
@@ -137,9 +69,8 @@
   </div>
 
 
-
-      <div id="edit-tip-container" class="">
-      </div>
+  <div id="edit-tip-container" class="">
+  </div>
 
 </div>
 

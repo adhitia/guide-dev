@@ -1,5 +1,5 @@
 class TipsController < ApplicationController
-  before_filter :ban_ie
+  before_filter :ban_ie #, :except => [:display, :vote, :internet_explorer]
 
   def create
     @guide = authorize_guide params[:id]
@@ -85,7 +85,8 @@ class TipsController < ApplicationController
       p "errors????????????"
       p tip.errors
 
-      @errors["tips[#{id}]"] = tip.errors_as_hash
+#      @errors["tips[#{id}]"] = tip.errors_as_hash
+      @errors["tips"] = tip.errors_as_hash
 
 =begin
 
@@ -144,6 +145,13 @@ class TipsController < ApplicationController
       @guide.update_completed_percentage
       @guide.save
     end
+
+    if !@errors.empty?
+#      render :text => {:errors => @errors}.to_json
+#      return
+      raise "validation errors present: #{@errors.inspect}"
+    end
+
 
 #    render :text => {:errors => @errors, :new_tip_id => new_tip_id}.to_json
     render :partial => 'edit_tile', :locals => {:tip => tip}

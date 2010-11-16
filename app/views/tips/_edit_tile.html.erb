@@ -26,9 +26,11 @@
     <% form_for(tip, :url => "/guides/#{@guide.id}/tips/update", :html => {:method => "post", :style => "", :class => 'tip-form'}) do |form| %>
       <div class="edit-tip-root full">
       <div class="tip-name-area">
-        <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
-        <!--<button class="tip-cancel" type="button">Cancel</button>-->
+        <%= form.text_field :name, :size => 30, :class => 'tip-name', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
         <button class="tip-update" type="button">Update</button>
+
+        <!--show no validation message for this field-->
+        <span class="validation-error tip[name]_error" style="display:none;"></span>
       </div>
 
 

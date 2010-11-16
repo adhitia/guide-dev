@@ -7,12 +7,19 @@ class Calendar < ActiveRecord::Base
   accepts_nested_attributes_for :tips
   accepts_nested_attributes_for :location
 
+  has_attached_file :image, :styles => { :medium => "300x300#", :thumb => "100x100#" },
+                    :storage => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :path => "/:class/:attachment/:id/:style.:extension",
+                    :default_style => :medium
+
   validates_presence_of :location_id, :guide_type_id, :user_id
   validates_length_of :name_location, :name_target, :in => 2..20,
                       :too_long => "no more than {{count}} characters expected",
                       :too_short => "at least {{count}} characters expected"
 
 #  before_save :update_completed_percentage
+  before_save {|guide| guide.name = guide.name_location + ' for ' + guide.name_target}
 
   def rating_num
     if votes_num == 0
@@ -30,13 +37,13 @@ class Calendar < ActiveRecord::Base
     end
   end
 
-  def errors_as_hash
-    result = {}
-    result[:calendar_name_location] = errors.on(:name_location) if !errors.on(:name_location).blank?
-    result[:calendar_name_target] = errors.on(:name_target) if !errors.on(:name_target).blank?
-    result[:location_name] = errors.on(:location_id) if !errors.on(:location_id).blank?
-    result
-  end
+#  def errors_as_hash
+#    result = {}
+#    result[:calendar_name_location] = errors.on(:name_location) if !errors.on(:name_location).blank?
+#    result[:calendar_name_target] = errors.on(:name_target) if !errors.on(:name_target).blank?
+#    result[:location_name] = errors.on(:location_id) if !errors.on(:location_id).blank?
+#    result
+#  end
 
   def update_completed_percentage
     completed = 0

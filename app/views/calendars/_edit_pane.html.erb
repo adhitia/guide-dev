@@ -1,0 +1,61 @@
+<div class="guide-details">
+
+  <a class="edit-link" href="javascript:">
+    <span class="data"><%= h guide.name %> </span>
+    <span class="data"><%= h guide.location.name %></span>
+    <span class="data"><%= guide.public? ? 'Public' : 'Private' %></span>
+    <span style="float:right;font-size:small;">click to edit</span>
+    <!--<b></b> guide for <b><%= h guide.location.name %></b>. Click to edit.-->
+  </a>
+
+  <div class="edit-area">
+    <% form_for(guide, :url => update_guide_path(:id => guide), :method => 'post', :class => 'update-guide-form', :multipart => true) do |form| %>
+
+        <div class="input-row">
+          <div style="display:inline-block;">
+            <%= form.text_field :name_location, :size => 20, :class => "tip_url", :maxlength => 20, :title => "city or region" %>
+          </div>
+          FOR
+          <div style="display:inline-block;">
+            <%= form.text_field :name_target, :size => 20, :class => 'tip_url', :maxlength => 20, :title => "target group" %>
+          </div>
+        </div>
+
+        <div class="input-row">
+          Location:
+          <%= render :partial => 'location_input', :locals => {:name => guide.location.name, :code => guide.location.code} %>
+        </div>
+
+        <div class="input-row" title="Public guides can be discovered by other users through search and featured on guiderer main page.">
+          Access Type:
+          <%= form.radio_button 'public', true %>
+          <%= form.label :public_true, 'public' %>
+          <%= form.radio_button 'public', false %>
+          <%= form.label :public_false, 'private' %>
+        </div>
+
+        <div class="input-row">
+          <% if guide.image.file? %>
+              <%= image_tag guide.image.url(:thumb) %>
+              <br/>
+              Change Image:
+              <%= form.file_field :image %>
+          <% else %>
+              Add Image:
+              <%= form.file_field :image %>
+          <% end %>
+        </div>
+
+        <div class="input-row">
+          Description<br/>
+          <%= form.text_area(:description, :rows => 5, :cols => 50) %>
+        </div>
+
+        <div class="input-row">
+          <button type="submit" class="save">save changes</button>
+          <button type="reset" class="discard">discard changes</button>
+        </div>
+    <% end %>
+  </div>
+</div>
+

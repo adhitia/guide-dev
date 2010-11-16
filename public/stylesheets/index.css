@@ -536,7 +536,27 @@ textarea.invalid {
     /*border: 5px solid blue;*/
     overflow: hidden;
     display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 15px;
 }
+
+#edit_tips .guide-details .edit-link {
+    text-decoration: none;
+    background-color: #0088ee;
+    /*font-weight: normal;*/
+    font-size: large;
+    padding: 5px;
+    display: inline-block;
+    width: 990px;
+}
+#edit_tips .guide-details .edit-link span.data {
+    margin-right:100px;
+    font-weight:bold;
+    /*width: 290px;*/
+    /*text-align: center;*/
+    display: inline-block;
+}
+
 #edit_tips .guide-details .edit-area {
     display: none;
     padding: 10px;
@@ -550,6 +570,9 @@ textarea.invalid {
     float: right;
 }
 
+.location-input {
+    display: inline-block;
+}
 
 
 .local-search-container {
@@ -764,13 +787,13 @@ font-weight: bold;
 
 
 #home-page .new-guides {
-    float: right;
-    width: 355px;
+    float: left;
+    width: 936px;
 }
 
 #home-page .search-guides, #home-page .create-guide {
     float: left;
-    width: 520px;
+    width: 440px;
 }
 
 #home-page #search_location {

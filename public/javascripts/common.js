@@ -13,7 +13,8 @@ if (!window.common) {
 
         },
         error: function(event, request, options, error) {
-//            alert("error " + event.status);
+            console.log('test');
+            alert("error " + event.status);
             switch (event.status) {
 //                case 503: common.setLocation('maintenance'); break;
 //                case 404: common.setLocation('not-found'); break;
@@ -160,9 +161,23 @@ if (!window.common) {
             $('input.invalid,textarea.invalid').removeClass('invalid');
         },
 
-        validationErrors: function(errors) {
+        validationErrors: function(errors, root) {
+            if (!root) {
+                root = $(document);
+            }
             var errorsFound = false;
             if (errors != null) {
+                if (typeof errors == "string") {
+                    // when response is string, check if it's in JSON format and has errors data
+                    if (!errors.startsWith('{')) {
+                        return false;
+                    }
+                    errors = eval('(' + errors + ')').errors;
+                    if (!errors) {
+                        return false;
+                    }
+                }
+
                 var focused = false;
                 for (var key in errors) {
                     var message = errors[key];
@@ -173,7 +188,7 @@ if (!window.common) {
 
                     // highlight corresponding input field
                     var searchKey = key.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
-                    var e = $('input[name=' + searchKey + '],textarea[name=' + searchKey + ']');
+                    var e = root.find('input[name=' + searchKey + '],textarea[name=' + searchKey + ']');
                     if (!focused) {
                         e.focus();
                         focused = true;
@@ -185,10 +200,11 @@ if (!window.common) {
 
                     if (message != '') {
 //                        var label_id = key + "_error";
-                        if ($('#' + searchKey + "_error").length == 0) {
-                            $('<br/><span id="' + key + "_error" + '" class="validation-error">' + message + '</span>').insertAfter(e);
+                        var error_class = searchKey + '_error';
+                        if (root.find('span.' + error_class).length == 0) {
+                            $('<br/><span class="validation-error ' + error_class + '">' + message + '</span>').insertAfter(e);
                         } else {
-                            $('#' + searchKey + "_error").html(message);
+                            root.find('span.' + error_class).html(message);
                         }
                     }
                 }
@@ -327,6 +343,10 @@ if (!window.common) {
 
     String.prototype.endsWith = function(str) {
         return this.match(str + "$") == str;
+    };
+
+    String.prototype.blank = function() {
+        return common.empty(this);
     };
 
     $(document).ready(function() {
