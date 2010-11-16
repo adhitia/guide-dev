@@ -53,10 +53,15 @@ Rails::Initializer.run do |config|
 
 
   class ActiveRecord::Base
-    def errors_as_hash
+    # convert_periods parameter is used to convert 'guide.location.name' into '[guide][location][name]'
+    def errors_as_hash(convert_periods = true)
       result = {}
       errors.each do |attr, message|
-        result["[#{attr.gsub(/\./, '][')}]"] = message
+        if convert_periods
+          result["[#{attr.gsub(/\./, '][')}]"] = message
+        else
+          result[attr] = message
+        end
       end
       result
     end

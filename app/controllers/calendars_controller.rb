@@ -87,11 +87,17 @@ class CalendarsController < ApplicationController
     guide = read_guide
     guide.guide_type_id = 1
     guide.name = guide.name_location + ' for ' + guide.name_target
+
     if guide.invalid?
-      @errors = guide.errors_as_hash
+      @errors = guide.errors_as_hash(false)
+      if (!@errors['location_id'].nil?)
+        @errors['location_id'] = nil
+        @errors['location_name'] = 'required field' 
+      end
       render :action => :new
       return
     end
+
     guide.public = false
     guide.save
 
@@ -272,8 +278,8 @@ class CalendarsController < ApplicationController
 
   def read_guide
     Calendar.new({
-            :name_location => params[:calendar_name_location],
-            :name_target => params[:calendar_name_target],
+            :name_location => params[:name_location],
+            :name_target => params[:name_target],
             :location_id => find_or_create_location,
             :user_id => @current_user.id
     })

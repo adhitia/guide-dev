@@ -457,6 +457,7 @@ if (!window.guide) var guide = {
             },
             delay: 1000,
             focus: function(event, ui) {
+//                console.log('focus');
                 return ui.item.id != 'no_result';
             },
             change: function(event, ui) {
@@ -476,6 +477,11 @@ if (!window.guide) var guide = {
                 input_name.data('last', ui.item.label);
                 input_code.val(ui.item.id);
 //                callback(input, ui.item);
+            },
+
+            close: function(event, ui) {
+//                console.log('close');
+                input_name.val(input_name.data('last'));
             },
 
             minLength: 2

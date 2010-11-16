@@ -39,13 +39,13 @@
 <p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests, Hollywood for Movie Fans </p>
       <div>
         <div class="column">
-          <input id="calendar_name_location" class="watermark" title="city or region" name="calendar_name_location"
-                 type="text" value="<%= h params[:calendar_name_location] %>" size="20" maxlength="20">
+          <input id="calendar_name_location" class="watermark" title="city or region" name="name_location"
+                 type="text" value="<%= h params[:name_location] %>" size="20" maxlength="20">
         </div>
         FOR
         <div class="column">
-          <input id="calendar_name_target" class="watermark" title="target group" name="calendar_name_target"
-                 type="text" value="<%= h params[:calendar_name_target] %>" size="20" maxlength="20">
+          <input id="calendar_name_target" class="watermark" title="target group" name="name_target"
+                 type="text" value="<%= h params[:name_target] %>" size="20" maxlength="20">
         </div>
       </div>
 
@@ -54,9 +54,10 @@
         <h4>Use weather info for which city?</h4>
 
         <div class="input-area">
-          <input id="calendar_location_name" name="location_name" size="25" value="<%= h params[:location_name] %>" type="text">
+          <!--<input id="calendar_location_name" name="location_name" size="25" value="<%= h params[:location_name] %>" type="text">
           <span style="position:absolute;left:50%;" class="location-loading"></span>
-          <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">
+          <input id="calendar_location_code" name="location_code" value="<%= params[:location_code] %>" type="hidden" class="param_location_code">-->
+          <%= render :partial => 'location_input', :locals => {:name => params[:location_name], :code => params[:location_code]} %>
         </div>
 
         <p class="hint">If you can not find your destination, type in the closest big city</p>
@@ -78,7 +79,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // initialize autocomplete for locations
-        $('#calendar_location_name').each(function(i, e) {
+        guide.init_location_input($('#new_guide_page .location-area'));
+        /*$('#calendar_location_name').each(function(i, e) {
             guide.locationInput(e, function(input, result) {
                 if (result == null) {
                     //                    if ($('#calendar_location_code').val() == '') {
@@ -89,16 +91,25 @@
                     $('#calendar_location_code').val(result.id);
                 }
             });
-        });
+        });*/
 
 
         $('#calendar_name_location').blur(function() {
+            $.Watermark.HideAll();
             var loc = $(this).val();
-            var target = $('#calendar_location_name');
-            if (!common.empty(loc) && common.empty(target.val())) {
+            var target = $('input[name=location_name]');
+//            alert(target.length);
+            if (!loc.blank() && target.val().blank()) {
                 target.val(loc);
                 target.autocomplete('search');
+//                target.val('');
             }
+            $.Watermark.ShowAll();
+        });
+
+        $('#new_calendar_form').submit(function() {
+            var input_name = $('#new_calendar_form input[name=location_name]');
+            input_name.val(input_name.data('last'));
         });
     });
 
