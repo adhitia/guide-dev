@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'check_location', :controller => :util, :action => :check_location
   map.connect 'fetch_gmaps_data', :controller => :util, :action => :fetch_gmaps_data
+  map.connect 'checkout_callback', :controller => :util, :action => :checkout_callback
   map.connect '', :controller => :users, :action => :index
 #  map.connect 'index', :controller => :users, :action => :index
 
@@ -39,7 +40,6 @@ ActionController::Routing::Routes.draw do |map|
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
   map.guide_map 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
   map.print_guide 'guides/:id/print', :controller => :calendars, :action => :print, :conditions => { :method => :get }
-  map.checkout_callback 'checkout_callback', :controller => :calendars, :action => :checkout_callback
 #  map.change_access_type 'guides/:id'
 
 #  map.new_tip   'tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
