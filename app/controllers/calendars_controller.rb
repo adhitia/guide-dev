@@ -194,7 +194,17 @@ class CalendarsController < ApplicationController
     @guide = verify_guide params[:id]
   end
 
+  def print
+    @guide = verify_guide params[:id]
+  end
 
+  def checkout_callback
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!! google checkout callback event "
+    p params
+    puts "!!!!!!!! #{params['serial-number']}"
+
+    render :text => params['serial-number']
+  end
 
   protected
 

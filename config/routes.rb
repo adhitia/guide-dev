@@ -37,7 +37,9 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
   map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
-  map.share_guide 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
+  map.guide_map 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
+  map.print_guide 'guides/:id/print', :controller => :calendars, :action => :print, :conditions => { :method => :get }
+  map.checkout_callback 'checkout_callback', :controller => :calendars, :action => :checkout_callback
 #  map.change_access_type 'guides/:id'
 
 #  map.new_tip   'tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
