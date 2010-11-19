@@ -609,6 +609,10 @@ if (!window.tips) var tips = {
 
 
             tips.add(new_tip).find('.tip-update').click(guide.updateTip);
+            tips.add(new_tip).find('button.load-info').click(function() {
+                guide.loadTipSuggestions($(this));
+                return false;
+            });
             tips.add(new_tip).find('input.tip-name').keypress(function(e) {
                 if (e.which == 13) {
                     guide.loadTipSuggestions(this);
@@ -621,9 +625,9 @@ if (!window.tips) var tips = {
                     guides.closeTip.apply(root);
                 }
             });
-            tips.add(new_tip).find('input.tip-name').each(function() {
-                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
-            });
+//            tips.add(new_tip).find('input.tip-name').each(function() {
+//                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
+//            });
         }
 
     }

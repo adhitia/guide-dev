@@ -9,7 +9,8 @@
     <!--
     <% if !tip.url.blank? %>
         <span class="tip-url">
-            <a href='<% h tip.url %>' target='_blank'><%= h(shorten(tip.url, 25)) %></a>
+            <a href='
+        <% h tip.url %>' target='_blank'><%= h(shorten(tip.url, 25)) %></a>
         </span>
     <% end %>
     -->
@@ -23,19 +24,22 @@
 
 
 
-    <% form_for(tip, :url => "/guides/#{@guide.id}/tips/update", :html => {:method => "post", :style => "", :class => 'tip-form'}) do |form| %>
+  <% form_for(tip, :url => "/guides/#{@guide.id}/tips/update", :html => {:method => "post", :style => "", :class => 'tip-form'}) do |form| %>
       <div class="edit-tip-root full">
-      <div class="tip-name-area">
-        <%= form.text_field :name, :size => 30, :class => 'tip-name', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
+        <div class="tip-name-area">
+          <%= form.text_field :name, :size => 30, :class => 'tip-name', :title => "tip name", :maxlength => Tip::MAX_NAME_LENGTH %>
+          <!--<button class="tip-update" type="button">Update</button>-->
+          <button class="load-info" type="button">find contact and photos</button>
+
+          <!--show no validation message for this field-->
+          <span class="validation-error tip[name]_error" style="display:none;"></span>
+        </div>
+
+
+        <%= render :partial => 'tips/edit', :locals => {:tip => tip, :form => form} %>
+
         <button class="tip-update" type="button">Update</button>
-
-        <!--show no validation message for this field-->
-        <span class="validation-error tip[name]_error" style="display:none;"></span>
       </div>
-
-
-      <%= render :partial => 'tips/edit', :locals => {:tip => tip, :form => form} %>
-      </div>
-    <% end %>
+  <% end %>
 </div>
 

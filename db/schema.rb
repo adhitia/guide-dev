@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115181237) do
+ActiveRecord::Schema.define(:version => 20101119200929) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20101115181237) do
     t.boolean  "public",               :default => false
     t.integer  "guide_type_id"
     t.integer  "completed_percentage", :default => 0
-    t.string   "description",          :default => ""
+    t.text     "description"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20101115181237) do
     t.integer  "condition_id"
     t.integer  "calendar_id"
     t.string   "name"
-    t.string   "description",                     :default => ""
+    t.text     "description"
     t.string   "url",                             :default => ""
     t.integer  "view_count",                      :default => 0
     t.integer  "click_count",                     :default => 0

@@ -229,16 +229,18 @@ textarea.invalid {
 #edit_tips .edit-tip-root .tip-name-area .tip-save {
     display: none;
 }
-#edit_tips .edit-tip-root .tip-name-area .tip-create {
+#edit_tips .edit-tip-root .tip-create, #edit_tips .edit-tip-root .load-info {
     display: none;
 }
+/*
 #edit_tips .edit-tip-root.full .tip-name-area .tip-cancel {
     display: inline;
 }
 #edit_tips .edit-tip-root.full .tip-name-area .tip-save {
     display: inline;
 }
-#edit_tips .edit-tip-root.full .tip-name-area .tip-create {
+*/
+#edit_tips .edit-tip-root.full .tip-create, #edit_tips .edit-tip-root.full .load-info {
     display: inline;
 }
 #edit_tips .edit-tip-root.full .tip-name-area {
@@ -247,6 +249,15 @@ textarea.invalid {
     -webkit-border-bottom-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+#edit_tips .edit-tip-root button.tip-update, #edit_tips .edit-tip-root button.tip-create {
+    background-color:yellow;
+    float:right;
+    font-size:large;
+    height:30px;
+    width:200px;
+}
+
 #edit_tips .edit-tip-root .edit-area {
     /*height: 200px;*/
     display: none;
@@ -1377,5 +1388,5 @@ div.guide-type-panes > div {
     /*min-height: 100px;*/
     background-color: white;
     color: black;
-    z-index:40000;
+    z-index:140000;
 }

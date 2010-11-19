@@ -11,11 +11,14 @@
           <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH %>
           <!--show no validation message for this field-->
           <span class="validation-error tip[name]_error" style="display:none;"></span>
-          <button class="tip-cancel" type="button">Cancel</button>
-          <button class="tip-create" type="button">Create</button>
+
+          <!--<button class="tip-cancel" type="button">Cancel</button>-->
+          <button class="load-info" type="button">find contact and photos</button>
         </div>
 
         <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
+
+        <button class="tip-create" type="button">Create</button>
     <% end %>
   </div>
 
@@ -103,7 +106,7 @@
 
         $('#guide_active').button();
 
-        $('div.new-tip-container .tip-cancel').click(guide.closeTip);
+//        $('div.new-tip-container .tip-cancel').click(guide.closeTip);
         $('div.new-tip-container .tip-create').click(guide.createTip);
     });
 </script>

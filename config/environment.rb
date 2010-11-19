@@ -71,6 +71,16 @@ Rails::Initializer.run do |config|
   WeatherMan.partner_id = '1180784909'
   WeatherMan.license_key = '0e1b5b7c95d8cdd8'
 
+
+  GOOGLE_CHECKOUT = {:id => '149743569739798', :key => 'OEQtO2K1EtS940cpHJTJ0w'} # sandbox
+  GOOGLE_CHECKOUT[:url] = "https://sandbox.google.com/checkout/api/checkout/v2/reportsForm/Merchant/#{GOOGLE_CHECKOUT[:id]}"
+#  GOOGLE_CHECKOUT = {:id => '907231132431549', :key => 'wpDYYfQs8kC0sTzRbvdjBA'} # production
+#  GOOGLE_CHECKOUT[:url] = "https://checkout.google.com/api/checkout/v2/reportsForm/Merchant/#{GOOGLE_CHECKOUT[:id]}"
+
+#  GOOGLE_CHECKOUT = {}
+#  GOOGLE_CHECKOUT['sandbox'] = {:id => '149743569739798', :key => 'OEQtO2K1EtS940cpHJTJ0w'}
+#  GOOGLE_CHECKOUT['production'] = {:id => '907231132431549', :key => 'wpDYYfQs8kC0sTzRbvdjBA'}
+
   # maximum number of days guide can have
   DAY_LIMIT = 5
 end

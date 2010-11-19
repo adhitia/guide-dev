@@ -1,5 +1,9 @@
-
-
+<p style="overflow:hidden;">
+<% if @guide.image.file? %>
+    <%= image_tag @guide.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;"} %>
+<% end %>
+<%= h @guide.description %>
+</p>
 
 
 <%= render :partial => 'calendars/widget', :locals => {:guide => @guide, :style_id => '4'} %>
@@ -20,7 +24,7 @@
           <h3>
             <% if !tip.url.blank? %>
                 <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-                    <%= h tip.name %>
+                  <%= h tip.name %>
                 </a>
             <% else %>
                 <%= h tip.name %>
@@ -49,14 +53,14 @@
 
 <div class="button-panel">
   <a href="/guides/rio" class="button">
-More guides on Rio de Janeiro  </a>
-<a href="/users/<%= @guide.user.id %>" class="button">
+    More guides on Rio de Janeiro </a>
+  <a href="/users/<%= @guide.user.id %>" class="button">
     More by <%= @guide.user.name %>
   </a>
   <a href="/guides/<%= @guide.id %>/share" class="button">
     Embed on your site
   </a>
-<a href="http://www.guiderer.com" class="button">
+  <a href="http://www.guiderer.com" class="button">
     Create your own guide
   </a>
 </div>
