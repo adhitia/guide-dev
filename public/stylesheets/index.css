@@ -799,7 +799,8 @@ font-weight: bold;
 
 #home-page .new-guides {
     float: left;
-    width: 936px;
+    width: 944px;
+    padding-right:16px;
 }
 
 #home-page .search-guides, #home-page .create-guide {

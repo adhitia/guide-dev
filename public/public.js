@@ -382,7 +382,7 @@ if (!window._guiderer) {
         if (window.addthis == undefined) {
             load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1', init);
         }
-        load_css(server + 'public.css?_version=6');
+        load_css(server + 'public.css?_version=7');
 
     }, false);
 
