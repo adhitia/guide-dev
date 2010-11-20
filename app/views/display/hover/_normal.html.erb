@@ -55,13 +55,13 @@
 
     <div class="twits-all">
       <div class="twits-container">
-        <h4><%=h tip.name %> twits</h4>
+        <h4><%=h tip.name %> tweets</h4>
         <div class="twits" data-query="<%= h(tip.calendar.location.short_name + ' ' + tip.name) %>">
           Loading...
         </div>
       </div>
       <div class="twits-container">
-        <h4><%= tip.condition.full_name %> twits</h4>
+        <h4><%= tip.condition.full_name %> tweets</h4>
         <div class="twits" data-query="<%= h(tip.calendar.location.short_name + ' ' + tip.condition.full_name) %>">
           Loading...
         </div>

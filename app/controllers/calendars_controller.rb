@@ -98,7 +98,7 @@ class CalendarsController < ApplicationController
       return
     end
 
-    guide.public = false
+    guide.public = true
     guide.save
 
 #    @calendar = Calendar.new

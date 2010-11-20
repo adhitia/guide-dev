@@ -594,6 +594,7 @@ if (!window.tips) var tips = {
                 var overlay = $('#global-overlay').css('height', ($('body').height() + 2) + 'px').show();
                 var position_y = root.offset().top + root.height() - $('#edit_tips').offset().top;
                 var container = $('#edit-tip-container').css('top', position_y + 'px');
+                container.html('');
                 container.append(edit_form);
                 edit_form.find('div.edit-area').show();
 

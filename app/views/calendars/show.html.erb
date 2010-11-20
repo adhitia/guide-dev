@@ -52,15 +52,15 @@
 </div>
 
 <div class="button-panel">
-  <a href="/guides/rio" class="button">
-    More guides on Rio de Janeiro </a>
+  <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
+    More guides on <%= h @guide.location.name %> </a>
   <a href="/users/<%= @guide.user.id %>" class="button">
     More by <%= @guide.user.name %>
   </a>
   <a href="/guides/<%= @guide.id %>/share" class="button">
     Embed on your site
   </a>
-  <a href="http://www.guiderer.com" class="button">
+  <a href="/" class="button">
     Create your own guide
   </a>
 </div>

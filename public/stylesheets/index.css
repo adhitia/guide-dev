@@ -758,7 +758,7 @@ font-weight: bold;
 
 
 #home-page {
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 /*#home-page .new-guides, #home-page .search-guides, #home-page .create-guide {*/
@@ -1363,7 +1363,7 @@ div.guide-type-panes > div {
 }
 
 #global-overlay {
-    z-index: 25000;
+    z-index: 1000000000;
     opacity: 0.4;
     background-color: gray;
     width: 100%;
@@ -1379,7 +1379,7 @@ div.guide-type-panes > div {
     position: absolute;
     width: 100%;
     display: none;
-    z-index: 26000;
+    z-index: 1000000001;
 }
 
 .image-tooltip {
@@ -1389,5 +1389,14 @@ div.guide-type-panes > div {
     /*min-height: 100px;*/
     background-color: white;
     color: black;
-    z-index:140000;
+    z-index: 1000000001;
+}
+
+.clear-fix:after {
+    content:"";
+    clear:both;
+    display:block;
+}
+.clear-fix {
+    zoom: 1;
 }

@@ -7,8 +7,8 @@ Add those imports to the 'head' tag of your page.
 <textarea id="preview_import" rows="4" cols="120">
   <% escape do %>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<%=WEB_ROOT%>/public.js" ></script>
-    <script type="text/javascript" src="<%=WEB_ROOT%>/jquery/jquery.qtip-1.0.0-rc3.js"></script>
+    <script type="text/javascript" src="<%= WEB_ROOT %>/public.js" ></script>
+    <script type="text/javascript" src="<%= WEB_ROOT %>/jquery/jquery.qtip-1.0.0-rc3.js"></script>
   <% end %>
 </textarea>
 -->
@@ -16,25 +16,25 @@ Add those imports to the 'head' tag of your page.
 
 <P>Choose your preferred widget layout:</p>
 <div id="choose_style">
-<% @layouts.each do |layout|  %>
-    <label for="preview_type_<%=layout.id%>"><%= layout.name %></label>
-    <input type="radio" name="preview_type" id="preview_type_<%=layout.id%>" onchange="change_style(this);"/>
-<% end %>
+  <% @layouts.each do |layout| %>
+      <label for="preview_type_<%= layout.id %>"><%= layout.name %></label>
+      <input type="radio" name="preview_type" id="preview_type_<%= layout.id %>" onchange="change_style(this);"/>
+  <% end %>
 </div>
 
 <textarea id="preview_html" rows="3" cols="40"></textarea>
 
-<P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>     
+<P>Copy and paste the html code above any where in between your &lt; BODY &gt; tags in your html page.</P>
 <p><span class="head2">What your widget looks like</span></p>
-<div id="preview_guide" class="" server="<%=WEB_ROOT%>"></div>
+<div id="preview_guide" class="clear-fix" server="<%= WEB_ROOT %>"></div>
 
-<div id="bgblue" style="background-color:blue;">
-
-<div id="preview_template" class="hidden">
-  <% escape do %>
-<%= render :partial => 'widget', :locals => {:guide => @calendar, :style_id => '{style_id}'} %>
-  <% end %>
-</div></div>
+<div>
+  <div id="preview_template" class="hidden">
+    <% escape do %>
+        <%= render :partial => 'widget', :locals => {:guide => @calendar, :style_id => '{style_id}'} %>
+    <% end %>
+  </div>
+</div>
 
 
 
@@ -64,14 +64,14 @@ Add those imports to the 'head' tag of your page.
         target.attr('guide_id', calendar_id);
         target.attr('guide_style', style_id);
         target.addClass("guiderer");
-//        alert(target.length);
+        //        alert(target.length);
         if (_guiderer.render) {
             _guiderer.render(target);
         }
     };
 
-  $(document).ready(function() {
-      $('#preview_type_1').click();
-      $('#choose_style').buttonset();
-  });
+    $(document).ready(function() {
+        $('#preview_type_1').click();
+        $('#choose_style').buttonset();
+    });
 </script>
