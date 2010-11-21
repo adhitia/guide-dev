@@ -60,8 +60,7 @@ class UtilController < ApplicationController
   end
 
   def checkout_test
-#    serial_number = '517669820723894-00001-7'
-    serial_number = '314249553131269-00001-7'
+    serial_number = '724606466162622-00001-7'
     puts params
 
     url = URI.parse(GOOGLE_CHECKOUT[:url])
@@ -73,15 +72,27 @@ class UtilController < ApplicationController
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
 
-    res.set_debug_output $stderr
+#    res.set_debug_output $stderr
     result = 'test'
     res.start {|http|
       request.basic_auth GOOGLE_CHECKOUT[:id], GOOGLE_CHECKOUT[:key]
       result = http.request(request)
     }
 
-    puts "???????????????????? #{result}"
+    puts "!!!!!!! result !!!!!!! #{result.body}"
+    book_id = result.body.scan(/&shopping-cart.merchant-private-data=([^&]*)&/)[0][0]
+    puts "book_id = #{book_id}"
+
+    CommonMailer.deliver_print_order Book.find_by_id(book_id)
 
     render :text => result.body
+  end
+
+  def db_test
+    result = "start "
+    Book.all.each do |book|
+      result += " [#{book.id} : #{book.calendar.id}] "
+    end
+    render :text => result
   end
 end
