@@ -49,6 +49,7 @@ class UtilController < ApplicationController
       result = http.request(request)
     }
 
+    puts "!!!!!!! result !!!!!!! #{result.body}"
     book_id = result.body.scan(/&amp;shopping-cart.merchant-private-data=([^&]*)&amp;/)[0][0]
     puts "book_id = #{book_id}"
 
