@@ -1,5 +1,5 @@
 thoughtbot-paperclip --source gems.github.com
-oauth2
+oauth2 --version 0.0.10
 rails --version 2.3.5
 aws-s3
 exceptional
