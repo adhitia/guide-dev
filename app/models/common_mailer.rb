@@ -9,9 +9,10 @@ class CommonMailer < ActionMailer::Base
     @name = name
   end
 
-  def print_order(book)
+  def print_order(book, type)
     @book = book
     @guide = book.calendar
+    @type = type
 
     @from = @guide.user.email
     @recipients = BOOK_ORDER_EMAILS_TO

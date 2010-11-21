@@ -50,40 +50,23 @@ class UtilController < ApplicationController
     }
 
     puts "!!!!!!! result !!!!!!! #{result.body}"
-    book_id = result.body.scan(/&shopping-cart.merchant-private-data=([^&]*)&/)[0][0]
-    puts "book_id = #{book_id}"
+    book_id = fetch_parameter(result.body, 'shopping-cart.merchant-private-data')
+    type = fetch_parameter(result.body, '_type')
+    puts "book_id = #{book_id}, type = #{type}"
 
-    CommonMailer.deliver_print_order Book.find_by_id(book_id)
+    CommonMailer.deliver_print_order Book.find_by_id(book_id), type
 
-#    render :text => "<notification-acknowledgment xmlns='http://checkout.google.com/schema/2' serial-number='#{params['serial-number']}' />"
-    render :text => params['serial-number']
+    render :text => "<notification-acknowledgment xmlns='http://checkout.google.com/schema/2' serial-number='#{params['serial-number']}' />"
+#    render :text => params['serial-number']
   end
+
+
+
 
   def checkout_test
     serial_number = '724606466162622-00001-7'
     puts params
 
-    url = URI.parse(GOOGLE_CHECKOUT[:url])
-    request = Net::HTTP::Post.new(url.path, {
-            'Content-Type' => 'application/xml;charset=UTF-8',
-            'Accept' => 'application/xml;charset=UTF-8'
-    })
-    request.set_form_data({'_type' => 'notification-history-request', 'serial-number' => serial_number})
-    res = Net::HTTP.new(url.host, url.port)
-    res.use_ssl = true
-
-#    res.set_debug_output $stderr
-    result = 'test'
-    res.start {|http|
-      request.basic_auth GOOGLE_CHECKOUT[:id], GOOGLE_CHECKOUT[:key]
-      result = http.request(request)
-    }
-
-    puts "!!!!!!! result !!!!!!! #{result.body}"
-    book_id = result.body.scan(/&shopping-cart.merchant-private-data=([^&]*)&/)[0][0]
-    puts "book_id = #{book_id}"
-
-    CommonMailer.deliver_print_order Book.find_by_id(book_id)
 
     render :text => result.body
   end
@@ -94,5 +77,11 @@ class UtilController < ApplicationController
       result += " [#{book.id} : #{book.calendar.id}] "
     end
     render :text => result
+  end
+
+  private
+
+  def fetch_parameter(data, name)
+    data.scan(/(^|&)#{name}=([^&]*)($|&)/)[0][1]
   end
 end

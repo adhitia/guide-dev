@@ -1,5 +1,8 @@
 require 'rubygems'
 require 'weather_man'
+require 'prawn'
+require "open-uri"
+
 
 class CalendarsController < ApplicationController
   before_filter :ban_ie
@@ -207,9 +210,25 @@ class CalendarsController < ApplicationController
   end
 
   def print_book
-    @book = Book.find params[:id]
+    book = Book.find params[:id]
+    guide = book.calendar
 
-    render :partial => 'book', :locals => {:guide => @book.calendar}
+#    render :partial => 'book', :locals => {:guide => @book.calendar}
+    pdf = Prawn::Document.new(:page_size => [300, 100], :margin => 0)
+
+    guide.tips.each do |tip|
+      pdf.start_new_page
+      if tip.image.file?
+        p tip.image.url(:thumb)
+        pdf.image open(tip.image.url(:thumb))
+      end
+      pdf.draw_text(tip.name, :at => [120, 40])
+    end
+
+#    pdf.text("some other text")
+#    pdf.render_file('prawn.pdf')
+
+    send_data pdf.render, :filename => 'guide-book.pdf', :type => 'application/pdf', :disposition => 'inline'  
   end
 
   protected

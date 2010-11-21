@@ -1347,13 +1347,6 @@ div.guide-type-panes > div {
 }
 */
 
-.book .tip {
-    width: 300px;
-    height: 100px;
-    border: solid black 1px;
-}
-
-
 #edit_tips {
     position: relative;
 }

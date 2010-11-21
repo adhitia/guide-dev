@@ -83,4 +83,6 @@ Rails::Initializer.run do |config|
   DAY_LIMIT = 5
 
   BOOK_ORDER_EMAILS_TO = "nikita.rybak@gmail.com"
+
+  ActionMailer::Base.default_content_type = "text/html"
 end
