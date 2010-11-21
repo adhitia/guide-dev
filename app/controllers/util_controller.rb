@@ -53,7 +53,7 @@ class UtilController < ApplicationController
     book_id = result.body.scan(/&shopping-cart.merchant-private-data=([^&]*)&/)[0][0]
     puts "book_id = #{book_id}"
 
-    CommonMailer.deliver_print_order Book.find(book_id)
+    CommonMailer.deliver_print_order Book.find_by_id(book_id)
 
 #    render :text => "<notification-acknowledgment xmlns='http://checkout.google.com/schema/2' serial-number='#{params['serial-number']}' />"
     render :text => params['serial-number']
