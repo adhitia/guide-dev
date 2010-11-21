@@ -1,0 +1,8 @@
+<div class="book">
+  <% guide.tips.each do |tip| %>
+    <div class="tip">
+      <%= image_tag tip.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;width:100px;height:100px;"} %>
+      <%= h tip.name %>
+    </div>
+  <% end %>
+</div>

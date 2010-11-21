@@ -41,6 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
   map.guide_map 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
   map.print_guide 'guides/:id/print', :controller => :calendars, :action => :print, :conditions => { :method => :get }
+
+  map.connect 'books/create', :controller => :calendars, :action => :create_book, :conditions => { :method => :post }
+  map.connect 'books/:id/print', :controller => :calendars, :action => :create_book, :conditions => { :method => :post }
 #  map.change_access_type 'guides/:id'
 
 #  map.new_tip   'tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }

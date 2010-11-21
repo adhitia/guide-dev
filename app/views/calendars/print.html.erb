@@ -1,7 +1,17 @@
 Test printing here.
 
-<!--<form action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/907231132431549" -->
-<form action="https://sandbox.google.com/checkout/api/checkout/v2/checkoutForm/Merchant/149743569739798" 
+<form id="book-preview" action="/books/create" method="post">
+  <input type="hidden" name="guide_id" value="<%= @guide.id %>">
+  test guide preview
+
+  <%= render :partial => 'book', :locals => {:guide => @guide} %>
+</form>
+
+
+
+
+
+<form action="<%= GOOGLE_CHECKOUT[:form_url] %>" 
       id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
     <table cellpadding="5" cellspacing="0" width="1%">
         <tr>
@@ -22,11 +32,12 @@ Test printing here.
                 <input name="item_option_currency_2" type="hidden" value="USD"/>
             </td>
             <td align="left" width="1%">
-                <!--<input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=907231132431549&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US" type="image"/>-->
-                <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=149743569739798&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US" type="image"/>
+                <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=<%= GOOGLE_CHECKOUT[:id] %>&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US"
+                       onclick="return guide.print_book();" type="image" class="submit" />
             </td>
         </tr>
     </table>
 
-  <input type="hidden" name="shopping-cart.merchant-private-data" value="color=blue;memory=2gb">
+  <input type="hidden" name="shopping-cart.merchant-private-data" value="" class="book-id">
+  <input type="hidden" name="shopping-cart.merchant-private-data.test-data" value="some other text">
 </form>

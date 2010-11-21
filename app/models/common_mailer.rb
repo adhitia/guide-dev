@@ -8,4 +8,13 @@ class CommonMailer < ActionMailer::Base
     @message = message;
     @name = name
   end
+
+  def print_order(book)
+    @book = book
+    @guide = book.calendar
+
+    @from = @guide.user.email
+    @recipients = BOOK_ORDER_EMAILS_TO
+    @subject = "new print order"
+  end
 end

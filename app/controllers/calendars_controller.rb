@@ -198,6 +198,20 @@ class CalendarsController < ApplicationController
     @guide = verify_guide params[:id]
   end
 
+  def create_book
+    guide = verify_guide params[:guide_id]
+    book = Book.new(:calendar_id => guide.id)
+    book.save
+
+    render :text => book.id
+  end
+
+  def print_book
+    @book = Book.find params[:id]
+
+    render :partial => 'book', :locals => {:guide => @book.calendar}
+  end
+
   protected
 
 

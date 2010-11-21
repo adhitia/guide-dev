@@ -546,6 +546,24 @@ if (!window.guide) var guide = {
             root.find('.edit-link').click();
             return true;
         });
+    },
+
+    print_book: function() {
+        common.setLoadingGlobal('Saving guide...');
+
+        var checkout_form = $('#BB_BuyButtonForm');
+        checkout_form.find('input.submit').attr('disabled', 'disabled');
+//        console.log('ttt');
+        $('#book-preview').ajaxSubmit({
+            success: function(r) {
+                alert(r);
+                common.stopLoadingGlobal();
+                checkout_form.find('input.book-id').val(r);
+                checkout_form.submit();
+            }
+        });
+
+        return false;
     }
 };
 
