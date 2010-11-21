@@ -49,7 +49,7 @@ class UtilController < ApplicationController
       result = http.request(request)
     }
 
-    book_id = result.scan(/&amp;shopping-cart.merchant-private-data=([^&]*)&amp;/)[0][0]
+    book_id = result.body.scan(/&amp;shopping-cart.merchant-private-data=([^&]*)&amp;/)[0][0]
     puts "book_id = #{book_id}"
 
     CommonMailer.deliver_print_order Book.find(book_id)
