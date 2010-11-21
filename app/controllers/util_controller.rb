@@ -43,6 +43,7 @@ class UtilController < ApplicationController
     res.use_ssl = true
 
 #    res.set_debug_output $stderr
+    result = 'test'
     res.start {|http|
       request.basic_auth GOOGLE_CHECKOUT[:id], GOOGLE_CHECKOUT[:key]
       result = http.request(request)
