@@ -42,19 +42,21 @@ class UtilController < ApplicationController
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
 
-#    res.set_debug_output $stderr
-    result = 'test'
+    result = ''
     res.start {|http|
       request.basic_auth GOOGLE_CHECKOUT[:id], GOOGLE_CHECKOUT[:key]
       result = http.request(request)
     }
 
-    puts "!!!!!!! result !!!!!!! #{result.body}"
-    book_id = fetch_parameter(result.body, 'shopping-cart.merchant-private-data')
+#    puts "!!!!!!! result !!!!!!! #{result.body}"
+    book_id = fetch_parameter(result.body, 'order-summary.shopping-cart.merchant-private-data')
     type = fetch_parameter(result.body, '_type')
-    puts "book_id = #{book_id}, type = #{type}"
+    new_state = fetch_parameter(result.body, 'new-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'new-financial-order-state')
+    old_state = fetch_parameter(result.body, 'previous-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'previous-financial-order-state')
+    state = type + '  -  ' + old_state + '  -  ' + new_state
+    puts "book_id = #{book_id}, state = #{state}"
 
-    CommonMailer.deliver_print_order Book.find_by_id(book_id), type
+    CommonMailer.deliver_print_order Book.find_by_id(book_id), state 
 
     render :text => "<notification-acknowledgment xmlns='http://checkout.google.com/schema/2' serial-number='#{params['serial-number']}' />"
 #    render :text => params['serial-number']
