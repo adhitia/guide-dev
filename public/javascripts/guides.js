@@ -80,10 +80,9 @@ if (!window.guide) var guide = {
                 root.removeClass('full');
             });
         } else {
-            var edit_form = root.find('form.tip-form');
-            $('#edit-tip-container').slideUp(300, function() {
+            var edit_form = root.closest('form');
+            edit_form.slideUp(300, function() {
                 $('#global-overlay').hide();
-                edit_form.appendTo(root);
             });
         }
         common.clearValidationErrors();
@@ -138,9 +137,10 @@ if (!window.guide) var guide = {
     updateTip: function() {
         var form = $(this).closest('.tip-form');
         var edit_area = form.find('div.edit-area');
-        var tile = form.data('origin-tip');
+//        var tile = form.data('origin-tip');
+        var tile = form.closest('.edit-tip-tile');
         var overlay = $('#global-overlay');
-        var container = $('#edit-tip-container');
+//        var container = $('#edit-tip-container');
 
         var errors = {};
         if (form.find('input.tip-name').val().blank()) {
@@ -165,9 +165,9 @@ if (!window.guide) var guide = {
                 tips.init(result);
             }
         });
-        container.slideUp(300, function() {
+        form.slideUp(300, function() {
             overlay.hide();
-            form.appendTo(tile);
+//            form.appendTo(tile);
         });
     },
 

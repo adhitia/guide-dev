@@ -1180,8 +1180,8 @@ div.guide-type-panes > div {
 
 
 #tips-matrix {
-    overflow: hidden;
-    zoom: 1;
+    /*overflow: hidden;*/
+    /*zoom: 1;*/
 }
 
 #tips-matrix .day-header {
@@ -1228,7 +1228,7 @@ div.guide-type-panes > div {
 }
 
 #tips-matrix .condition-group {
-    overflow: hidden;
+    /*overflow: hidden;*/
     zoom: 1;
     min-height: 25px;
     /*display:table-row;*/
@@ -1353,6 +1353,9 @@ div.guide-type-panes > div {
 
 .edit-tip-tile .tip-form {
     display: none;
+    z-index: 1000000001;
+    width: 1000px;
+    position:absolute;
 }
 
 .ui-corner-all {

@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'check_location', :controller => :util, :action => :check_location
   map.connect 'fetch_gmaps_data', :controller => :util, :action => :fetch_gmaps_data
-  map.connect 'checkout_callback', :controller => :util, :action => :checkout_callback
+#  map.connect 'checkout_callback', :controller => :util, :action => :checkout_callback
 
   map.connect 'checkout_test', :controller => :util, :action => :checkout_test
   map.connect 'db_test', :controller => :util, :action => :db_test

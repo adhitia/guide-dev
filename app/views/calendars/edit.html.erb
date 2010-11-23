@@ -8,7 +8,7 @@
     <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
         <div class="tip-name-area">
           <span>Add a point of interest: </span>
-          <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH %>
+          <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH, :autocomplete => "off" %>
           <!--show no validation message for this field-->
           <span class="validation-error tip[name]_error" style="display:none;"></span>
 
@@ -24,7 +24,7 @@
 
   <BR><BR>
 
-  <div id="tips-matrix">
+  <div id="tips-matrix" class="clear-fix">
     <% tips = @guide.grouped_tips %>
 
     <% tips.each_index do |day| %>

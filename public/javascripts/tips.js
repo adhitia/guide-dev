@@ -593,18 +593,18 @@ if (!window.tips) var tips = {
 
                 var overlay = $('#global-overlay').css('height', ($('body').height() + 2) + 'px').show();
                 var position_y = root.offset().top + root.height() - $('#edit_tips').offset().top;
-                var container = $('#edit-tip-container').css('top', position_y + 'px');
-                container.html('');
-                container.append(edit_form);
+//                var container = $('#edit-tip-container').css('top', position_y + 'px');
+//                container.html('');
+//                container.append(edit_form);
                 edit_form.find('div.edit-area').show();
 
                 edit_form.data('origin-tip', root);
 
-                container.slideDown(500, function() {
+                edit_form.slideDown(500, function() {
                     guides.loadTipSuggestions(edit_form.find('div.edit-tip-root'));
                 });
                 overlay.click(function() {
-                    guides.closeTip.apply(root);
+                    guides.closeTip.apply(edit_form.find('div.edit-tip-root'));
                 });
             });
 
@@ -623,7 +623,7 @@ if (!window.tips) var tips = {
 //            tips.add(new_tip).find('form').keyup(function(e) {
             tips.add(new_tip).find('form').keyup(function(e) {
                 if (e.which == 27) {
-                    guides.closeTip.apply(root);
+                    guides.closeTip.apply($(this).find('div.edit-tip-root'));
                 }
             });
 //            tips.add(new_tip).find('input.tip-name').each(function() {

@@ -64,9 +64,32 @@ class UtilController < ApplicationController
 
 
   def checkout_test
-    serial_number = '724606466162622-00001-7'
+    serial_number = '624804594557278-00005-1'
     puts params
 
+    url = URI.parse(GOOGLE_CHECKOUT[:url])
+    request = Net::HTTP::Post.new(url.path, {
+            'Content-Type' => 'application/xml;charset=UTF-8',
+            'Accept' => 'application/xml;charset=UTF-8'
+    })
+    request.set_form_data({'_type' => 'notification-history-request', 'serial-number' => serial_number})
+    res = Net::HTTP.new(url.host, url.port)
+    res.use_ssl = true
+
+#    res.set_debug_output $stderr
+    result = 'test'
+    res.start {|http|
+      request.basic_auth GOOGLE_CHECKOUT[:id], GOOGLE_CHECKOUT[:key]
+      result = http.request(request)
+    }
+
+    puts "!!!!!!! result !!!!!!! #{result.body}"
+    book_id = fetch_parameter(result.body, 'shopping-cart.merchant-private-data')
+    type = fetch_parameter(result.body, '_type')
+    puts "book_id = #{book_id}, type = #{type}"
+
+    CommonMailer.deliver_print_order Book.find_by_id(book_id), type
+    
 
     render :text => result.body
   end
