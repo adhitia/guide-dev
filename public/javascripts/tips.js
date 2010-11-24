@@ -550,6 +550,7 @@ if (!window.tips) var tips = {
             var condition_groups = root.hasClass('condition-group') ? root : $(root).find('.condition-group');
             condition_groups.sortable({
                 placeholder: 'edit-tip-tile edit-tip-tile-placeholder',
+                cancel: 'form.tip-form',
                 forceHelperSize: true,
                 forcePlaceholderSize: true,
                 connectWith: '.condition-group',
@@ -624,6 +625,25 @@ if (!window.tips) var tips = {
             tips.add(new_tip).find('form').keyup(function(e) {
                 if (e.which == 27) {
                     guides.closeTip.apply($(this).find('div.edit-tip-root'));
+                }
+            });
+            tips.add(new_tip).find('.image-selection-area .file-upload > input').change(function() {
+                $(this).parent().find('.file-name').html($(this).val());
+                var google_images = $(this).closest('.image-selection-area').find('div.google-suggestions div.content');
+                google_images.find('div').removeClass('selected');
+                google_images.find('.tip_image_url').val('');
+            });
+            tips.add(new_tip).find('.image-selection-area .file-upload').hide();
+            tips.add(new_tip).find('.image-selection-area .current-image').hover(function() {
+                var e = $(this).find('.file-upload');
+                if (e.find('input').val().blank()) {
+                    e.fadeIn();
+                }
+            },
+            function() {
+                var e = $(this).find('.file-upload');
+                if (e.find('input').val().blank()) {
+                    e.fadeOut();
                 }
             });
 //            tips.add(new_tip).find('input.tip-name').each(function() {

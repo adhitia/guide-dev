@@ -279,7 +279,7 @@ if (!window.guide) var guide = {
         ls.execute(name);
 
         var is = new google.search.ImageSearch();
-        is.setResultSetSize(7);
+        is.setResultSetSize(8);
         is.setSearchCompleteCallback(this, guide.processImageSearchResults, [is, root]);
         is.execute(name + ' ' + city);
     },
@@ -421,6 +421,10 @@ if (!window.guide) var guide = {
             img.parent().addClass('selected');
             root.find('.tip_image_url').val(url);
         }
+        var upload = root.closest('.image-selection-area').find('.current-image .file-upload');
+        upload.find('.file-name').html('');
+        upload.find('input').val('');
+        upload.fadeOut();
     },
 
     init_location_input: function(root) {
