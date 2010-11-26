@@ -214,7 +214,7 @@ textarea.invalid {
     /*float: left;*/
     /*width: 400px;*/
     position: relative;
-    z-index:100000;
+    z-index:1000;
 }
 #edit_tips .edit-tip-root .tip-name-area > span {
     /*width:40%;*/

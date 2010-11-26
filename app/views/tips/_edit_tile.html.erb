@@ -6,15 +6,6 @@
     <%= image_tag tip.image.url(:thumb), {:class => 'tip-icon', :align=>"left"} %>
     <%= h tip.name %>
 
-    <!--
-    <% if !tip.url.blank? %>
-        <span class="tip-url">
-            <a href='
-        <% h tip.url %>' target='_blank'><%= h(shorten(tip.url, 25)) %></a>
-        </span>
-    <% end %>
-    -->
-
     <a class="delete-tip">x</a>
   </div>
 

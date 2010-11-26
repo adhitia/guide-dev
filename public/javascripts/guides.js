@@ -128,10 +128,25 @@ if (!window.guide) var guide = {
                 guide.saveMatrix();
 
                 $.Watermark.HideAll();
-//                root.find('input.tip-name').val('');
                 root.find('input[type=text]').val('');
                 root.find('textarea').val('');
                 $.Watermark.ShowAll();
+
+                // show tooltip to suggest that tip is draggable
+//                if ($('#tips-matrix div.edit-tip-tile').length <= 2) {
+                    setTimeout(function() {
+                        response.qtip({
+                            content: 'Try dragging this tip around to change its location.',
+                            show: { ready: true },
+                            hide: { when: { event: 'click' } }
+                        });
+                        response.qtip("show");
+                        setTimeout(function() {
+                            response.qtip("hide");
+                            response.qtip("disable");
+                        }, 5000);
+                    }, 600);
+//                }
             }
         });
     },
