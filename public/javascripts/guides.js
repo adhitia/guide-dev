@@ -128,7 +128,9 @@ if (!window.guide) var guide = {
                 guide.saveMatrix();
 
                 $.Watermark.HideAll();
-                root.find('input.tip-name').val('');
+//                root.find('input.tip-name').val('');
+                root.find('input[type=text]').val('');
+                root.find('textarea').val('');
                 $.Watermark.ShowAll();
             }
         });
@@ -286,6 +288,8 @@ if (!window.guide) var guide = {
 
     processLocalSearchResults: function(searcher, root) {
         var container = root.find('div.autosuggestions');
+        var name = $.trim(root.find('input.tip-name').val());
+
         common.stopLoading(container);
         container.html('');
         if (searcher.results && searcher.results.length > 0) {
@@ -312,13 +316,8 @@ if (!window.guide) var guide = {
                 a.data('local_result_lat', result.lat);
                 a.data('local_result_lng', result.lng);
             }
-//            for (x in searcher.results[0]) {
-//                console.log(x + ' :  ' + searcher.results[0][x]);
-//            }
-//            console.log('html :  ' + $(searcher.results[0].html).html());
-//            $('#map-test').append(searcher.results[0].html);
         } else {
-            container.append('no results found');
+            container.append('No results found. <a target="_blank" href="http://www.google.com/search?q=' + name + '">Try searching Google</a>');
         }
     },
 
@@ -406,7 +405,7 @@ if (!window.guide) var guide = {
                 container.append(element);
             }
         } else {
-            container.html('No results found, check spelling.');
+//            container.html('No results found, check spelling.');
         }
         common.imageHelper(container);
     },
