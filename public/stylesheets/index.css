@@ -396,17 +396,19 @@ textarea.invalid {
     opacity: 1;
     border: solid 5px green;
 }
-/*#edit_tips .edit-tip-root .image-selection-area .google-suggestions div.full-image:before {*/
-    /*content: 'selected';*/
-    /*position: relative;*/
-    /*z-index: 1000000010;*/
-    /*left: 0;*/
-    /*top: 20px;*/
-    /*float: left;*/
-    /*display: inline;*/
-    /*text-align: center;*/
-    /*vertical-align: middle;*/
-/*}*/
+#edit_tips .edit-tip-root .image-selection-area .google-suggestions div.full-image.selected:after {
+    content: 'selected';
+    position: relative;
+    left: 0;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    height: 0;
+    color:yellow;
+    font-size:x-large;
+    font-weight:bold;
+    top: -30px;
+}
 #edit_tips .edit-tip-root .image-selection-area .google-suggestions .google_image {
     max-height: 100px;
     max-width: 100px;

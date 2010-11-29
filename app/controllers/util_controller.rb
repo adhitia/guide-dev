@@ -58,7 +58,6 @@ class UtilController < ApplicationController
 
     CommonMailer.deliver_print_order Book.find_by_id(book_id), state 
 
-#    render :text => "<notification-acknowledgment xmlns='http://checkout.google.com/schema/2' serial-number='#{params['serial-number']}' />"
     render :text => params['serial-number']
   end
 
