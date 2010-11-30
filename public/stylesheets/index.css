@@ -366,8 +366,8 @@ textarea.invalid {
     top: -30px;
 }
 #edit_tips .edit-tip-root .image-selection-area .google-suggestions .google_image {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 95px;
+    max-width: 95px;
 }
 
 
@@ -1070,7 +1070,7 @@ div.guide-type-panes > div {
 .google-suggestions .scrollable {
 	position: relative;
 	overflow: hidden;
-	height: 115px;
+	height: 110px;
     width: 830px;
     float: left;
 }

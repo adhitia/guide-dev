@@ -133,7 +133,7 @@ if (!window.guide) var guide = {
                 $.Watermark.ShowAll();
 
                 // show tooltip to suggest that tip is draggable
-//                if ($('#tips-matrix div.edit-tip-tile').length <= 2) {
+                if ($('#tips-matrix div.edit-tip-tile').length <= 2) {
                     setTimeout(function() {
                         response.qtip({
                             content: 'Try dragging this tip around to change its location.',
@@ -146,7 +146,7 @@ if (!window.guide) var guide = {
                             response.qtip("disable");
                         }, 5000);
                     }, 600);
-//                }
+                }
             }
         });
     },
