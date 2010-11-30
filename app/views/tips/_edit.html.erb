@@ -34,7 +34,7 @@
       <span class="label">current image</span>
 
       <% if tip.image.file? %>
-          <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url %> <!--, :width => 80, :height => 80-->
+          <%= image_tag tip.image.url(:thumb), :class => "full-image", :full_url => tip.image.url %>
       <% else %>
           <div style="text-align:center;margin-top:20px;"> no image </div>
       <% end %>
@@ -45,12 +45,10 @@
           <span class="file-name"></span>
         </span>
         <%= form.file_field :image, :size => 5 %>
+        <!--, :onchange => "alert('!');"-->
       </label>
 
     </div>
-    <!--<div class="upload-image">
-      <span class="label">upload image</span>
-    </div>-->
     <div class="google-suggestions">
       <span class="label">google suggestions</span>
 

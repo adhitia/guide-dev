@@ -627,13 +627,20 @@ if (!window.tips) var tips = {
                     guides.closeTip.apply($(this).find('div.edit-tip-root'));
                 }
             });
+
+
             tips.add(new_tip).find('.image-selection-area .file-upload > input').change(function() {
-                $(this).parent().find('.file-name').html($(this).val());
+                var value = $(this).val();
+                if (value.indexOf('\\') >= 0) {
+                    value = value.substring(value.lastIndexOf('\\') + 1, value.length);
+                }
+//                alert('test change ' + value + ' ?');
+                $(this).parent().find('.file-name').html(value);
                 var google_images = $(this).closest('.image-selection-area').find('div.google-suggestions div.content');
                 google_images.find('div').removeClass('selected');
                 google_images.find('.tip_image_url').val('');
             });
-            tips.add(new_tip).find('.image-selection-area .file-upload').hide();
+//            console.log('4');
             tips.add(new_tip).find('.image-selection-area .current-image').hover(function() {
                 var e = $(this).find('.file-upload');
                 if (e.find('input').val().blank()) {
@@ -646,6 +653,7 @@ if (!window.tips) var tips = {
                     e.fadeOut();
                 }
             });
+            tips.add(new_tip).find('.image-selection-area .file-upload').hide();
 //            tips.add(new_tip).find('input.tip-name').each(function() {
 //                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
 //            });

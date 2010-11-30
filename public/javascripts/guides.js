@@ -409,7 +409,7 @@ if (!window.guide) var guide = {
         common.stopLoading(container);
         if (searcher.results && searcher.results.length > 0) {
             var cursor = searcher.cursor;
-            console.log(cursor.currentPageIndex + '   ' + cursor.pages.length);
+//            console.log(cursor.currentPageIndex + '   ' + cursor.pages.length);
 
             if (cursor.currentPageIndex == 0) {
                 container.html('');
@@ -430,7 +430,6 @@ if (!window.guide) var guide = {
 
                 scrollable.scrollable({
                     onSeek: function(event, index) {
-//                        console.log('onSeek ' + index);
                         var page = $(this.getItems()[index]);
                         if (page.find('div').length == 0) {
                             common.setLoading(container, 'Loading more images...', container.closest('div.edit-area'));
