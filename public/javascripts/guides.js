@@ -293,11 +293,13 @@ if (!window.guide) var guide = {
         ls.setCenterPoint(city);
         ls.setResultSetSize(8);
         ls.setSearchCompleteCallback(root, guide.processLocalSearchResults, [ls, root]);
+        ls.setNoHtmlGeneration();
         ls.execute(name);
 
         var is = new google.search.ImageSearch();
         is.setResultSetSize(8);
         is.setSearchCompleteCallback(this, guide.processImageSearchResults, [is, root]);
+        ls.setNoHtmlGeneration();
         is.execute(name + ' ' + city);
     },
 
@@ -405,24 +407,69 @@ if (!window.guide) var guide = {
     processImageSearchResults: function(searcher, root) {
         var container = $(root).find('div.google-suggestions > div.content');
         common.stopLoading(container);
-        container.html('');
         if (searcher.results && searcher.results.length > 0) {
-            container.append('<input type="hidden" class="tip_image_url" name="tip[image_url]">');
+            var cursor = searcher.cursor;
+            console.log(cursor.currentPageIndex + '   ' + cursor.pages.length);
 
-            var n = searcher.results.length;
-            for (var i = 0; i < n; ++i) {
-                var result = searcher.results[i];
-                var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl);
-                img.bind('click', {url: result.url}, function(event) {
-                    guide.selectGoogleImage($(this), event.data.url);
+            if (cursor.currentPageIndex == 0) {
+                container.html('');
+
+                container.append('<input type="hidden" class="tip_image_url" name="tip[image_url]">');
+                var scrollable = $('<div></div>').addClass('scrollable');
+                var items = $('<div></div>').addClass('items');
+
+                var page = $('<div></div>');
+                items.append(page);
+                guide.renderGoogleImages(page, searcher);
+                items.append('<div></div>');
+
+                scrollable.append(items);
+                container.append('<a class="prev left browse"></a>');
+                container.append(scrollable);
+                container.append('<a class="next right browse"></a>');
+
+                scrollable.scrollable({
+                    onSeek: function(event, index) {
+//                        console.log('onSeek ' + index);
+                        var page = $(this.getItems()[index]);
+                        if (page.find('div').length == 0) {
+                            common.setLoading(container, 'Loading more images...', container.closest('div.edit-area'));
+                            searcher.gotoPage(searcher.cursor.currentPageIndex + 1);
+                        }
+                    }
                 });
-                var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
-                container.append(element);
+            } else {
+                var page = root.find('.scrollable .items > div:last');
+                guide.renderGoogleImages(page, searcher);
+                if (cursor.currentPageIndex < cursor.pages.length - 1) {
+                    var api = page.closest('.scrollable').data('scrollable');
+                    api.addItem($('<div></div>'));
+
+                    // fix scrollable bug, de-disable button manually
+                    api.getNaviButtons().filter('.right').removeClass('disabled');
+                }
             }
         } else {
+            container.html('');
 //            container.html('No results found, check spelling.');
         }
         common.imageHelper(container);
+    },
+
+    renderGoogleImages: function(page, searcher) {
+        var n = searcher.results.length;
+        for (var i = 0; i < n; ++i) {
+            var result = searcher.results[i];
+            var img = $('<img/>').addClass('google_image').attr('src', result.tbUrl);
+            img.bind('click', {url: result.url}, function(event) {
+                guide.selectGoogleImage($(this), event.data.url);
+            });
+            var element = $('<div></div>').addClass('full-image').attr('full_url', result.url).append(img);
+            page.append(element);
+        }
+//        if (searcher.cursor.currentPageIndex < searcher.cursor.pages.length - 1) {
+//            page.closest('.scrollable').data('scrollable').addItem($('<div></div>'));
+//        }
     },
 
     selectGoogleImage: function(img, url) {
