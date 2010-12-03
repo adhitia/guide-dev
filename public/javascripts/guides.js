@@ -612,21 +612,41 @@ if (!window.guide) var guide = {
         });
     },
 
-    print_book: function() {
+    order_book: function() {
+        guide.save_book(function() {
+            $('#BB_BuyButtonForm').submit();
+        });
+        return false;
+    },
+
+    preview_book: function() {
+        guide.save_book(function() {
+            var id = $('#BB_BuyButtonForm .book-id').val();
+            window.location = '/books/' + id + '/print';
+        });
+        return false;
+    },
+
+    save_book: function(callback) {
         common.setLoadingGlobal('Saving guide...');
 
         var checkout_form = $('#BB_BuyButtonForm');
         checkout_form.find('input.submit').attr('disabled', 'disabled');
-//        console.log('ttt');
         $('#book-preview').ajaxSubmit({
             success: function(r) {
                 common.stopLoadingGlobal();
-                checkout_form.find('input.book-id').val(r);
-                checkout_form.submit();
+                checkout_form.find('input.submit').removeAttr('disabled');
+                callback(r);
             }
         });
 
-        return false;
+    },
+
+    init_book_preview: function() {
+        console.log('init');
+        $('#book-preview .tip .image img').draggable({
+            containment: 'parent'
+        });
     }
 };
 
@@ -636,4 +656,7 @@ window.guides = window.guide;
 
 $(document).ready(function() {
     guide.init_edit_area($('div.guide-details'));
+    if ($('#book-preview').length > 0) {
+        guide.init_book_preview();
+    }
 });

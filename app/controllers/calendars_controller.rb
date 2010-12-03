@@ -199,37 +199,13 @@ class CalendarsController < ApplicationController
 
   def print
     @guide = verify_guide params[:id]
-  end
-
-  def create_book
-    guide = verify_guide params[:guide_id]
-    book = Book.new(:calendar_id => guide.id)
-    book.save
-
-    render :text => book.id
-  end
-
-  def print_book
-    book = Book.find params[:id]
-    guide = book.calendar
-
-#    render :partial => 'book', :locals => {:guide => @book.calendar}
-    pdf = Prawn::Document.new(:page_size => [300, 100], :margin => 0)
-
-    guide.tips.each do |tip|
-      pdf.start_new_page
-      if tip.image.file?
-        p tip.image.url(:thumb)
-        pdf.image open(tip.image.url(:thumb))
-      end
-      pdf.draw_text(tip.name, :at => [120, 40])
+    @book = Book.find_by_calendar_id @guide.id, :order => 'created_at DESC', :limit => 1
+    if @book.nil?
+      @book = Book.new(:calendar_id => @guide.id)
+      @book.save
     end
-
-#    pdf.text("some other text")
-#    pdf.render_file('prawn.pdf')
-
-    send_data pdf.render, :filename => 'guide-book.pdf', :type => 'application/pdf', :disposition => 'inline'  
   end
+
 
   protected
 

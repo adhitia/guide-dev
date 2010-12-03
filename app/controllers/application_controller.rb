@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
-  def authorize_guide(guide_id)
+  def authorize_guide(guide_id = params[:id])
     authenticate
 
     guide = verify_guide guide_id
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
     guide
   end
 
-  def authorize_user(user_id)
+  def authorize_user(user_id = params[:id])
     authenticate
 
     user = verify_user user_id
@@ -58,30 +58,38 @@ class ApplicationController < ActionController::Base
     user
   end
 
+  def authorize_book(id = params[:id])
+    authenticate
+    book = verify_book id
+    raise AuthorizationError.new('This operation can be performed by guide owner only.') if book.calendar.user_id != @current_user.id
+    book
+  end
+
   # check that guide is present
   def verify_guide id
-    result = Calendar.find_by_id(id)
-    raise ResourceNotFoundError.new("Guide with id \"#{id}\" can't be found") if result.nil?
-    result
+    verify_resource id, Calendar, 'Guide'
   end
 
   # check that tip is present
   def verify_tip id
-    result = Tip.find_by_id(id)
-    raise ResourceNotFoundError.new("Tip with id \"#{id}\" can't be found") if result.nil?
-    result
+    verify_resource id, Tip
   end
 
   # check that user is present
   def verify_user id
-    result = User.find_by_id(id)
-    raise ResourceNotFoundError.new("User with id \"#{id}\" can't be found") if result.nil?
-    result
+    verify_resource id, User
   end
 
-#  def empty?(s)
-#    return s == nil || s.strip.empty?;
-#  end
+  def verify_book id
+    verify_resource id, Book
+  end
+
+  def verify_resource id, type, name = nil
+    name = type.to_s if name.nil?
+    result = type.find_by_id(id)
+    raise ResourceNotFoundError.new("#{name} with id \"#{id}\" can't be found") if result.nil?
+    result
+  end
 
   # request.xhr? isn't good enough, because we have iframes with images submitted in background
   # They all have 'X-Requested-With' parameter set 

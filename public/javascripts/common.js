@@ -13,8 +13,8 @@ if (!window.common) {
 
         },
         error: function(event, request, options, error) {
-            console.log('test');
-            alert("error " + event.status);
+            console.log('error ' + event.status);
+//            alert("error " + event.status);
             switch (event.status) {
 //                case 503: common.setLocation('maintenance'); break;
 //                case 404: common.setLocation('not-found'); break;

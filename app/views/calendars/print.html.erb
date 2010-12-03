@@ -1,42 +1,76 @@
 Test printing here.
 
-<form id="book-preview" action="/books/create" method="post">
-  <input type="hidden" name="guide_id" value="<%= @guide.id %>">
-  test guide preview
+<form id="book-preview" action="/books/<%= @book.id %>/update" method="post">
+  <p>Adjust presentation of your book and then
+  <a href="javascript:" onclick="guide.preview_book();">click here to preview pdf</a>.</p>
 
-  <%= render :partial => 'book', :locals => {:guide => @guide} %>
+  <p>Drag images to adjust cropping.</p>
+
+
+  <!--<link href="/css/book.css" media="screen" rel="stylesheet" type="text/css"/>-->
+  <div class="book">
+    <% @guide.tips.each do |tip| %>
+        <div class="tip">
+          <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>">
+            <% if tip.image.file? %>
+                <% window_width = 400 %>
+                <% window_height = 200 %>
+                <% scroll_x = tip.image_height * Book::BOOK_PROPORTION < tip.image_width %>
+                <% if scroll_x %>
+                    <% full_width = window_height * 1.0 / tip.image_height * tip.image_width %>
+                    <div class="container" style="left:<%= window_width - full_width %>px;width:<%= 2 * full_width - window_width %>px;">
+                        <%= image_tag tip.image.url(:original), {:style=> "height:200px;left:#{full_width - window_width}px;"} %>
+                    </div>
+                <% else %>
+                    <% full_height = window_width * 1.0 / tip.image_width * tip.image_height %>
+                    <div class="container" style="top:<%= window_height - full_height %>px;height:<%= 2 * full_height - window_height %>px;">
+                        <%= image_tag tip.image.url(:original), {:style=> "width:400px;top:#{full_height - window_height}px;"} %>
+                    </div>
+                <% end %>
+            <% else %>
+                No image
+            <% end %>
+          </div>
+
+          <div class="text">
+            <%= h tip.name %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <!--<= render :partial => 'book', :locals => {:guide => @guide} %>-->
 </form>
 
 
 
 
-
-<form action="<%= GOOGLE_CHECKOUT[:form_url] %>" 
+<form action="<%= GOOGLE_CHECKOUT[:form_url] %>"
       id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
-    <table cellpadding="5" cellspacing="0" width="1%">
-        <tr>
-            <td align="right" width="1%">
-                <select name="item_selection_1">
-                    <option value="1">$300.00 - Printed Guide, 200 items</option>
-                    <option value="2">$900.00 - Printed Guide, 1000 items</option>
-                </select>
-                <input name="item_option_name_1" type="hidden" value="Printed Guide, 200 items"/>
-                <input name="item_option_price_1" type="hidden" value="300.0"/>
-                <input name="item_option_description_1" type="hidden" value=""/>
-                <input name="item_option_quantity_1" type="hidden" value="1"/>
-                <input name="item_option_currency_1" type="hidden" value="USD"/>
-                <input name="item_option_name_2" type="hidden" value="Printed Guide, 1000 items"/>
-                <input name="item_option_price_2" type="hidden" value="900.0"/>
-                <input name="item_option_description_2" type="hidden" value=""/>
-                <input name="item_option_quantity_2" type="hidden" value="1"/>
-                <input name="item_option_currency_2" type="hidden" value="USD"/>
-            </td>
-            <td align="left" width="1%">
-                <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=<%= GOOGLE_CHECKOUT[:id] %>&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US"
-                       onclick="return guide.print_book();" type="image" class="submit" />
-            </td>
-        </tr>
-    </table>
+  <table cellpadding="5" cellspacing="0" width="1%">
+    <tr>
+      <td align="right" width="1%">
+        <select name="item_selection_1">
+          <option value="1">$300.00 - Printed Guide, 200 items</option>
+          <option value="2">$900.00 - Printed Guide, 1000 items</option>
+        </select>
+        <input name="item_option_name_1" type="hidden" value="Printed Guide, 200 items"/>
+        <input name="item_option_price_1" type="hidden" value="300.0"/>
+        <input name="item_option_description_1" type="hidden" value=""/>
+        <input name="item_option_quantity_1" type="hidden" value="1"/>
+        <input name="item_option_currency_1" type="hidden" value="USD"/>
+        <input name="item_option_name_2" type="hidden" value="Printed Guide, 1000 items"/>
+        <input name="item_option_price_2" type="hidden" value="900.0"/>
+        <input name="item_option_description_2" type="hidden" value=""/>
+        <input name="item_option_quantity_2" type="hidden" value="1"/>
+        <input name="item_option_currency_2" type="hidden" value="USD"/>
+      </td>
+      <td align="left" width="1%">
+        <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=<%= GOOGLE_CHECKOUT[:id] %>&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US"
+               onclick="return guide.order_book();" type="image" class="submit"/>
+      </td>
+    </tr>
+  </table>
 
-  <input type="hidden" name="shopping-cart.merchant-private-data" value="" class="book-id">
+  <input type="hidden" name="shopping-cart.merchant-private-data" value="<%= @book.id %>" class="book-id">
 </form>

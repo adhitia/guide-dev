@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101121021651) do
+ActiveRecord::Schema.define(:version => 20101203160503) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -138,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20101121021651) do
     t.integer  "day",                             :default => 0
     t.integer  "order",                           :default => 0
     t.integer  "rank",                            :default => 0
+    t.integer  "image_width"
+    t.integer  "image_height"
   end
 
   create_table "users", :force => true do |t|

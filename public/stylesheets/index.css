@@ -1333,6 +1333,27 @@ div.guide-type-panes > div {
     left: 0;
 }
 
+#book-preview .tip {
+    width: 800px;
+    height: 200px;
+    border: solid black 1px;
+}
+#book-preview .tip .image {
+    width: 400px;
+    overflow: hidden;
+    height: 200px;
+    display: inline-block;
+}
+#book-preview .tip .image .container {
+    position: relative;
+    cursor: pointer;
+}
+#book-preview .tip .text {
+    width: 390px;
+    float: right;
+}
+
+
 .ui-corner-all {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;

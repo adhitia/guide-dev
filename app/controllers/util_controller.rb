@@ -15,7 +15,7 @@ class UtilController < ApplicationController
       return
     end
 
-    result = [];
+    result = []
     WeatherMan.search(q).each do |l|
       result.push({:label => l.name, :id => l.code})
     end
