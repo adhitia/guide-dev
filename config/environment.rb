@@ -20,6 +20,7 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
+#  config.gem 'rmagick'
   config.gem 'xml-simple'
   config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'xml-simple'

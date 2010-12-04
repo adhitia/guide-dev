@@ -7,26 +7,31 @@ Test printing here.
   <p>Drag images to adjust cropping.</p>
 
 
-  <!--<link href="/css/book.css" media="screen" rel="stylesheet" type="text/css"/>-->
   <div class="book">
     <% @guide.tips.each do |tip| %>
         <div class="tip">
           <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>">
             <% if tip.image.file? %>
+                <% offset_x = @book.image_data[tip.id.to_s][:left].to_i %>
+                <% offset_y = @book.image_data[tip.id.to_s][:top].to_i %>
                 <% window_width = 400 %>
                 <% window_height = 200 %>
                 <% scroll_x = tip.image_height * Book::BOOK_PROPORTION < tip.image_width %>
                 <% if scroll_x %>
-                    <% full_width = window_height * 1.0 / tip.image_height * tip.image_width %>
-                    <div class="container" style="left:<%= window_width - full_width %>px;width:<%= 2 * full_width - window_width %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "height:200px;left:#{full_width - window_width}px;"} %>
+                    <% k = window_height * 1.0 / tip.image_height %>
+                    <% full_width = k * tip.image_width %>
+                    <div class="container scroll-x" style="left:<%= window_width - full_width %>px;width:<%= 2 * full_width - window_width %>px;">
+                        <%= image_tag tip.image.url(:original), {:style=> "height:200px;left:#{full_width - window_width - offset_x * k}px;"} %>
                     </div>
                 <% else %>
-                    <% full_height = window_width * 1.0 / tip.image_width * tip.image_height %>
-                    <div class="container" style="top:<%= window_height - full_height %>px;height:<%= 2 * full_height - window_height %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "width:400px;top:#{full_height - window_height}px;"} %>
+                    <% k = window_width * 1.0 / tip.image_width %>
+                    <% full_height = k * tip.image_height %>
+                    <div class="container scroll-y" style="top:<%= window_height - full_height %>px;height:<%= 2 * full_height - window_height %>px;">
+                        <%= image_tag tip.image.url(:original), {:style=> "width:400px;top:#{full_height - window_height - offset_y * k}px;"} %>
                     </div>
                 <% end %>
+                <input type="hidden" name="image_data[<%= tip.id %>]top" value="0" class="offset-top">
+                <input type="hidden" name="image_data[<%= tip.id %>]left" value="0" class="offset-left">
             <% else %>
                 No image
             <% end %>

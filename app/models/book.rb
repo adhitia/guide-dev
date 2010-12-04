@@ -4,4 +4,6 @@ class Book < ActiveRecord::Base
   BOOK_PROPORTION = BOOK_WIDTH * 1.0 / BOOK_HEIGHT
 
   belongs_to :calendar
+
+  serialize :image_data, ::HashWithIndifferentAccess
 end

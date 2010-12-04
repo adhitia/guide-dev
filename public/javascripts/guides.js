@@ -645,7 +645,28 @@ if (!window.guide) var guide = {
     init_book_preview: function() {
         console.log('init');
         $('#book-preview .tip .image img').draggable({
-            containment: 'parent'
+            containment: 'parent',
+            scroll: false,
+            stop: function(event, ui) {
+//                console.log(ui.position);
+                var img = $(this);
+                var container = img.parent();
+                var window = container.parent();
+
+                var offset_x = 0;
+                var offset_y = 0;
+                if (container.hasClass('scroll-x')) {
+                    offset_x = (container.width() - window.width())/2 - ui.position.left;
+                } else {
+                    offset_y = (container.height() - window.height())/2 - ui.position.top;
+                }
+                var k = window.data('original-width') / img.width();
+                offset_x *= k;
+                offset_y *= k;
+                window.find('input.offset-top').val(Math.round(offset_y));
+                window.find('input.offset-left').val(Math.round(offset_x));
+//                console.log(offset_x + '   ' + offset_y);
+            }
         });
     }
 };

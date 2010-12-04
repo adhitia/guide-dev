@@ -4,4 +4,3 @@ rails --version 2.3.5
 aws-s3
 exceptional
 prawn --source gems.github.com --version 0.11.1.pre 
-
