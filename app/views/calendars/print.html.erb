@@ -21,13 +21,13 @@ Test printing here.
                     <% k = window_height * 1.0 / tip.image_height %>
                     <% full_width = k * tip.image_width %>
                     <div class="container scroll-x" style="left:<%= window_width - full_width %>px;width:<%= 2 * full_width - window_width %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "height:200px;left:#{full_width - window_width - offset_x * k}px;"} %>
+                        <%= image_tag tip.image.url(:original), {:style=> "height:200px;left:#{full_width - window_width - offset_x * k}px;", :draggable => 'false'} %>
                     </div>
                 <% else %>
                     <% k = window_width * 1.0 / tip.image_width %>
                     <% full_height = k * tip.image_height %>
                     <div class="container scroll-y" style="top:<%= window_height - full_height %>px;height:<%= 2 * full_height - window_height %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "width:400px;top:#{full_height - window_height - offset_y * k}px;"} %>
+                        <%= image_tag tip.image.url(:original), {:style=> "width:400px;top:#{full_height - window_height - offset_y * k}px;", :draggable => 'false'} %>
                     </div>
                 <% end %>
                 <input type="hidden" name="image_data[<%= tip.id %>]top" value="0" class="offset-top">
