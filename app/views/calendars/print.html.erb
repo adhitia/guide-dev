@@ -12,8 +12,13 @@ Test printing here.
         <div class="tip">
           <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>">
             <% if tip.image.file? %>
-                <% offset_x = @book.image_data[tip.id.to_s][:left].to_i %>
-                <% offset_y = @book.image_data[tip.id.to_s][:top].to_i %>
+                <% if @book.image_data.nil? || @book.image_data[tip.id.to_s].nil?
+                       offset_x = 0
+                       offset_y = 0
+                   else
+                       offset_x = @book.image_data[tip.id.to_s][:left].to_i
+                       offset_y = @book.image_data[tip.id.to_s][:top].to_i
+                   end %>
                 <% window_width = 400 %>
                 <% window_height = 200 %>
                 <% scroll_x = tip.image_height * Book::BOOK_PROPORTION < tip.image_width %>

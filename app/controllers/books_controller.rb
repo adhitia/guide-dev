@@ -20,6 +20,10 @@ class BooksController < ApplicationController
     pdf.text guide.name, :size => 26
 
     guide.tips.each do |tip|
+      if book.image_data[tip.id.to_s].nil?
+        next
+      end
+
       pdf.start_new_page
       if tip.image.file?
         begin
