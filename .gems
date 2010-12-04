@@ -1,7 +1,7 @@
+RMagick --source gems.github.com
 thoughtbot-paperclip --source gems.github.com
 oauth2 --version 0.0.10
 rails --version 2.3.5
 aws-s3
 exceptional
 prawn --source gems.github.com --version 0.11.1.pre 
-RMagick --version 2.13.1
