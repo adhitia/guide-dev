@@ -2,7 +2,8 @@ require 'RMagick'
 
 class BooksController < ApplicationController
   def update
-    book = authorize_book params[:id]
+#    book = authorize_book params[:id]
+    book = verify_book params[:id]
 
     book.image_data = params[:image_data]
     book.save
