@@ -11,7 +11,8 @@ class BooksController < ApplicationController
   end
 
   def print
-    book = authorize_book
+#    book = authorize_book
+    book = verify_book params[:id]
     guide = book.calendar
 
     pdf = Prawn::Document.new(:page_size => [600, 300], :margin => 0)
