@@ -24,7 +24,7 @@ class Tip < ActiveRecord::Base
                     :default_url => "#{WEB_ROOT}/images/tip_missing.gif"
   before_validation :download_remote_image, :if => :image_url_provided?
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
-  after_validation :save_image_dimensions
+#  after_validation :save_image_dimensions
 
   accepts_nested_attributes_for :address, :allow_destroy => true
 
@@ -43,6 +43,16 @@ class Tip < ActiveRecord::Base
     self.image.file?
   end
 
+  def save_image_dimensions
+#    if !self.image_file_size.nil?
+    if self.image.file?
+#      puts "!!!!!!!!!!!! #{self.image_file_size}"
+      geo = Paperclip::Geometry.from_file(self.image.to_file(:original))
+      self.image_width = geo.width
+      self.image_height = geo.height
+    end
+  end
+
 private
   # to make paperclip load urls
   def image_url_provided?
@@ -57,11 +67,5 @@ private
     def io.original_filename; base_uri.path.split('/').last; end
     io.original_filename.blank? ? nil : io
   rescue # catch url errors with validations instead of exceptions (Errno::ENOENT, OpenURI::HTTPError, etc...)
-  end
-
-  def save_image_dimensions
-    geo = Paperclip::Geometry.from_file(self.image.to_file(:original))
-    self.image_width = geo.width
-    self.image_height = geo.height
   end
 end

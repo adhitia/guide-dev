@@ -117,6 +117,12 @@ if (!window.common) {
 
         confirm: function(message, successHandler) {
             $("#dialog_box").html(message);
+
+            if ($("#dialog_box").data('dialog')) {
+                $("#dialog_box").dialog('destroy');
+            }
+
+//            if (!$("#dialog_box").data('dialog')) {
             $("#dialog_box").dialog({
                 buttons: {
                     "Ok": function() {
@@ -133,6 +139,9 @@ if (!window.common) {
                 title: 'Please confirm',
                 width: 230
             });
+//            } else {
+//                $("#dialog_box").dialog(open);
+//            }
         },
 
         trim: function(s) {

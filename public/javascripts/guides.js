@@ -643,7 +643,6 @@ if (!window.guide) var guide = {
     },
 
     init_book_preview: function() {
-//        console.log('init 2');
         $('#book-preview .tip .image .container img').each(function() {
             $(this).draggable({
                 containment: $(this).parents('.container'),

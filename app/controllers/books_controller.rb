@@ -20,7 +20,7 @@ class BooksController < ApplicationController
     pdf.text guide.name, :size => 26
 
     guide.tips.each do |tip|
-      if book.image_data[tip.id.to_s].nil?
+      if book.image_data[tip.id.to_s].nil? && tip.image.file?
         next
       end
 
