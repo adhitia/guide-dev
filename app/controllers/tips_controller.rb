@@ -46,9 +46,6 @@ class TipsController < ApplicationController
     tip.author_id = @current_user.id
     tip.save
 
-    tip.save_image_dimensions
-    tip.save
-
     @guide.update_completed_percentage
     @guide.save
 
@@ -144,9 +141,6 @@ class TipsController < ApplicationController
       if !@errors.empty?
         raise ActiveRecord::Rollback.new
       end
-
-      tip.save_image_dimensions
-      tip.save
 
       @guide.update_completed_percentage
       @guide.save

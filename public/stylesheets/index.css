@@ -1334,14 +1334,14 @@ div.guide-type-panes > div {
 }
 
 #book-preview .tip {
-    width: 800px;
-    height: 200px;
+    width: 1000px;
+    height: 250px;
     border: solid black 1px;
 }
 #book-preview .tip .image {
-    width: 400px;
+    width: 500px;
     overflow: hidden;
-    height: 200px;
+    height: 250px;
     display: inline-block;
 }
 #book-preview .tip .image .container {
@@ -1352,7 +1352,7 @@ div.guide-type-panes > div {
     background-repeat: no-repeat;
 }
 #book-preview .tip .text {
-    width: 390px;
+    width: 490px;
     float: right;
 }
 
