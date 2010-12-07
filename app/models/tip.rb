@@ -11,6 +11,8 @@ class Tip < ActiveRecord::Base
 #  belongs_to :weekday
   belongs_to :author, :class_name => 'User'
 
+  has_many :book_tips, :dependent => :destroy
+
 
   # include Paperclip
   has_attached_file :image, :styles => {:medium => "200x200>", :thumb => "100x100#", :small => "100x100>",
@@ -46,12 +48,9 @@ class Tip < ActiveRecord::Base
   end
 
   def save_image_dimensions
-#    if self.image.file?
-      puts "save image dimensions ******************"
-      geo = Paperclip::Geometry.from_file(image.queued_for_write[:original])
-      self.image_width = geo.width
-      self.image_height = geo.height
-#    end
+    geo = Paperclip::Geometry.from_file(image.queued_for_write[:original])
+    self.image_width = geo.width
+    self.image_height = geo.height
   end
 
   private

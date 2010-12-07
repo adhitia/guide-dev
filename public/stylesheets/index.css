@@ -1333,29 +1333,41 @@ div.guide-type-panes > div {
     left: 0;
 }
 
-#book-preview .tip {
+#book-preview .tips-data .tip {
     width: 1000px;
     height: 250px;
     border: solid black 1px;
 }
-#book-preview .tip .image {
+#book-preview .tips-data .tip .image {
     width: 500px;
     overflow: hidden;
     height: 250px;
     display: inline-block;
 }
-#book-preview .tip .image .container {
+#book-preview .tips-data .tip .image .container {
     position: relative;
     cursor: pointer;
 }
-#book-preview .tip .image .container .draggable {
+#book-preview .tips-data .tip .image .container .draggable {
     background-repeat: no-repeat;
 }
-#book-preview .tip .text {
+#book-preview .tips-data .tip .text {
     width: 490px;
     float: right;
 }
 
+#book-preview .tips-order {
+    margin-bottom: 40px;
+}
+
+#book-preview .tips-order .tip {
+    width: 40px;
+    height: 40px;
+    float: left;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
 
 .ui-corner-all {
     -moz-border-radius: 4px;

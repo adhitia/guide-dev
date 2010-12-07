@@ -5,7 +5,14 @@ class BooksController < ApplicationController
 #    book = authorize_book params[:id]
     book = verify_book params[:id]
 
-    book.image_data = params[:image_data]
+#    book.image_data = params[:image_data]
+    if params[:tips]
+      params[:tips].each_pair do |id, tip_data|
+        book_tip = BookTip.find id, :lock => true
+        book_tip.update_attributes! tip_data
+      end
+    end
+
     book.save
 
     render :text => book.id
@@ -21,16 +28,12 @@ class BooksController < ApplicationController
     # print title page
     pdf.text guide.name, :size => 26
 
-    guide.tips.each do |tip|
-      if book.image_data[tip.id.to_s].nil? && tip.image.file?
-        next
-      end
-
+    book.book_tips.each do |book_tip|
+      tip = book_tip.tip
       pdf.start_new_page
       if tip.image.file?
         begin
           puts "printing tip #{tip.id} : #{tip.image.url}"
-          crop_data = book.image_data[tip.id.to_s]
 
           image = tip.image.to_file(:original).path
           rm = Magick::ImageList.new(image)
@@ -45,8 +48,8 @@ class BooksController < ApplicationController
           end
 
           puts image
-          puts "crop arguments ! #{[crop_data[:left], crop_data[:top], width, height].inspect}"
-          rm.crop! crop_data[:left].to_i, crop_data[:top].to_i, width, height
+          puts "crop arguments ! #{[book_tip.image_offset_x, book_tip.image_offset_y, width, height].inspect}"
+          rm.crop! book_tip.image_offset_x, book_tip.image_offset_y, width, height
           rm.write(image)
 
 

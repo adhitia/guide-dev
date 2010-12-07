@@ -4,21 +4,29 @@ Test printing here.
   <p>Adjust presentation of your book and then
   <a href="javascript:" onclick="guide.preview_book();">click here to preview pdf</a>.</p>
 
-  <p>Drag images to adjust cropping.</p>
+  <p>Drag to rearrange order.</p>
+  <div class="tips-order clear-fix">
+    <% @book.book_tips.each do |book_tip| %>
+        <% tip = book_tip.tip %>
+        <div class="tip" title="<%= h tip.condition.full_name %> - <%= h tip.name %>">
+          <% if tip.image.file? %>
+              <%= image_tag tip.image.url(:thumb), {:style=> "width:40px;top:40px;", :draggable => 'false'} %>
+          <% else %>
+              <%= h tip.name %>
+          <% end %>
+          <input type="hidden" name="tips[<%= book_tip.id %>]rank" value="<%= book_tip.rank %>" class="rank">
+        </div>
+    <% end %>
+  </div>
 
-
-  <div class="book">
-    <% @guide.tips.each do |tip| %>
+  <!--<p>Drag images to adjust cropping.</p>-->
+  <div class="tips-data">
+    <% @book.book_tips.each do |book_tip| %>
+        <% tip = book_tip.tip %>
         <div class="tip">
-          <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>">
+          <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>"
+            title="Drag image to adjust cropping.">
             <% if tip.image.file? %>
-                <% if @book.image_data.nil? || @book.image_data[tip.id.to_s].nil?
-                       offset_x = 0
-                       offset_y = 0
-                   else
-                       offset_x = @book.image_data[tip.id.to_s][:left].to_i
-                       offset_y = @book.image_data[tip.id.to_s][:top].to_i
-                   end %>
                 <% window_width = 500 %>
                 <% window_height = 250 %>
                 <% scroll_x = tip.image_height * Book::BOOK_PROPORTION < tip.image_width %>
@@ -26,17 +34,17 @@ Test printing here.
                     <% k = window_height * 1.0 / tip.image_height %>
                     <% full_width = k * tip.image_width %>
                     <div class="container scroll-x" style="left:<%= window_width - full_width %>px;width:<%= 2 * full_width - window_width %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "height:#{window_height}px;left:#{full_width - window_width - offset_x * k}px;", :draggable => 'false'} %>
+                        <%= image_tag tip.image.url(:original), {:style=> "height:#{window_height}px;left:#{full_width - window_width - book_tip.image_offset_x * k}px;", :draggable => 'false'} %>
                     </div>
                 <% else %>
                     <% k = window_width * 1.0 / tip.image_width %>
                     <% full_height = k * tip.image_height %>
                     <div class="container scroll-y" style="top:<%= window_height - full_height %>px;height:<%= 2 * full_height - window_height %>px;">
-                        <%= image_tag tip.image.url(:original), {:style=> "width:#{window_width}px;top:#{full_height - window_height - offset_y * k}px;", :draggable => 'false'} %>
+                        <%= image_tag tip.image.url(:original), {:style=> "width:#{window_width}px;top:#{full_height - window_height - book_tip.image_offset_y * k}px;", :draggable => 'false'} %>
                     </div>
                 <% end %>
-                <input type="hidden" name="image_data[<%= tip.id %>]top" value="0" class="offset-top">
-                <input type="hidden" name="image_data[<%= tip.id %>]left" value="0" class="offset-left">
+                <input type="hidden" name="tips[<%= book_tip.id %>]image_offset_y" value="<%= book_tip.image_offset_y %>" class="offset-top">
+                <input type="hidden" name="tips[<%= book_tip.id %>]image_offset_x" value="<%= book_tip.image_offset_x %>" class="offset-left">
             <% else %>
                 No image
             <% end %>
@@ -52,6 +60,15 @@ Test printing here.
   <!--<= render :partial => 'book', :locals => {:guide => @guide} %>-->
 </form>
 
+
+<div class="button-panel">
+  <a href="javascript:" onclick="guide.save_book();" class="button">
+    Save book
+  </a>
+  <a href="javascript:" onclick="guide.preview_book();" class="button">
+    Save book and preview PDF
+  </a>
+</div>
 
 
 

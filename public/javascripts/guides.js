@@ -636,14 +636,16 @@ if (!window.guide) var guide = {
             success: function(r) {
                 common.stopLoadingGlobal();
                 checkout_form.find('input.submit').removeAttr('disabled');
-                callback(r);
+                if (callback) {
+                    callback(r);
+                }
             }
         });
 
     },
 
     init_book_preview: function() {
-        $('#book-preview .tip .image .container img').each(function() {
+        $('#book-preview .tips-data .tip .image .container img').each(function() {
             $(this).draggable({
                 containment: $(this).parents('.container'),
                 scroll: false,
@@ -664,6 +666,15 @@ if (!window.guide) var guide = {
                     offset_y *= k;
                     window.find('input.offset-top').val(Math.round(offset_y));
                     window.find('input.offset-left').val(Math.round(offset_x));
+                }
+            });
+
+            $('#book-preview .tips-order').sortable({
+                update: function(event, ui) {
+                    var rank = 0;
+                    $('#book-preview .tips-order .tip').each(function() {
+                        $(this).find('input.rank').val(rank++);
+                    });
                 }
             });
         });

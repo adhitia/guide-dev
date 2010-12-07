@@ -204,6 +204,8 @@ class CalendarsController < ApplicationController
       @book = Book.new(:calendar_id => @guide.id)
       @book.save
     end
+
+    @book.sync_tips
   end
 
 
@@ -232,8 +234,8 @@ class CalendarsController < ApplicationController
           if !params['tip_name'][c.id.to_s][day.id.to_s]
             next
           end
-          name = params['tip_name'][c.id.to_s][day.id.to_s];
-          param_name = "tip_name[#{c.id}][#{day.id}]";
+          name = params['tip_name'][c.id.to_s][day.id.to_s]
+          param_name = "tip_name[#{c.id}][#{day.id}]"
 #          if !empty?(name)
             tip = Tip.new
             tip.name = name

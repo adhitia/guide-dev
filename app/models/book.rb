@@ -4,6 +4,21 @@ class Book < ActiveRecord::Base
   BOOK_PROPORTION = BOOK_WIDTH * 1.0 / BOOK_HEIGHT
 
   belongs_to :calendar
+  has_many :book_tips, :dependent => :destroy, :order => :rank
 
-  serialize :image_data, ::HashWithIndifferentAccess
+#  serialize :image_data, ::HashWithIndifferentAccess
+#  serialize :tip_order, ::Array
+
+#  def initialize(guide, attributes)
+#    super(attributes)
+#  end
+
+  def sync_tips
+    calendar.tips.each do |tip|
+      if !book_tips.exists?(:tip_id => tip.id)
+        puts "creating a book tip #{book_tips.size}"
+        book_tips.create(:tip_id => tip.id, :rank => book_tips.size)
+      end
+    end
+  end
 end
