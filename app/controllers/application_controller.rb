@@ -86,9 +86,11 @@ class ApplicationController < ActionController::Base
 
   def verify_resource id, type, name = nil
     name = type.to_s if name.nil?
-    result = type.find_by_id(id)
+    result = type.find_by_id(Integer(id))
     raise ResourceNotFoundError.new("#{name} with id \"#{id}\" can't be found") if result.nil?
     result
+  rescue ArgumentError
+    raise ResourceNotFoundError.new("#{name} with id \"#{id}\" can't be found")
   end
 
   # request.xhr? isn't good enough, because we have iframes with images submitted in background
@@ -124,7 +126,7 @@ class ApplicationController < ActionController::Base
       puts "!!!!!!!!!! error !!!    ajax : #{ajax?}  \n#{error.backtrace.join("\n")}\n"
     elsif ENV["RAILS_ENV"] == 'production'
       Exceptional.context(:params => params, :fullpath => request.fullpath)
-      Exceptional.handle(error, "error detected...\n")
+      Exceptional.handle(error, "error detected....\n")
     end
   end
 

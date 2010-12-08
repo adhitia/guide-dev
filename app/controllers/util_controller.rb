@@ -49,14 +49,20 @@ class UtilController < ApplicationController
     }
 
 #    puts "!!!!!!! result !!!!!!! #{result.body}"
-    book_id = fetch_parameter(result.body, 'order-summary.shopping-cart.merchant-private-data')
     type = fetch_parameter(result.body, '_type')
-    new_state = fetch_parameter(result.body, 'new-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'new-financial-order-state')
-    old_state = fetch_parameter(result.body, 'previous-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'previous-financial-order-state')
-    state = type + '  -  ' + old_state + '  -  ' + new_state + '  @@@  ' + serial_number
-    puts "book_id = #{book_id}, state = #{state}"
+    if type == 'order-state-change-notification'
+      book_id   = fetch_parameter(result.body, 'order-summary.shopping-cart.merchant-private-data')
 
-    CommonMailer.deliver_print_order Book.find_by_id(book_id), state 
+      new_state = fetch_parameter(result.body, 'new-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'new-financial-order-state')
+      old_state = fetch_parameter(result.body, 'previous-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'previous-financial-order-state')
+      state     = type + '  -  ' + old_state + '  -  ' + new_state + '  @@@  ' + serial_number
+
+      puts "book_id = #{book_id}, state = #{state}"
+      if !Book.find_by_id(book_id).nil? # TODO delete when in production
+        CommonMailer.deliver_print_order Book.find_by_id(book_id), state
+      end
+    end
+
 
     render :text => params['serial-number']
   end
@@ -65,7 +71,7 @@ class UtilController < ApplicationController
 
 
   def checkout_test
-    serial_number = '624804594557278-00005-1'
+    serial_number = '447621572903826-00005-5'
     puts params
 
     url = URI.parse(GOOGLE_CHECKOUT[:url])
@@ -85,12 +91,17 @@ class UtilController < ApplicationController
     }
 
     puts "!!!!!!! result !!!!!!! #{result.body}"
-    book_id = fetch_parameter(result.body, 'shopping-cart.merchant-private-data')
     type = fetch_parameter(result.body, '_type')
-    puts "book_id = #{book_id}, type = #{type}"
+    if type == 'order-state-change-notification'
+      book_id = fetch_parameter(result.body, 'order-summary.shopping-cart.merchant-private-data')
 
-    CommonMailer.deliver_print_order Book.find_by_id(book_id), type
-    
+      new_state = fetch_parameter(result.body, 'new-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'new-financial-order-state')
+      old_state = fetch_parameter(result.body, 'previous-fulfillment-order-state') + ' : ' + fetch_parameter(result.body, 'previous-financial-order-state')
+      state = type + '  -  ' + old_state + '  -  ' + new_state + '  @@@  ' + serial_number
+      puts "book_id = #{book_id}, state = #{state}"
+
+  #    CommonMailer.deliver_print_order Book.find_by_id(book_id), type
+    end
 
     render :text => result.body
   end
