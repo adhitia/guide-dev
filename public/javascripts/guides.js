@@ -668,38 +668,47 @@ if (!window.guide) var guide = {
                     window.find('input.offset-left').val(Math.round(offset_x));
                 }
             });
-
-            $('#book-preview .tips-order').sortable({
-                update: function(event, ui) {
-                    var rank = 0;
-                    $('#book-preview .tips-order .tip').each(function() {
-                        $(this).find('input.rank').val(rank++);
-                    });
-                }
-            });
         });
-//        $('#book-preview .tip .image img').draggable({
-//            containment: 'parent',
-//            scroll: false,
-//            stop: function(event, ui) {
-//                var img = $(this);
-//                var container = img.parent();
-//                var window = container.parent();
-//
-//                var offset_x = 0;
-//                var offset_y = 0;
-//                if (container.hasClass('scroll-x')) {
-//                    offset_x = (container.width() - window.width())/2 - ui.position.left;
-//                } else {
-//                    offset_y = (container.height() - window.height())/2 - ui.position.top;
-//                }
-//                var k = window.data('original-width') / img.width();
-//                offset_x *= k;
-//                offset_y *= k;
-//                window.find('input.offset-top').val(Math.round(offset_y));
-//                window.find('input.offset-left').val(Math.round(offset_x));
-//            }
-//        });
+
+        $('#book-preview .tips-order').sortable({
+            update: function(event, ui) {
+                var rank = 0;
+                $('#book-preview .tips-order .tip').each(function() {
+                    $(this).find('input.rank').val(rank++);
+                });
+            }
+        });
+        $('#book-preview .input-widget .label').click(function() {
+            var label = $(this);
+            var widget = label.closest('.input-widget');
+            var input = widget.find(':input');
+
+            label.hide();
+            input.show().focus();
+        });
+        $('#book-preview .input-widget :input').blur(function() {
+            var input = $(this);
+            var widget = input.closest('.input-widget');
+            var label = widget.find('.label');
+
+            input.hide();
+            label.show();
+
+            var new_value = input.val();
+            if (new_value.blank()) {
+                label.html(widget.find('.original').html());
+                label.removeClass('redefined');
+            } else {
+                label.addClass('redefined');
+                label.html(new_value);
+            }
+        });
+        $('#book-preview .input-widget :input').blur();
+        $('#book-preview .input-widget :input').keypress(function(e) {
+            if (e.which == 13) {
+                $(this).blur();
+            }
+        });
     }
 };
 

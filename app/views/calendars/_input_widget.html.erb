@@ -1,0 +1,8 @@
+<% input_control ||= form.text_field(name) %>
+
+<div class="input-widget input-widget-<%= name %>">
+  <div class="label" title="<%= name %> - click to edit"></div>
+  <div class="original"><%= h original_value %></div>
+  <%= input_control %>
+</div>
+

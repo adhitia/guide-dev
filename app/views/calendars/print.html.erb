@@ -19,10 +19,12 @@ Test printing here.
     <% end %>
   </div>
 
-  <!--<p>Drag images to adjust cropping.</p>-->
+  <p>Changes made here do <b>not</b> affect guide itself.</p>
   <div class="tips-data">
     <% @book.book_tips.each do |book_tip| %>
         <% tip = book_tip.tip %>
+
+        <% fields_for "tips[#{book_tip.id}]", book_tip do |form| %>
         <div class="tip">
           <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>"
             title="Drag image to adjust cropping.">
@@ -43,21 +45,28 @@ Test printing here.
                         <%= image_tag tip.image.url(:original), {:style=> "width:#{window_width}px;top:#{full_height - window_height - book_tip.image_offset_y * k}px;", :draggable => 'false'} %>
                     </div>
                 <% end %>
-                <input type="hidden" name="tips[<%= book_tip.id %>]image_offset_y" value="<%= book_tip.image_offset_y %>" class="offset-top">
-                <input type="hidden" name="tips[<%= book_tip.id %>]image_offset_x" value="<%= book_tip.image_offset_x %>" class="offset-left">
+
+                <!--<input type="hidden" name="tips[<%= book_tip.id %>]image_offset_y" value="<%= book_tip.image_offset_y %>" class="offset-top">
+                <input type="hidden" name="tips[<%= book_tip.id %>]image_offset_x" value="<%= book_tip.image_offset_x %>" class="offset-left">-->
+
+                <%= form.hidden_field :image_offset_y, :class => 'offset-top' %>
+                <%= form.hidden_field :image_offset_x, :class => 'offset-left' %>
             <% else %>
-                No image
+                <div class="no-image">No image</div>
             <% end %>
           </div>
 
           <div class="text">
-            <%= h tip.name %>
+            <%= render :partial => 'input_widget', :locals => {:name => 'name', :original_value => tip.name, :form => form} %>
+            <%= render :partial => 'input_widget', :locals => {:name => 'url', :original_value => tip.url, :form => form} %>
+            <%= render :partial => 'input_widget', :locals => {:name => 'address', :original_value => tip.address.address, :form => form} %>
+            <%= render :partial => 'input_widget', :locals => {:name => 'phone', :original_value => tip.phone, :form => form} %>
+            <%= render :partial => 'input_widget', :locals => {:name => 'description', :original_value => tip.description, :input_control => form.text_area(:description)} %>
           </div>
         </div>
+        <% end %>
     <% end %>
   </div>
-
-  <!--<= render :partial => 'book', :locals => {:guide => @guide} %>-->
 </form>
 
 

@@ -69,7 +69,7 @@ class TipsController < ApplicationController
     @guide = authorize_guide params[:id]
 #    @full_access = true;
 
-    @errors = {};
+    @errors = {}
 #    new_tip_id = nil
 
     tip_data = params[:tip]
@@ -178,7 +178,7 @@ class TipsController < ApplicationController
     tip = verify_tip params[:id]
     authorize_guide tip.calendar_id
 
-    tip.delete
+    tip.destroy
 
     tip.calendar.update_completed_percentage
     tip.calendar.save
