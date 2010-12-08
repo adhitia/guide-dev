@@ -1,7 +1,10 @@
 <% input_control ||= form.text_field(name) %>
 
 <div class="input-widget input-widget-<%= name %>">
-  <div class="label" title="<%= name %> - click to edit"></div>
+  <div class="label" title="<%= name %> - click to edit">
+    <div class="content"></div>
+    <img src="/images/undo-icon.png" alt="" class="undo" title="undo changes to <%= name %>">
+  </div>
   <div class="original"><%= h original_value %></div>
   <%= input_control %>
 </div>

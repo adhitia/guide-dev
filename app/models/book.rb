@@ -6,13 +6,6 @@ class Book < ActiveRecord::Base
   belongs_to :calendar
   has_many :book_tips, :dependent => :destroy, :order => :rank
 
-#  serialize :image_data, ::HashWithIndifferentAccess
-#  serialize :tip_order, ::Array
-
-#  def initialize(guide, attributes)
-#    super(attributes)
-#  end
-
   def sync_tips
     calendar.tips.each do |tip|
       if !book_tips.exists?(:tip_id => tip.id)

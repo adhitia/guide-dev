@@ -696,11 +696,11 @@ if (!window.guide) var guide = {
 
             var new_value = input.val();
             if (new_value.blank()) {
-                label.html(widget.find('.original').html());
-                label.removeClass('redefined');
+                label.find('.content').html(widget.find('.original').html());
+                widget.removeClass('redefined');
             } else {
-                label.addClass('redefined');
-                label.html(new_value);
+                widget.addClass('redefined');
+                label.find('.content').html(new_value);
             }
         });
         $('#book-preview .input-widget :input').blur();
@@ -708,6 +708,11 @@ if (!window.guide) var guide = {
             if (e.which == 13) {
                 $(this).blur();
             }
+        });
+        $('#book-preview .input-widget .undo').click(function(e) {
+            var widget = $(this).closest('.input-widget');
+            widget.find(':input').val('').blur();
+            return false;
         });
     }
 };
