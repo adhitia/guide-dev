@@ -58,7 +58,7 @@ class UtilController < ApplicationController
       state     = type + '  -  ' + old_state + '  -  ' + new_state + '  @@@  ' + serial_number
 
       puts "book_id = #{book_id}, state = #{state}"
-      if !Book.find_by_id(book_id).nil? # TODO delete when in production
+      if book_id =~ /\A\d+\z/ && !Book.find_by_id(book_id).nil? # TODO delete when in production
         CommonMailer.deliver_print_order Book.find_by_id(book_id), state
       end
     end
@@ -71,7 +71,7 @@ class UtilController < ApplicationController
 
 
   def checkout_test
-    serial_number = '447621572903826-00005-5'
+    serial_number = '517669820723894-00005-1'
     puts params
 
     url = URI.parse(GOOGLE_CHECKOUT[:url])
@@ -117,6 +117,11 @@ class UtilController < ApplicationController
   private
 
   def fetch_parameter(data, name)
-    data.scan(/(^|&)#{name}=([^&]*)($|&)/)[0][1]
+    result = data.scan(/(^|&)#{name}=([^&]*)($|&)/)
+    if result.length > 0
+      [0][1]
+    else
+      nil
+    end
   end
 end
