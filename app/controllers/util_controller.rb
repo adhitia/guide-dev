@@ -108,8 +108,8 @@ class UtilController < ApplicationController
 
   def db_test
     result = "start "
-    Book.all.each do |book|
-      result += " [#{book.id} : #{book.calendar.id}] "
+    Address.all.each do |address|
+      result += " [#{address.lat} : #{address.lng}] \n"
     end
     render :text => result
   end
