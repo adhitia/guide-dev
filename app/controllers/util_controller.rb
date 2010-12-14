@@ -111,6 +111,11 @@ class UtilController < ApplicationController
     Address.all.each do |address|
       result += " [#{address.lat} : #{address.lng}] \n"
     end
+    address = Address.find(:first, :conditions => ["lat = ? and lng = ?", -22.970249, -43.256986])
+    result += address.inspect
+    result += '!!!!!!'
+    address = Address.find(:first, :conditions => ["lat = ?", -22.970249])
+    result += address.inspect
     render :text => result
   end
 
