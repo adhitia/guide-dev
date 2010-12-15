@@ -17,6 +17,11 @@ class ApplicationController < ActionController::Base
   before_filter :set_user
 
 
+  def authenticate
+    raise AuthenticationError.new if @current_user.nil?
+    @current_user
+  end
+
   protected
 
   # flattens hash keys just like similar method in Array
@@ -36,11 +41,6 @@ class ApplicationController < ActionController::Base
     @current_user = User.find(session[:id]) if @current_user.nil? && session[:id]
   end
 
-
-  def authenticate
-    raise AuthenticationError.new if @current_user.nil?
-    @current_user
-  end
 
   def authorize_guide(guide_id = params[:id])
     authenticate
