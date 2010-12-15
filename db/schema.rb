@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101214173056) do
+ActiveRecord::Schema.define(:version => 20101215203440) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20101214173056) do
     t.datetime "updated_at"
     t.string   "identity_url"
     t.boolean  "registration_complete"
+    t.boolean  "admin",                 :default => false
   end
 
   create_table "weather_forecasts", :force => true do |t|
