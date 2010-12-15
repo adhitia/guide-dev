@@ -17,6 +17,9 @@ class CreateAttractionModel < ActiveRecord::Migration
       if tip.nil?
         next
       end
+      if tip.calendar_id.nil?
+        next # for heroku
+      end
 
       if address.lat != 0
         a = Attraction.new
