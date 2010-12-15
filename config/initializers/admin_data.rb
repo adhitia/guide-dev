@@ -4,7 +4,7 @@ AdminData::Config.set = {
       user = controller.authenticate
       puts "!!!!!!!!!!!!!!! #{user.inspect}"
       user.admin
-    rescue AuthenticationError
+    rescue ApplicationController::AuthenticationError
       false
     end
   },
