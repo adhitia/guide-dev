@@ -7,11 +7,17 @@
   <% @attractions.each do |attraction| %>
       <% tip = attraction.tips.max {|a, b| a.calendar.rating <=> b.calendar.rating} %>
 
+      <% if @attractions.first.popularity == @attractions.last.popularity
+        marker_size = 1
+      else
+        marker_size = 1 + Float(attraction.popularity - @attractions.last.popularity) / (@attractions.first.popularity - @attractions.last.popularity)
+      end %>
+
       <div class="tip-data"
            data-name="<%= h tip.name %>"
            data-lat="<%= tip.attraction.lat %>"
            data-lng="<%= tip.attraction.lng %>"
-           data-size="<%= 1 + Float(attraction.popularity - @attractions.last.popularity) / (@attractions.first.popularity - @attractions.last.popularity) %>"
+           data-size="<%= marker_size %>"
       >
         <div class="map-info-window">
           <h3>
