@@ -1,3 +1,4 @@
+will_paginate
 rmagick --source gems.github.com
 thoughtbot-paperclip --source gems.github.com
 oauth2 --version 0.0.10

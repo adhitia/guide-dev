@@ -50,7 +50,7 @@ class DisplayController < ApplicationController
 #    @calendar.view_count += 1;
 #    @calendar.save
 
-    @rating = @calendar.rating_num;
+    @rating = @calendar.rating_num
 
     layout = GuideLayout.find params[:layout]
     render :template => "display/#{layout.path}"
@@ -69,6 +69,7 @@ class DisplayController < ApplicationController
     else
       @guide.votes_sum += vote - old_vote.to_i
     end
+    @guide.update_rating
     @guide.save
 
     cookies["guide_vote_#{@guide.id}"] = vote

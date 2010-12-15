@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101207050537) do
+ActiveRecord::Schema.define(:version => 20101214173056) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(:version => 20101207050537) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
+  end
+
+  create_table "attractions", :force => true do |t|
+    t.string   "identity_url"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "popularity",   :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "city_id"
   end
 
   create_table "book_tips", :force => true do |t|
@@ -75,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20101207050537) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "image_remote_url"
+    t.float    "rating",               :default => 0.0
   end
 
   create_table "conditions", :force => true do |t|
@@ -154,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20101207050537) do
     t.integer  "rank",                            :default => 0
     t.integer  "image_width"
     t.integer  "image_height"
+    t.string   "address",                         :default => ""
+    t.integer  "attraction_id"
   end
 
   create_table "users", :force => true do |t|

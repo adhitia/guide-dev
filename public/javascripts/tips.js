@@ -573,7 +573,8 @@ if (!window.tips) var tips = {
                         guides.saveMatrix();
                     }
                 }
-            }).disableSelection();
+            });
+//            .disableSelection()
 
 
 

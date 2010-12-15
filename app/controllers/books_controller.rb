@@ -64,7 +64,7 @@ class BooksController < ApplicationController
       pdf.start_new_page
       pdf.draw_text(tip.condition.full_name, :at => [20, pdf.bounds.top - 20], :size => 16)
       pdf.draw_text(book_tip.name.blank? ? tip.name : book_tip.name, :at => [40, Book::BOOK_HEIGHT - 60], :size => 24)
-      pdf.draw_text(book_tip.address.blank? ? tip.address.address : book_tip.address, :at => [40, Book::BOOK_HEIGHT - 100], :size => 16)
+      pdf.draw_text(book_tip.address.blank? ? tip.address : book_tip.address, :at => [40, Book::BOOK_HEIGHT - 100], :size => 16)
       pdf.draw_text(book_tip.url.blank? ? tip.url : book_tip.url, :at => [40, Book::BOOK_HEIGHT - 130], :size => 16)
       pdf.draw_text(book_tip.phone.blank? ? tip.phone : book_tip.phone, :at => [40, Book::BOOK_HEIGHT - 160], :size => 16)
 

@@ -20,9 +20,9 @@
       <%= h tip.description %>
     </p>
 
-    <% if !tip.address.address.blank? -%>
+    <% if !tip.address.blank? -%>
         <p>
-          Address: <%= h tip.address.address %>
+          Address: <%= h tip.address %>
         </p>
     <% end -%>
     <% if !tip.phone.blank? %>
@@ -31,25 +31,15 @@
         </p>
     <% end %>
 
-    <!--
-    <% if !tip.url.blank? %>
-        website:
-        <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
-          <%= h shorten(tip.url, 35) %>
-        </a>
-    <% end %>
--->
   </div>
 
   <div class="tooltip-row">
-    <% tip_map = false %>
-      <% if tip.address.lat != 0 %>
-        <% tip_map = true %>
+      <% if !tip.attraction.nil? && tip.attraction.lat != 0 %>
         <div class="tip-map">
-          <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.address.lat %>+<%= tip.address.lng %>&amp;z=16" target="_blank">
+          <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.attraction.lat %>+<%= tip.attraction.lng %>&amp;z=16" target="_blank">
             Directions and Map
           </a>:<br/>
-          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=200x200&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>"/>
+          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=200x200&amp;zoom=13&amp;markers=<%= tip.attraction.lat %>,<%= tip.attraction.lng %>"/>
         </div>
       <% end %>
 

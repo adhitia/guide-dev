@@ -1,5 +1,13 @@
 <h1>Search results for <i>"<%= params[:search_location] -%>"</i> </h1>
 
+<h2><%= format_number @cities.length, 'city' %> found</h2>
+
+<div>
+  <%= @cities.map {|city| city_link city}.join(', ') %>
+</div>
+
+<h2><%= format_number @guides.length, 'guide' %> found</h2>
+
 <div style="width:950px">
 
 <table id="calendar_search_result" width=950px class="display" border="0" cellpadding="0" cellspacing="0">
@@ -23,7 +31,7 @@
     </span></td>
     <td><%=h calendar.location.name %></td>
     <td><%= link_to calendar.user.name, show_user_path(:id => calendar.user) %></td>
-    <!--<td><%=h calendar.view_count %></td>-->
+    <!--<td><%= h calendar.view_count %></td>-->
     <td><%=h calendar.rating_str %></td>
     <td><%=h calendar.completed_percentage %>%</td>
     <td><%=h calendar.created_at.strftime "%B %d, %Y" %></td>

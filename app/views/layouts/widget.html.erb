@@ -1,6 +1,7 @@
 <div class="guiderer-data" style="display:none;">
   <% @calendar.tips.each do |tip| %>
-      <div class="guiderer-tip-data" data-name="<%=h tip.name%>" data-lat="<%=tip.address.lat%>" data-lng="<%=tip.address.lng%>"></div>
+      <div class="guiderer-tip-data" data-name="<%=h tip.name%>" data-lat="<%= tip.attraction.nil? ? '' : tip.attraction.lat %>"
+           data-lng="<%= tip.attraction.nil? ? '' : tip.attraction.lng %>"></div>
   <% end %>
 </div>
 

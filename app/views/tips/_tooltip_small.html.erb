@@ -11,8 +11,8 @@
   </div>
 
   <div class="map">
-    <% if tip.address.lat != 0 %>
-        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=100x100&amp;zoom=13&amp;markers=<%= tip.address.lat %>,<%= tip.address.lng %>"/>
+    <% if tip.attraction.lat != 0 %>
+        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=100x100&amp;zoom=13&amp;markers=<%= tip.attraction.lat %>,<%= tip.attraction.lng %>"/>
     <% else %>
         <h4>There's no map.</h4>
     <% end %>
@@ -25,7 +25,7 @@
     </p>
 
     <ul>
-      <li><b>Address</b>: <%= !tip.address.address.blank? ? h(tip.address.address) : 'No address' %></li>
+      <li><b>Address</b>: <%= !tip.address.blank? ? h(tip.address) : 'No address' %></li>
       <li><b>Phone</b>: <%= !tip.phone.blank? ? h(tip.phone) : 'No phone' %></li>
       <li><b>Website</b>: <%= !tip.url.blank? ? "<a href='#{h tip.url}' target='_blank'>#{h(shorten(tip.url, 25))}</a>" : 'No website' %></li>
     </ul>

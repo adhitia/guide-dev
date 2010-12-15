@@ -14,7 +14,7 @@
             </a>
         <% end %>
         Day <%= @day + 1 %>
-        <% if @day < @tips.length - 1 %>
+        <% if @day < @tips.length - 2 %>
             <a class="next-day" href="javascript:" onclick="_guiderer.render(this, <%= @day + 1 %>);" title="View day <%= @day + 2 %>">
               <img style="border: none;" src="<%= WEB_ROOT %>/images/arrowright.gif"/>
             </a>

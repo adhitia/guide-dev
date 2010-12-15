@@ -149,7 +149,7 @@ if (!window._guiderer) {
                                 var el = $(this);
                                 var lat = el.attr('data-lat');
                                 var lng = el.attr('data-lng');
-                                if (lat != '0.0') {
+                                if (lat != '0.0' && !lat.blank()) {
                                     var name = el.attr('data-name');
                                     var point = new google.maps.LatLng(lat, lng);
                                     var marker = new google.maps.Marker({

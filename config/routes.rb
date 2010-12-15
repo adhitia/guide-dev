@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'checkout_test', :controller => :util, :action => :checkout_test
   map.connect 'db_test', :controller => :util, :action => :db_test
 
+  map.connect 'cities/:id/*name', :controller => :calendars, :action => :city_map
+
   map.connect '', :controller => :users, :action => :index
 #  map.connect 'index', :controller => :users, :action => :index
 

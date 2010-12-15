@@ -108,14 +108,9 @@ class UtilController < ApplicationController
 
   def db_test
     result = "start "
-    Address.all.each do |address|
-      result += " [#{address.lat} : #{address.lng}] \n"
+    Attraction.all.each do |a|
+      result += " #{a.city.inspect} <br/>\n"
     end
-    address = Address.find(:first, :conditions => ["lat = ? and lng = ?", -22.970249, -43.256986])
-    result += address.inspect
-    result += '!!!!!!'
-    address = Address.find(:first, :conditions => ["lat = ?", -22.970249])
-    result += address.inspect
     render :text => result
   end
 

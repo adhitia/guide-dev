@@ -1,0 +1,123 @@
+<h1><%= @guides.length %> guide<%= @guides.length == 1 ? '' : 's' %> for <%= h @city.name %></h1>
+
+<div id="map-canvas"></div>
+
+<div id="map-data" style="display: none;">
+  <% ratio = Float(@attractions.first.popularity) / @attractions.last.popularity %>
+  <% @attractions.each do |attraction| %>
+      <% tip = attraction.tips.max {|a, b| a.calendar.rating <=> b.calendar.rating} %>
+
+      <div class="tip-data"
+           data-name="<%= h tip.name %>"
+           data-lat="<%= tip.attraction.lat %>"
+           data-lng="<%= tip.attraction.lng %>"
+           data-size="<%= 1 + Float(attraction.popularity - @attractions.last.popularity) / (@attractions.first.popularity - @attractions.last.popularity) %>"
+      >
+        <div class="map-info-window">
+          <h3>
+            <% if !tip.url.blank? %>
+                <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+                  <%= h tip.name %>
+                </a>
+            <% else %>
+                <%= h tip.name %>
+            <% end %>
+          </h3>
+          <% if tip.image_exists? %>
+              <%= image_tag tip.image.url(:thumb), {:align=>"left", :style=>"margin:10px;"} %>
+          <% end %>
+          <p>
+            <%= h tip.description %>
+          </p>
+          <% if !tip.address.blank? -%>
+              <p>
+                <b>Address</b>: <%= h tip.address %>
+              </p>
+          <% end -%>
+          <% if !tip.phone.blank? %>
+              <p>
+                <b>Phone</b>: <%= h tip.phone %>
+              </p>
+          <% end %>
+
+          <p>Appears in
+            <% if attraction.tips.length == 1 %>
+                <%= guide_link(attraction.tips[0].calendar) %>
+            <% elsif attraction.tips.length == 2 %>
+                <%= guide_link(attraction.tips[0].calendar) %> and <%= guide_link(attraction.tips[1].calendar) %>
+            <% else %>
+                <%= guide_link(attraction.tips[0].calendar) %>, <%= guide_link(attraction.tips[1].calendar) %> and
+                <%= attraction.tips.length - 2 %> other guide<%= attraction.tips.length - 2 == 1 ? '' : 's' %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<div style="margin-top:20px">
+  <% @guides.each do |guide| %>
+    <%= render :partial => 'calendars/widget', :locals => {:guide => guide, :style_id => '3'} %>
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+    google.load('maps', '3', {'other_params' : 'sensor=false'});
+
+    $(document).ready(function() {
+        var markers = [];
+        var tip_elements = [];
+        var bounds = new google.maps.LatLngBounds();
+
+        $('#map-data .tip-data').each(function() {
+            var el = $(this);
+            var lat = el.attr('data-lat');
+            var lng = el.attr('data-lng');
+            if (lat != '0.0') {
+                var name = el.attr('data-name');
+                var point = new google.maps.LatLng(lat, lng);
+                var k = el.data('size') / 1.5;
+                var shape = [9,0,6,1,4,2,2,4,0,8,0,12,1,14,2,16,5,19,7,23,8,26,9,30,9,34,11,34,11,30,12,26,13,24,14,21,16,18,18,16,20,12,20,8,18,4,16,2,15,1,13,0]
+                for (var i = 0; i < shape.length; ++i) {
+                    shape[i] = Math.round(shape[i] * k);
+                }
+                var marker = new google.maps.Marker({
+                    icon: new google.maps.MarkerImage('http://maps.gstatic.com/intl/en_us/mapfiles/markers/marker_sprite.png',
+                            new google.maps.Size(20 * k, 34 * k),
+                            new google.maps.Point(0, 0),
+                            new google.maps.Point(10 * k, 34 * k),
+                            new google.maps.Size(57 * k, 34 * k)),
+                    shape: {coord: shape, type: 'poly'},
+                    position: point,
+                    title: name
+                });
+                markers.push(marker);
+                tip_elements.push(el);
+                bounds.extend(point);
+            }
+        });
+
+        if (markers.length == 0) {
+            $('#map-canvas').html('<h2>No map to show.</h2>');
+            return;
+        }
+        var map = new google.maps.Map($('#map-canvas')[0], {
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        map.fitBounds(bounds);
+
+        var info_window = new google.maps.InfoWindow({});
+        for (var i = 0; i < markers.length; ++i) {
+            (function(marker, tip_element) {
+                marker.setMap(map);
+                google.maps.event.addListener(marker, 'click', function() {
+                    info_window.close();
+                    info_window.setContent(tip_element.find('.map-info-window').clone()[0]);
+                    info_window.open(map, marker);
+                });
+            })(markers[i], tip_elements[i]);
+        }
+    });
+</script>

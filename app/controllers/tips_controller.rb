@@ -6,11 +6,11 @@ class TipsController < ApplicationController
     @full_access = true
 
     tip_data = params[:tip]
-    address = Address.new tip_data[:address]
-    tip_data.delete :address
+    attraction = find_or_create_attraction tip_data[:attraction]
+    tip_data.delete :attraction
 
     tip = Tip.new tip_data
-    tip.address = address
+    tip.attraction_id = attraction.id if !attraction.nil?
 
     # seek for first empty spot
     tips = @guide.grouped_tips
@@ -44,10 +44,15 @@ class TipsController < ApplicationController
 
     tip.calendar_id = @guide.id
     tip.author_id = @current_user.id
-    tip.save
+    tip.save!
+
+    if !attraction.nil?
+      attraction.popularity += 1
+      attraction.save!
+    end
 
     @guide.update_completed_percentage
-    @guide.save
+    @guide.save!
 
     render :partial => 'edit_tile', :locals => {:tip => tip}
   end
@@ -57,7 +62,7 @@ class TipsController < ApplicationController
     @full_access = true
 
     tip = Tip.new(
-            :address => Address.new,
+            :attraction => Attraction.new,
             :calendar => @calendar,
             :condition => Condition.find(params[:condition_id]),
             :weekday => Weekday.find(params[:weekday_id])
@@ -77,8 +82,17 @@ class TipsController < ApplicationController
     tip = Tip.find tip_data[:id], :lock => true
 
     Tip.transaction do
-      tip.address.update_attributes tip_data[:address]
-      tip_data.delete :address
+      attraction = find_or_create_attraction tip_data[:attraction]
+      if attraction.id != tip.attraction_id
+        tip.attraction.popularity -= 1 if !tip.attraction.nil?
+        attraction.popularity += 1
+        tip.attraction.save!
+        attraction.save!
+
+        tip.attraction = attraction
+      end
+      tip_data.delete :attraction
+
       tip.update_attributes tip_data
       tip.save
 
@@ -87,55 +101,6 @@ class TipsController < ApplicationController
 
 #      @errors["tips[#{id}]"] = tip.errors_as_hash
       @errors["tips"] = tip.errors_as_hash
-
-=begin
-
-      if !params[:tips].nil?
-        params[:tips].each_pair do |id, tip_data|
-          tip = Tip.find id, :lock => true
-          if tip.author_id != @calendar.user_id
-            raise "Found tip belonging to user #{tip.author_id}, while #{@calendar.user_id} expected."
-          end
-
-#        if !tip_data[:name].blank?
-          tip.address.update_attributes tip_data[:address]
-          tip_data.delete :address
-          tip.update_attributes tip_data
-          @errors["tips[#{id}]"] = tip.errors_as_hash
-#        else
-#          tip.delete
-#        end
-        end
-      end
-=end
-
-=begin
-
-      if !params[:tips_new].nil?
-        params[:tips_new].each_pair do |condition_id, weekday_map|
-          weekday_map.each_pair do |weekday_id, tip_data|
-            if tip_data[:name].blank? && params[:require_tip].blank?
-              next
-            end
-              address = Address.new tip_data[:address]
-              tip_data.delete :address
-
-              tip = Tip.new tip_data
-              tip.address = address
-              tip.condition_id = condition_id
-              tip.weekday_id = weekday_id
-              tip.calendar_id = @calendar.id
-              tip.author_id = @current_user.id
-              tip.save
-
-              new_tip_id = tip.id
-
-              @errors["tips_new[#{condition_id}][#{weekday_id}]"] = tip.errors_as_hash
-#            end
-          end
-        end
-      end
-=end
 
       @errors = flatten @errors
       if !@errors.empty?
@@ -161,10 +126,10 @@ class TipsController < ApplicationController
     @calendar = verify_guide params[:id]
     @tip = verify_tip params[:tip_id]
 
-    @tip.click_count += 1;
-    @tip.save;
-    @calendar.click_count += 1;
-    @calendar.save;
+    @tip.click_count += 1
+    @tip.save
+    @calendar.click_count += 1
+    @calendar.save
 
     url = @tip.url
     if !url.start_with? 'http://'
@@ -238,4 +203,43 @@ class TipsController < ApplicationController
     render :partial => 'tips/show_tile', :locals => {:tip => tip}
   end
 
+  private
+
+  def find_or_create_attraction(data)
+    return nil if data[:identity_url].nil?
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!! #{data.inspect}"
+
+    attraction = Attraction.find_by_identity_url data[:identity_url]
+    if attraction.nil?
+
+      # hack because fucking rails
+#      lat = Float(data[:lat])
+#      lng = Float(data[:lng])
+#      puts "********** #{lat} : #{lng}"
+      attraction = Attraction.find(:first, :conditions => ["lat = ? and lng = ?", Float(data[:lat]), Float(data[:lng])])
+#      def dist(a)
+#        (lat - a.lat).abs + (lng - a.lng).abs
+#      end
+#      attraction = Attraction.all.min {|a, b| dist(a) <=> dist(b)}
+#      if (dist(attraction) > 0.0001)
+#        attraction = nil
+#      end
+
+      puts "!!!!!!!!!!! found old ? #{attraction.inspect}"
+      if !attraction.nil?
+        if attraction.identity_url.start_with? 'placeholder_for_tip_'
+          attraction.identity_url = data[:identity_url]
+          attraction.save!
+        else
+          attraction = nil
+        end
+      end
+
+      if attraction.nil?
+        data[:city_id] = @guide.location_id
+        attraction = Attraction.create(data)
+      end
+    end
+    attraction
+  end
 end

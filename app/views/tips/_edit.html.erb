@@ -1,25 +1,28 @@
 <div class="edit-area">
   <%= form.hidden_field :id %>
+  <% form.fields_for tip.attraction do |attraction_form| %>
+      <%= attraction_form.hidden_field :lat, :class => 'tip_lat' %>
+      <%= attraction_form.hidden_field :lng, :class => 'tip_lng' %>
+      <%= attraction_form.hidden_field :identity_url, :class => 'tip_google_url' %>
+  <% end %>
+
+
   <div style="overflow: hidden; zoom: 1; height: 130px;">
 
     <div class="autosuggestions"></div>
 
     <div class="tip-edit-column tip-edit-column-1">
       <div class="input-row">
-        <%= form.label :url %> <%= form.text_field :url, :size => 30, :class => 'tip_url', :maxlength => 100 %>
+        <%= form.label :url %> <%= form.text_field :url, :size => 30, :class => 'tip_url', :maxlength => 100, :autocomplete => "off" %>
       </div>
 
       <div class="input-row">
-        <% form.fields_for tip.address do |address_form| %>
-            <%= address_form.label :address, 'Street Address' %>
-            <%= address_form.text_field :address, :size => 30, :class => 'tip_address_street', :maxlength => 100 %>
-            <%= address_form.hidden_field :lat, :class => 'tip_address_lat' %>
-            <%= address_form.hidden_field :lng, :class => 'tip_address_lng' %>
-        <% end %>
+        <%= form.label :address, 'Street Address' %>
+        <%= form.text_field :address, :size => 30, :class => 'tip_address', :maxlength => 100, :autocomplete => "off" %>
       </div>
 
       <div class="input-row">
-        <%= form.label :phone %> <%= form.text_field :phone, :size => 30, :class => 'tip_phone', :maxlength => 100 %>
+        <%= form.label :phone %> <%= form.text_field :phone, :size => 30, :class => 'tip_phone', :maxlength => 100, :autocomplete => "off" %>
       </div>
     </div>
 
@@ -45,7 +48,6 @@
           <span class="file-name"></span>
         </span>
         <%= form.file_field :image, :size => 5 %>
-        <!--, :onchange => "alert('!');"-->
       </label>
 
     </div>

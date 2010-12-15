@@ -59,7 +59,7 @@
               <div class="text">
                 <%= render :partial => 'input_widget', :locals => {:name => 'name', :original_value => tip.name, :form => form} %>
                 <%= render :partial => 'input_widget', :locals => {:name => 'url', :original_value => tip.url, :form => form} %>
-                <%= render :partial => 'input_widget', :locals => {:name => 'address', :original_value => tip.address.address, :form => form} %>
+                <%= render :partial => 'input_widget', :locals => {:name => 'address', :original_value => tip.address, :form => form} %>
                 <%= render :partial => 'input_widget', :locals => {:name => 'phone', :original_value => tip.phone, :form => form} %>
                 <%= render :partial => 'input_widget', :locals => {:name => 'description', :original_value => tip.description, :input_control => form.text_area(:description)} %>
               </div>

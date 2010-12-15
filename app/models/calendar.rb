@@ -22,11 +22,7 @@ class Calendar < ActiveRecord::Base
   before_save {|guide| guide.name = guide.name_location + ' for ' + guide.name_target}
 
   def rating_num
-    if votes_num == 0
-      0
-    else
-      Float(votes_sum) / votes_num
-    end
+    (rating * 100).round / 100.0
   end
 
   def rating_str
@@ -47,8 +43,8 @@ class Calendar < ActiveRecord::Base
 
   def update_completed_percentage
     completed = 0
-    total = conditions.size * Weekday.all.size
-    tips.each do |tip|
+    total = conditions.size * DAY_LIMIT #Weekday.all.size
+    tips(true).each do |tip|
       if tip.description.blank?
         completed += 0.5
       else
@@ -56,7 +52,21 @@ class Calendar < ActiveRecord::Base
       end
     end
     self.completed_percentage = (completed * 100.0 / total).round
+
+    # can be more than one tip at a single spot
+    if self.completed_percentage > 100
+      self.completed_percentage = 100
+    end
   end
+
+  def update_rating
+    if votes_num == 0
+      self.rating = 0
+    else
+      self.rating = Float(votes_sum) / votes_num
+    end
+  end
+
 
   def grouped_tips
     groups = []

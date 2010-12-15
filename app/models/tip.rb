@@ -5,7 +5,8 @@ class Tip < ActiveRecord::Base
 
   attr_accessor :image_url
 
-  has_one :address
+#  has_one :address
+  belongs_to :attraction
   belongs_to :calendar
   belongs_to :condition
 #  belongs_to :weekday
@@ -31,7 +32,7 @@ class Tip < ActiveRecord::Base
   validates_presence_of :image_remote_url, :if => :image_url_provided?, :message => 'is invalid or inaccessible'
 #  after_validation :save_image_dimensions
 
-  accepts_nested_attributes_for :address, :allow_destroy => true
+#  accepts_nested_attributes_for :attraction #, :allow_destroy => true
 
   validates_presence_of :author_id, :condition_id, :calendar_id
   validates_length_of :name, :in => 1..MAX_NAME_LENGTH, # allow no name, denoting no tip
@@ -41,6 +42,13 @@ class Tip < ActiveRecord::Base
                       :too_long              => "no more than {{count}} characters expected", :allow_nil => true
 #  validates_length_of :description, :maximum => 300,
 #                      :too_long => "no more than {{count}} characters expected"
+
+  after_destroy {|tip|
+    if !tip.attraction.nil?
+      tip.attraction.popularity -= 1
+      tip.attraction.save!
+    end
+  }
 
 
   def image_exists?

@@ -324,7 +324,16 @@ if (!window.guide) var guide = {
                         .click(guides.selectLocalResult);
                 list.append($('<li></li>').append(a));
 
-                a.data('result_url', result.url);
+                // remove random data from google url, leave only place's id
+                var url = result.url;
+                var index = url.indexOf('&cid=');
+                if (index >= 0) {
+                    url = 'http://www.google.com/maps/place?cid=' + url.substring(index + 5);
+                }
+                console.log(url);
+
+                a.data('result_url', url);
+
                 if (result.phoneNumbers && result.phoneNumbers.length > 0) {
                     a.data('result_phone', result.phoneNumbers[0].number);
                 }
@@ -354,10 +363,12 @@ if (!window.guide) var guide = {
         var title = result.data('title');
 
 
-        root.find('input.tip_address_street').val(addr);
-        root.find('input.tip_address_lat').val(lat);
-        root.find('input.tip_address_lng').val(lng);
+        root.find('input.tip_address').val(addr);
+//        console.log(addr + '    ' + root.find('input.tip_address').length);
+        root.find('input.tip_lat').val(lat);
+        root.find('input.tip_lng').val(lng);
         root.find('input.tip_phone').val(phone);
+        root.find('input.tip_google_url').val(google_url);
         common.set_value($(root).find('input.tip-name'), title);
 
 //        root.find('input.tip_url').val('loading...');

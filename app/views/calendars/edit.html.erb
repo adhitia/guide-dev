@@ -4,7 +4,7 @@
   <%= render :partial => 'edit_pane', :locals => {:guide => @guide} %>
 
   <div class="new-tip-container edit-tip-root">
-    <% tip_model = Tip.new(:address => Address.new) %>
+    <% tip_model = Tip.new(:attraction => Attraction.new) %>
     <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
         <div class="tip-name-area">
           <span>Add a point of interest: </span>

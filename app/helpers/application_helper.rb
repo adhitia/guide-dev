@@ -2,7 +2,17 @@
 module ApplicationHelper
 
   def times(number)
-    number.to_s + ' time' + (number == 1 ? '' : 's');
+    format_number(number, "time")
+#    number.to_s + ' time' + (number == 1 ? '' : 's');
+  end
+
+  def format_number(number, entity)
+    if entity =~ /y\z/
+      multiple = entity[0, entity.length - 1] + 'ies'
+    else
+      multiple = entity + 's'
+    end
+    "#{number} #{number == 1 ? entity : multiple}"
   end
 
   def shorten(text, size = 70)
@@ -31,6 +41,15 @@ module ApplicationHelper
       ERB::Util::HTML_ESCAPE[special]
     }
     concat text
+  end
+
+  def guide_link(guide)
+    link_to guide.name, show_guide_path(:id => guide)
+  end
+
+  def city_link(city)
+    link_to "#{city.name}", "/cities/#{city.id}/#{city.name}"
+#     (#{city.guides.length} guides)
   end
 
 #  def show_errors(name, &block)
