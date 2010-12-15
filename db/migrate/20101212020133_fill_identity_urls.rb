@@ -1,8 +1,10 @@
 class FillIdentityUrls < ActiveRecord::Migration
   def self.up
     Tip.all.each do |tip|
-      tip.attraction.identity_url = "placeholder_for_tip_#{tip.id}"
-      tip.attraction.save!
+      if !tip.attraction.nil?
+        tip.attraction.identity_url = "placeholder_for_tip_#{tip.id}"
+        tip.attraction.save!
+      end
     end
   end
 

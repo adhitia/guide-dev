@@ -20,7 +20,7 @@ class CreateAttractionModel < ActiveRecord::Migration
 
       if address.lat != 0
         a = Attraction.new
-        a.identity_url = ''
+        a.identity_url = "placeholder_for_tip_#{tip.id}"
         a.lat = address.lat
         a.lng = address.lng
         a.save!
