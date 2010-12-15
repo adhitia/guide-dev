@@ -29,6 +29,7 @@ class CreateAttractionModel < ActiveRecord::Migration
       end
 
       tip.street_address = address.address
+      puts "!!!!!!!!!!!!!!!!!!!!!!! #{tip.inspect}"
       tip.save!
     end
 
