@@ -2,7 +2,6 @@ AdminData::Config.set = {
   :is_allowed_to_view => lambda {|controller|
     begin
       user = controller.authenticate
-      puts "!!!!!!!!!!!!!!! #{user.inspect}"
       user.admin
     rescue ApplicationController::AuthenticationError
       false
