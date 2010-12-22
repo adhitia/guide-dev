@@ -16,13 +16,87 @@
           <button class="load-info" type="button">find contact and photos</button>
         </div>
 
+        <div class="tip-ideas">
+          <span>Need ideas?</span>
+          <div class="content">
+            <div class="category">
+              <div class="name">entertainment</div>
+              <div class="content">
+                <div class="type">club</div>
+                <div class="type">bar</div>
+                <div class="type">pub</div>
+                <div class="type">concert</div>
+                <div class="type">aquarium</div>
+                <div class="type">zoo</div>
+                <div class="type">arena</div>
+                <div class="type">stadium</div>
+                <div class="type">casino</div>
+                <div class="type">music</div>
+                <div class="type">dance</div>
+                <div class="type">jazz</div>
+                <div class="type">blues</div>
+                <div class="type">disco</div>
+              </div>
+            </div>
+            <div class="category">
+              <div class="name">culture</div>
+              <div class="content">
+                <div class="type">gallery</div>
+                <div class="type">theater</div>
+                <div class="type">museum</div>
+                <div class="type">history museum</div>
+                <div class="type">art museum</div>
+                <div class="type">symphony</div>
+                <div class="type">opera</div>
+                <div class="type">library</div>
+              </div>
+            </div>
+            <div class="category">
+              <div class="name">sightseeing</div>
+              <div class="content">
+                <div class="type">park</div>
+                <div class="type">church</div>
+                <div class="type">temple</div>
+                <div class="type">mosque</div>
+                <div class="type">synagogue</div>
+                <div class="type">river</div>
+                <div class="type">ship</div>
+                <div class="type">statue</div>
+                <div class="type">monument</div>
+                <div class="type">waterfall</div>
+                <div class="type">square</div>
+                <div class="type">lake</div>
+                <div class="type">garden</div>
+                <div class="type">forest</div>
+                <div class="type">farm</div>
+                <div class="type">factory</div>
+                <div class="type">castle</div>
+                <div class="type">bay</div>
+                <div class="type">bridge</div>
+                <div class="type">beach</div>
+                <div class="type">market</div>
+              </div>
+            </div>
+            <div class="category">
+              <div class="name">other</div>
+              <div class="content">
+                <div class="type">mall</div>
+                <div class="type">shop</div>
+                <div class="type">spa</div>
+                <div class="type">restaurant</div>
+                <div class="type">cafe</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
 
         <button class="tip-create" type="button">Create</button>
     <% end %>
   </div>
 
-  <BR><BR>
+
 
   <div id="tips-matrix" class="clear-fix">
     <% tips = @guide.grouped_tips %>
@@ -48,13 +122,11 @@
     <% end %>
 
   </div>
-  <p> TIP! You can drag your points of interest around, to place them in the ideal time of day.</p>
 
   <div>
 
     <div class="button-panel">
- <span class="head2">I am done creating my guide, for now:
-    </span>
+      <span class="head2">I am done creating my guide, for now:</span>
       <a href="/guides/<%= @guide.id %>/share" class="button">
         View live version
       </a>

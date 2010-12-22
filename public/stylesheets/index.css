@@ -160,6 +160,63 @@ textarea.invalid {
     padding-right: 10px;
     position: relative;
 }
+#edit_tips .new-tip-container .tip-ideas {
+    float: right;
+    display: none;
+    cursor: pointer;
+    z-index: 1001;
+    position: relative;
+    width: 200px;
+}
+#edit_tips .new-tip-container .tip-ideas:hover {
+    color: #ddffdd;
+}
+#edit_tips .new-tip-container .tip-ideas > span {
+    font-size: x-large;
+}
+#edit_tips .new-tip-container .tip-ideas > .content {
+    display: none;
+    color: black;
+    font-size: large;
+    position: absolute;
+}
+#edit_tips .new-tip-container .tip-ideas .category {
+    border: 1px solid black;
+    border-top: none;
+    width: 200px;
+    background-color: #aaeeaa;
+    position: relative;
+}
+#edit_tips .new-tip-container .tip-ideas .category:hover {
+    background-color: #ccffcc;
+}
+#edit_tips .new-tip-container .tip-ideas .category > .name {
+    padding: 0 10px;
+}
+#edit_tips .new-tip-container .tip-ideas .category > .content {
+    position: absolute;
+    right: 200px;
+    top: 0;
+    border-top: 1px solid black;
+}
+#edit_tips .new-tip-container .tip-ideas .category .type {
+    display: none;
+    width: 200px;
+    border: 1px solid black;
+    border-top: none;
+    background-color: #aaeeaa;
+    position: relative;
+    top: -1px;
+    padding: 0 10px;
+}
+#edit_tips .new-tip-container .tip-ideas .category:hover .type {
+    display: block;
+}
+#edit_tips .new-tip-container .tip-ideas .category .type:hover {
+    background-color: #ccffcc;
+}
+
+
 #edit_tips .edit-tip-root .tip-name-area {
     display: inline-block;
     border: 5px solid blue;
@@ -1150,6 +1207,7 @@ div.guide-type-panes > div {
 #tips-matrix {
     /*overflow: hidden;*/
     /*zoom: 1;*/
+    margin-top: 30px;
 }
 
 #tips-matrix .day-header {

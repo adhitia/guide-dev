@@ -641,7 +641,6 @@ if (!window.tips) var tips = {
                 google_images.find('div').removeClass('selected');
                 google_images.find('.tip_image_url').val('');
             });
-//            console.log('4');
             tips.add(new_tip).find('.image-selection-area .current-image').hover(function() {
                 var e = $(this).find('.file-upload');
                 if (e.find('input').val().blank()) {
@@ -658,6 +657,33 @@ if (!window.tips) var tips = {
 //            tips.add(new_tip).find('input.tip-name').each(function() {
 //                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
 //            });
+
+            // show tip ideas suggestions only when tip name is in the focus
+            new_tip.find('input.tip-name').focus(function() {
+                $(this).closest('.edit-tip-root').find('div.tip-ideas').fadeIn();
+            });
+            new_tip.find('input.tip-name').blur(function() {
+                $(this).closest('.edit-tip-root').find('div.tip-ideas').fadeOut();
+            });
+
+            new_tip.find('div.tip-ideas').hover(function() {
+                $(this).children('.content').slideDown();
+            },
+            function() {
+                $(this).children('.content').slideUp();
+            });
+
+            new_tip.find('div.tip-ideas .type').click(function() {
+                $.Watermark.HideAll();
+                var name = $(this).text();
+                $.Watermark.ShowAll();
+
+                var root = $(this).closest('.edit-tip-root');
+                root.find('div.tip-name-area .tip-name').val(name);
+                guide.loadTipSuggestions(root);
+
+                $(this).closest('div.tip-ideas').children('.content').slideUp();
+            });
         }
 
     }
