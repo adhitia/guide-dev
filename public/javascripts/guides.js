@@ -693,22 +693,29 @@ if (!window.guide) var guide = {
             var label = $(this);
             var widget = label.closest('.input-widget');
             var input = widget.find(':input');
+            var original = widget.find('.original').html();
 
             label.hide();
             input.show().focus();
+//            if (input.val().blank()) {
+            if (!widget.hasClass('redefined')) {
+                input.val(original).select();
+            }
         });
         $('#book-preview .input-widget :input').blur(function() {
             var input = $(this);
             var widget = input.closest('.input-widget');
             var label = widget.find('.label');
+            var original = widget.find('.original').html();
 
             input.hide();
             label.show();
 
             var new_value = input.val();
-            if (new_value.blank()) {
+            if (new_value.blank() || new_value == original) {
                 label.find('.content').html(widget.find('.original').html());
                 widget.removeClass('redefined');
+                input.val('');
             } else {
                 widget.addClass('redefined');
                 label.find('.content').html(new_value);
