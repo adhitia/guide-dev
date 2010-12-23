@@ -66,6 +66,7 @@
 
         if (markers.length == 0) {
             $('#map-canvas').html('<h2>No map to show.</h2>');
+            $('#map-canvas').css('height', '50px');
             return;
         }
         var map = new google.maps.Map($('#map-canvas')[0], {

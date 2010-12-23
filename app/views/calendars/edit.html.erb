@@ -1,3 +1,5 @@
+<% title @guide.name %>
+
 <div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
   <h1>Step 2: Add points of interest on your day tours</h1>
 
@@ -147,8 +149,14 @@
   <div id="edit-tip-container" class="">
   </div>
 
+
+  <h3>Ready to share?</h3>
+  <fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true"></fb:comments>
 </div>
 
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
 
 
 <script type="text/javascript">

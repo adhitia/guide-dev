@@ -2,12 +2,12 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
-  <meta name="description" content="View, create and share highly targeted travel guides"/>
+  <meta name="description" content="<%= yield(:title) || "View, create and share highly targeted travel guides" %>"/>
   <meta name="keywords" content="travel, guides"/>
-  <title>Guiderer: View, create and share highly targeted travel guides</title>
+  <title>Guiderer: <%= yield(:title) || "View, create and share highly targeted travel guides" %></title>
 
   <link rel="image_src" href="/images/guiderer-logo.png" />
 
@@ -53,6 +53,14 @@
   <link href="/stylesheets/demo_table_jui.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/css/openid.css" media="screen" rel="stylesheet" type="text/css"/>
   <!--<link href="/jquery/jquery.autocomplete.css" media="screen" rel="stylesheet" type="text/css"/>-->
+
+
+
+  <!--<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>-->
+  <!--<script type="text/javascript" src="http://static.ak.connect.facebook.com/connect.php/en_US/js/Api/CanvasUtil/Connect/XFBML"></script>-->
+  <!--<link rel="stylesheet" type="text/css" href="http://static.ak.connect.facebook.com/connect.php/en_US/css/bookmark-button-css/connect-button-css/share-button-css/FB.Connect-css/connect-css">-->
+  <!--<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/XdCommReceiver.js"></script>-->
+
 
 
   <script type="text/javascript">

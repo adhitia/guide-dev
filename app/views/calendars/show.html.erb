@@ -1,13 +1,17 @@
+<% title @guide.name %>
+
 <p style="overflow:hidden;">
-<% if @guide.image.file? %>
-    <%= image_tag @guide.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;"} %>
-<% end %>
-<%= h @guide.description %>
+  <% if @guide.image.file? %>
+      <%= image_tag @guide.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;"} %>
+  <% end %>
+  <%= h @guide.description %>
 </p>
 
 
-<%= render :partial => 'calendars/widget', :locals => {:guide => @guide, :style_id => '4'} %>
-
+  <div class="clear-fix">
+    <%= render :partial => 'calendars/widget', :locals => {:guide => @guide, :style_id => '4'} %>
+  </div>
+<br/>
 
 
 <h1>Points of Interest Map</h1>
@@ -28,3 +32,8 @@
   </a>
 </div>
 
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
+<h3>Share this guide with others.</h3>
+<fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true"></fb:comments>
