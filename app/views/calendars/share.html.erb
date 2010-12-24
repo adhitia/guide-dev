@@ -52,7 +52,7 @@ Add those imports to the 'head' tag of your page.
         var style_id = el.id.substring("preview_type_".length);
 
         // prepare code to show
-        var html = $('#preview_template').html();
+        var html = $('#preview_template').html().trim();
         html = html.replace("{target_id}", target_id);
         html = html.replace("{calendar_id}", calendar_id);
         html = html.replace("{style_id}", style_id);
@@ -73,5 +73,13 @@ Add those imports to the 'head' tag of your page.
     $(document).ready(function() {
         $('#preview_type_1').click();
         $('#choose_style').buttonset();
+//        $('#preview_html').focus(function() {
+//            console.log('focus');
+//        });
+
+        // selecting on focus doesn't work in chrome
+        $('#preview_html').click(function() {
+            this.select();
+        });
     });
 </script>

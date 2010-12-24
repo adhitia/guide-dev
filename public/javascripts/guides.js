@@ -697,7 +697,6 @@ if (!window.guide) var guide = {
 
             label.hide();
             input.show().focus();
-//            if (input.val().blank()) {
             if (!widget.hasClass('redefined')) {
                 input.val(original).select();
             }

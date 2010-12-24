@@ -108,6 +108,7 @@ textarea.invalid {
     border: 3px groove #E8B900;
     display: inline-block;
     vertical-align: top;
+    height: 24.5px;
 }
 
 

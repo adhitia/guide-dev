@@ -19,8 +19,13 @@
 <%= render :partial => 'map', :locals => {:guide => @guide} %>
 
 <div class="button-panel">
+  <span class="button">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" >Tweet</a>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  </span>
   <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
-    More guides on <%= h @guide.location.name %> </a>
+    More guides on <%= h @guide.location.name %>
+  </a>
   <a href="/users/<%= @guide.user.id %>" class="button">
     More by <%= @guide.user.name %>
   </a>
