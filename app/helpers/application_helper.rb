@@ -47,13 +47,23 @@ module ApplicationHelper
     concat text
   end
 
+  def guide_url(guide)
+    "#{WEB_ROOT}/guides/#{guide.id}/#{for_url(guide.name)}"
+  end
+
   def guide_link(guide)
-    link_to guide.name, show_guide_path(:id => guide)
+    link_to guide.name, guide_url(guide)
+#    link_to guide.name, show_guide_path(:id => guide)
+#    , {:target => '_blank'}
   end
 
   def city_link(city)
-    link_to "#{city.name}", "/cities/#{city.id}/#{city.name}"
+    link_to "#{city.name}", "#{WEB_ROOT}/cities/#{city.id}/#{for_url(city.name)}"
 #     (#{city.guides.length} guides)
+  end
+
+  def for_url(s)
+    s.gsub(/\s/, "-").gsub(/["'\[\]:\/\\<>#%~^`|]/, "")
   end
 
 #  def show_errors(name, &block)

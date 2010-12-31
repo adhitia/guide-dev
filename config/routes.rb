@@ -41,8 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   map.update_tips 'guides/:id/tips/update', :controller => :tips, :action => :update, :conditions => { :method => :post }
   map.create_tip  'guides/:id/tips/create', :controller => :tips, :action => :create, :conditions => { :method => :post }
   map.create_tip  'guides/:id/tips/new', :controller => :tips, :action => :new, :conditions => { :method => :get }
-  map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
-  map.show_guide 'guides/:id', :controller => :calendars, :action => :show, :conditions => { :method => :get }
+#  map.edit_guide 'guides/:id/edit', :controller => :calendars, :action => :edit
   map.share_guide 'guides/:id/share', :controller => :calendars, :action => :share, :conditions => { :method => :get }
   map.guide_map 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
   map.print_guide 'guides/:id/print', :controller => :calendars, :action => :print, :conditions => { :method => :get }
@@ -81,5 +80,8 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.connect 'guides/:id/vote/:vote', :controller => :display, :action => :vote
-  map.connect 'guides/:id/:layout', :controller => :display, :action => :display
+  map.connect 'guides/:id/:layout', :controller => :display, :action => :display,
+              :requirements => { :layout => /\d+/ }
+
+  map.show_guide 'guides/:id/*name', :controller => :calendars, :action => :show, :conditions => { :method => :get }
 end

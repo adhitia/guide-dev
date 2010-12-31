@@ -24,17 +24,17 @@
   </thead>
 
   <tbody>
-<% @guides.each do |calendar| %>
+<% @guides.each do |guide| %>
   <tr>
     <td><span class="headtextlighter">
-      <%= link_to calendar.name, show_guide_path(:id => calendar) %>
+      <%= guide_link(guide) %>
     </span></td>
-    <td><%=h calendar.location.name %></td>
-    <td><%= link_to calendar.user.name, show_user_path(:id => calendar.user) %></td>
-    <!--<td><%= h calendar.view_count %></td>-->
-    <td><%=h calendar.rating_str %></td>
-    <td><%=h calendar.completed_percentage %>%</td>
-    <td><%=h calendar.created_at.strftime "%B %d, %Y" %></td>
+    <td><%=h guide.location.name %></td>
+    <td><%= link_to guide.user.name, show_user_path(:id => guide.user) %></td>
+    <!--<td><%= h guide.view_count %></td>-->
+    <td><%=h guide.rating_str %></td>
+    <td><%=h guide.completed_percentage %>%</td>
+    <td><%=h guide.created_at.strftime "%B %d, %Y" %></td>
   </tr>
 <% end %>
 </tbody>
