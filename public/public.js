@@ -220,6 +220,15 @@ if (!window._guiderer) {
             }
 
             var position_tooltip = function(trigger, tip) {
+                var horizontal_arrow = [];
+                var arrows = [
+                    {x: 28, y: 0, w: 28, h: 28},
+                    {x: 56, y: 28, w: 28, h: 28},
+                    {x: 28, y: 56, w: 28, h: 28},
+                    {x: 0, y: 28, w: 28, h: 28}
+                ];
+                var arrow;
+
                 // x and y positions relative to window
                 var window_x = trigger.offset().left - $(window).scrollLeft();
                 var window_y = trigger.offset().top - $(window).scrollTop();
@@ -231,34 +240,81 @@ if (!window._guiderer) {
                 var available_bottom = $(window).height() - window_y - trigger.height();
 
                 var x, y;
-                var margin = 20;
+//                var ax, ay; // arrow positions relative to tip window
+                var margin = 28;
+                var arrow_element = tip.find('.arrow').css({left: '', right: '', top: '', bottom: ''});
+
+
                 // now, find the best side to present content
                 if (Math.max(available_left, available_right) * tip.height()
                         > Math.max(available_top, available_bottom) * tip.width()) {
                     if (available_left > available_right) {
                         x = -tip.width() - margin;
+                        arrow = arrows[1];
+                        arrow_element.css('right', -arrow.w);
                     } else {
                         x = trigger.width() + margin;
+                        arrow = arrows[3];
+                        arrow_element.css('left', -arrow.w);
                     }
+
+                    // position tooltip relative to trigger
                     y = ($(window).height() - tip.height()) / 2.0 - window_y;
-                    if (y > trigger.height()) {
-                        y = trigger.height();
-                    } else if (y < -tip.height()) {
-                        y = -tip.height();
+                    if (y > trigger.height() - arrow.h*2) {
+                        y = trigger.height() - arrow.h*2;
+                    } else if (y < -tip.height() + arrow.h*2) {
+                        y = -tip.height() + arrow.h*2;
                     }
+
+                    // position arrow relative to tooltip
+                    var ay = trigger.height()/2 - y - arrow.h/2;
+                    if (ay < arrow.h) {
+                        ay = arrow.h;
+                    } else if (ay + arrow.h > tip.height() - arrow.h) {
+                        ay = tip.height() - arrow.h - arrow.h;
+                    }
+
+                    arrow_element.css('top', ay);
                 } else {
                     if (available_top > available_bottom) {
                         y = -tip.height() - margin;
+                        arrow = arrows[2];
+                        arrow_element.css('bottom', -arrow.h);
                     } else {
                         y = trigger.height() + margin;
+                        arrow = arrows[0];
+                        arrow_element.css('top', -arrow.h + 'px');
                     }
+
+                    // position tooltip relative to trigger
                     x = ($(window).width() - tip.width()) / 2.0 - window_x;
-                    if (x > trigger.width()) {
-                        x = trigger.width();
-                    } else if (x < -tip.width()) {
-                        x = -tip.width();
+                    if (x > trigger.width() - arrow.w*2) {
+                        x = trigger.width() - arrow.w*2;
+                    } else if (x < -tip.width() + arrow.w*2) {
+                        x = -tip.width() + arrow.w*2;
                     }
+
+                    // position arrow relative to tooltip
+                    var ax = trigger.width()/2 - x - arrow.w/2;
+                    if (ax < arrow.w) {
+                        ax = arrow.w;
+                    } else if (ax + arrow.w > tip.width() - arrow.w) {
+                        ax = tip.width() - arrow.w - arrow.w;
+                    }
+
+
+//                    var ax = trigger.width()/2 - x - arrow.w/2;
+                    arrow_element.css('left', ax + 'px');
                 }
+
+                arrow_element.css({
+                    'background-position': -arrow.x + 'px ' + -arrow.y + 'px',
+                    width: arrow.w + 'px',
+                    height: arrow.h + 'px',
+//                    left: ax + 'px',
+//                    top: ay + 'px',
+                    display: 'block'
+                });
 
                 tip.css({
                     position: 'absolute',
@@ -382,7 +438,7 @@ if (!window._guiderer) {
         if (window.addthis == undefined) {
             load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1', init);
         }
-        load_css(server + 'public.css?_version=9');
+        load_css(server + 'public.css?_version=10');
 
     }, false);
 

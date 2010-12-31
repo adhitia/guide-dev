@@ -55,6 +55,12 @@
     border: solid gray 5px;
 }
 
+.guiderer .full_tip .arrow {
+    background-image: url("images/hover_arrows.png");
+    position: absolute;
+    display: none;
+}
+
 .guiderer .full_tip .tip-show .tip-name {
     color: #666666;
     font-weight: bold;
