@@ -76,6 +76,7 @@ if (!window._guiderer) {
                 var tooltip = $(this).find('.full_tip');
                 _guiderer.tooltip(trigger, tooltip, {
                     hide_delay : 500,
+                    show_delay : 500,
                     on_before_show: function(trigger, tooltip) {
                         // hide all other tooltips
                         $('div.guiderer div.full_tip').hide();
@@ -130,6 +131,7 @@ if (!window._guiderer) {
                 var tooltip = $(this).find('.tooltip-content');
                 _guiderer.tooltip(trigger, tooltip, {
                     hide_delay : 500,
+                    show_delay : 500,
                     on_before_show: function() {
                         $('div.guiderer div.full_tip').hide();
                         $('div.guiderer div.guide-info .tooltip-content').hide();
@@ -211,12 +213,15 @@ if (!window._guiderer) {
         };
 
         // creates a tooltip when trigger element is hovered 
-        // currently supported options: on_before_show, on_show, hide_delay
+        // currently supported options: on_before_show, on_show, hide_delay, show_delay
         _guiderer.tooltip = function(trigger, tooltip, options) {
             if (!options) options = {};
             if (!options.hide_delay) {
                 // hide tooltip immediately when mouse left by default 
                 options.hide_delay = 0;
+            }
+            if (!options.show_delay) {
+                options.show_delay = 0;
             }
 
             var position_tooltip = function(trigger, tip) {
@@ -240,7 +245,6 @@ if (!window._guiderer) {
                 var available_bottom = $(window).height() - window_y - trigger.height();
 
                 var x, y;
-//                var ax, ay; // arrow positions relative to tip window
                 var margin = 28;
                 var arrow_element = tip.find('.arrow').css({left: '', right: '', top: '', bottom: ''});
 
@@ -302,8 +306,6 @@ if (!window._guiderer) {
                         ax = tip.width() - arrow.w - arrow.w;
                     }
 
-
-//                    var ax = trigger.width()/2 - x - arrow.w/2;
                     arrow_element.css('left', ax + 'px');
                 }
 
@@ -311,8 +313,6 @@ if (!window._guiderer) {
                     'background-position': -arrow.x + 'px ' + -arrow.y + 'px',
                     width: arrow.w + 'px',
                     height: arrow.h + 'px',
-//                    left: ax + 'px',
-//                    top: ay + 'px',
                     display: 'block'
                 });
 
@@ -326,29 +326,44 @@ if (!window._guiderer) {
             // setup tooltip for each particular tip
             trigger.hover(function() {
                 // remove closing timer, if necessary
-                if (tooltip.data('hover-timeout-var') != null) {
-                    clearTimeout(tooltip.data('hover-timeout-var'));
-                    tooltip.data('hover-timeout-var', null);
+                if (tooltip.data('close-timeout-var') != null) {
+                    clearTimeout(tooltip.data('close-timeout-var'));
+                    tooltip.data('close-timeout-var', null);
                 }
 
-                position_tooltip(trigger, tooltip);
+                if (!tooltip.is(':visible')) {
+//                    console.log('hover');
+                    var t = setTimeout(function() {
+                        position_tooltip(trigger, tooltip);
 
-                if (options.on_before_show) {
-                    options.on_before_show(trigger, tooltip);
-                }
+                        if (options.on_before_show) {
+                            options.on_before_show(trigger, tooltip);
+                        }
 
-                tooltip.show();
+                        tooltip.show();
 
-                if (options.on_show) {
-                    options.on_show(trigger, tooltip);
+                        if (options.on_show) {
+                            options.on_show(trigger, tooltip);
+                        }
+                        tooltip.data('open-timeout-var', null);
+                    }, options.show_delay);
+                    tooltip.data('open-timeout-var', t);
                 }
             },
             function() {
-                var t = setTimeout(function() {
-                    tooltip.hide();
-                    tooltip.data('hover-timeout-var', null);
-                }, options.hide_delay);
-                tooltip.data('hover-timeout-var', t);
+                // remove opening timer, if necessary
+                if (tooltip.data('open-timeout-var') != null) {
+                    clearTimeout(tooltip.data('open-timeout-var'));
+                    tooltip.data('open-timeout-var', null);
+                }
+
+                if (tooltip.is(':visible')) {
+                    var t = setTimeout(function() {
+                        tooltip.hide();
+                        tooltip.data('close-timeout-var', null);
+                    }, options.hide_delay);
+                    tooltip.data('close-timeout-var', t);
+                }
             });
         };
     };
