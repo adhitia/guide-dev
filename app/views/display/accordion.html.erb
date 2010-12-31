@@ -66,7 +66,7 @@
   <!--header-->
   <div class="guide-head">
     <div class="guide-name">
-      <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
+      <%= guide_link @calendar %>
     </div>
     <div class="guide-description">Travel tips for <%= @calendar.location.name %></div>
     <div class="guide-dow">Day <%= @day + 1 %></div>

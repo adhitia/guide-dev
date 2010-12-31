@@ -88,7 +88,7 @@
 
 <div class="guide-head">
       <div class="guide-name">
-        <a href="<%=WEB_ROOT%>/guides/<%= @calendar.id %>"><%= @calendar.name %></a>
+        <%= guide_link @calendar %>
       </div>
       <div class="guide-description">Day tours in <%= @calendar.location.name %></div>
     </div>
