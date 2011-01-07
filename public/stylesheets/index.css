@@ -887,7 +887,7 @@ font-weight: bold;
     margin-left:5px;
     width: 19px;
     height: 19px;
-    opacity: 0.7;
+    opacity: 0.5;
 }
 .icon-small:hover {
     opacity: 1 !important;
@@ -1291,7 +1291,7 @@ div.guide-type-panes > div {
     height: 100%;
     position: relative;
 }
-#tips-matrix .edit-tip-tile .delete-tip {
+/*#tips-matrix .edit-tip-tile .delete-tip {
     position: absolute;
     color: black;
     top: 0;
@@ -1299,13 +1299,24 @@ div.guide-type-panes > div {
     font-size: x-large;
     float: right;
     margin-left: 5px;
-    /*width: 19px;*/
-    /*height: 19px;*/
     opacity: 0.1;
+}*/
+#tips-matrix .edit-tip-tile:hover .icon-small {
+    opacity: 0.7;
 }
-#tips-matrix .edit-tip-tile:hover .delete-tip {
-    opacity: 1;
+#tips-matrix .edit-tip-tile .move-tip {
+    background: transparent url(/images/movetip.gif) no-repeat;
+    position: absolute;
+    top: 0;
+    right: 21px;
 }
+#tips-matrix .edit-tip-tile .delete-tip {
+    background: transparent url(/images/deletetip.gif) no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 #tips-matrix .edit-tip-tile .tip-url {
     vertical-align:bottom;
     float:right;

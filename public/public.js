@@ -332,7 +332,6 @@ if (!window._guiderer) {
                 }
 
                 if (!tooltip.is(':visible')) {
-//                    console.log('hover');
                     var t = setTimeout(function() {
                         position_tooltip(trigger, tooltip);
 

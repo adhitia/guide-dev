@@ -556,6 +556,7 @@ if (!window.tips) var tips = {
                 connectWith: '.condition-group',
                 delay: 100,
                 distance: 5,
+                handle: 'a.move-tip',
                 start: function(event, ui) {
                     var tooltips = $('div.edit-tip-tile > .tip-icon');
                     tooltips.qtip("hide");

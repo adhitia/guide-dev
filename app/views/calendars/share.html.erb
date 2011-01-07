@@ -2,18 +2,6 @@
 
 <h1>Preview and get widget code</h1>
 
-<!--
-Add those imports to the 'head' tag of your page.
-<textarea id="preview_import" rows="4" cols="120">
-  <% escape do %>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<%= WEB_ROOT %>/public.js" ></script>
-    <script type="text/javascript" src="<%= WEB_ROOT %>/jquery/jquery.qtip-1.0.0-rc3.js"></script>
-  <% end %>
-</textarea>
--->
-
-
 <P>Choose your preferred widget layout:</p>
 <div id="choose_style">
   <% @layouts.each do |layout| %>
@@ -37,6 +25,11 @@ Add those imports to the 'head' tag of your page.
 </div>
 
 
+<div class="button-panel">
+  <a href="<%= guide_url @calendar %>" class="button">
+    Edit Guide
+  </a>
+</div>
 
 
 
