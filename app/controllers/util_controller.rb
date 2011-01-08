@@ -107,11 +107,13 @@ class UtilController < ApplicationController
   end
 
   def db_test
-    result = "start "
-    Attraction.all.each do |a|
-      result += " #{a.city.inspect} <br/>\n"
-    end
-    render :text => result
+#    result = "start "
+#    Attraction.all.each do |a|
+#      result += " #{a.city.inspect} <br/>\n"
+#    end
+#    render :text => result
+#    expire_page :controller => "display_controller", :action => "display"
+    render :text => "ok"
   end
 
   private

@@ -3,7 +3,6 @@
 <div id="map-canvas"></div>
 
 <div id="map-data" style="display: none;">
-  <% ratio = Float(@attractions.first.popularity) / @attractions.last.popularity %>
   <% @attractions.each do |attraction| %>
       <% tip = attraction.tips.max {|a, b| a.calendar.rating <=> b.calendar.rating} %>
 

@@ -7,10 +7,12 @@ require 'calendars_helper'
 class DisplayController < ApplicationController
   layout 'widget'
 
+#  caches_action :display
   after_filter :jsonp
 
 
   def display
+    puts "display guide"
     response.headers['Cache-Control'] = 'public, max-age=300'
 
     @calendar = Calendar.find params[:id]
@@ -22,16 +24,6 @@ class DisplayController < ApplicationController
       @day = @day.to_i
     end
 
-
-    # protect ourselves from bad indexes
-#    @forecast_full = get_forecast(@calendar.location.id)
-#    if @day >= @forecast_full.length
-#      @day = @forecast_full.length - 1
-#    end
-#    if @day < 0
-#      @day = 0
-#    end
-
     @tips = @calendar.grouped_tips
     if @day >= @tips.length
       @day = @tips.length - 1
@@ -40,20 +32,14 @@ class DisplayController < ApplicationController
       @day = 0
     end
 
-
-#    @weather_forecast = @forecast_full[@day]
-#    @dow = Weekday.find(@weather_forecast.date.cwday);
-#    @weather_forecast = get_forecast(@calendar.location.id, 0, 1)[0]
-
-#    @tips = @calendar.tips.select {|t| t.weekday.id == @dow.id and (t.condition.weather == nil || t.condition.weather == @weather_forecast.condition)}
-#    @tips = @tips.sort_by {|t| t.condition.id }
-#    @calendar.view_count += 1;
-#    @calendar.save
-
     @rating = @calendar.rating_num
 
     layout = GuideLayout.find params[:layout]
     render :template => "display/#{layout.path}"
+#    puts "???? 1"
+#    response = jsonp2(render_to_string :template => "display/#{layout.path}")
+#    puts "???? 2"
+#    render :text => response
   end
 
 
@@ -92,14 +78,26 @@ class DisplayController < ApplicationController
 
   def jsonp()
     if params[:callback]
-      body = response.body
-      body = body.gsub '"', '\\"'
+      body = response.body;
+      body = body.gsub '"', '\\"';
       body = body.gsub /\n/, '\\n';
       body = body.gsub /\r/, '\\r';
       body = body.gsub '/', '\\/';
       body = params[:callback] + '("' + body + '");';
       response.body = body;
     end
+  end
+  def jsonp2(body)
+    if params[:callback]
+#      body = response.body;
+      body = body.gsub '"', '\\"';
+      body = body.gsub /\n/, '\\n';
+      body = body.gsub /\r/, '\\r';
+      body = body.gsub '/', '\\/';
+      body = params[:callback] + '("' + body + '");';
+#      response.body = body;
+    end
+    body
   end
 
 
