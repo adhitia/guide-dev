@@ -33,7 +33,6 @@ if (!window._guiderer) {
                 throw "Guide id or style or server isn't set.";
             }
 
-            console.log('request');
             $.ajax({
                 url: server + '/guides/' + id + '/' + style,
                 type: 'GET',
@@ -44,7 +43,6 @@ if (!window._guiderer) {
                 dataType: 'jsonp',
                 cache: true,
                 success: function(res) {
-                    console.log('test!');
                     target.html('');
                     target.append(res);
                     _guiderer.init(target);
