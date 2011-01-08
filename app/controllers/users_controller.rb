@@ -83,7 +83,7 @@ class UsersController < ApplicationController
   def index
     @calendars = Calendar.find(:all, :order => "created_at DESC")
     @calendars_amount = @calendars.size
-    @recent_calendars = Calendar.find(:all, :conditions => ["public = ?", true], :limit => 8, :order => "created_at DESC")
+    @recent_calendars = Calendar.find(:all, :conditions => ["public = ? and completed_percentage > 10", true], :limit => 8, :order => "created_at DESC")
     @locations = Location.all
   end
 
