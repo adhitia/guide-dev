@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215203440) do
+ActiveRecord::Schema.define(:version => 20110119212152) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address"
@@ -132,6 +132,20 @@ ActiveRecord::Schema.define(:version => 20101215203440) do
     t.string  "salt",       :null => false
   end
 
+  create_table "photos", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.string   "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "image_remote_url"
+    t.integer  "image_width"
+    t.integer  "image_height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+  end
+
   create_table "show_places", :force => true do |t|
     t.integer  "condition_id"
     t.integer  "weekday_id"
@@ -177,6 +191,11 @@ ActiveRecord::Schema.define(:version => 20101215203440) do
     t.string   "identity_url"
     t.boolean  "registration_complete"
     t.boolean  "admin",                 :default => false
+    t.text     "bio"
+    t.string   "public_email"
+    t.string   "website"
+    t.string   "facebook"
+    t.string   "twitter"
   end
 
   create_table "weather_forecasts", :force => true do |t|

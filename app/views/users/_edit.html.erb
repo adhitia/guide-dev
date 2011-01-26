@@ -1,0 +1,164 @@
+
+
+<form id="user-edit" class="<%= @errors.nil? || @errors.empty? ? 'view-mode' : 'edit-mode' %>" action="/users/<%= user.id %>" method="post" enctype="multipart/form-data">
+  <!--<span class="edit-tip">Click to edit</span>-->
+
+  <% fields_for "user", user do |form| %>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+
+      <div class="input-row">
+        <div>
+          <%= form.label :name %>
+          <span class="view"><%= h user.name %></span>
+          <%= form.text_field :name, :class => 'input' %>
+        </div>
+        <div>
+          <%= form.label :email %>
+          <span class="view"><%= h user.email %></span>
+          <%= form.text_field :email, :class => 'input' %>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <%= form.label :website %>
+          <span class="view"><%= h user.website %></span>
+          <%= form.text_field :website, :class => 'input' %>
+        </div>
+        <div>
+          <%= form.label :public_email %>
+          <span class="view"><%= h user.public_email %></span>
+          <%= form.text_field :public_email, :class => 'input' %>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <%= form.label :facebook %>
+          <span class="view"><%= h user.facebook %></span>
+          <%= form.text_field :facebook, :class => 'input' %>
+        </div>
+        <div>
+          <%= form.label :twitter %>
+          <span class="view"><%= h user.twitter %></span>
+          <%= form.text_field :twitter, :class => 'input' %>
+        </div>
+      </div>
+
+      <br/>
+
+      <div class="input-row">
+        <div class="image">
+          <label for="user_photo.image">Photo</label>
+
+          <% if user.photo != nil %>
+              <%= image_tag user.photo.image.url(:thumb), :class => 'view' %>
+          <% else %>
+              <span class="view no-value">none</span>
+          <% end %>
+
+          <label class="file-upload input">
+            <span class="label">upload image <br/>
+              <span class="file-name"></span>
+            </span>
+            <input type="file" name="user[photo_attributes][image]" size="5">
+          </label>
+          <input type="hidden" size="30" name="user[photo_attributes][id]" id="user_photo.id" value="<%= user.photo.nil? ? '' : @user.photo.id %>">
+        </div>
+
+        <div class="bio">
+          <%= form.label :bio %>
+          <div class="view"><%= h user.bio %></div>
+          <textarea class="input" name="user[bio]" id="user_bio"><%= h user.bio %></textarea>
+        </div>
+      </div>
+
+
+      <div class="button-panel">
+        <a href="javascript:" class="button edit">
+          Edit
+        </a>
+        <a href="javascript:" class="button submit">
+          Submit
+        </a>
+        <a href="javascript:" class="button cancel">
+          Cancel
+        </a>
+      </div>
+
+      <!--<div class="controls">
+        <button class="submit" type="submit">submit</button>
+        <button class="cancel" type="reset">cancel</button>
+      </div>-->
+
+  <% end %>
+
+  <br/>
+</form>
+
+
+
+
+<br/>
+<!--<button type="button" onclick="$('#user-edit').toggleClass('edit-mode').toggleClass('view-mode');">edit</button>-->
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<script type="text/javascript">
+    $('#user-edit .input-row .view:empty').each(function() {
+        $(this).addClass('no-value').html('none');
+    });
+
+
+    $('#user-edit .file-upload > input').change(function() {
+        var value = $(this).val();
+        if (value.indexOf('\\') >= 0) {
+            value = value.substring(value.lastIndexOf('\\') + 1, value.length);
+        }
+        $(this).parent().find('.file-name').html(value);
+    });
+
+    $('#user-edit .button-panel .edit').click(function() {
+        if ($('#user-edit').hasClass('view-mode')) {
+            $('#user-edit').removeClass('view-mode').addClass('edit-mode');
+        }
+    });
+    $('#user-edit .button-panel .cancel').click(function() {
+        $('#user-edit').addClass('view-mode').removeClass('edit-mode');
+
+        // do not reset, for now
+//        $('#user-edit')[0].reset();
+//        $('.file-upload .label .file-name').html('');
+        return false;
+    });
+    $('#user-edit .button-panel .submit').click(function() {
+        common.clearValidationErrors();
+        common.setLoadingGlobal('Saving..');
+        $('#user-edit').ajaxSubmit({
+            type: 'POST',
+            cache: false,
+            iframe: true,
+            dataType: "text",
+            success: function(result) {
+                common.stopLoadingGlobal();
+
+                if (result.startsWith('{')) {
+                    // errors in json form returned
+                    var errors = eval('(' + result + ')').errors;
+                    common.validationErrors(errors);
+                    return;
+                }
+
+                $('#user-edit').replaceWith(result);
+            }
+        });
+        return false;
+    });
+
+
+</script>

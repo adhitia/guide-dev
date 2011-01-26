@@ -149,7 +149,6 @@ if (!window.common) {
         },
 
         empty: function(s) {
-//            return s == null || common.trim(s) == '';
             return s == null || /^\s*$/.test(s);
         },
 
@@ -197,7 +196,14 @@ if (!window.common) {
 
                     // highlight corresponding input field
                     var searchKey = key.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
-                    var e = root.find('input[name=' + searchKey + '],textarea[name=' + searchKey + ']');
+//                    var e = root.find('input[name="' + searchKey + '"],textarea[name="' + searchKey + '"]');
+                    var e = root.find('input, textarea').filter(function() {
+                        // rails adds '_attributes' for nested objects (see accepts_nested_attributes_for)
+                        // ignore those suffixes
+                        var name = $(this).attr('name');
+                        return key == name.replace(/_attributes]/g, ']');
+                    });
+
                     if (!focused) {
                         e.focus();
                         focused = true;
@@ -209,7 +215,7 @@ if (!window.common) {
 
                     if (message != '') {
 //                        var label_id = key + "_error";
-                        var error_class = searchKey + '_error';
+                        var error_class = key + '_error';
                         if (root.find('span.' + error_class).length == 0) {
                             $('<br/><span class="validation-error ' + error_class + '">' + message + '</span>').insertAfter(e);
                         } else {

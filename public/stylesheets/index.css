@@ -1,6 +1,10 @@
 
 @charset "utf-8";
 
+*{
+    line-height: normal !important;
+}
+
 .text {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
@@ -1543,7 +1547,7 @@ div.guide-type-panes > div {
 	top: 0;
 	left: 0;
 	margin: 0;
-	font-size: 70px;
+	font-size: 100px;
 
 	/* Loses tab index in webkit if width is set to 0 */
 	opacity: 0;
@@ -1596,4 +1600,116 @@ div.guide-type-panes > div {
 .clear-fix {
     zoom: 1;
 }
+
+
+#user-edit .input-row {
+    overflow: hidden;
+    zoom: 1;
+    margin: 10px;
+}
+
+#user-edit .input-row > div {
+    width: 45%;
+    float: left;
+    margin-left: 30px;
+    /*height: 21px;*/
+}
+#user-edit .input-row > div > .input {
+    float: right;
+    width: 250px;
+    display: none;
+}
+#user-edit .input-row > div > input.input {
+    text-align: right;
+}
+#user-edit .input-row > div > .view {
+    float: right;
+    /*width: 250px;*/
+    display: none;
+}
+#user-edit .input-row > div > .view.no-value {
+    color: #d3d3d3;
+}
+#user-edit .input-row > div > label {
+    /*height: 21px;*/
+}
+
+#user-edit.edit-mode .input-row > div > .input {
+    display: block;
+}
+#user-edit.view-mode .input-row > div > .view {
+    display: inline;
+}
+
+#user-edit .input-row > div.bio {
+    width: 800px;
+    height: auto;
+}
+#user-edit .input-row > div.bio > textarea {
+    height: 100px;
+    width: 100%;
+}
+#user-edit .input-row > div.bio > .view {
+    width: 100%;
+}
+
+#user-edit .input-row > div.image {
+    width: 100px;
+    height: auto;
+}
+#user-edit .input-row > div.image > .view {
+    width: 100px;
+}
+#user-edit .input-row > div.image > .input {
+    width: 100px;
+    height: 100px;
+}
+
+/*
+#user-edit .controls {
+    text-align: center;
+}
+*/
+#user-edit.view-mode .button-panel .submit, #user-edit.view-mode .button-panel .cancel {
+    display: none;
+}
+#user-edit.edit-mode .button-panel .edit {
+    display: none;
+}
+
+/*
+#user-edit.view-mode:hover {
+    border: 2px solid yellow;
+    cursor: pointer;
+}
+*/
+
+#user-edit {
+    position: relative;
+}
+/*
+#user-edit > .edit-tip {
+    display: none;
+}
+#user-edit.view-mode:hover > .edit-tip {
+    display: inline;
+    color: yellow;
+    font-size: 25px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+*/
+
+#user-edit .validation-error {
+    float: right;
+    min-width: 250px;
+    text-align: right;
+}
+#user-edit.view-mode .validation-error {
+    display: none;
+}
+
+
+
 

@@ -1,7 +1,24 @@
-<p>
-  <b>Name:</b>
-  <%=h @user.name %>
-</p>
+
+  <p><b>Name:</b> <%= h @user.name %></p>
+  <% if !@user.website.blank? %>
+      <p><b>Website:</b> <a href="<%= h @user.website %>"><%= h @user.website %></a></p>
+  <% end %>
+  <% if !@user.public_email.blank? %>
+      <p><b>Contact Email:</b> <a href="mailto:<%= h @user.public_email %>"><%= h @user.public_email %></a></p>
+  <% end %>
+  <% if !@user.twitter.blank? %>
+      <p><b>Twitter:</b> <a href="<%= h @user.twitter %>"><%= h @user.twitter %></a></p>
+  <% end %>
+  <% if !@user.facebook.blank? %>
+      <p><b>Facebook:</b> <a href="<%= h @user.facebook %>"><%= h @user.facebook %></a></p>
+  <% end %>
+
+  <p>
+    <% if @user.photo != nil %>
+        <%= image_tag @user.photo.image.url(:thumb) %>
+    <% end %>
+    <%= h @user.bio %>
+  </p>
 
 <h2>User's guides</h2>
 <% @user.calendars.select{|guide| guide.public?}.each do |guide| %>

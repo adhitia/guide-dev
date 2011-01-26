@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  has_one :photo, :as => :imageable, :dependent => :destroy
+
+  accepts_nested_attributes_for :photo, :reject_if => lambda { |t| t['image'].blank? }
+
   has_many :calendars
   has_many :advertisements
   validates_presence_of :name, :email, :identity_url
@@ -14,14 +18,11 @@ class User < ActiveRecord::Base
   validates_length_of :email, :maximum => 40,
                       :message => "No more than {{count}} characters allowed"
 
-#  validates_confirmation_of :password#, :on => :create
-#  validates_length_of :password, :within => 3..20
+  before_validation { |user|
+    user.name = '' if user.name.blank?
+    user.name.gsub! /[\s]+/, ' '
+    user.name.strip!
+  }
 
-  attr_accessible :email, :name, :identity_url
 
-  # If a user matching the credentials is found, returns the User object.
-  # If no matching user is found, returns nil.
-#  def self.authenticate(user_info)
-#    find_by_email_and_password(user_info[:email], user_info[:password])
-#  end
 end

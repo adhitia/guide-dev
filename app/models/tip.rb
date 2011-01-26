@@ -68,7 +68,7 @@ class Tip < ActiveRecord::Base
   end
 
   def download_remote_image
-    self.image            = do_download_remote_image
+    self.image = do_download_remote_image
     self.image_remote_url = image_url
   end
 

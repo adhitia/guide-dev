@@ -1,0 +1,24 @@
+<%
+  input_type ||= ''
+  if input_type == 'textarea'
+    input_control = form.text_area(name)
+  else
+    input_control = form.text_field(name)
+  end
+%>
+
+<!--
+<div>
+    <%= name %> : <%= input_control %>
+</div>
+<div class="input-widget input-widget-<%= name %>">
+  <div class="label" title="<%= name %> - click to edit">
+    <div class="content"></div>
+    <img src="/images/undo-icon.png" alt="" class="undo" title="undo changes to <%= name %>">
+  </div>
+  <div class="original"><%= h value %></div>
+  <%= input_control %>
+</div>
+
+
+-->

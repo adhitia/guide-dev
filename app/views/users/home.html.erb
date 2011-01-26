@@ -1,5 +1,7 @@
 <h1>Account Info</h1>
 
+<%= render :partial => 'edit', :locals => {:user => @user} %>
+
 <div>
 <%= link_to 'Create a new guide', new_guide_path %>
 </div>
@@ -8,58 +10,16 @@
 Your guides
 </h2>
 
+
 <% @user.calendars.each do |guide| %>
     <%= render :partial => 'calendars/widget', :locals => {:guide => guide, :style_id => 3} %>
 <% end %>
 
 
 
-
-<!--<table id="calendar_search_result" width=950px class="display" border="0" cellpadding="0" cellspacing="0">
-  <thead>
-  <tr>
-    <th class="sorting">Name</th>
-    <th class="sorting">Location</th>
-    <th class="sorting">Views</th>
-    <th class="sorting">Rating</th>
-    <th class="sorting">Completed</th>
-    <th class="sorting">Created</th>
-  </tr>
-  </thead>
-
-  <tbody>
-<% @user.calendars.each do |calendar| %>
-  <tr>
-    <td><span class="headtextlighter">
-      <%= link_to calendar.name, show_guide_path(:id => calendar) %>
-    </span></td>
-    <td><%=h calendar.location.name %></td>
-    <td><%=h calendar.view_count %></td>
-    <td><%=h calendar.rating_str %></td>
-    <td><%=h calendar.completed_percentage %>%</td>
-    <td><%=h calendar.created_at.strftime "%B %d, %Y" %></td>
-  </tr>
-<% end %>
-</tbody>
-</table>-->
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#calendar_search_result').dataTable();
-    });
-</script>
-
-
-<br/>
-<br/>
-
-
-
-<br/>
-
-
-<br/>
 <%= link_to 'New guide', new_guide_path %>
+
+
 
 
 

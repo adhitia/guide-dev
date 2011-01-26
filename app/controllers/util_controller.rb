@@ -113,7 +113,12 @@ class UtilController < ApplicationController
 #    end
 #    render :text => result
 #    expire_page :controller => "display_controller", :action => "display"
-    render :text => "ok"
+#    render :text => "ok"
+    render :xml => "<success/>"
+#    render :xml => {:a => 'b'}
+#    respond_to do |format|
+#      format.xml { 'b' }
+#    end
   end
 
   private

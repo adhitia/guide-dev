@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
     user_json = access_token.get('/me')
     user_data = ActiveSupport::JSON.decode(user_json)
-    identity_url = "synthetic-open-id/facebook/" + user_data["id"];
+    identity_url = "synthetic-open-id/facebook/" + user_data["id"]
     finish_login identity_url, user_data["email"], user_data["name"]
   end
 
@@ -49,9 +49,9 @@ class UsersController < ApplicationController
 #    @user = User.new
 #  end
 
-  def edit
-    @user = authorize_user params[:id]
-  end
+#  def edit
+#    @user = authorize_user params[:id]
+#  end
 
 #  def create
 #    @user = User.new(params[:user])
@@ -69,15 +69,26 @@ class UsersController < ApplicationController
 
   def update
     @user = authorize_user params[:id]
+    @view_user = @user
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        flash[:notice] = 'User was successfully updated.'
-        format.html { redirect_to :action => 'show', :id => @user }
-      else
-        format.html { render :action => "edit" }
-      end
+    data = params[:user]
+#    @user.photo_attributes = data[:photo_attributes]  # a dirty hack, won't work otherwise
+    @user.update_attributes(data)
+
+    p "********************************************"
+    p @user.errors
+    @errors = {:user => @user.errors_as_hash}
+    p ""
+    p @errors
+    @errors = flatten @errors
+#    @user.errors.clear
+
+    if !@errors.empty?
+      render :text => {:errors => @errors}.to_json
+      return
     end
+
+    render :partial => 'edit', :locals => {:user => @user}
   end
 
   def index
@@ -95,9 +106,9 @@ class UsersController < ApplicationController
     end
 
     @user = User.new(params[:user])
-    @user.name = '' if @user.name.blank?
-    @user.name.gsub! /[\s]+/, ' '
-    @user.name.strip!
+#    @user.name = '' if @user.name.blank?
+#    @user.name.gsub! /[\s]+/, ' '
+#    @user.name.strip!
 
     if request.post?
       if @user.save
