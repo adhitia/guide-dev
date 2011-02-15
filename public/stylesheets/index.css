@@ -253,8 +253,9 @@ textarea.invalid {
 #edit_tips .edit-tip-root .tip-create, #edit_tips .edit-tip-root .load-info {
     display: none;
 }
-#edit_tips .edit-tip-root.full .tip-create, #edit_tips .edit-tip-root.full .load-info {
-    /*display: inline;*/
+/*#edit_tips .edit-tip-root.full .tip-create, */
+#edit_tips .edit-tip-root.full .load-info {
+    display: inline;
 }
 #edit_tips .edit-tip-root.full .tip-name-area {
     border-bottom-color: #0066CC;
