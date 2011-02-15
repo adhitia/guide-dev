@@ -132,12 +132,10 @@
       <a href="/users/<%= @guide.user.id %>" class="button">
         My Guides
       </a>
-<!--
       <span class="button">
         <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" >Tweet</a>
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
       </span>
--->
       <a href="/guides/<%= @guide.id %>/share" class="button">
         View live version
       </a>
@@ -160,15 +158,12 @@
 
 
   <h3>Ready to share?</h3>
-  <!--<fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true" ></fb:comments>-->
-  <!--css="http://guiderer.com/css/facebook.css"-->
-
-  <!--data-url="<%= "http://guiderer.com/guides/#{@guide.id}" %>"-->
+  <fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true" ></fb:comments>
 </div>
 
 
-<!--<div id="fb-root"></div>-->
-<!--<script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>-->
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
 
 
 <script type="text/javascript">
