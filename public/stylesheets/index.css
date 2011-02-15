@@ -165,7 +165,7 @@ textarea.invalid {
 #edit_tips .new-tip-container {
     width: 100%;
     padding-right: 10px;
-    position: relative;
+    position: absolute;
 }
 #edit_tips .new-tip-container .tip-ideas {
     float: right;
@@ -250,7 +250,8 @@ textarea.invalid {
 #edit_tips .edit-tip-root .tip-name-area .tip-save {
     display: none;
 }
-#edit_tips .edit-tip-root .tip-create, #edit_tips .edit-tip-root .load-info {
+/*, #edit_tips .edit-tip-root .load-info*/
+#edit_tips .edit-tip-root .tip-create {
     display: none;
 }
 /*#edit_tips .edit-tip-root.full .tip-create, */
@@ -265,7 +266,9 @@ textarea.invalid {
 }
 
 #edit_tips .edit-tip-root button.tip-update, #edit_tips .edit-tip-root button.tip-create {
-    background-color:yellow;
+    background-color: #FFCC00;
+    border: 3px none #E8B900;
+    color: #006699;
     float:right;
     font-size:large;
     height:30px;
@@ -296,6 +299,10 @@ textarea.invalid {
 #edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body {
     margin: 5px;
     width: 190px;
+}
+#edit_tips .edit-tip-root .edit-area .autosuggestions .autosuggestions-body ul li a.selected {
+    font-weight: bold;
+    color:#FFCC00;
 }
 
 
@@ -382,8 +389,12 @@ textarea.invalid {
     display: none;
 }
 #edit_tips .new-tip-container.stage-2 .tip-select-images {
+    background-color: #FFCC00;
+    border: 3px none #E8B900;
+    color: #006699;
+
     display: inline;
-    background-color:yellow;
+    /*background-color:yellow;*/
     float:right;
     font-size:large;
     height:30px;
@@ -413,7 +424,8 @@ textarea.invalid {
     float: right;
 }
 #edit_tips .edit-tip-root .edit-area .tip-edit-column-1 label {
-    float: left;
+    float: right;
+    padding-right: 10px;
 }
 #edit_tips .edit-tip-root .edit-area .tip-edit-column-2 {
     padding: 10px;
@@ -952,6 +964,11 @@ font-weight: bold;
     font-size: x-small;
 }
 
+#new_guide_page .afterwards table tr.boxes td > span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 #new_guide_overview_page {
 }
 
@@ -973,7 +990,7 @@ font-weight: bold;
 
 
 .about-guiderer {
-    margin-left: 400px;
+    margin-left: 300px;
 }
 
 .about-guiderer h1 {
@@ -1286,7 +1303,7 @@ div.guide-type-panes > div {
 #tips-matrix {
     /*overflow: hidden;*/
     /*zoom: 1;*/
-    margin-top: 30px;
+    margin-top: 330px;
 }
 
 #tips-matrix .day-header {
@@ -1751,8 +1768,15 @@ div.guide-type-panes > div {
 #user-edit.view-mode .button-panel .submit, #user-edit.view-mode .button-panel .cancel {
     display: none;
 }
-#user-edit.edit-mode .button-panel .edit {
+#user-edit.edit-mode .button.edit {
     display: none;
+}
+
+#user-edit.view-mode .button.edit {
+    font-size: x-large;
+    left: 280px;
+    position: absolute;
+    top: -80px;
 }
 
 /*

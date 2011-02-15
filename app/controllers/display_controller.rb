@@ -13,7 +13,7 @@ class DisplayController < ApplicationController
 
   def display
 #    puts "display guide"
-    response.headers['Cache-Control'] = 'public, max-age=300'
+#    response.headers['Cache-Control'] = 'public, max-age=300'
 
     @calendar = Calendar.find params[:id]
     @weekdays = Weekday.all

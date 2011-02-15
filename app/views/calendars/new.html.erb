@@ -6,37 +6,50 @@
     <h1>Create a Travel Guide</h1>
 
     <div style="width:700px;margin-left:100px;font-size:medium" align="left">
-      <P>There are four steps to creating a Guiderer travel guide:</P>
-<ol>
-      <li>Name you guide</li>
+      <P>There are three steps to creating a Guiderer travel guide:</P>
+      <ol>
+        <li>Name you guide</li>
 
-      <li>Add points of interest</li>
+        <li>Add points of interest</li>
 
-      <li>Arrange your points of interest into day tours</li>
-</ol>
-</div>
+        <li>Arrange your points of interest into day tours</li>
+      </ol>
+    </div>
 
-    <div style="width:700px;margin-left:100px;font-size:medium" align="left">
-      
-    <table cellspacing="15" cellpadding="4" valign="top">
-    <tr><td colspan="4">Afterwards, You can turn your guide into a:</td></tr>
-          <tr><td width="20%" valign="top" bgcolor="#CC9966">
-          <span style="font-size:larger">Widget</span> <br />
-          and place it on your blog or site</td>
-        <td width="20%" valign="top" bgcolor="#9999FF">  <span style="font-size:larger"> Booklet </span> <br />
-          to
-            give to customer</td>
-            <td width="20%" valign="top" bgcolor="#00CC66"><span style="font-size:larger">Iphone App </span> <br />
-            and mobilize it</td>
-      <td width="20%" valign="top" bgcolor="#FFCC00"><span style="font-size:larger"> ".com" Domain</span><br />
-        featuring your guide</td>
-  </tr></table>
+    <div class="afterwards" style="width:700px;margin-left:100px;font-size:medium" align="left">
+
+      <table cellspacing="15" cellpadding="4" valign="top">
+        <tr>
+          <td colspan="4">Afterwards, you can turn your guide into a:</td>
+        </tr>
+        <tr class="boxes">
+          <td width="20%" valign="top" bgcolor="#CC9966">
+            <span style="font-size:larger">Widget</span> <br/>
+            and place it on your blog or site
+          </td>
+          <td width="20%" valign="top" bgcolor="#9999FF"><span style="font-size:larger"> Print Booklet </span> <br/>
+            to give to customer
+          </td>
+          <td width="20%" valign="top" bgcolor="#00CC66"><span style="font-size:larger">iPhone App </span> <br/>
+            and mobilize it (coming soon)
+          </td>
+          <td width="20%" valign="top" bgcolor="#FFCC00"><span style="font-size:larger"> ".com" Domain</span><br/>
+            featuring your guide
+          </td>
+          <td width="20%" valign="top" bgcolor="#FF0000"><span style="font-size:larger">video clip</span><br/>
+            3 minutes of tips with cool music (coming soon)
+          </td>
+        </tr>
+      </table>
 
       <P>The whole process takes less than 15 minutes and can make you a super-star, of sorts.</P></div>
 
     <div class="name-area" style="width:700px;margin-left:100px;background-color:#0066CC;border-radius:15px;padding:10px">
       <h2 align="left">Step 1: Name Your Guide</h2>
-<p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests, Hollywood for Movie Fans </p>
+
+      <p class="hint"> E.g., Rio for Partiers, Big Apple for Families, Madrid for Hilton Guests, Hollywood for Movie
+        Fans </p>
+
       <div>
         <div class="column">
           <input id="calendar_name_location" class="watermark" title="city or region" name="name_location"
@@ -73,47 +86,44 @@
   </form>
 
 
+  <script type="text/javascript">
+      $(document).ready(function() {
+          // initialize autocomplete for locations
+          guide.init_location_input($('#new_guide_page .location-area'));
+          /*$('#calendar_location_name').each(function(i, e) {
+           guide.locationInput(e, function(input, result) {
+           if (result == null) {
+           //                    if ($('#calendar_location_code').val() == '') {
+           //                        $('#calendar_location_name').val('');
+           //                    }
+           //                    $('#calendar_location_code').val('');
+           } else {
+           $('#calendar_location_code').val(result.id);
+           }
+           });
+           });*/
 
 
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // initialize autocomplete for locations
-        guide.init_location_input($('#new_guide_page .location-area'));
-        /*$('#calendar_location_name').each(function(i, e) {
-            guide.locationInput(e, function(input, result) {
-                if (result == null) {
-                    //                    if ($('#calendar_location_code').val() == '') {
-                    //                        $('#calendar_location_name').val('');
-                    //                    }
-                    //                    $('#calendar_location_code').val('');
-                } else {
-                    $('#calendar_location_code').val(result.id);
-                }
-            });
-        });*/
-
-
-        $('#calendar_name_location').blur(function() {
-            $.Watermark.HideAll();
-            var loc = $(this).val();
-            var target = $('input[name=location_name]');
+          $('#calendar_name_location').blur(function() {
+              $.Watermark.HideAll();
+              var loc = $(this).val();
+              var target = $('input[name=location_name]');
 //            alert(target.length);
-            if (!loc.blank() && target.val().blank()) {
-                target.val(loc);
-                target.autocomplete('search');
+              if (!loc.blank() && target.val().blank()) {
+                  target.val(loc);
+                  target.autocomplete('search');
 //                target.val('');
-            }
-            $.Watermark.ShowAll();
-        });
+              }
+              $.Watermark.ShowAll();
+          });
 
-        $('#new_calendar_form').submit(function() {
-            var input_name = $('#new_calendar_form input[name=location_name]');
-            input_name.val(input_name.data('last'));
-        });
-    });
+          $('#new_calendar_form').submit(function() {
+              var input_name = $('#new_calendar_form input[name=location_name]');
+              input_name.val(input_name.data('last'));
+          });
+      });
 
-</script>
+  </script>
 
 
 </div>

@@ -16,7 +16,7 @@
 
   <!-- Sets version for each changeable resource here -->
   <!-- Increment when put changed in production to make user's browsers reload resources -->
-  <% resource_version = 41 %>
+  <% resource_version = 42 %>
 
   <!--<%= stylesheet_link_tag 'scaffold' %>-->
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
@@ -88,20 +88,27 @@
     <div align="left">
       <table>
         <tr>
-          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td><p>
-            <img src="/images/spacer.gif" width="20" height="45"/><a href="/"><img src="/images/guiderer-index_r3_c4.jpg" alt="" name="guidererindex_r3_c4" width="269" height="45" border="0" id="guidererindex_r3_c4"/></a><br/>
-            <font color="#FFFFFF" size="4"><img src="/images/spacer.gif" width="30" height="10"/><span class="text">Create, share and monetize your local travel tips</span></font>
-          </p> </td><td><div align="right"><img src="/images/spacer.gif" width="400" height="20"/><% if @current_user %>
-                  Welcome,
-                  <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
-                  | <%= link_to 'Sign out', logout_path %>
-              <% else %>
-                  <%= link_to 'Sign in / Sign-up', :controller => :users, :action => :login %>
-              <% end %></div></td>
-                      </tr>
-                    </table>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><p>
+                  <img src="/images/spacer.gif" width="20" height="45"/><a href="/"><img src="/images/guiderer-index_r3_c4.jpg" alt="" name="guidererindex_r3_c4" width="269" height="45" border="0" id="guidererindex_r3_c4"/></a><br/>
+                  <font color="#FFFFFF" size="4"><img src="/images/spacer.gif" width="30" height="10"/><span class="text">Create, share and monetize your local travel tips</span></font>
+                </p></td>
+                <td>
+                  <div align="right"><img src="/images/spacer.gif" width="320" height="20"/>
+                    <% if @current_user %>
+                        Welcome,
+                        <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
+                         (<%= format_number(@current_user.calendars.size, "guide") %>)
+
+                        | <%= link_to 'Sign out', logout_path %>
+                    <% else %>
+                        <%= link_to 'Sign in / Sign-up', :controller => :users, :action => :login %>
+                    <% end %></div>
+                </td>
+              </tr>
+            </table>
 
           </td>
         </tr>
@@ -122,9 +129,9 @@
 
   <table width="1000" border="0" cellspacing="0" cellpadding="15">
     <tr>
-      <td width="50%" valign="top" class="textgray">Guiderer is here to tell travelers what they should be doing right
-        now. And later on for dinner. And to night. And during the rest of their trip. Just search for your desired
-        destination, choose the market segment you want to experience, and get juicy tips.
+      <td width="50%" valign="top" class="textgray">Guiderer is here to tell travelers what they should be doing right now. And later on for dinner. And to night. And during the rest of their trip. Just search for your desired destination, choose the market segment you want to experience, and get juicy tips.
+<br/>
+Guiderer is ideal for members of the travel trade who want to show all the great attractions in their destination. Hotels owners can create their own personalized “Boston for Astoria Hotel Guests” guide.
         <a href="/about-us">[more]</a></td>
       <td width="24%" valign="top"><p class="textgray"><a href="/about-us">About us</a></p>
 

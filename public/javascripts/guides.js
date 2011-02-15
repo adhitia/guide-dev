@@ -350,7 +350,7 @@ if (!window.guide) var guide = {
                 a.data('local_result_lat', result.lat);
                 a.data('local_result_lng', result.lng);
             }
-            var skip = $('<a>').attr('href', 'javascript:').text('skip this step').addClass('skip');
+            var skip = $('<a>').attr('href', 'javascript:').text('or skip this step').addClass('skip');
             skip.click(function() {
                 root = $(this).closest('div.edit-tip-root');
                 root.removeClass('stage-1');
@@ -380,9 +380,10 @@ if (!window.guide) var guide = {
         var root = result.closest('div.edit-tip-root');
         var container = result.closest('div.autosuggestions');
 
+        result.closest('ul').find('a').removeClass('selected');
+        result.addClass('selected');
+
         if (root.hasClass('stage-1')) {
-//            console.log(root.find('.row-1').length);
-//            root.find('.row-1').fadeIn(1000);
             root.removeClass('stage-1');
             root.addClass('stage-2');
         }
@@ -785,7 +786,7 @@ if (!window.guide) var guide = {
             $(this).parent().find('.file-name').html(value);
         });
 
-        $('#user-edit .button-panel .edit').click(function() {
+        $('#user-edit .button.edit').click(function() {
             if ($('#user-edit').hasClass('view-mode')) {
                 $('#user-edit').removeClass('view-mode').addClass('edit-mode');
             }

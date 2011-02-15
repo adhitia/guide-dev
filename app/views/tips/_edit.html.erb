@@ -13,16 +13,18 @@
 
     <div class="tip-edit-column tip-edit-column-1">
       <div class="input-row">
-        <%= form.label :url %> <%= form.text_field :url, :size => 30, :class => 'tip_url', :maxlength => 100, :autocomplete => "off" %>
+        <%= form.text_field :url, :size => 30, :class => 'tip_url', :maxlength => 100, :autocomplete => "off" %>
+        <%= form.label :url %>
       </div>
 
       <div class="input-row">
-        <%= form.label :address, 'Street Address' %>
         <%= form.text_field :address, :size => 30, :class => 'tip_address', :maxlength => 100, :autocomplete => "off" %>
+        <%= form.label :address, 'Street Address' %>
       </div>
 
       <div class="input-row">
-        <%= form.label :phone %> <%= form.text_field :phone, :size => 30, :class => 'tip_phone', :maxlength => 100, :autocomplete => "off" %>
+        <%= form.text_field :phone, :size => 30, :class => 'tip_phone', :maxlength => 100, :autocomplete => "off" %>
+        <%= form.label :phone %>
       </div>
     </div>
 

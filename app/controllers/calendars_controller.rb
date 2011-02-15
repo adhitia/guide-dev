@@ -13,7 +13,6 @@ class CalendarsController < ApplicationController
     @full_access = @current_user && (@guide.user.id == @current_user.id)
 
     @today = Date.today.cwday - 1
-#    @weekdays = Weekday.all
     @conditions = @guide.conditions
 
     if @full_access
@@ -21,6 +20,16 @@ class CalendarsController < ApplicationController
     else
       render :action => 'show'
     end
+  end
+
+  def view_owner
+    @guide = verify_guide params[:id]
+    @full_access = @current_user && (@guide.user.id == @current_user.id)
+
+    @today = Date.today.cwday - 1
+    @conditions = @guide.conditions
+
+    render :action => 'show'
   end
 
   def new

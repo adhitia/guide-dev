@@ -13,12 +13,9 @@
 
   <div class="tip-details">
     <% if tip.image_exists? %>
-        <%= image_tag tip.image.url(:medium), {:align=>"left", :style=>"margin:10px;"} %>
+        <%= image_tag tip.image.url(:original), {:align=>"left", :style=>"margin:10px;max-height:300px;max-width:300px;"} %>
     <% else %>
     <% end %>
-    <p>
-      <%= h tip.description %>
-    </p>
 
     <% if !tip.address.blank? -%>
         <p>
@@ -30,19 +27,34 @@
           Phone: <%= h tip.phone %>
         </p>
     <% end %>
+    <% if !tip.url.blank? %>
+        <p> Url:
+        <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+            <%= h tip.url %>
+        </a>
+        </p>
+    <% end %>
+
 
   </div>
 
   <div class="tooltip-row">
-      <% if !tip.attraction.nil? && tip.attraction.lat != 0 %>
-        <div class="tip-map">
-          <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.attraction.lat %>+<%= tip.attraction.lng %>&amp;z=16" target="_blank">
-            Directions and Map
-          </a>:<br/>
-          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=200x200&amp;zoom=13&amp;markers=<%= tip.attraction.lat %>,<%= tip.attraction.lng %>"/>
-        </div>
-      <% end %>
+    <% if !tip.attraction.nil? && tip.attraction.lat != 0 %>
+      <span class="tip-map">
+        <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.attraction.lat %>+<%= tip.attraction.lng %>&amp;z=16" target="_blank">
+          Directions and Map
+        </a>:<br/>
+        <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=200x200&amp;zoom=13&amp;markers=<%= tip.attraction.lat %>,<%= tip.attraction.lng %>"/>
+      </span>
+    <% end %>
 
+
+      <%= h tip.description %>
+
+
+
+
+    <!--
     <div class="twits-all">
       <div class="twits-container">
         <h4><%=h tip.name %> tweets</h4>
@@ -57,5 +69,6 @@
         </div>
       </div>
     </div>
+    -->
   </div>
 </div>

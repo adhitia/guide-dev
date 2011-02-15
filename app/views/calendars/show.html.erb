@@ -19,26 +19,53 @@
 <%= render :partial => 'map', :locals => {:guide => @guide} %>
 
 <div class="button-panel">
-  <span class="button">
-    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" >Tweet</a>
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-  </span>
-  <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
-    More guides on <%= h @guide.location.name %>
-  </a>
-  <a href="/users/<%= @guide.user.id %>" class="button">
-    More by <%= @guide.user.name %>
-  </a>
-  <a href="/guides/<%= @guide.id %>/share" class="button">
-    Embed on your site
-  </a>
-  <a href="/" class="button">
-    Create your own guide
-  </a>
+  <% if @full_access %>
+      <a href="/guides/<%= @guide.id %>" class="button">
+        Edit
+      </a>
+      <a href="/guides/<%= @guide.id %>/share" class="button">
+        Embed on your site
+      </a>
+      <a href="/guides/new" class="button">
+        Create another guide
+      </a>
+      <a href="/guides/<%= @guide.id %>/print" class="button">
+        Order print booklets
+      </a>
+  <% else %>
+      <a href="/guides/<%= @guide.id %>/share" class="button">
+        Embed on your site
+      </a>
+      <a href="/users/<%= @guide.user.id %>" class="button">
+        More by <i><%= h @guide.user.name %></i>
+      </a>
+      <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
+        More guides on <%= h @guide.location.name %>
+      </a>
+      <a href="/guides/new" class="button">
+        Create your own guide
+      </a>
+  <% end %>
 </div>
 
 
+<h1>Announce <%= @full_access ? 'your' : 'this' %> guide</h1>
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
-<h3>Share this guide with others.</h3>
-<fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true"></fb:comments>
+
+<div style="font-size:large;margin-left:70px;">
+  First
+  <a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a>
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  about it.
+  <br/>
+  <br/>
+  Then <br/>
+  Rave about it on your Facebook wall
+
+
+  <div style="padding-right:100px">
+    <fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true"></fb:comments>
+  </div>
+
+</div>

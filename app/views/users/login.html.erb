@@ -1,6 +1,5 @@
 
 
-<BR><BR>
 <% if flash[:message] %>
     <div><%= flash[:message] %></div>
 <% end %>
@@ -10,12 +9,17 @@
 
 <br>
 
+<h1>Sign up or In with any of these accounts:</h1>
 <% form_tag('/process_login', :method => :post, :id => 'openid_form') do %>
     <input type="hidden" id="oauth_version" name="oauth_version"/>
     <input type="hidden" id="oauth_server" name="oauth_server"/>
 
     <div id="openid_choice">
-      <p>Do you already have an account on one of these sites? You can use that to log on here!</p>
+      <p>
+        <br/>
+        Use your login and password to log, and skip having to create an account from scratch.
+
+       </p>
 
       <div id="openid_btns"></div>
     </div>
@@ -24,6 +28,7 @@
     </div>
 
 
+<!--
     <p>Or, manually enter your OpenID</p>
 
     <table id="openid-url-input">
@@ -36,6 +41,7 @@
 
 
     </table>
+-->
 
 
 <% end %>

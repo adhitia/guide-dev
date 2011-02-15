@@ -1,21 +1,26 @@
 <% title @guide.name %>
 
-<div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
-  <h1>Step 2: Add points of interest on your day tours</h1>
 
-  <%= render :partial => 'edit_pane', :locals => {:guide => @guide} %>
+
+<div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
+
+<%= render :partial => 'edit_pane', :locals => {:guide => @guide} %>
+
+
+  <h1>Step 2: Add points of interest (POI) on your day tours</h1>
+
 
   <div class="new-tip-container edit-tip-root">
     <% tip_model = Tip.new(:attraction => Attraction.new) %>
     <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
         <div class="tip-name-area">
-          <span>Add a point of interest: </span>
-          <%= form.text_field :name, :size => 30, :class => 'tip-name watermark', :title => "name of attraction", :maxlength => Tip::MAX_NAME_LENGTH, :autocomplete => "off" %>
+          <span>Type in the name of the point of interest </span>
+          <%= form.text_field :name, :size => 30, :class => 'tip-name', :title => 'Example: Dublin Pub, not drinking at the Dublin pub (no need for verbs here)', :maxlength => Tip::MAX_NAME_LENGTH, :autocomplete => "off" %>
           <!--show no validation message for this field-->
           <span class="validation-error tip[name]_error" style="display:none;"></span>
 
           <!--<button class="tip-cancel" type="button">Cancel</button>-->
-          <button class="load-info" type="button">find contact and photos</button>
+          <button class="load-info" type="button">find</button>
         </div>
 
         <div class="tip-ideas">
@@ -94,7 +99,7 @@
 
         <%= render :partial => 'tips/edit', :locals => {:tip => tip_model, :form => form} %>
 
-        <button class="tip-create" type="button">Create</button>
+        <button class="tip-create" type="button">Create POI</button>
         <button class="tip-select-images" type="button">Select Images</button>
     <% end %>
   </div>
@@ -129,18 +134,8 @@
   <div>
     <div class="button-panel">
       <span class="head2">I am done creating my guide, for now:</span>
-      <a href="/users/<%= @guide.user.id %>" class="button">
-        My Guides
-      </a>
-      <span class="button">
-        <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" >Tweet</a>
-        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-      </span>
-      <a href="/guides/<%= @guide.id %>/share" class="button">
-        View live version
-      </a>
-      <a href="/guides/<%= @guide.id %>/map" class="button">
-        View map
+      <a href="/guides/<%= @guide.id %>/view" class="button">
+        Show me my guide!
       </a>
     </div>
   </div>
@@ -157,13 +152,10 @@
   </div>
 
 
-  <h3>Ready to share?</h3>
-  <fb:comments xid="<%= "guides-#{@guide.id}" %>" numposts="3" width="500" publish_feed="true" ></fb:comments>
+
 </div>
 
 
-<div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
 
 
 <script type="text/javascript">

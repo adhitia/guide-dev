@@ -1,6 +1,11 @@
 <form id="user-edit" class="<%= @errors.nil? || @errors.empty? ? 'view-mode' : 'edit-mode' %>" action="/users/<%= user.id %>" method="post" enctype="multipart/form-data">
 
   <% fields_for "user", user do |form| %>
+        <a href="javascript:" class="button edit">
+          Edit
+        </a>
+
+
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
 
       <div class="input-row">
@@ -72,9 +77,9 @@
 
 
       <div class="button-panel">
-        <a href="javascript:" class="button edit">
+        <!--<a href="javascript:" class="button edit">
           Edit
-        </a>
+        </a>-->
         <a href="javascript:" class="button submit">
           Submit
         </a>

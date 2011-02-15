@@ -48,7 +48,7 @@
     min-width: 200px;
     min-height: 200px;
     /*max-width: 500px;*/
-    width: 500px;
+    width: 540px;
     color: black;
     padding: 5px;
     background-color: white;
@@ -86,7 +86,8 @@
 }
 .guiderer .full_tip .tip-show .tip-map {
     text-align: center;
-    display: inline-block;
+    /*display: inline-block;*/
+    display: inline;
     margin: 0 0 10px 10px;
     float: right;
 }

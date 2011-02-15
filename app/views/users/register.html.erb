@@ -1,4 +1,4 @@
-<h1>You're logging in for the first time!</h1>
+<h1>Welcome! You are almost done creating an account!</h1>
 
 <style type="text/css">
   .validation-error {
@@ -18,8 +18,16 @@
     </p>
     <%= f.hidden_field :identity_url %>
     <br/>
-    <p>
+
+    <div class="button-panel">
+      <a href="javascript:" class="button" onclick="$('#new_user').submit();">
+        Complete registration
+      </a>
+    </div>
+
+
+    <!--<p>
       <%= f.submit 'Complete registration' %>
-    </p>
+    </p>-->
 <% end %>
 
