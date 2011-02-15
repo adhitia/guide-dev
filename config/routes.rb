@@ -61,10 +61,8 @@ ActionController::Routing::Routes.draw do |map|
   map.logout 'logout', :controller => 'users', :action => 'logout'
 
   map.show_user 'users/:id', :controller => 'users', :action => 'show', :conditions => { :method => :get }
-#  map.edit_user 'users/:id/edit', :controller => 'users', :action => 'edit', :conditions => { :method => :get }
   map.update_user 'users/:id', :controller => 'users', :action => 'update', :conditions => { :method => :post }
   map.register 'register', :controller => :users, :action => :register #, :conditions => { :method => :post }
-#  map.create_user 'register', :controller => 'users', :action => 'create', :conditions => { :method => :post }
 
   map.connect 'about-us', :controller => :common, :action => :about_us
   map.advertise 'advertise', :controller => :common, :action => :advertise

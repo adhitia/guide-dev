@@ -115,6 +115,7 @@ if (!window.guide) var guide = {
                                ' div.day-group[data-day=' + response.data('day') + ']' +
                                ' div.condition-group[data-condition=' + response.data('condition-id') + ']');
 //                console.log(response.hasClass('edit-tip-tile'));
+                root.removeClass('stage-3');
                 common.stopLoading(root);
                 guides.closeTip.apply(root);
 
@@ -263,6 +264,12 @@ if (!window.guide) var guide = {
         root = $(root).closest('div.edit-tip-root');
         var edit_area = root.find('div.edit-area');
 
+        if (root.hasClass('new-tip-container') && !root.hasClass('stage-2') && !root.hasClass('stage-3')) {
+            root.addClass('stage-1');
+//            root.removeClass('stage-2');
+//            root.removeClass('stage-3');
+        }
+
         $.Watermark.HideAll();
         var name_element = root.find('input.tip-name');
         var name = $.trim(name_element.val());
@@ -309,6 +316,7 @@ if (!window.guide) var guide = {
 
         common.stopLoading(container);
         container.html('');
+
         if (searcher.results && searcher.results.length > 0) {
             var body = $('<div></div>').addClass('autosuggestions-body');
             body.append('Select to prefill other fields<br/>');
@@ -330,7 +338,7 @@ if (!window.guide) var guide = {
                 if (index >= 0) {
                     url = 'http://www.google.com/maps/place?cid=' + url.substring(index + 5);
                 }
-                console.log(url);
+//                console.log(url);
 
                 a.data('result_url', url);
 
@@ -342,8 +350,28 @@ if (!window.guide) var guide = {
                 a.data('local_result_lat', result.lat);
                 a.data('local_result_lng', result.lng);
             }
+            var skip = $('<a>').attr('href', 'javascript:').text('skip this step').addClass('skip');
+            skip.click(function() {
+                root = $(this).closest('div.edit-tip-root');
+                root.removeClass('stage-1');
+                root.addClass('stage-2');
+            });
+
+            body.append(skip);
         } else {
-            container.append('No results found. <a target="_blank" href="http://www.google.com/search?q=' + name + '">Try searching Google</a>');
+            if (root.hasClass('stage-1')) {
+                var skip = $('<a>').attr('href', 'javascript:').text('skip this step');
+                skip.click(function() {
+                    if (root.hasClass('stage-1')) {
+                        root = $(this).closest('div.edit-tip-root');
+                        root.removeClass('stage-1');
+                        root.addClass('stage-2');
+                    }
+                });
+                container.append('No results found. Try different name or ').append(skip);
+            } else {
+                container.append('No results found. <a target="_blank" href="http://www.google.com/search?q=' + name + '">Try searching Google</a>');
+            }
         }
     },
 
@@ -351,6 +379,14 @@ if (!window.guide) var guide = {
         var result = $(this);
         var root = result.closest('div.edit-tip-root');
         var container = result.closest('div.autosuggestions');
+
+        if (root.hasClass('stage-1')) {
+//            console.log(root.find('.row-1').length);
+//            root.find('.row-1').fadeIn(1000);
+            root.removeClass('stage-1');
+            root.addClass('stage-2');
+        }
+
 
         var addr = result.data('local_result_address');
         var lat = result.data('local_result_lat');
@@ -731,6 +767,65 @@ if (!window.guide) var guide = {
             widget.find(':input').val('').blur();
             return false;
         });
+    },
+
+    init_user_edit: function() {
+        $('#user-edit .input-row .view:empty').each(function() {
+            if (!$(this).is('img')) {
+                $(this).addClass('no-value').html('none');
+            }
+        });
+
+
+        $('#user-edit .file-upload > input').change(function() {
+            var value = $(this).val();
+            if (value.indexOf('\\') >= 0) {
+                value = value.substring(value.lastIndexOf('\\') + 1, value.length);
+            }
+            $(this).parent().find('.file-name').html(value);
+        });
+
+        $('#user-edit .button-panel .edit').click(function() {
+            if ($('#user-edit').hasClass('view-mode')) {
+                $('#user-edit').removeClass('view-mode').addClass('edit-mode');
+            }
+        });
+
+        $('#user-edit .button-panel .cancel').click(function() {
+            $('#user-edit').addClass('view-mode').removeClass('edit-mode');
+
+            // do not reset, for now
+//        $('#user-edit')[0].reset();
+//        $('.file-upload .label .file-name').html('');
+            return false;
+        });
+        $('#user-edit .button-panel .submit').click(function() {
+            common.clearValidationErrors();
+            common.setLoadingGlobal('Saving..');
+            $('#user-edit').ajaxSubmit({
+                type: 'POST',
+                cache: false,
+                iframe: true,
+                dataType: "text",
+                success: function(result) {
+                    common.stopLoadingGlobal();
+
+                    if (result.startsWith('{')) {
+                        // errors in json form returned
+                        var errors = eval('(' + result + ')').errors;
+                        common.validationErrors(errors);
+                        return;
+                    }
+
+                    $('#user-edit').replaceWith(result);
+                    guides.init_user_edit();
+                }
+            });
+            return false;
+        });
+    },
+
+    init: function(root) {
     }
 };
 
@@ -742,5 +837,8 @@ $(document).ready(function() {
     guide.init_edit_area($('div.guide-details'));
     if ($('#book-preview').length > 0) {
         guide.init_book_preview();
+    }
+    if ($('#user-edit').length > 0) {
+        guide.init_user_edit();
     }
 });

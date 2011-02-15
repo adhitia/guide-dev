@@ -206,8 +206,8 @@ class TipsController < ApplicationController
   private
 
   def find_or_create_attraction(data)
-    return nil if data[:identity_url].blank?
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!! #{data.inspect}"
+    return nil if data.nil? || data[:identity_url].blank?
+#    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!! #{data.inspect}"
 
     attraction = Attraction.find_by_identity_url data[:identity_url]
     if attraction.nil?

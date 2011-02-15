@@ -1,5 +1,4 @@
 if (!window._guiderer) {
-
     _guiderer = {};
 
     // initialize
@@ -152,7 +151,7 @@ if (!window._guiderer) {
                                 var el = $(this);
                                 var lat = el.attr('data-lat');
                                 var lng = el.attr('data-lng');
-                                if (lat != '0.0' && !lat.blank()) {
+                                if (lat != '0.0' && !/^\s*$/.test(lat)) {
                                     var name = el.attr('data-name');
                                     var point = new google.maps.LatLng(lat, lng);
                                     var marker = new google.maps.Marker({
@@ -369,7 +368,7 @@ if (!window._guiderer) {
     };
 
 
-    _guiderer.addEvent = function(elm, evType, fn, useCapture) {
+    /*_guiderer.addEvent = function(elm, evType, fn, useCapture) {
         //Credit: Function written by Scott Andrews
         //(slightly modified)
         var ret = 0;
@@ -383,10 +382,30 @@ if (!window._guiderer) {
         }
 
         return ret;
+    };*/
+    _guiderer.addOnLoad = function(element, callback) {
+        var done = false;
+
+        // Attach handlers for all browsers
+        element.onload = element.onreadystatechange = function() {
+            if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+                done = true;
+                //jQuery.handleSuccess( s, xhr, status, data );
+                //jQuery.handleComplete( s, xhr, status, data );
+                callback();
+
+                // Handle memory leak in IE
+                element.onload = element.onreadystatechange = null;
+//                if (head && script.parentNode) {
+//                    head.removeChild(script);
+//                }
+            }
+        };
+
     };
 
     // render all guides once page is loaded
-    _guiderer.addEvent(window, "load", function() {
+    _guiderer.addOnLoad(window, function() {
         // fetch location of guiderer server from script tag
         var server = null;
         var scripts = document.getElementsByTagName("script");
@@ -406,6 +425,7 @@ if (!window._guiderer) {
         // _guiderer object will be initialized only when last library is loaded
         var left_to_load = 0;
         function init() {
+//            alert('init ' + left_to_load);
             --left_to_load;
             if (left_to_load > 0) {
                 return;
@@ -418,14 +438,25 @@ if (!window._guiderer) {
 
         // load necessary resources first
         function load_javascript(src, callback) {
-            var a = document.createElement('script');
+            /*var a = document.createElement('script');
             a.type = 'text/javascript';
             a.src = src;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(a, s);
 
             ++left_to_load;
-            _guiderer.addEvent(a, 'load', callback, false);
+            _guiderer.addEvent(a, 'load', callback, false);*/
+
+            var head = document.getElementsByTagName("head")[0] || document.documentElement;
+            var script = document.createElement("script");
+            script.src = src;
+
+            ++left_to_load;
+            _guiderer.addOnLoad(script, callback);
+
+            // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
+            // This arises when a base node is used (#2709 and #4378).
+            head.insertBefore(script, head.firstChild);
         }
 
         function load_css(src) {
@@ -442,8 +473,9 @@ if (!window._guiderer) {
                 google.load("maps", "3", {'callback': init, 'other_params' : 'sensor=false'});
             }
         };
+//        load_javascript('/test.js', init);
         if (window.google == undefined) {
-            load_javascript('http://www.google.com/jsapi', function() {load_google_apis(); init();});
+            load_javascript('http://www.google.com/jsapi', function() { load_google_apis(); init();});
         } else {
             load_google_apis();
         }
@@ -454,8 +486,7 @@ if (!window._guiderer) {
             load_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username=guiderer&domready=1', init);
         }
         load_css(server + 'public.css?_version=10');
-
-    }, false);
+    });
 
 
     // configure addthis globally

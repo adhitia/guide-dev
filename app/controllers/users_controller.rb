@@ -69,26 +69,20 @@ class UsersController < ApplicationController
 
   def update
     @user = authorize_user params[:id]
-    @view_user = @user
 
-    data = params[:user]
-#    @user.photo_attributes = data[:photo_attributes]  # a dirty hack, won't work otherwise
-    @user.update_attributes(data)
+    @user.update_attributes(params[:user])
 
-    p "********************************************"
     p @user.errors
     @errors = {:user => @user.errors_as_hash}
-    p ""
-    p @errors
     @errors = flatten @errors
-#    @user.errors.clear
 
     if !@errors.empty?
       render :text => {:errors => @errors}.to_json
       return
     end
 
-    render :partial => 'edit', :locals => {:user => @user}
+    r = render_to_string :partial => 'edit', :locals => {:user => @user}
+    render :text => "<body>#{r}</body>"
   end
 
   def index

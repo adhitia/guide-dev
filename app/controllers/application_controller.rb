@@ -133,7 +133,9 @@ class ApplicationController < ActionController::Base
   # no ie (except guide viewers) so far
   # fix it some time later
   def ban_ie
-    if request.env['HTTP_USER_AGENT'] =~ /MSIE/
+    ua = request.env['HTTP_USER_AGENT']
+#    if ua =~ /MSIE/ && !(ua =~ /MSIE 8/)
+    if ua =~ /MSIE/
       redirect_to :controller => :common, :action => :internet_explorer
     end
   end

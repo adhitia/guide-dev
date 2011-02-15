@@ -156,6 +156,7 @@ if (!window.tips) var tips = {
         }
     },
 
+/*
     processLocalSearchResults: function(searcher, root, search_term) {
         var trigger = $(root).find('.local-search-launch');
         var container = $(root).find('.local-search-container');
@@ -184,6 +185,8 @@ if (!window.tips) var tips = {
             container.append('no results found');
         }
     },
+*/
+/*
 
     selectLocalResult: function() {
         var result = $(this);
@@ -244,6 +247,7 @@ if (!window.tips) var tips = {
             }
         });
     },
+*/
 
     /**
      * Loads local suggestions (address, url, phone) from google. 

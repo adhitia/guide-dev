@@ -10,12 +10,9 @@
 Your guides
 </h2>
 
-
 <% @user.calendars.each do |guide| %>
     <%= render :partial => 'calendars/widget', :locals => {:guide => guide, :style_id => 3} %>
 <% end %>
-
-
 
 <%= link_to 'New guide', new_guide_path %>
 
