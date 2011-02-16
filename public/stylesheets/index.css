@@ -1389,6 +1389,7 @@ div.guide-type-panes > div {
 #tips-matrix .edit-tip-tile .view {
     height: 100%;
     position: relative;
+    padding-right: 40px;
 }
 /*#tips-matrix .edit-tip-tile .delete-tip {
     position: absolute;
