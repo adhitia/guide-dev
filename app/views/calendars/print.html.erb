@@ -1,15 +1,36 @@
+<h1>Print your guide in Booklet format</h1>
+
+<p>Convert you guide into a booklet, and we'll print it for you!</p>
+Simply:<br/>
+<ol>
+<li>arrange your pages in the right order</li>
+<li>make editorial changes or corrections to your text</li>
+<li>position images into the format</li>
+<li>and orderthe quantity of print books you want.</li>
+</ol>
+
+<br/><br/>
+In 6 weeks you will get a package with your booklets.
+
+
+
+
 <form id="book-preview" action="/books/<%= @book.id %>/update" method="post">
+<!--
   <p>Adjust presentation of your book and then
     <a href="javascript:" onclick="guide.preview_book();">click here to preview pdf</a>.</p>
+-->
 
-  <p>Drag to rearrange order.</p>
+
+  <p><big>Step 1: Drag to rearrange order.</big></p>
 
   <div class="tips-order clear-fix">
     <% @book.book_tips.each do |book_tip| %>
         <% tip = book_tip.tip %>
-        <div class="tip" title="<%= h tip.condition.full_name %> - <%= h tip.name %>">
+        <div class="tip" title="<%= h tip.condition.full_name %> - <%= h tip.name %>"
+        data-tip-id="<%= tip.id %>">
           <% if tip.image.file? %>
-              <%= image_tag tip.image.url(:thumb), {:style=> "width:40px;top:40px;", :draggable => 'false'} %>
+              <%= image_tag tip.image.url(:thumb), {:style=> "width:50px;top:50px;", :draggable => 'false'} %>
           <% else %>
               <%= h tip.name %>
           <% end %>
@@ -21,16 +42,33 @@
   <p>Changes made here do <b>not</b> affect guide itself.</p>
 
   <div class="tips-data">
+    <!-- image size -->
+    <% window_width = 500 %>
+    <% window_height = window_width / Book::BOOK_PROPORTION %>
+
     <% @book.book_tips.each do |book_tip| %>
         <% tip = book_tip.tip %>
 
         <% fields_for "tips[#{book_tip.id}]", book_tip do |form| %>
-            <div class="tip">
-              <div class="image" data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>"
+            <div class="tip" data-tip-id="<%= tip.id %>" style="height:<%=window_height%>px">
+
+              <div class="text" style="height:<%=window_height - 40%>px">
+                <p>
+                  <%= tip.condition.full_name %>
+                </p>
+                <%= render :partial => 'input_widget', :locals => {:name => 'name', :original_value => tip.name, :form => form} %>
+                <%= render :partial => 'input_widget', :locals => {:name => 'url', :original_value => tip.url, :form => form} %>
+                <%= render :partial => 'input_widget', :locals => {:name => 'address', :original_value => tip.address, :form => form} %>
+                <%= render :partial => 'input_widget', :locals => {:name => 'phone', :original_value => tip.phone, :form => form} %>
+                <%= render :partial => 'input_widget', :locals => {:name => 'description', :original_value => tip.description, :input_control => form.text_area(:description)} %>
+              </div>
+
+
+              <div class="image" style="height:<%=window_height%>px"
+                   data-original-width="<%= tip.image_width %>" data-original-height="<%= tip.image_height %>"
                    title="Drag image to adjust cropping.">
                 <% if tip.image.file? %>
-                    <% window_width = 500 %>
-                    <% window_height = 250 %>
+
                     <% scroll_x = tip.image_height * Book::BOOK_PROPORTION < tip.image_width %>
                     <% if scroll_x %>
                         <% k = window_height * 1.0 / tip.image_height %>
@@ -56,13 +94,7 @@
                 <% end %>
               </div>
 
-              <div class="text">
-                <%= render :partial => 'input_widget', :locals => {:name => 'name', :original_value => tip.name, :form => form} %>
-                <%= render :partial => 'input_widget', :locals => {:name => 'url', :original_value => tip.url, :form => form} %>
-                <%= render :partial => 'input_widget', :locals => {:name => 'address', :original_value => tip.address, :form => form} %>
-                <%= render :partial => 'input_widget', :locals => {:name => 'phone', :original_value => tip.phone, :form => form} %>
-                <%= render :partial => 'input_widget', :locals => {:name => 'description', :original_value => tip.description, :input_control => form.text_area(:description)} %>
-              </div>
+
             </div>
         <% end %>
     <% end %>

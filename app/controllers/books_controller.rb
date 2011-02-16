@@ -23,13 +23,40 @@ class BooksController < ApplicationController
     book = verify_book params[:id]
     guide = book.calendar
 
-    pdf = Prawn::Document.new(:page_size => [600, 300], :margin => 0)
+    pdf = Prawn::Document.new(:page_size => [Book::BOOK_WIDTH, Book::BOOK_HEIGHT], :margin => 0)
+    pdf.font "Times-Roman"
 
     # print title page
     pdf.text guide.name, :size => 26
 
     book.book_tips.each do |book_tip|
       tip = book_tip.tip
+
+      # draw text
+      pdf.start_new_page
+      top = Book::BOOK_HEIGHT - 60
+      margin = 60
+      pdf.draw_text(tip.condition.full_name, :at => [margin, top], :size => 26)
+
+      top -= 50
+      pdf.draw_text(book_tip.name.blank? ? tip.name : book_tip.name, :at => [margin, top], :size => 50)
+
+      top -= 50
+      pdf.draw_text(book_tip.address.blank? ? tip.address : book_tip.address, :at => [margin, top], :size => 26)
+
+      top -= 35
+      pdf.draw_text(book_tip.url.blank? ? tip.url : book_tip.url, :at => [margin, top], :size => 26)
+
+      top -= 35
+      pdf.draw_text(book_tip.phone.blank? ? tip.phone : book_tip.phone, :at => [margin, top], :size => 26)
+
+      top -= 40
+      pdf.text_box(book_tip.description.blank? ? tip.description : book_tip.description, :size => 26,
+                   :at => [pdf.bounds.left + margin, top], :width => Book::BOOK_WIDTH - 2*margin,
+                   :overflow => :shrink_to_fit, :min_font_size => 18)
+
+
+      # draw image
       pdf.start_new_page
       if tip.image.file?
         begin
@@ -48,7 +75,6 @@ class BooksController < ApplicationController
           end
 
           puts image
-#          puts "crop arguments ! #{[book_tip.image_offset_x, book_tip.image_offset_y, width, height].inspect}"
           rm.crop! book_tip.image_offset_x, book_tip.image_offset_y, width, height
           rm.write(image)
 
@@ -60,16 +86,6 @@ class BooksController < ApplicationController
       else
         pdf.text 'No image.'
       end
-
-      pdf.start_new_page
-      pdf.draw_text(tip.condition.full_name, :at => [20, pdf.bounds.top - 20], :size => 16)
-      pdf.draw_text(book_tip.name.blank? ? tip.name : book_tip.name, :at => [40, Book::BOOK_HEIGHT - 60], :size => 24)
-      pdf.draw_text(book_tip.address.blank? ? tip.address : book_tip.address, :at => [40, Book::BOOK_HEIGHT - 100], :size => 16)
-      pdf.draw_text(book_tip.url.blank? ? tip.url : book_tip.url, :at => [40, Book::BOOK_HEIGHT - 130], :size => 16)
-      pdf.draw_text(book_tip.phone.blank? ? tip.phone : book_tip.phone, :at => [40, Book::BOOK_HEIGHT - 160], :size => 16)
-
-      pdf.text_box(book_tip.description.blank? ? tip.description : book_tip.description, :size => 16, :at => [pdf.bounds.left + 40, pdf.bounds.top - 190],
-                   :overflow => :shrink_to_fit, :min_font_size => 12)
     end
 
 #    pdf.text("some other text")

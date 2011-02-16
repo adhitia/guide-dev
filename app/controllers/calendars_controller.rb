@@ -32,6 +32,11 @@ class CalendarsController < ApplicationController
     render :action => 'show'
   end
 
+  def domain
+    @guide = authorize_guide params[:id]
+    @name = @guide.name.gsub(/\s/, '-').downcase + '.com'
+  end
+
   def new
     authenticate
   end

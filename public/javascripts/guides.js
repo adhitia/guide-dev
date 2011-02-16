@@ -413,6 +413,8 @@ if (!window.guide) var guide = {
 //        root.find('button.tip-save').attr('disabled', true);
 //        root.find('button.tip-cancel').attr('disabled', true);
 
+        guide.loadTipSuggestions(root);
+
 
         // fetch website url
 //        common.setLoading(container, 'Loading...');
@@ -723,6 +725,9 @@ if (!window.guide) var guide = {
                 var rank = 0;
                 $('#book-preview .tips-order .tip').each(function() {
                     $(this).find('input.rank').val(rank++);
+                    var tipId = $(this).data('tip-id');
+                    var largeTip = $('#book-preview .tips-data .tip[data-tip-id=' + tipId + ']');
+                    $('#book-preview .tips-data').append(largeTip);
                 });
             }
         });

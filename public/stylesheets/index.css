@@ -7,11 +7,14 @@
 }
 */
 
+/*
 .text {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: small;
 	color: #444444;
 }
+*/
+
 .headtext {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: medium;
@@ -1507,12 +1510,13 @@ div.guide-type-panes > div {
     border: solid black 1px;
     background-color: white;
     color: black;
+    font-family: Times New Roman;
 }
 #book-preview .tips-data .tip .image {
     width: 500px;
     overflow: hidden;
     height: 250px;
-    display: inline-block;
+    float: right;
 }
 #book-preview .tips-data .tip .image .no-image {
     width: 100%;
@@ -1529,12 +1533,14 @@ div.guide-type-panes > div {
     background-repeat: no-repeat;
 }
 #book-preview .tips-data .tip .text {
-    width: 495px;
-    float: right;
+    width: 455px;
+    float: left;
     color: gray;
     position: relative;
-    height: 100%;
+    height: 210px;
     overflow: hidden;
+    padding: 20px;
+    font-size: large;
 }
 #book-preview .tips-data .tip .text .redefined {
     color: black;
@@ -1543,7 +1549,7 @@ div.guide-type-panes > div {
     width: 95%;
     overflow: hidden;
     max-height: 30px;
-    margin: 5px 10px 0 10px;
+    /*margin: 0 10px 0 10px;*/
     position: relative;
 }
 #book-preview .tips-data .tip .text .input-widget .label {
@@ -1575,16 +1581,16 @@ div.guide-type-panes > div {
 }
 
 #book-preview .tips-data .tip .text .input-widget-name {
-    font-size: large;
+    font-size: xx-large;
     max-height: 50px;
 }
 #book-preview .tips-data .tip .text .input-widget-description textarea {
     width: 98%;
-    height: 95px;
+    height: 150px;
 }
 #book-preview .tips-data .tip .text .input-widget-description {
-    height: 100px;
-    max-height: 100px;
+    height: 160px;
+    max-height: 160px;
     bottom: 0;
     position: absolute;
 }
@@ -1594,12 +1600,14 @@ div.guide-type-panes > div {
 }
 
 #book-preview .tips-order .tip {
-    width: 40px;
-    height: 40px;
     float: left;
     cursor: pointer;
     background-color: white;
     color: black;
+    border: 5px solid white;
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
 }
 
 .ui-corner-all {
@@ -1813,5 +1821,9 @@ div.guide-type-panes > div {
 }
 
 
+#buy-domain .name {
+    color:orange;
+    font-weight:bold;
+}
 
 

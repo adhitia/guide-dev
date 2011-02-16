@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.guide_map 'guides/:id/map', :controller => :calendars, :action => :map, :conditions => { :method => :get }
   map.print_guide 'guides/:id/print', :controller => :calendars, :action => :print, :conditions => { :method => :get }
   map.connect 'guides/:id/view', :controller => :calendars, :action => :view_owner, :conditions => { :method => :get }
+  map.connect 'guides/:id/domain', :controller => :calendars, :action => :domain, :conditions => { :method => :get }
 
   map.connect 'books/:id/update', :controller => :books, :action => :update, :conditions => { :method => :post }
   map.connect 'books/:id/print', :controller => :books, :action => :print, :conditions => { :method => :get }
