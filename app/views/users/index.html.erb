@@ -9,6 +9,15 @@
       <input name="search_location" id="search_location" class="watermark" value="" type="text" title="type destination here" size="20">
       <img class="button" onclick="$('#search_form').submit();" src="/images/guiderer-index_r11_c5.jpg" align="absmiddle"/>
     </form>
+
+    <div style="margin-top:20px">
+      Popular locations:
+
+      <% @prominent_locations.each do |l| %>
+       <%= l + ((l != @prominent_locations.last) ? ',' : '') %>
+
+      <% end %>
+    </div>
   </div>
 
   <!--create guide-->
@@ -30,6 +39,9 @@
             <%= render :partial => 'calendars/widget', :locals => {:guide => calendar, :style_id => '1'} %>
           </div>
       <% end %>
+
+
+
     </div>
   
   

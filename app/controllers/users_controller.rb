@@ -90,6 +90,13 @@ class UsersController < ApplicationController
     @calendars_amount = @calendars.size
     @recent_calendars = Calendar.find(:all, :conditions => ["public = ? and completed_percentage > 10", true], :limit => 8, :order => "created_at DESC")
     @locations = Location.all
+    @prominent_locations = @locations.sort_by {|l| -l.guides.size} .collect {|l|
+      l = l.name
+      if !l.index(',').nil?
+        l[0, l.index(',')]
+      end
+    }[0..5]
+
   end
 
   def register

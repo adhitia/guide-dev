@@ -922,6 +922,7 @@ font-weight: bold;
 #home-page .search-guides, #home-page .create-guide {
     float: left;
     width: 440px;
+    height: 191px;
 }
 
 #home-page #search_location {
