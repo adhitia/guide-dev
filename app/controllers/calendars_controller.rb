@@ -184,7 +184,6 @@ class CalendarsController < ApplicationController
 
   def city_map
     @city = verify_resource params[:id], Location, 'City'
-#     and completed_percentage > 10
     @guides = Calendar.find(:all, :conditions => ['location_id = ? and public = ?', @city.id, true], :order => 'rating DESC')
     @attractions = Attraction.find(:all, :conditions => ['city_id = ? and popularity > 0', @city.id], :order => 'popularity DESC', :limit => 50)
   end

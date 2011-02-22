@@ -1,0 +1,28 @@
+
+
+<div class="image-selection-area">
+  <div class="current-image">
+    <span class="label">current image</span>
+
+    <% if image.file? %>
+        <%= image_tag image.url(:thumb), :class => "full-image", :full_url => image.url %>
+    <% else %>
+        <div style="text-align:center;margin-top:20px;"> no image </div>
+    <% end %>
+    <br/>
+
+    <label class="file-upload">
+      <span class="label">upload image <br/>
+        <span class="file-name"></span>
+      </span>
+      <input type="file" size="5" name="<%= param_name %>">
+    </label>
+
+  </div>
+  <div class="google-suggestions">
+    <span class="label">google suggestions</span>
+
+    <div class="content"></div>
+  </div>
+</div>
+

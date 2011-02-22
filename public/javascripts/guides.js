@@ -90,6 +90,7 @@ if (!window.guide) var guide = {
 
     createTip: function() {
         var root = $(this).closest('div.edit-tip-root');
+        root.removeClass('stage-3');
         var edit_area = root.find('div.edit-area');
 
         $.Watermark.HideAll();
@@ -263,6 +264,7 @@ if (!window.guide) var guide = {
     loadTipSuggestions: function(root) {
         root = $(root).closest('div.edit-tip-root');
         var edit_area = root.find('div.edit-area');
+        root.find('.image-selection-area').css('display', '').css('visibility', '');
 
         if (root.hasClass('new-tip-container') && !root.hasClass('stage-2') && !root.hasClass('stage-3')) {
             root.addClass('stage-1');
@@ -319,7 +321,7 @@ if (!window.guide) var guide = {
 
         if (searcher.results && searcher.results.length > 0) {
             var body = $('<div></div>').addClass('autosuggestions-body');
-            body.append('Select to prefill other fields<br/>');
+            body.append('Choose correct POI<br/>');
             var list = $('<ul></ul>');
             container.append(body);
             body.append(list);

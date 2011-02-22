@@ -1,6 +1,37 @@
+<% page_width 826 %>
+
+
 <div id="home-page" class="clear-fix">
 
-  <!--search guides-->
+
+  <div class="info">
+    <div class="content">
+      <p>List your favourite attractions, shops, restaurants, bars and clubs.
+        We'll help find photos and contact info.</p>
+
+      Then convert it to:
+      <ul>
+        <li>a Website</li>
+        <li>a Print Booklet</li>
+        <li>a Map</li>
+        <li>a Video-clip</li>
+        <li>an iPhone App</li>
+        <li>and a Shareable Widget!</li>
+      </ul>
+    </div>
+
+    <a href="/guides/new" class="create"></a>
+  </div>
+
+  <!--<div class="">-->
+    <form id="search_form" name="search_form" method="get" action="guides" class="search">
+      <input name="search_location" id="search_location" value="" type="text" title="type destination here">
+      <a href="javascript:" onclick="$('#search_form').submit();">Find</a>
+    </form>
+  <!--</div>-->
+
+
+  <!--
   <div class="search-guides section">
     <h1>Want travel tips for a destination?</h1>
     Search our travel guides here:
@@ -20,7 +51,6 @@
     </div>
   </div>
 
-  <!--create guide-->
   <div class="create-guide section">
     <h1>Know your city well? Share your travel tips with travelers!</h1>
 
@@ -30,7 +60,7 @@
     <img class="button" align="right" onclick="window.location='/guides/new';" src="/images/guiderer-index_r12_c5.jpg"/>
   </div>
   
-    <!--new guides-->
+    &lt;!&ndash;new guides&ndash;&gt;
     <div class="new-guides section">
       <h1>Recently Created Guides</h1>
   
@@ -40,17 +70,17 @@
           </div>
       <% end %>
 
-
-
     </div>
-  
-  
-  
-  
+  -->
+
+
 </div>
 
 
 
+
+<!-- until better times -->
+<!--
 <script type="text/javascript">
     $(document).ready(function() {
         $("#search_location").autocomplete(
@@ -71,3 +101,4 @@
         });
     });
 </script>
+-->

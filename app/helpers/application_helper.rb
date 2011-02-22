@@ -5,6 +5,10 @@ module ApplicationHelper
     content_for(:title) { h page_title }
   end
 
+  def page_width(w)
+    content_for(:page_width) { h w }
+  end
+
   def times(number)
     format_number(number, "time")
 #    number.to_s + ' time' + (number == 1 ? '' : 's');

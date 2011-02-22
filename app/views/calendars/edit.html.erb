@@ -1,5 +1,8 @@
 <% title @guide.name %>
 
+<!--
+<%= render :partial => 'common/select_image', :locals => {:image => @guide.image, :param_name => 'calendar[image]'} %>
+-->
 
 
 <div id="edit_tips" data-city="<%= h @guide.location.name %>" data-id="<%= @guide.id %>">
@@ -15,7 +18,7 @@
     <% form_for(tip_model, :url => "/guides/#{@guide.id}/tips/create", :html => {:method => "post", :id => 'create_tip_form', :class => ''}) do |form| %>
         <div class="tip-name-area">
           <span>Type in the name of the point of interest </span>
-          <%= form.text_field :name, :size => 30, :class => 'tip-name', :title => 'Example: Dublin Pub, not drinking at the Dublin pub (no need for verbs here)', :maxlength => Tip::MAX_NAME_LENGTH, :autocomplete => "off" %>
+          <%= form.text_field :name, :class => 'tip-name', :size => '', :title => 'Example: Dublin Pub, not drinking at the Dublin pub (no need for verbs here)', :maxlength => Tip::MAX_NAME_LENGTH, :autocomplete => "off" %>
           <!--show no validation message for this field-->
           <span class="validation-error tip[name]_error" style="display:none;"></span>
 
@@ -107,6 +110,8 @@
 
 
   <div id="tips-matrix" class="clear-fix">
+    <h1>Your day tours and POIs</h1>
+    <p>Each day as many POIs as you want</p>
     <% tips = @guide.grouped_tips %>
 
     <% tips.each_index do |day| %>
@@ -133,7 +138,7 @@
 
   <div>
     <div class="button-panel">
-      <span class="head2">I am done creating my guide, for now:</span>
+      <div class="caption">I am done creating my guide, for now:</div>
       <a href="/guides/<%= @guide.id %>/view" class="button">
         Show me my guide!
       </a>

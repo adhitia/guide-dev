@@ -156,99 +156,6 @@ if (!window.tips) var tips = {
         }
     },
 
-/*
-    processLocalSearchResults: function(searcher, root, search_term) {
-        var trigger = $(root).find('.local-search-launch');
-        var container = $(root).find('.local-search-container');
-        container.html('');
-        if (searcher.results && searcher.results.length > 0) {
-            container.append('Select to prefill other fields<br/>');
-            var list = $('<ul></ul>');
-            container.append(list);
-            for (var i = 0; i < searcher.results.length; i++) {
-                var result = searcher.results[i];
-                var a = $('<a></a>').attr('href', 'javascript:')
-                        .text(result.titleNoFormatting + ' - ' + result.streetAddress)
-                        .click(tips.selectLocalResult);
-                list.append($('<li></li>').append(a));
-
-                a.data('result_url', result.url);
-                if (result.phoneNumbers && result.phoneNumbers.length > 0) {
-                    a.data('result_phone', result.phoneNumbers[0].number);
-                }
-                a.data('title', result.titleNoFormatting);
-                a.data('local_result_address', result.streetAddress);
-                a.data('local_result_lat', result.lat);
-                a.data('local_result_lng', result.lng);
-            }
-        } else {
-            container.append('no results found');
-        }
-    },
-*/
-/*
-
-    selectLocalResult: function() {
-        var result = $(this);
-        var row = result.parents('.edit-tip-root')[0];
-        var container = result.parents('.local-search-container');
-        var addr = result.data('local_result_address');
-        var lat = result.data('local_result_lat');
-        var lng = result.data('local_result_lng');
-        var google_url = result.data('result_url');
-        var phone = result.data('result_phone');
-        if (phone != null && phone.startsWith('(0xx)')) {
-            phone = phone.substring('(0xx)'.length);
-        }
-        var title = result.data('title');
-
-        var tooltip = $(row).find('.local-search-launch').data('tooltip');
-        tooltip.state = 'fetching url';
-//        trigger.data('tooltip').getConf().events = {
-//            def: 'click,',
-//            tooltip: 'click,'
-//        };
-        container.html('');
-
-        // fetch website url
-        common.setLoading(container, 'Loading..');
-        $.ajax({
-            url: '/fetch_gmaps_data',
-            data: {'url' : google_url},
-            type: 'GET',
-            cache: false,
-            dataType: "html",
-            success: function(r) {
-                tooltip.state = '';
-                r = $(r);
-                var url = r.find('.pp-authority-page a').attr('href');
-                if (url == null) {
-                    url = google_url;
-                } else {
-                    var re = new RegExp("q=[^&]+&");
-                    url = re.exec(url).toString();
-                    url = url.substr(2, url.length - 3);
-                }
-                r.remove();
-
-                tooltip.hide();
-                container.html('');
-
-                $(row).find('input.tip_address_street').val(addr);
-                $(row).find('input.tip_address_lat').val(lat);
-                $(row).find('input.tip_address_lng').val(lng);
-                $(row).find('input.tip_url').val(url);
-                $(row).find('input.tip_phone').val(phone);
-                common.set_value($(row).find('input.tip_name'), title);
-            },
-            error: function(a, b, c) {
-                tooltip.state = '';
-                tooltip.hide();
-            }
-        });
-    },
-*/
-
     /**
      * Loads local suggestions (address, url, phone) from google. 
      */
@@ -283,6 +190,8 @@ if (!window.tips) var tips = {
 
     init: function(root) {
         root = $(root);
+
+        common.init(root);
 
         // image suggestions
 //        $(root).find('.upload_image').tabs();
@@ -416,85 +325,6 @@ if (!window.tips) var tips = {
                 return false;
             });
 
-            // drag'n'drop
-            // workaround for the case when editing is not accessible
-            /*if (root.find('a.move-tip').length > 0) {
-                root.find('div.tip-tile').draggable({
-                    handle: 'a.move-tip',
-                    revert: 'invalid'
-                });
-            }*/
-            /*root.find('div.tip-tile').droppable({
-                hoverClass: 'droppable-active',
-                drop: function(event, ui) {
-                    var container_from = ui.draggable.parent();
-                    var container_to = $(this).parent();
-
-                    var place_id = ui.draggable.attr('place_id');
-                    var target_id = $(this).attr('place_id');
-
-                    // TODO move elements slowly
-                    ui.draggable.appendTo(container_to);
-                    $(this).appendTo(container_from);
-                    ui.draggable.css('left', 0).css('top', 0);
-
-                    common.setLoadingGlobal();
-                    $.ajax({
-                        url: '/occurrences/' + place_id + '/switch',
-                        data: {'target_id' : target_id},
-                        cache: false,
-                        dataType: "text",
-                        success: function() {
-                            common.stopLoadingGlobal();
-                        }
-                    });
-                }
-            });*/
-            /*root.find('div.no-tip-tile').droppable({
-                hoverClass: 'droppable-active',
-                drop: function(event, ui) {
-                    var container_from = ui.draggable.parent();
-                    var container_to = $(this).parent();
-
-                    var place_id = ui.draggable.attr('place_id');
-                    var condition_id = container_to.attr('condition_id');
-                    var day_id = container_to.attr('day_id');
-
-                    // TODO move elements slowly
-                    ui.draggable.appendTo(container_to);
-                    $(this).appendTo(container_from);
-                    ui.draggable.css('left', 0).css('top', 0);
-
-                    common.setLoadingGlobal();
-                    $.ajax({
-                        url: '/occurrences/' + place_id + '/move',
-                        data: {'condition_id' : condition_id, 'weekday_id' : day_id},
-                        cache: false,
-                        dataType: "text",
-                        success: function() {
-                            common.stopLoadingGlobal();
-                        }
-                    });
-                }
-            });*/
-
-            /*$(root).find('a.view-tip').overlay({
-//                effect: 'apple',
-                closeOnClick: true,
-                closeOnEsc: true,
-                onLoad: function() {
-                    var wrap = this.getOverlay().find('.content');
-                    common.setLoading(wrap);
-                    $.ajax({
-                        url: this.getTrigger().attr("href"),
-                        cache: false,
-                        dataType: "html",
-                        success: function(r) {
-                            wrap.html(r);
-                        }
-                    });
-                }
-            });*/
 
 
             // view tip contents
@@ -560,7 +390,7 @@ if (!window.tips) var tips = {
                 connectWith: '.condition-group',
                 delay: 100,
                 distance: 5,
-                handle: 'a.move-tip',
+//                handle: 'a.move-tip',
                 start: function(event, ui) {
                     var tooltips = $('div.edit-tip-tile > .tip-icon');
                     tooltips.qtip("hide");
@@ -584,8 +414,9 @@ if (!window.tips) var tips = {
 
 
             // open edit 'tab' on click
-            tips.click(function() {
-//                console.log('click');
+            tips.find('.edit-tip').click(function() {
+                var root = $(this).closest('.edit-tip-tile');
+
                 if ($(this).data('state') == 'saving') {
                     return;
                 }
@@ -594,7 +425,6 @@ if (!window.tips) var tips = {
                     return;
                 }
 
-                var root = $(this);
 //                var edit_area = root.find('div.edit-area');
                 var edit_form = root.find('form.tip-form');
 
@@ -635,6 +465,7 @@ if (!window.tips) var tips = {
             });
 
 
+            /*
             tips.add(new_tip).find('.image-selection-area .file-upload > input').change(function() {
                 var value = $(this).val();
                 if (value.indexOf('\\') >= 0) {
@@ -662,6 +493,7 @@ if (!window.tips) var tips = {
 //            tips.add(new_tip).find('input.tip-name').each(function() {
 //                common.runOnDelay($(this), 1000, guide.loadTipSuggestions);
 //            });
+            */
 
             // show tip ideas suggestions only when tip name is in the focus
             new_tip.find('input.tip-name').focus(function() {

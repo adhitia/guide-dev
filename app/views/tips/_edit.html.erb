@@ -34,6 +34,7 @@
     </div>
   </div>
 
+<!--
   <div class="image-selection-area">
     <div class="current-image">
       <span class="label">current image</span>
@@ -59,5 +60,8 @@
       <div class="content"></div>
     </div>
   </div>
+-->
+
+  <%= render :partial => 'common/select_image', :locals => {:image => tip.image, :param_name => 'tip[image]'} %>
 
 </div>

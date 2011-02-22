@@ -248,6 +248,34 @@ if (!window.common) {
                 $.Watermark.HideAll();
                 return true;
             });
+
+
+
+            root.find('.image-selection-area .file-upload > input').change(function() {
+                var value = $(this).val();
+                if (value.indexOf('\\') >= 0) {
+                    value = value.substring(value.lastIndexOf('\\') + 1, value.length);
+                }
+//                alert('test change ' + value + ' ?');
+                $(this).parent().find('.file-name').html(value);
+                var google_images = $(this).closest('.image-selection-area').find('div.google-suggestions div.content');
+                google_images.find('div').removeClass('selected');
+                google_images.find('.tip_image_url').val('');
+            });
+            root.find('.image-selection-area .current-image').hover(function() {
+                var e = $(this).find('.file-upload');
+                if (e.find('input').val().blank()) {
+                    e.fadeIn();
+                }
+            },
+            function() {
+                var e = $(this).find('.file-upload');
+                if (e.find('input').val().blank()) {
+                    e.fadeOut();
+                }
+            });
+            root.find('.image-selection-area .file-upload').hide();
+
         },
 
         runOnDelay: function(input, delay, callback) {

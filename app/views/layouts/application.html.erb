@@ -9,16 +9,18 @@
   <meta name="keywords" content="travel, guides"/>
   <title>Guiderer: <%= yield(:title) || "View, create and share highly targeted travel guides" %></title>
 
-  <link rel="image_src" href="/images/guiderer-logo.png" />
+  <link rel="image_src" href="/images/guiderer-logo.png"/>
 
-  <!-- workaround for 'tick is not defined' ga error -->
-  <script type="text/javascript">if( !tick ) { var tick = function(){}; }</script>
+  <!-- workaround for 'tick is not defined', ga error -->
+  <script type="text/javascript">if (!tick) {
+      var tick = function() {
+      };
+  }</script>
 
   <!-- Sets version for each changeable resource here -->
   <!-- Increment when put changed in production to make user's browsers reload resources -->
   <% resource_version = 43 %>
 
-  <!--<%= stylesheet_link_tag 'scaffold' %>-->
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 
   <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>-->
@@ -33,10 +35,10 @@
 
   <script type="text/javascript" src="/jquery/jquery.dataTables.min.js"></script>
 
-  <script type="text/javascript" src="/public.js?_version=<%=resource_version%>" class="guiderer-script"></script>
-  <script type="text/javascript" src="/javascripts/tips.js?_version=<%=resource_version%>"></script>
-  <script type="text/javascript" src="/javascripts/guides.js?_version=<%=resource_version%>"></script>
-  <script type="text/javascript" src="/javascripts/common.js?_version=<%=resource_version%>"></script>
+  <script type="text/javascript" src="/public.js?_version=<%= resource_version %>" class="guiderer-script"></script>
+  <script type="text/javascript" src="/javascripts/tips.js?_version=<%= resource_version %>"></script>
+  <script type="text/javascript" src="/javascripts/guides.js?_version=<%= resource_version %>"></script>
+  <script type="text/javascript" src="/javascripts/common.js?_version=<%= resource_version %>"></script>
 
   <script type="text/javascript" src="/jquery/jquery.watermarkinput.js"></script>
   <script type="text/javascript" src="/jquery/jquery.form.js"></script>
@@ -45,22 +47,14 @@
   <script type="text/javascript" src="/jquery/openid-jquery.js"></script>
 
   <!-- 'tabs' plugin renamed to 'fpTabs' to avoid conflict with jqueryui 'tabs'. Be adviced if update library -->
-  <script type="text/javascript" src="/jquery/jquery.tools.min.js" ></script>
+  <script type="text/javascript" src="/jquery/jquery.tools.min.js"></script>
 
-  <link href="/stylesheets/index.css?_version=<%=resource_version%>" media="screen" rel="stylesheet" type="text/css"/>
+  <link href="/stylesheets/index.css?_version=<%= resource_version %>" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_table.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_page.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/demo_table_jui.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href="/css/openid.css" media="screen" rel="stylesheet" type="text/css"/>
   <!--<link href="/jquery/jquery.autocomplete.css" media="screen" rel="stylesheet" type="text/css"/>-->
-
-
-
-  <!--<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>-->
-  <!--<script type="text/javascript" src="http://static.ak.connect.facebook.com/connect.php/en_US/js/Api/CanvasUtil/Connect/XFBML"></script>-->
-  <!--<link rel="stylesheet" type="text/css" href="http://static.ak.connect.facebook.com/connect.php/en_US/css/bookmark-button-css/connect-button-css/share-button-css/FB.Connect-css/connect-css">-->
-  <!--<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/XdCommReceiver.js"></script>-->
-
 
 
   <script type="text/javascript">
@@ -81,94 +75,96 @@
 </head>
 
 
-<body background="/images/guiderer-index_r1_c1.jpg" link="#FFFFFF" vlink="#CCCCCC" alink="#00FFFF">
-<center>
+<body>
 
-  <div class="main-area">
-    <div align="left">
-      <table>
-        <tr>
-          <td>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td><p>
-                  <img src="/images/spacer.gif" width="20" height="45"/><a href="/"><img src="/images/guiderer-index_r3_c4.jpg" alt="" name="guidererindex_r3_c4" width="269" height="45" border="0" id="guidererindex_r3_c4"/></a><br/>
-                  <font color="#FFFFFF" size="4"><img src="/images/spacer.gif" width="30" height="10"/><span class="text">Create, share and monetize your local travel tips</span></font>
-                </p></td>
-                <td>
-                  <div align="right"><img src="/images/spacer.gif" width="230" height="20"/>
-                    <% if @current_user %>
-                        Welcome,
-                        <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
-                         (<%= format_number(@current_user.calendars.size, "guide") %>)
+<div id="content" style="width:<%= yield(:page_width) || 1020 %>px">
 
-                        | <%= link_to 'Sign out', logout_path %>
-                    <% else %>
-                        <%= link_to 'Sign in / Sign-up', :controller => :users, :action => :login %>
-                    <% end %></div>
-                </td>
-              </tr>
-            </table>
+  <div id="header">
+    <div class="logo"></div>
 
-          </td>
-        </tr>
-      </table>
+    <div class="login">
+      <% if @current_user %>
+          Welcome,
+          <%= link_to @current_user.name, show_user_path(:id => @current_user) %>
+          (<%= format_number(@current_user.calendars.size, "guide") %>)
 
+          | <%= link_to 'Sign out', logout_path %>
+      <% else %>
+          <%= link_to 'Sign in / Sign-up', :controller => :users, :action => :login %>
+      <% end %>
+    </div>
 
-      <%= yield %>
-
-
+    <div class="links">
+      <a href="/how-it-works">How <span class="hint">(1.2.3. booayab!)</span></a>
+      |
+      <a href="/faq">Why <span class="hint">(hint: $+Fame!)</span></a>
+      |
+      <a href="/guides/new" class="prominent">Create a Guide</a>
     </div>
   </div>
 
-<!--
-  <div class="main-area">
+
+
+  <div id="main">
+  <%= yield %>
   </div>
--->
+
+  <div id="footer">
+    <div class="guiderer-for column">
+      <h3>Guiderer for:</h3>
+      <ul>
+        <li>Hotels and Lodging</li>
+        <li>Travel Agencies</li>
+        <li>Personal Tour Guides</li>
+        <li>Tourism Authorities</li>
+      </ul>
+    </div>
+    <div class="column solution">
+      <h3>Solution:</h3>
+      <ul>
+        <li><a href="/how-it-works">How does Guiderer work?</a></li>
+        <li>Make money with Guiderer</li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="column us">
+      <h3>US:</h3>
+      <ul>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/advertise">Advertise</a></li>
+        <li><a href="/join-us">Join us</a></li>
+        <li><a href="/about-us">About us</a></li>
+      </ul>
+    </div>
+
+    <div class="logo"></div>
+    <div class="copyright">@2011 Guiderer Inc. All rights reserved.</div>
+    <div class="share"></div>
+  </div>
 
 
-  <table width="1000" border="0" cellspacing="0" cellpadding="15">
-    <tr>
-      <td width="50%" valign="top" class="textgray">Guiderer is here to tell travelers what they should be doing right now. And later on for dinner. And to night. And during the rest of their trip. Just search for your desired destination, choose the market segment you want to experience, and get juicy tips.
-<br/>
-Guiderer is ideal for members of the travel trade who want to show all the great attractions in their destination. Hotels owners can create their own personalized “Boston for Astoria Hotel Guests” guide.
-        <a href="/about-us">[more]</a></td>
-      <td width="24%" valign="top"><p class="textgray"><a href="/about-us">About us</a></p>
+  <!-- some content used from javascript -->
+  <div id="dialog_box" style="display:none;">
+  </div>
 
-        <p class="textgray"><a href="/how-it-works">How does Guiderer work?</a></p>
-
-        <p class="textgray"><a href="/join-us">Join us</a></p>
-      </td>
-      <td width="26%" valign="top" class="textgray"><p><a href="/faq">FAQ</a></p>
-
-        <p><a href="/contact">Contact</a></p>
-        <p><a href="/advertise">Advertise</a></p></td>
-    </tr>
-  </table>
-
-</center>
+  <div id="global-loading-indicator" style="display:none;top:50%;left:50%;position:fixed;z-index:2147483640;width:100px;height:50px;">
+    <img src="/images/loading-indicator.gif">
+    <br/>
+    <span></span>
+  </div>
 
 
-<div id="dialog_box" style="display:none;">
+  <div class="hidden">
+    <form id="fetch_remote_content_form"></form>
+  </div>
+
+  <div id="global-overlay"></div>
+
+  <script type="text/javascript">
+      var validation_errors = <%= @errors.nil? ? '{}' : @errors.to_json %>;
+  </script>
+
 </div>
-
-<div id="global-loading-indicator" style="display:none;top:50%;left:50%;position:fixed;z-index:2147483640;width:100px;height:50px;">
-  <img src="/images/loading-indicator.gif">
-  <br/>
-  <span></span>
-</div>
-
-
-<div class="hidden">
-  <form id="fetch_remote_content_form"></form>
-</div>
-
-<div id="global-overlay"></div>
-
-
-<script type="text/javascript">
-  var validation_errors = <%= @errors.nil? ? '{}' : @errors.to_json %>;
-</script>
 
 </body>
 </html>
