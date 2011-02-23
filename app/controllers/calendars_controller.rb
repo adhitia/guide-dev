@@ -37,6 +37,12 @@ class CalendarsController < ApplicationController
     @name = @guide.name.gsub(/\s/, '-').downcase + '.com'
   end
 
+  def video
+    @guide = authorize_guide params[:id]
+
+    render :template => 'calendars/animoto'
+  end
+
   def new
     authenticate
   end

@@ -1,7 +1,7 @@
 <div class="guide-tip-body tip-element-medium" style="background-image:url('<%=tip.image.url(:square)%>');">
   <div class="tip-legend">
-    <span class="tip-condition"><%= tip.condition.name %>:</span>
-    <span class="tip-name"><%= tip.name %></span>
+    <span class="tip-condition"><%= h tip.condition.name %>:</span>
+    <span class="tip-name"><%= h tip.name %></span>
   </div>
 
   <div class="full_tip">

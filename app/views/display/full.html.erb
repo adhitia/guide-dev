@@ -111,11 +111,9 @@
           </div>
           <% end %>
 
-          <!--<div class="condition-group">-->
             <% @tips[day][condition.id].each do |tip| %>
                 <%= render :partial => 'display/tip/medium', :locals => {:tip => tip} %>
             <% end %>
-          <!--</div>-->
       <% end %>
     </div>
 <% end %>

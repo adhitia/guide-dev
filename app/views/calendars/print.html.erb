@@ -15,13 +15,7 @@ In 6 weeks you will get a package with your booklets.
 
 
 
-<form id="book-preview" action="/books/<%= @book.id %>/update" method="post">
-<!--
-  <p>Adjust presentation of your book and then
-    <a href="javascript:" onclick="guide.preview_book();">click here to preview pdf</a>.</p>
--->
-
-
+<form id="book-preview" action="/books/<%= @book.id %>/update" method="post" data-id="<%= @book.id %>">
   <p><big>Step 1: Drag to rearrange order.</big></p>
 
   <div class="tips-order clear-fix">
@@ -111,7 +105,13 @@ In 6 weeks you will get a package with your booklets.
   <a href="javascript:" onclick="guide.preview_book();" class="button">
     Save book and preview PDF
   </a>
+  <a href="javascript:" onclick="guide.order_book();" class="button">
+    Order print copies
+  </a>
 
+
+
+<!--
   <div class="button" style="width:400px;">
     <form action="<%= GOOGLE_CHECKOUT[:form_url] %>"
           id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
@@ -145,6 +145,7 @@ In 6 weeks you will get a package with your booklets.
   </div>
 
   <div>This functionality is in beta, no book will be purchased or delivered.</div>
+-->
 
 </div>
 

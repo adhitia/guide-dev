@@ -125,7 +125,7 @@ if (!window.guide) var guide = {
 
                 response.css('background-color', 'yellow');
                 setTimeout(function() {
-                    response.animate({backgroundColor: '#7fffd4'}, 2000);
+                    response.animate({backgroundColor: '#99FFFF'}, 2000);
                 }, 3000);
                 guide.saveMatrix();
 
@@ -666,14 +666,16 @@ if (!window.guide) var guide = {
 
     order_book: function() {
         guide.save_book(function() {
-            $('#BB_BuyButtonForm').submit();
+//            $('#BB_BuyButtonForm').submit();
+            var id = $('#book-preview').data('id');
+            window.location = '/books/' + id + '/print-order';
         });
         return false;
     },
 
     preview_book: function() {
         guide.save_book(function() {
-            var id = $('#BB_BuyButtonForm .book-id').val();
+            var id = $('#book-preview').data('id');
             window.location = '/books/' + id + '/print';
         });
         return false;

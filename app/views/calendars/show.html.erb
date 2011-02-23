@@ -1,58 +1,133 @@
 <% title @guide.name %>
 
-<p style="overflow:hidden;">
-  <% if @guide.image.file? %>
-      <%= image_tag @guide.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;"} %>
-  <% end %>
-  <%= h @guide.description %>
-</p>
 
 
-  <div class="clear-fix">
-    <%= render :partial => 'calendars/widget', :locals => {:guide => @guide, :style_id => '4'} %>
+
+
+
+<div class="guide-static">
+  <h1> <%= @guide.name %> </h1>
+
+  <p style="margin-left:60px;">A travel guide to <%= @guide.location.name %> by <%= h @guide.user.name %>.</p>
+
+  <div class="button-panel">
+    <% if @full_access %>
+        <a href="/guides/<%= @guide.id %>" class="button">
+          Edit
+        </a>
+        <a href="/guides/<%= @guide.id %>/share" class="button">
+          Embed on your site
+        </a>
+        <a href="/guides/new" class="button">
+          Create another guide
+        </a>
+        <a href="/guides/<%= @guide.id %>/print" class="button">
+          Order print booklets
+        </a>
+        <a href="/guides/<%= @guide.id %>/domain" class="button">
+          Order domain
+        </a>
+    <% else %>
+        <a href="/guides/<%= @guide.id %>/share" class="button">
+          Embed on your site
+        </a>
+        <a href="/users/<%= @guide.user.id %>" class="button">
+          More by <i><%= h @guide.user.name %></i>
+        </a>
+        <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
+          More guides on <%= h @guide.location.name %>
+        </a>
+        <a href="/guides/new" class="button">
+          Create your own guide
+        </a>
+    <% end %>
   </div>
-<br/>
+
+
+  <p style="overflow:hidden;margin-left:60px;">
+    <% if @guide.image.file? %>
+        <%= image_tag @guide.image.url(:thumb), {:align=>"left", :style=>"margin-right:10px;"} %>
+    <% end %>
+    <%= h @guide.description %>
+  </p>
+
+
+
+  <% tips = @guide.grouped_tips %>
+  <% tips.each_index do |day| %>
+
+      <% @guide.conditions.each do |condition| %>
+          <% tips[day][condition.id].each do |tip| %>
+              <div class="tip">
+                <div class="caption">
+                  <div class="when"> Day <%= day + 1 %> / <%= h tip.condition.full_name %></div>
+                  <div class="name"><%= h tip.name %></div>
+                </div>
+
+                <div class="content">
+                  <div class="image">
+                    <img src="<%= tip.image.url(:original) %>" alt="<%= h tip.name %> <%= h @guide.location.name %>">
+                  </div>
+                  <div class="details">
+                    <p>
+                      <%= h tip.description %>
+                    </p>
+
+                    <% if !tip.address.blank? -%>
+                        <p>
+                          Address: <span class="info"> <%= h tip.address %> </span>
+                        </p>
+                    <% end -%>
+                    <% if !tip.phone.blank? %>
+                        <p>
+                          Phone: <span class="info"> <%= h tip.phone %> </span>
+                        </p>
+                    <% end %>
+                    <% if !tip.url.blank? %>
+                        <p>
+                          <a href="/guides/<%= tip.calendar.id %>/tips/<%= tip.id %>/url" target="_blank">
+                            <span class="info"><%= h tip.url %> </span>
+                          </a>
+                        </p>
+                    <% end %>
+                  </div>
+
+                  <% if !tip.attraction.nil? && tip.attraction.lat != 0 %>
+                      <div class="map">
+                        <a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%= tip.attraction.lat %>+<%= tip.attraction.lng %>&amp;z=16" target="_blank">
+                          <img src="http://maps.google.com/maps/api/staticmap?maptype=roadmap&amp;format=gif&amp;sensor=false&amp;size=250x375&amp;zoom=13&amp;markers=<%= tip.attraction.lat %>,<%= tip.attraction.lng %>"/>
+                        </a>
+                      </div>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+
+  <% end %>
+</div>
+
+
 
 
 <h1>Points of Interest Map</h1>
 
 <%= render :partial => 'map', :locals => {:guide => @guide} %>
+<br/>
 
-<div class="button-panel">
-  <% if @full_access %>
-      <a href="/guides/<%= @guide.id %>" class="button">
-        Edit
-      </a>
-      <a href="/guides/<%= @guide.id %>/share" class="button">
-        Embed on your site
-      </a>
-      <a href="/guides/new" class="button">
-        Create another guide
-      </a>
-      <a href="/guides/<%= @guide.id %>/print" class="button">
-        Order print booklets
-      </a>
-      <a href="/guides/<%= @guide.id %>/domain" class="button">
-        Order domain
-      </a>
-  <% else %>
-      <a href="/guides/<%= @guide.id %>/share" class="button">
-        Embed on your site
-      </a>
-      <a href="/users/<%= @guide.user.id %>" class="button">
-        More by <i><%= h @guide.user.name %></i>
-      </a>
-      <a href="/guides?search_location=<%= @guide.location.name %>" class="button">
-        More guides on <%= h @guide.location.name %>
-      </a>
-      <a href="/guides/new" class="button">
-        Create your own guide
-      </a>
-  <% end %>
-</div>
+<a class="useless" href="http://www.hotelscombined.com/City/<%= @guide.location.short_name.gsub(/\s/, '_') %>.htm?a_aid=27072" target="_blank">
+  Find hotels in <%= @guide.location.short_name %>
+</a>
+<a class="useless" href="http://www.amazon.com/gp/search?ie=UTF8&keywords=travel%20guide%20<%= @guide.location.short_name.gsub(/\s/, '%20') %>&tag=wwwrioforpart-20&index=books&linkCode=ur2&camp=1789&creative=9325" target="_blank">
+  Find print guides on <%= @guide.location.short_name %>
+</a>
+<a class="useless" href="http://wikitravel.org/wiki/en/index.php?title=Special:Search&search=<%= @guide.location.short_name.gsub(/\s/, '%20') %>&fulltext=Search" target="_blank">
+  <%= @guide.location.short_name %> on Wikitravel
+</a>
 
+<br/><br/>
 
-<h1>Announce <%= @full_access ? 'your' : 'this' %> guide</h1>
+<h1 >Announce <%= @full_access ? 'your' : 'this' %> guide</h1>
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js#appId=<%= FACEBOOK_APP_ID %>&amp;xfbml=1"></script>
 

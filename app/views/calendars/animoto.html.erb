@@ -1,0 +1,24 @@
+<div id="animoto">
+  <h1>Turn your Guide into an Online Video!</h1>
+
+  <p>Click one button and your guide will take video format, that you can then share, distribute and embed on your site and around the web.</p>
+
+  <p>To start, click the button below, which will take you to Animoto's (TM) video engine, which will walk you throught the 3 steps.</p>
+
+  <p>It takes under 5 minutes and becomes a really cool travel media. Try it free!</p>
+
+  <form id="aniform" action="http://animoto.com/api/quickstart" method="post">
+    <input type="hidden" name="welcome_name" value="Guiderer">
+    <input type="hidden" name="ref" value="a_vwxjtqld">
+
+    <% @guide.tips.each do |tip| %>
+        <% if tip.image.file? %>
+            <input type="hidden" name="assets[]" value="<%= tip.image.url(:original) %>">
+        <% end %>
+    <% end %>
+  </form>
+
+  <div class="button-panel">
+    <a class="button" href="javascript:" onclick="$('#aniform').submit();">Click Here to Start (you will be redirected to Animoto)</a>
+  </div>
+</div>

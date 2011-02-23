@@ -18,6 +18,13 @@ class BooksController < ApplicationController
     render :text => book.id
   end
 
+  def print_order
+    @book = authorize_book params[:id]
+    @guide = @book.calendar
+
+    render :template => 'calendars/print_order'
+  end
+
   def print
 #    book = authorize_book
     book = verify_book params[:id]
@@ -42,13 +49,15 @@ class BooksController < ApplicationController
       pdf.draw_text(book_tip.name.blank? ? tip.name : book_tip.name, :at => [margin, top], :size => 50)
 
       top -= 50
-      pdf.draw_text(book_tip.address.blank? ? tip.address : book_tip.address, :at => [margin, top], :size => 26)
+      address = book_tip.address.blank? ? tip.address : book_tip.address
+      phone = book_tip.phone.blank? ? tip.phone : book_tip.phone
+      pdf.draw_text(address + '   ' + phone, :at => [margin, top], :size => 26)
 
       top -= 35
       pdf.draw_text(book_tip.url.blank? ? tip.url : book_tip.url, :at => [margin, top], :size => 26)
 
-      top -= 35
-      pdf.draw_text(book_tip.phone.blank? ? tip.phone : book_tip.phone, :at => [margin, top], :size => 26)
+#      top -= 35
+#      pdf.draw_text(, :at => [margin, top], :size => 26)
 
       top -= 40
       pdf.text_box(book_tip.description.blank? ? tip.description : book_tip.description, :size => 26,
@@ -79,7 +88,7 @@ class BooksController < ApplicationController
           rm.write(image)
 
 
-          pdf.image image, :fit => [600, 300]
+          pdf.image image, :fit => [Book::BOOK_WIDTH, Book::BOOK_HEIGHT]
         rescue Prawn::Errors::UnsupportedImageType
           pdf.text 'Not supported image type: only JPG and PNG are supported so far.'
         end

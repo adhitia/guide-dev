@@ -56,7 +56,7 @@ module ApplicationHelper
   end
 
   def guide_link(guide)
-    link_to guide.name, guide_url(guide)
+    link_to h(guide.name), guide_url(guide)
 #    link_to guide.name, show_guide_path(:id => guide)
 #    , {:target => '_blank'}
   end
